@@ -9,6 +9,8 @@ public class Test2 {
 // 하이하이하이
 =======
 	// 수정사항 반영해주세요
+// 수정할게요 - 상필
+
 	
 >>>>>>> branch 'master' of https://github.com/gqpibd/kh_semi.git
 }
