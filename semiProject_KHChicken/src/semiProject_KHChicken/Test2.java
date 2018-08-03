@@ -13,5 +13,6 @@ public class Test2 {
 // 수정합니다
 	ddd
 // 수정할게요
+	//수정되나요?ㅋㅋ
 >>>>>>> branch 'master' of https://github.com/gqpibd/kh_semi.git
 }
