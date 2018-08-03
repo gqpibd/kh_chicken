@@ -1,5 +1,6 @@
 package semiProject_KHChicken;
 
 public class Test2 {
-	// ¼öÁ¤»çÇ× ¹İ¿µÇØÁÖ¼¼¿ä
+	// ìˆ˜ì •ì‚¬í•­ ë°˜ì˜í•´ì£¼ì„¸ìš”
+	
 }
