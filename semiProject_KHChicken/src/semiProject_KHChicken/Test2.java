@@ -12,5 +12,6 @@ public class Test2 {
 // 수정할게요 - 상필
 // 수정합니다
 	
+// 수정할게요
 >>>>>>> branch 'master' of https://github.com/gqpibd/kh_semi.git
 }
