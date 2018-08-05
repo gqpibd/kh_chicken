@@ -3,9 +3,13 @@ package server.communicator;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 import server.dto.MemberDto;
@@ -26,25 +30,32 @@ public class ReadThread extends Thread {
 	@Override
 	public void run() {
 		super.run();
-		
+		Singleton s = Singleton.getInstance();
+
 		while (true) {
 			try {
-				Singleton s = Singleton.getInstance();
+				InputStream input = sock.getInputStream();
+				OutputStream out = sock.getOutputStream();
+				PrintWriter pw = new PrintWriter(new OutputStreamWriter(out));
+
+				pw.println("Welcome");
+				pw.flush();
 
 				// receive
-				ObjectInputStream ois = new ObjectInputStream(sock.getInputStream()); // dto받기
-				BufferedReader br = new BufferedReader(new InputStreamReader(sock.getInputStream())); // 번호받기
+				BufferedReader br = new BufferedReader(new InputStreamReader(input)); // 번호받기
 
 				Object obj = null;
 				int number;
-				number = Integer.parseInt(br.readLine());
 
+				number = Integer.parseInt(br.readLine());
+				System.out.println("received: " + number);
+				
 				switch (number) {
 				case 0:
 				case 1:
 				case 2:
 				case 3:
-
+					ObjectInputStream ois = new ObjectInputStream(input); // dto받기
 					obj = ois.readObject();
 					if (obj instanceof MemberDto) {
 
@@ -69,18 +80,18 @@ public class ReadThread extends Thread {
 				// send
 				ObjectOutputStream oos = new ObjectOutputStream(sock.getOutputStream());
 				oos.writeObject(obj);
+				sleep(100);
 
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
-	}
 
+	}
 }

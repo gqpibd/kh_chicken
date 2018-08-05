@@ -13,20 +13,20 @@ public class SocketControl {
 	public void serverOpen() {
 		
 		try {
-			ServerSocket serSocket = new ServerSocket(6000);
+			ServerSocket serSocket = new ServerSocket(7000);
 			//List<Socket> sockList = new ArrayList<Socket>();
 			
-			while(true) {
-				Socket socket = null;
+			//while(true) {
+				
 				System.out.println("접속 대기중...");
-				socket = serSocket.accept();
+				Socket socket = serSocket.accept();
 				//sockList.add(socket);
 				
 				System.out.println("클라이언트 연결 ip:"+socket.getInetAddress());
 				
 				new ReadThread(socket).start();
 				
-			}
+			//}
 			
 			
 		} catch (IOException e) {
