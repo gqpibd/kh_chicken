@@ -13,7 +13,7 @@ public class SocketControl {
 	public void serverOpen() {
 		
 		try {
-			ServerSocket serSocket = new ServerSocket(9000);
+			ServerSocket serSocket = new ServerSocket(6000);
 			//List<Socket> sockList = new ArrayList<Socket>();
 			
 			while(true) {
