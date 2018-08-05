@@ -9,6 +9,8 @@ public class TestClass {
 		
 		//김다슬
 		// 백승지
+		System.out.println("d얍");
+		//ㅇ ㅇㅇㄹㅇㄴㄹㅇㄴㄹㅇㄴㅇㅇㅇ
 	}
 
 }
