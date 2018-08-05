@@ -1,4 +1,4 @@
-package chChicken_client.run;
+package client.run;
 
 public class Main {
 
