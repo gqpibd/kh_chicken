@@ -19,7 +19,7 @@ public class SaleManageView extends JFrame{
 		
 		Singleton s = Singleton.getInstance();
 		
-		list = s.memCtrl.select();
+		list = s.ordCtrl.select();
 		
 		setBounds(100, 100, 640, 480);
 		getContentPane().setBackground(Color.black);

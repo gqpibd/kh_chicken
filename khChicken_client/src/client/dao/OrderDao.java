@@ -17,8 +17,8 @@ public class OrderDao {
 		
 	}
 	
-	public void select() {
-		
+	public List<OrderedMenuDto> select() {
+		return null;
 	}
 	
 	public void update() {
