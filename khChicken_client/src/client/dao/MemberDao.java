@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import client.dto.MemberDto;
+import client.dto.OrderedMenuDto;
 
 public class MemberDao {
 	
@@ -16,8 +17,8 @@ public class MemberDao {
 		
 	}
 	
-	public void select() {
-		
+	public List<OrderedMenuDto> select() {
+		return null;
 	}
 	
 	public void update() {

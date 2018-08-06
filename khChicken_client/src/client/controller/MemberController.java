@@ -1,6 +1,9 @@
 package client.controller;
 
+import java.util.List;
+
 import client.dao.MemberDao;
+import client.dto.OrderedMenuDto;
 
 public class MemberController {
 	
@@ -10,8 +13,8 @@ public class MemberController {
 		memDao.insert();
 	}
 	
-	public void select() {
-		memDao.select();
+	public List<OrderedMenuDto> select() {
+		return memDao.select();
 	}
 	
 	public void delete() {
