@@ -1,13 +1,15 @@
 package client.communicator;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.InetAddress;
+import java.io.ObjectInputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.util.Scanner;
+
+import client.dto.MemberDto;
+import client.dto.MenuDto;
+import client.dto.MenuShowDto;
+import client.dto.OrderedMenuDto;
+import client.dto.ReviewDto;
 
 public class Communicator {
 	private Socket sock;
@@ -19,9 +21,33 @@ public class Communicator {
 			sock.connect(sockAddr);
 			System.out.println("연결성공");
 
-			//BufferedReader br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+			
+			// reader
+			ObjectInputStream ois = new ObjectInputStream(sock.getInputStream());
+			Object obj = ois.readObject();
+			
+			//어떤 dto 인지 구분
+			if (obj instanceof MemberDto) {
+				
+			} else if (obj instanceof MenuDto) {
+				
+			} else if (obj instanceof MenuShowDto) {
+				
+			} else if (obj instanceof OrderedMenuDto) {
+				
+			} else if (obj instanceof ReviewDto) {
+				
+			}
+			
+			
+			// writer
+			// 각 클래스 내부에서 구현
+			
 
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
