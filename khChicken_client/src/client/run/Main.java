@@ -8,6 +8,8 @@ public class Main {
 		new Communicator().makeConnection();
 		// dohyeon_client branch test
 		
+		// hello_ hello_ hello_
+		
 	}
 
 }
