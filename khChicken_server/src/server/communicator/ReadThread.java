@@ -44,7 +44,7 @@ public class ReadThread extends Thread {
 				pw.flush();
 
 				// receive
-				BufferedReader br = new BufferedReader(new InputStreamReader(input)); // client에서 번호받기 번호
+				BufferedReader br = new BufferedReader(new InputStreamReader(input)); // client에서 받은 번호 input
 
 				Object obj = null;
 				int number;
