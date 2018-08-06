@@ -8,6 +8,12 @@ CREATE TABLE MEMBER(
     PHONE VARCHAR2(20) NOT NULL
 );
 
+insert into member (name,id,pw,auth,adr,phone)
+values ('admin', 'admin', 'admin', 1, 'KH CHICKEN', '010-0000-0000');
+
+
+select * from member;
+
 CREATE TABLE MENU(
     MENU_NAME VARCHAR2(15) PRIMARY KEY,
     PRICE NUMBER(5) NOT NULL
@@ -26,4 +32,6 @@ CREATE TABLE ORDER_DETAIL(
     CONSTRAINT FK_MENU FOREIGN KEY(MENU_NAME)
     REFERENCES MENU(MENU_NAME)
 );
+
+   
 
