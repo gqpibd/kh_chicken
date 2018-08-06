@@ -1,8 +1,8 @@
 package client.run;
 
 import client.communicator.Communicator;
-import view.AddMenuView;
-import view.MenuManagementView;
+import client.view.AddMenuView;
+import client.view.MenuManagementView;
 
 public class Main {
 
