@@ -19,7 +19,7 @@ public class SaleManageView extends JFrame{
 		
 		Singleton s = Singleton.getInstance();
 		
-		list = s.ordCtrl.select();
+		list = s.ordCtrl.select();	// controller로 영수증 목록 취득
 		
 		setBounds(100, 100, 640, 480);
 		getContentPane().setBackground(Color.black);
