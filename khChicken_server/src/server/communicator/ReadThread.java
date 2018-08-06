@@ -34,6 +34,8 @@ public class ReadThread extends Thread {
 
 		while (true) {
 			try {
+				
+				//input. output 스트림 생성, printwriter 생성(번호 받기용)
 				InputStream input = sock.getInputStream();
 				OutputStream out = sock.getOutputStream();
 				PrintWriter pw = new PrintWriter(new OutputStreamWriter(out));
@@ -42,7 +44,7 @@ public class ReadThread extends Thread {
 				pw.flush();
 
 				// receive
-				BufferedReader br = new BufferedReader(new InputStreamReader(input)); // 번호받기
+				BufferedReader br = new BufferedReader(new InputStreamReader(input)); // client에서 번호받기 번호
 
 				Object obj = null;
 				int number;
@@ -51,13 +53,15 @@ public class ReadThread extends Thread {
 				System.out.println("received: " + number);
 				
 				switch (number) {
-				case 0:
-				case 1:
-				case 2:
-				case 3:
+				case 0:	//insert	
+				case 1:	//select
+				case 2:	//delete
+				case 3:	//update
 					ObjectInputStream ois = new ObjectInputStream(input); // dto받기
 					obj = ois.readObject();
-					if (obj instanceof MemberDto) {
+					
+					//어떤 dto 인지 구분
+					if (obj instanceof MemberDto) {	
 
 					} else if (obj instanceof MenuDto) {
 
@@ -71,13 +75,16 @@ public class ReadThread extends Thread {
 					break;
 
 				case 4: // menu 불러오기
+					
 				case 5: // review 불러오기
+					
 				case 6: // 전체매출 불러오기
+					
 				case 7: // 내 주문내역 불러오기
 
 				}
 
-				// send
+				// send (받는건 번호+dto 지만 보내는건 한번만 해도됨)
 				ObjectOutputStream oos = new ObjectOutputStream(sock.getOutputStream());
 				oos.writeObject(obj);
 				sleep(100);
