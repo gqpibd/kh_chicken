@@ -14,8 +14,9 @@ public class OrderedMenuDto extends MenuDto implements Serializable {
 	}
 
 
-	public OrderedMenuDto(int coupon, int count) {
-		super();
+	public OrderedMenuDto(String menu_name, int price, int coupon, int count) {
+		super.setMenu_name(menu_name);
+		super.setPrice(price);
 		this.coupon = coupon;
 		this.count = count;
 	}
