@@ -1,12 +1,17 @@
 package client.view;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 
+import client.dto.OrderedMenuDto;
 import client.singleton.Singleton;
 
 public class SaleManageView extends JFrame{
+	
+	List<OrderedMenuDto> list = new ArrayList<OrderedMenuDto>();
 	
 	public SaleManageView() {
 		super("판매 내역");
@@ -14,7 +19,7 @@ public class SaleManageView extends JFrame{
 		
 		Singleton s = Singleton.getInstance();
 		
-		
+		list = s.memCtrl.
 		
 		setBounds(100, 100, 640, 480);
 		getContentPane().setBackground(Color.black);
