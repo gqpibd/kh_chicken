@@ -7,9 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import db.DBClose;
-import db.DBConnection;
-import model.BbsDto;
+import server.db.DBConnection;
 import server.dto.OrderedMenuDto;
 
 public class OrderDao {
@@ -24,7 +22,7 @@ public class OrderDao {
 	
 	
 	
-	public List<BbsDto> getBbsList() {
+	/*public List<BbsDto> getBbsList() {
 		String sql = " SELECT SEQ, ID, TITLE, CONTENT,"
 				+ " WDATE, DEL, READCOUNT "
 				+ " FROM BBS "
@@ -61,10 +59,36 @@ public class OrderDao {
 		}
 		
 		return list;
-	}
+	}*/
 	public List<OrderedMenuDto> select() {
 		
-		String sql = " SELECT MENU_NAME,   "
+		String sql = " SELECT MENU_NAME, BEV_COUPON, COUNT, b.PRICE "
+					+ " FROM ORDER_DETAIL a, "
+					+ " (SELECT DISTINCT PRICE "
+					+ " FROM ORDER_DETAIL a, MENU b "
+					+ " WHERE a.menu_name = b.menu_name) b ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		List<OrderedMenuDto> list = new ArrayList<OrderedMenuDto>();
+		
+		
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		
 		/*
 		CREATE TABLE ORDER_DETAIL(
 	    ID VARCHAR2(10),
