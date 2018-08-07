@@ -1,22 +1,18 @@
 package server.communicator;
 
-import java.io.BufferedReader;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Iterator;
 
-import dto.MemberDto;
-import dto.MenuDto;
-import dto.MenuShowDto;
-import dto.OrderedMenuDto;
-import dto.ReviewDto;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageOutputStream;
+
 import server.singleton.Singleton;
 
 public class ReadThread extends Thread {
@@ -30,80 +26,87 @@ public class ReadThread extends Thread {
 	@Override
 	public void run() {
 		super.run();
-		Singleton s = Singleton.getInstance();
+		// Singleton s = Singleton.getInstance();
+		// ObjectOutputStream oos = null;
+		// ObjectInputStream ois = null;
+		// // while (true) {
+		// try {
+		// // sock.getOutputStream();
+		// oos = new ObjectOutputStream(sock.getOutputStream());
+		// ois = new ObjectInputStream(sock.getInputStream()); // dto받기
+		//
+		// // int number = ois.readInt();
+		// // System.out.println(number);
+		//
+		// // switch (number) {
+		// // case 0: // insert
+		// // case 1: // select
+		// // case 2: // delete
+		// // case 3: // update
+		// //
+		// // Object obj = ois.readObject();
+		// // // 어떤 dto 인지 구분
+		// // if (obj instanceof MemberDto) {
+		// //
+		// // } else if (obj instanceof MenuShowDto) {
+		// // System.out.println("MenuShowDto received");
+		// // s.getMenuCtrl().execute(number, (MenuShowDto) obj);
+		// // } else if (obj instanceof OrderedMenuDto) {
+		// //
+		// // } else if (obj instanceof ReviewDto) {
+		// //
+		// // }
+		// // break;
+		// //
+		// // case 4: // menu 불러오기
+		// //
+		// // case 5: // review 불러오기
+		// //
+		// // case 6: // 전체매출 불러오기
+		// //
+		// // case 7: // 내 주문내역 불러오기
+		// //
+		// // }
+		//
+		// // // send (받는건 번호+dto 지만 보내는건 한번만 해도됨)
+		// // ObjectOutputStream oos = new ObjectOutputStream(sock.getOutputStream());
+		// // oos.writeObject(obj);
+		// sleep(100);
+		//
+		// } catch (FileNotFoundException e) {
+		// e.printStackTrace();
+		// } catch (IOException e) {
+		// e.printStackTrace();
+		// } /*
+		// * catch (ClassNotFoundException e) { e.printStackTrace(); }
+		// */catch (InterruptedException e) {
+		// e.printStackTrace();
+		// }
+		// }
+		receiveImage();
 
-		//while (true) {
-			try {
-				
-				//input. output 스트림 생성, printwriter 생성(번호 받기용)
-				InputStream input = sock.getInputStream();
-				//OutputStream out = sock.getOutputStream();
-				//PrintWriter pw = new PrintWriter(new OutputStreamWriter(out));
+	}
 
-				//pw.println("Welcome");
-				//pw.flush();
+	public void receiveImage() {
 
-				// receive
-				BufferedReader br = new BufferedReader(new InputStreamReader(input)); // client에서 받은 번호 input
-				
-				int number;
-
-				number = Integer.parseInt(br.readLine());
-				System.out.println("received: " + number);
-				
-				ObjectInputStream ois = new ObjectInputStream(input); // dto받기
-				Object obj = ois.readObject();
-				System.out.println(obj.toString());
-				
-//				Object obj = null;
-				
-//				switch (number) {
-//				case 0:	//insert	
-//				case 1:	//select
-//				case 2:	//delete
-//				case 3:	//update
-//					ObjectInputStream ois = new ObjectInputStream(input); // dto받기
-//					obj = ois.readObject();
-//					
-//					//어떤 dto 인지 구분
-//					if (obj instanceof MemberDto) {	
-//
-//					} else if (obj instanceof MenuDto) {
-//
-//					} else if (obj instanceof MenuShowDto) {
-//
-//					} else if (obj instanceof OrderedMenuDto) {
-//
-//					} else if (obj instanceof ReviewDto) {
-//
-//					}
-//					break;
-//
-//				case 4: // menu 불러오기
-//					
-//				case 5: // review 불러오기
-//					
-//				case 6: // 전체매출 불러오기
-//					
-//				case 7: // 내 주문내역 불러오기
-//
-//				}
-//
-//				// send (받는건 번호+dto 지만 보내는건 한번만 해도됨)
-//				ObjectOutputStream oos = new ObjectOutputStream(sock.getOutputStream());
-//				oos.writeObject(obj);
-				sleep(100);
-
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			} 
-		//}
+		ObjectInputStream ois;
+		try {
+			ois = new ObjectInputStream(sock.getInputStream());
+			BufferedImage im = null;// = ImageIO.read(ois);
+			
+			im = ImageIO.read(ois);
+			
+			
+			if (im == null) {
+				System.out.println("null");
+				return;
+			} else {
+				System.out.println(im.toString());
+				new ImgTester(im);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 }

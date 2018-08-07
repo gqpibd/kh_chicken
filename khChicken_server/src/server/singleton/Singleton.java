@@ -21,5 +21,9 @@ public class Singleton {
 		return single;
 	}
 	
+	public MenuDao getMenuCtrl() {
+		return ctrlMenu;
+	}
+	
 
 }

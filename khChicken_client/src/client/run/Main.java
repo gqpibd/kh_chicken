@@ -1,19 +1,15 @@
 package client.run;
 
-import client.communicator.Communicator;
 import client.singleton.Singleton;
-import client.view.MenuManagementView;
+import dto.MenuDto;
+import dto.MenuShowDto;
 
 public class Main {
 
 	public static void main(String[] args) {
 		Singleton s = Singleton.getInstance();
 		s.getComm().makeConnection();
-		s.getComm().SendMessage(11, s.getMenuCtrl().getMenDao().get(0));
-		// dohyeon_client branch test
-		new MenuManagementView();
-		//new AddMenuView();
-		// hello_ hello_ hello_
+		s.getComm().SendMessage(3, new MenuShowDto("후라이드 치킨", 11000,"fried.jpg", 9.0));
 		
 	}
 
