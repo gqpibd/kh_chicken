@@ -18,64 +18,11 @@ public class OrderDao {
 	
 	
 	public void insert() {
-		
-		String sql = " INSERT INTO ORDER_DETAIL(ID, MENU_NAME, COUNT, BEV_COUPON, ORDER_DATE, REVIEW, SCORE) "
-				+ " VALUES('홍길동', '후라이드 치킨', 1, 0, SYSDATE, null, null) ";
-		
-		String sql2 = " INSERT INTO MENU(MENU_NAME, PRICE) "
-				+ " VALUES('후라이드 치킨', 16000) ";
-		
-		Connection conn = null;
-		PreparedStatement psmt = null;
-		
-		
-		try {
-			conn = DBConnection.getConnection();
-			psmt = conn.prepareStatement(sql2);
-			psmt.executeQuery();
-			
-			
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			DBClose.close(psmt, conn, null);			
-		}
-		
-		
-		
-				/*
-				INSERT INTO EMP(employee_id, first_name, last_name, email, phone_number, hire_date,
-                job_id, salary, commission_pct, manager_id, department_id)
-				VALUES(NULL, NULL, '홍길동', 'hgj@naver.com', null, sysdate, 'IT_PROG', null, null, null, null);
-				 */
-				
-				/*
-				CREATE TABLE MENU(
-			    MENU_NAME VARCHAR2(15) PRIMARY KEY,
-			    PRICE NUMBER(5) NOT NULL
-				);
-			
-				CREATE TABLE ORDER_DETAIL(
-			    ID VARCHAR2(10),
-			    MENU_NAME VARCHAR2(15),
-			    COUNT NUMBER(10) NOT NULL,
-			    BEV_COUPON NUMBER(10),
-			    ORDER_DATE DATE NOT NULL,
-			    REVIEW VARCHAR2(1000),
-			    SCORE NUMBER(5),
-			    CONSTRAINT FK_ID FOREIGN KEY(ID)
-			    REFERENCES MEMBER(ID),
-			    CONSTRAINT FK_MENU FOREIGN KEY(MENU_NAME)
-			    REFERENCES MENU(MENU_NAME)
-			);
-				 */
 	}
 	
 	public List<OrderedMenuDto> select() {
 		
-		String sql = " SELECT DISTINCT a.ORDER_DATE, a.menu_name, a.count, a.bev_coupon, b.price "
+		String sql = " SELECT DISTINCT a.ORDER_DATE, a.menu_name, a.counts, a.bev_coupon, b.price "
 					+ " FROM ORDER_DETAIL a, MENU b "
 					+ " WHERE a.menu_name = b.menu_name ";
 		
@@ -95,10 +42,11 @@ public class OrderDao {
 				
 				OrderedMenuDto omd = new OrderedMenuDto(rs.getDate("ORDER_DATE"),
 														rs.getNString("MENU_NAME"),
-														rs.getInt("COUNT"),
+														rs.getInt("COUNTS"),
 														rs.getInt("BEV_COUPON"),
-														rs.getInt("b.PRICE"));
+														rs.getInt("PRICE"));
 				list.add(omd);
+				
 				
 			}
 			

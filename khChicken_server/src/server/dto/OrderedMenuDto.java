@@ -94,7 +94,7 @@ public class OrderedMenuDto extends MenuDto implements Serializable {
 
 	@Override
 	public String toString() {
-		return "OrderedMenuDto [order_date=" + order_date + ", coupon=" + coupon + ", count=" + count + "]";
+		return super.toString() + " OrderedMenuDto [order_date=" + order_date + ", coupon=" + coupon + ", count=" + count + "]";
 	}
 
 
