@@ -1,5 +1,8 @@
 package client.dao;
 
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +20,8 @@ public class OrderDao {
 		
 	}
 	
-	public List<OrderedMenuDto> select(Object obj) {
+	public List<OrderedMenuDto> select() {
+		
 		
 		// reader
 		List<OrderedMenuDto> list = new ArrayList<OrderedMenuDto>();

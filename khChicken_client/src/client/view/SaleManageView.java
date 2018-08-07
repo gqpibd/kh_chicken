@@ -1,6 +1,9 @@
 package client.view;
 
 import java.awt.Color;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -34,6 +37,12 @@ public class SaleManageView extends JFrame {
 		setLayout(null);
 		
 		Singleton s = Singleton.getInstance();
+		
+		OutputStream out = sock.getOutputStream();
+		PrintWriter pw = new PrintWriter(new OutputStreamWriter(out));
+
+		pw.println("Welcome");
+		pw.flush();
 		
 		list = s.ordCtrl.select();	// controller로 영수증 목록 취득
 		
