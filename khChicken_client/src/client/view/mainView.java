@@ -51,27 +51,30 @@ import net.miginfocom.swing.MigLayout;
 
 
 public class mainView extends JFrame {
-	//로고2, 버튼 4, 패널 1
-	JButton btn_Login;
-	JButton btn_Register;
-	JButton btn_Order;
-	JButton btn_Manage;
-	JButton btn_good;
-	JLabel label_goodCount;
-	JPanel pn_menu;
 	
-	boolean menuPlus = false;
-	boolean menuMinus = false;
 	
 	public mainView() {
 		super("KH CHICKEN");
 		setLayout(null);
 		
-		//관리자넘버
-		int auth = 3;
+		//로고2, 버튼 4, 패널 1
+		JButton btn_Login;
+		JButton btn_Register;
+		JButton btn_Order;
+		JButton btn_Manage;
+		JButton btn_good;
+		JLabel label_goodCount;
+		JPanel pn_menu;
+		
+		boolean menuPlus = false;
+		boolean menuMinus = false;
+		boolean managerBtn = false;
+		
+		//버튼글씨
+		String loginOut = "로그인";
 		
 		//버튼설정 
-		btn_Login = new JButton("로그인");	//로그아웃으로 변환
+		btn_Login = new JButton(loginOut);	//로그아웃으로 변환
 		btn_Login.setBounds(370, 50, 97, 30);
 		btn_Login.setFont(new Font("다음_Regular", Font.PLAIN, 14));
 		btn_Login.addActionListener(new ActionListener() {
@@ -80,8 +83,16 @@ public class mainView extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				JOptionPane.showMessageDialog(null, "로그인");
+				
 				//로그인 뷰 open return auth
 				
+			/*	if ( 로그인아이디 not null ) {
+					
+					loginOut = "로그아웃"; 
+					if ( 로그인 auth ==1)	managerBtn = true;
+
+				}
+				*/
 			}
 		});
 		
@@ -115,11 +126,7 @@ public class mainView extends JFrame {
 		
 		btn_Manage = new JButton("관리");		
 		btn_Manage.setBounds(394,720,66, 34);	
-		if (auth == 3) {
-				btn_Manage.setVisible(false);
-		} else if (auth == 1){
-			btn_Manage.setVisible(true);
-		}
+		btn_Manage.setVisible(managerBtn);
 		btn_Manage.setFont(new Font("다음_Regular", Font.PLAIN, 14));
 		btn_Manage.addActionListener(new ActionListener() {
 			
@@ -146,7 +153,8 @@ public class mainView extends JFrame {
 		
 		
 			/*//메뉴 추가삭제 
-		 * 
+		 
+		 //menudao를 list.size로 봤을때 
 		if (menuPlus) {					//승지 관리자 메뉴추가 true받아야 함 
 			
 			list_menudto.add(menuDto);//menuDto를 리스트에 추가
@@ -195,15 +203,17 @@ public class mainView extends JFrame {
 		
 		//하나하나의 패널사이즈
 		JPanel frontpanel = new JPanel();
-//		frontpanel.setBorder(new LineBorder(new Color(0, 0, 0)));
+//	frontpanel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		frontpanel.setLayout(new MigLayout("","20","40"));
 		frontpanel.setSize(300, 100);
 
 		//이미지 판별
 		ImageIcon icon = null;
-		if (dto.getMenu_name().contains("치킨")) {
+		
+		//for menuDto 길이 
+		if (dto.getMenu_name().contains("치킨")) {	//db의 메뉴이름
 			
-			icon = new ImageIcon("chi.jpg");
+			icon = new ImageIcon("chi.jpg");	//new ImageIcon( menuImgStr + ".jpg")
 		
 		}else if (dto.getMenu_name().contains("콜라")) {
 			
@@ -228,6 +238,7 @@ public class mainView extends JFrame {
 			public void mousePressed(MouseEvent e) {
 				
 				//누른 img파일명 의 menuName을 상필이한테 보내줌
+				//dao-->String pressImgName () { select MENU_NAME from MenuDto where 누른이미지 return MENU_NAME; } 
 				
 				JOptionPane.showMessageDialog(null, "치킨누름");
 				
