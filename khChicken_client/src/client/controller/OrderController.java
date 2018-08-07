@@ -13,8 +13,8 @@ public class OrderController {
 		ordDao.insert();
 	}
 	
-	public List<OrderedMenuDto> select() {
-		return ordDao.select();
+	public List<OrderedMenuDto> select(Object obj) {
+		return ordDao.select(obj);
 	}
 	
 	public void delete() {

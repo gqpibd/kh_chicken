@@ -12,9 +12,10 @@ import client.dto.MenuShowDto;
 import client.dto.OrderedMenuDto;
 import client.dto.ReviewDto;
 import client.singleton.Singleton;
+import client.view.SaleManageView;
 
 public class Communicator {
-	private Socket sock;
+	public Socket sock;
 	
 
 	public void makeConnection() {
@@ -38,7 +39,7 @@ public class Communicator {
 			} else if (obj instanceof MenuShowDto) {
 				
 			} else if (obj instanceof OrderedMenuDto) {
-				
+				new SaleManageView().obj = obj;
 			} else if (obj instanceof ReviewDto) {
 				
 			}

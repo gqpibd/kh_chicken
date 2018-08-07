@@ -10,6 +10,7 @@ import client.dto.OrderedMenuDto;
 
 public class OrderDao {
 	
+	private Object obj;
 	List<OrderedMenuDto> oList = new ArrayList<OrderedMenuDto>();
 	
 	public OrderDao() {
@@ -20,15 +21,16 @@ public class OrderDao {
 		
 	}
 	
-	public List<OrderedMenuDto> select() {
-		
+	public List<OrderedMenuDto> select(Object obj) {
+		this.obj = obj;
 		
 		// reader
 		List<OrderedMenuDto> list = new ArrayList<OrderedMenuDto>();
+		list.add((OrderedMenuDto) obj);
 		
 		
 		
-		return null;
+		return list;
 	}
 	
 	public void update() {

@@ -10,7 +10,8 @@ public class Main {
 		
 		new Communicator().makeConnection();
 		
-		//new SaleManageView().setVisible(true);
+		new ManageView().setVisible(true);
+		
 		
 		
 		

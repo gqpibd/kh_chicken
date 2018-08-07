@@ -1,9 +1,11 @@
 package client.view;
 
 import java.awt.Color;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -26,6 +28,7 @@ public class SaleManageView extends JFrame {
 	};
 	
 	
+	public Object obj;
 	Object rowData[][];
 	
 	DefaultTableModel model;
@@ -37,14 +40,24 @@ public class SaleManageView extends JFrame {
 		setLayout(null);
 		
 		Singleton s = Singleton.getInstance();
-		
-		OutputStream out = sock.getOutputStream();
-		PrintWriter pw = new PrintWriter(new OutputStreamWriter(out));
 
-		pw.println("Welcome");
-		pw.flush();
+		Socket sock = s.comm.sock;
+		OutputStream out;
+		try {
+			out = sock.getOutputStream();
+			PrintWriter pw = new PrintWriter(new OutputStreamWriter(out));
+			pw.println("6");
+			pw.flush();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		list = s.ordCtrl.select();	// controller로 영수증 목록 취득
+
+		
+		
+		list = s.ordCtrl.select(obj);	// controller로 영수증 목록 취득
 		
 		JLabel label = new JLabel("판매 내역");
 		label.setBounds(10, 10, 120, 15);
