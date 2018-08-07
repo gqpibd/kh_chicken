@@ -27,4 +27,7 @@ public class Singleton {
 		return menCtrl;
 	}
 
+	public Communicator getComm() {
+		return comm;
+	}
 }

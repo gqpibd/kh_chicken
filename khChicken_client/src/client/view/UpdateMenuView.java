@@ -26,9 +26,9 @@ import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-import client.dto.MenuDto;
-import client.dto.MenuShowDto;
 import client.singleton.Singleton;
+import dto.MenuDto;
+import dto.MenuShowDto;
 
 public class UpdateMenuView extends JFrame implements ActionListener {
 	private final int NAME_COL = 0;
@@ -152,7 +152,7 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 		System.out.println(topDto.toString());
 		nameField.setText(topDto.getMenu_name());
 		priceField.setText(topDto.getPrice() + "");
-		priceField.setText(topDto.getImage());
+		imgFileField.setText(topDto.getImage());
 		setImage(FOLDER_PATH + topDto.getImage());
 
 		setVisible(true);

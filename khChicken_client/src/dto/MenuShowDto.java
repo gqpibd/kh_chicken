@@ -1,6 +1,5 @@
-package client.dto;
+package dto;
 
-import java.awt.Image;
 import java.io.Serializable;
 
 public class MenuShowDto extends MenuDto implements Serializable {

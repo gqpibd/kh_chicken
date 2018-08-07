@@ -4,9 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import dto.MenuDto;
 import server.db.DBClose;
 import server.db.DBConnection;
-import server.dto.MenuDto;
 
 public class MenuDao {
 
