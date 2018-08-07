@@ -17,7 +17,7 @@ public class OrderDao {
 		
 	}
 	
-	public List<OrderedMenuDto> select() {
+	public List<OrderedMenuDto> select(Object obj) {
 		
 		// reader
 		List<OrderedMenuDto> list = new ArrayList<OrderedMenuDto>();

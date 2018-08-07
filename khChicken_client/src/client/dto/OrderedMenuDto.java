@@ -17,7 +17,7 @@ public class OrderedMenuDto extends MenuDto implements Serializable {
 
 
 	public OrderedMenuDto(Date order_date, String menu_name, int count, int coupon, int price) {
-		this.setOrder_date(order_date);
+		this.order_date = order_date;
 		super.setMenu_name(menu_name);
 		super.setPrice(price);
 		this.coupon = coupon;

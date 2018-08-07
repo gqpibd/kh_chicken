@@ -79,7 +79,8 @@ public class ReadThread extends Thread {
 				case 5: // review 불러오기
 					
 				case 6: // 전체매출 불러오기
-					
+					obj = s.ctrlOrder.select();
+					break;
 				case 7: // 내 주문내역 불러오기
 
 				}

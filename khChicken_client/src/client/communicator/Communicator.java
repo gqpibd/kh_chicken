@@ -10,9 +10,11 @@ import client.dto.MenuDto;
 import client.dto.MenuShowDto;
 import client.dto.OrderedMenuDto;
 import client.dto.ReviewDto;
+import client.singleton.Singleton;
 
 public class Communicator {
 	private Socket sock;
+	
 
 	public void makeConnection() {
 		try {
@@ -21,6 +23,7 @@ public class Communicator {
 			sock.connect(sockAddr);
 			System.out.println("연결성공");
 
+			Singleton s = Singleton.getInstance();
 			
 			// reader
 			ObjectInputStream ois = new ObjectInputStream(sock.getInputStream());
