@@ -3,8 +3,8 @@ package client.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import client.dto.MenuDto;
-import client.dto.MenuShowDto;
+import dto.MenuDto;
+import dto.MenuShowDto;
 
 public class MenuDao {
 
