@@ -1,0 +1,279 @@
+package view;
+import java.awt.Checkbox;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
+import dto.menuDto;
+import net.miginfocom.swing.MigLayout;
+
+/*CREATE TABLE MEMBER(
+	    NAME VARCHAR2(20) NOT NULL,
+	    ID VARCHAR2(10) PRIMARY KEY,
+	    PW VARCHAR2(20) NOT NULL,
+	    COUPON NUMBER(1),
+	    AUTH NUMBER(1) NOT NULL,
+	    ADD VARCHAR2(50) NOT NULL,
+	    PHONE VARCHAR2(20) NOT NULL
+	);
+
+	CREATE TABLE MENU(
+	    MENU_NAME VARCHAR2(15) PRIMARY KEY,
+	    PRICE NUMBER(5) NOT NULL
+	);
+
+	CREATE TABLE ORDER_DETAIL(
+	    ID VARCHAR2(10),
+	    MENU_NAME VARCHAR2(15),
+	    COUNT NUMBER(10) NOT NULL,
+	    BEV_COUPON NUMBER(10),
+	    ORDER_DATE DATE NOT NULL,
+	    REVIEW VARCHAR2(1000),
+	    SCORE NUMBER(5),
+	    CONSTRAINT FK_ID FOREIGN KEY(ID)
+	    REFERENCES MEMBER(ID),
+	    CONSTRAINT FK_MENU FOREIGN KEY(MENU_NAME)
+	    REFERENCES MENU(MENU_NAME)
+	);*/
+
+
+public class mainView extends JFrame implements ActionListener{
+	//로고2, 버튼 4, 패널 1
+	JButton btn_Login;
+	JButton btn_Register;
+	JButton btn_Order;
+	JButton btn_Manage;
+	JButton btn_good;
+	JLabel label_goodCount;
+	JPanel pn_menu;
+	
+	boolean menuPlus = false;
+	boolean menuMinus = false;
+	
+	public mainView() {
+		super("KH CHICKEN");
+		setLayout(null);
+		
+		//버튼설정 
+		btn_Login = new JButton("로그인");
+		btn_Login.setBounds(370, 50, 97, 30);
+		btn_Login.setFont(new Font("다음_Regular", Font.PLAIN, 14));
+		btn_Login.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "로그인");
+				
+			}
+		});
+		
+		btn_Register = new JButton("회원가입");
+		btn_Register.setBounds(479,50, 97, 30);
+		btn_Register.setFont(new Font("다음_Regular", Font.PLAIN, 14));
+		btn_Register.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "회원가입");
+				
+			}
+		});
+		
+		btn_Order = new JButton("주문하기");
+		btn_Order.setBounds(475, 700, 97, 55);
+		btn_Order.setFont(new Font("다음_Regular", Font.PLAIN, 15));
+		btn_Order.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "주문하기");
+				
+			}
+		});
+		
+		btn_Manage = new JButton("관리");	
+		btn_Manage.setBounds(394,720,66, 34);
+		btn_Manage.setFont(new Font("다음_Regular", Font.PLAIN, 14));
+		btn_Manage.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "관리");
+				
+			}
+		});
+		//	 if (MemberDto.auth = 1)btn_Manage.setVisible(false); 
+		
+		
+	
+		//메뉴들을 넣을 패널 설정   
+		JPanel panel_bigmenu = new JPanel();
+		panel_bigmenu.setBounds(10, 100, 570, 600);
+		panel_bigmenu.setLayout(new MigLayout("wrap", "", ""));
+		
+		//메뉴하나의 패널
+		JPanel panel_menu = new JPanel();
+		panel_menu.setLayout(new MigLayout());
+		
+		List<menuDto> list_menudto = new ArrayList<>();
+		list_menudto.add(new menuDto("후라이드 치킨", "12, 000", "8.0"));
+		list_menudto.add(new menuDto("양념 치킨", "12, 000", "9.0"));
+		list_menudto.add(new menuDto("반반 치킨", "12, 000", "7.8"));
+		list_menudto.add(new menuDto("파닭 치킨", "12, 000", "9.1"));
+		list_menudto.add(new menuDto("콜라", "2, 000", "5.2"));
+		list_menudto.add(new menuDto("사이다", "2, 000", "5.8"));
+		
+		for (int i = 0; i < list_menudto.size(); i++) {
+			
+			if (i%2 == 1) {
+				panel_menu.add(setFrontPanel(list_menudto.get(i)),"wrap");
+				
+			}else {
+				
+				panel_menu.add(setFrontPanel(list_menudto.get(i)));
+				
+			}
+			panel_bigmenu.validate();
+		}
+		JScrollPane scroll = new JScrollPane(panel_menu);
+		scroll.setPreferredSize(new Dimension(700, 600));
+		panel_bigmenu.add(scroll);
+		
+	
+		
+		//패널에 메뉴이미지1, 메뉴이름 라벨, 좋아요 버튼 , 좋아요 라벨 
+		
+		/*//메뉴 추가삭제 
+		 * 
+		if (menuPlus) {		//승지 관리자 메뉴추가 true받아야 함 
+			
+			list_menudto.add(panel_menu);//리스트에 추가
+			menuPlus = false;
+			
+		}else if (menuMinus){	//승지 삭제할 메뉴삭제 true, String 받아와야함
+	
+			//리스트에서 삭제
+			for (int i = 0; i < list_menudto.size(); i++) {				
+				list_menuPn.equals(" 받은 메뉴 이름 ");
+			}
+			menuMinus = false;
+		}*/
+		 
+		//바탕에 저장
+		add(btn_Login);
+		add(btn_Register);
+		add(btn_Order);
+		add(btn_Manage);
+		add(panel_bigmenu);
+		
+		setBounds(400, 0, 600, 800);
+		setVisible(true);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+	}
+
+	public JPanel setFrontPanel(menuDto dto) {
+		
+		//하나하나의 패널사이즈
+		JPanel frontpanel = new JPanel();
+//		frontpanel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		frontpanel.setLayout(new MigLayout("","20","40"));
+		frontpanel.setSize(300, 100);
+
+		//이미지 판별
+		ImageIcon icon = null;
+		if (dto.getName().contains("치킨")) {
+			
+			icon = new ImageIcon("chi.jpg");
+		
+		}else if (dto.getName().contains("콜라")) {
+			
+			icon = new ImageIcon("cock.jpg");
+		}
+		else if (dto.getName().contains("사이다")) {
+			
+			icon = new ImageIcon("sprite.jpg");
+		}
+
+		//이미지 들어가는 레이블
+		JLabel imgLabel = new JLabel(icon);
+		imgLabel.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				//JOptionPane.showMessageDialog(null, "치킨누름");
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				
+				//누른 img파일명 의 menuName을 상필이한테 보내줌
+				
+				JOptionPane.showMessageDialog(null, "치킨누름");
+				
+				//review open
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		frontpanel.add(imgLabel, "wrap");
+		
+		//이름 
+		JLabel resLabel = new JLabel(dto.getName());
+		resLabel.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 20));
+		frontpanel.add(resLabel, "center, wrap");
+		
+		//가격
+		JLabel priceLabel = new JLabel(dto.getPrice());
+		priceLabel.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
+		frontpanel.add(priceLabel, "center, wrap");
+
+		
+		//체크박스
+		Checkbox chk = new Checkbox("선택");
+		chk.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
+		frontpanel.add(chk,"center, wrap");
+		
+		//별점
+		JLabel scoreLabel = new JLabel("별점 : "+ dto.getScore());
+		scoreLabel.setFont(new Font("다음_Regular", Font.PLAIN, 14));
+		frontpanel.add(scoreLabel, "center, wrap");
+		
+		return frontpanel;
+
+	}
+	
+
+}

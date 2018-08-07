@@ -55,15 +55,15 @@ public class ReadThread extends Thread {
 				switch (number) {
 				case 0:	//insert	
 				case 1:	//select
-				case 2:	//delete
-				case 3:	//update
+				case 2:	//update
+				case 3:	//delete
 					ObjectInputStream ois = new ObjectInputStream(input); // dto받기
 					obj = ois.readObject();
 					
 					//어떤 dto 인지 구분
 					if (obj instanceof MemberDto) {	
 
-					} else if (obj instanceof MenuDto) {
+					} else if (obj instanceof MenuDto) {	//여기서 오류날 가능성 많음
 
 					} else if (obj instanceof MenuShowDto) {
 
@@ -83,7 +83,10 @@ public class ReadThread extends Thread {
 				case 7: // 내 주문내역 불러오기
 
 				}
-
+					
+				
+				//각각따로 dao에서 
+				
 				// send (받는건 번호+dto 지만 보내는건 한번만 해도됨)
 				ObjectOutputStream oos = new ObjectOutputStream(sock.getOutputStream());
 				oos.writeObject(obj);

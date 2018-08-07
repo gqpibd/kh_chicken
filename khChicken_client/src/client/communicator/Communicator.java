@@ -20,6 +20,8 @@ public class Communicator {
 			System.out.println("연결성공");
 
 			//BufferedReader br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+			
+			
 
 		} catch (IOException e) {
 			e.printStackTrace();
