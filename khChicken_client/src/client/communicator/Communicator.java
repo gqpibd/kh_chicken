@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.List;
 
 import client.dto.MemberDto;
 import client.dto.MenuDto;
