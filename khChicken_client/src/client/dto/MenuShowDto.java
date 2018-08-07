@@ -8,15 +8,23 @@ public class MenuShowDto extends MenuDto implements Serializable {
 	private static final long serialVersionUID = 7675418139620414668L;
 	
 	private String image;
-	private int reviewCount;
+	private double avgScore;
 	
 	public MenuShowDto() {
 	}
+	
 
-	public MenuShowDto(String image, int reviewCount) {
+	public MenuShowDto(String name, int price, String image, double avgScore) {
+		super(name, price);
+		this.image = image;
+		this.avgScore = avgScore;
+	}
+
+
+	public MenuShowDto(String image, double avgScore) {
 		super();
 		this.image = image;
-		this.reviewCount = reviewCount;
+		this.avgScore = avgScore;
 	}
 
 	public String getImage() {
@@ -28,17 +36,18 @@ public class MenuShowDto extends MenuDto implements Serializable {
 	}
 
 
-	public int getReviewCount() {
-		return reviewCount;
+	public double getavgScore() {
+		return avgScore;
 	}
 
-	public void setReviewCount(int reviewCount) {
-		this.reviewCount = reviewCount;
+	public void setavgScore(double avgScore) {
+		this.avgScore = avgScore;
 	}
 
 	@Override
 	public String toString() {
-		return "MenuShowDto [image=" + image + ", reviewCount=" + reviewCount + "]";
+		
+		return super.toString() + "MenuShowDto [image=" + image + ", avgScore=" + avgScore + "]";
 	}
 	
 	

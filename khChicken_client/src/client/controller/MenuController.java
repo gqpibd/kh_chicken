@@ -4,7 +4,11 @@ import client.dao.MenuDao;
 
 public class MenuController {
 	
-	MenuDao menDao = new MenuDao();
+	private MenuDao menDao = new MenuDao();
+	
+	public MenuDao getMenDao() {
+		return menDao;
+	}
 	
 	public void insert() {
 		menDao.insert();

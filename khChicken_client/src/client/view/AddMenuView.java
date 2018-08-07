@@ -56,8 +56,7 @@ public class AddMenuView extends JFrame{
 		getContentPane().add(beverageRadBtn);
 		beverageRadBtn.addChangeListener(new ChangeListener() {			
 			@Override
-			public void stateChanged(ChangeEvent e) {
-				
+			public void stateChanged(ChangeEvent e) {				
 				if(beverageRadBtn.isSelected()) {
 					searchBtn.setVisible(false);
 					filePathField.setVisible(false);
@@ -85,14 +84,12 @@ public class AddMenuView extends JFrame{
 		titleLabel.setFont(new Font("돋움체", Font.BOLD, 20));
 		titleLabel.setBounds(0, 10, 269, 30);
 		getContentPane().add(titleLabel);
-
-		
 		
 		searchBtn = new JButton("검색");
 		searchBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String path = jFileChooserUtil();
-				filePathField.setText(path.substring(path.lastIndexOf("\\")+1));
+				filePathField.setText(path.substring(path.lastIndexOf("\\")+1)); // 전체 경로에서 파일 이름과 확장자명만 가져온다.
 				setImage(path);							
 			}
 		});

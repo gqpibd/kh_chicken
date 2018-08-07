@@ -10,6 +10,7 @@ public class MemberDao {
 	List<MemberDto> mList = new ArrayList<MemberDto>();
 	
 	public MemberDao() {
+	
 	}
 	
 	public void insert() {
@@ -26,6 +27,7 @@ public class MemberDao {
 	
 	public void delete() {
 		
-	}
+	}	
+	
 
 }
