@@ -8,7 +8,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,8 +15,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-
-import dto.menuDto;
+import client.dto.MemberDto;
+import client.dto.MenuDto;
+import client.dto.MenuShowDto;
 import net.miginfocom.swing.MigLayout;
 
 /*CREATE TABLE MEMBER(
@@ -26,12 +26,12 @@ import net.miginfocom.swing.MigLayout;
 	    PW VARCHAR2(20) NOT NULL,
 	    COUPON NUMBER(1),
 	    AUTH NUMBER(1) NOT NULL,
-	    ADD VARCHAR2(50) NOT NULL,
+	    ADR VARCHAR2(30) NOT NULL,
 	    PHONE VARCHAR2(20) NOT NULL
 	);
 
 	CREATE TABLE MENU(
-	    MENU_NAME VARCHAR2(15) PRIMARY KEY,
+	    MENU_NAME VARCHAR2(50) PRIMARY KEY,
 	    PRICE NUMBER(5) NOT NULL
 	);
 
@@ -50,7 +50,7 @@ import net.miginfocom.swing.MigLayout;
 	);*/
 
 
-public class mainView extends JFrame implements ActionListener{
+public class mainView extends JFrame {
 	//로고2, 버튼 4, 패널 1
 	JButton btn_Login;
 	JButton btn_Register;
@@ -67,14 +67,18 @@ public class mainView extends JFrame implements ActionListener{
 		super("KH CHICKEN");
 		setLayout(null);
 		
+		//화면을open했을때 무조건 dto 가져옴 
+		
+		
 		//버튼설정 
-		btn_Login = new JButton("로그인");
+		btn_Login = new JButton("로그인");	//로그아웃으로 변환
 		btn_Login.setBounds(370, 50, 97, 30);
 		btn_Login.setFont(new Font("다음_Regular", Font.PLAIN, 14));
 		btn_Login.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
 				JOptionPane.showMessageDialog(null, "로그인");
 				
 			}
@@ -115,7 +119,8 @@ public class mainView extends JFrame implements ActionListener{
 				
 			}
 		});
-		//	 if (MemberDto.auth = 1)btn_Manage.setVisible(false); 
+		
+		// if (MemberDto= 1)btn_Manage.setVisible(false); 
 		
 		
 	
@@ -128,13 +133,25 @@ public class mainView extends JFrame implements ActionListener{
 		JPanel panel_menu = new JPanel();
 		panel_menu.setLayout(new MigLayout());
 		
-		List<menuDto> list_menudto = new ArrayList<>();
-		list_menudto.add(new menuDto("후라이드 치킨", "12, 000", "8.0"));
-		list_menudto.add(new menuDto("양념 치킨", "12, 000", "9.0"));
-		list_menudto.add(new menuDto("반반 치킨", "12, 000", "7.8"));
-		list_menudto.add(new menuDto("파닭 치킨", "12, 000", "9.1"));
-		list_menudto.add(new menuDto("콜라", "2, 000", "5.2"));
-		list_menudto.add(new menuDto("사이다", "2, 000", "5.8"));
+		//메누 
+		List<MenuDto> list_menudto = new ArrayList<>();
+		
+		
+			/*//메뉴 추가삭제 
+		 * 
+		if (menuPlus) {		//승지 관리자 메뉴추가 true받아야 함 
+			
+			list_menudto.add(panel_menu);//리스트에 추가
+			menuPlus = false;
+			
+		}else if (menuMinus){	//승지 삭제할 메뉴삭제 true, String 받아와야함
+	
+			//리스트에서 삭제
+			for (int i = 0; i < list_menudto.size(); i++) {				
+				list_menuPn.equals(" 받은 메뉴 이름 ");
+			}
+			menuMinus = false;
+		}*/
 		
 		for (int i = 0; i < list_menudto.size(); i++) {
 			
@@ -153,24 +170,8 @@ public class mainView extends JFrame implements ActionListener{
 		panel_bigmenu.add(scroll);
 		
 	
-		
-		//패널에 메뉴이미지1, 메뉴이름 라벨, 좋아요 버튼 , 좋아요 라벨 
-		
-		/*//메뉴 추가삭제 
-		 * 
-		if (menuPlus) {		//승지 관리자 메뉴추가 true받아야 함 
-			
-			list_menudto.add(panel_menu);//리스트에 추가
-			menuPlus = false;
-			
-		}else if (menuMinus){	//승지 삭제할 메뉴삭제 true, String 받아와야함
 	
-			//리스트에서 삭제
-			for (int i = 0; i < list_menudto.size(); i++) {				
-				list_menuPn.equals(" 받은 메뉴 이름 ");
-			}
-			menuMinus = false;
-		}*/
+	
 		 
 		//바탕에 저장
 		add(btn_Login);
@@ -185,7 +186,7 @@ public class mainView extends JFrame implements ActionListener{
 		
 	}
 
-	public JPanel setFrontPanel(menuDto dto) {
+	public JPanel setFrontPanel(MenuDto dto) {
 		
 		//하나하나의 패널사이즈
 		JPanel frontpanel = new JPanel();
@@ -195,15 +196,15 @@ public class mainView extends JFrame implements ActionListener{
 
 		//이미지 판별
 		ImageIcon icon = null;
-		if (dto.getName().contains("치킨")) {
+		if (dto.getMenu_name().contains("치킨")) {
 			
 			icon = new ImageIcon("chi.jpg");
 		
-		}else if (dto.getName().contains("콜라")) {
+		}else if (dto.getMenu_name().contains("콜라")) {
 			
 			icon = new ImageIcon("cock.jpg");
 		}
-		else if (dto.getName().contains("사이다")) {
+		else if (dto.getMenu_name().contains("사이다")) {
 			
 			icon = new ImageIcon("sprite.jpg");
 		}
@@ -251,12 +252,12 @@ public class mainView extends JFrame implements ActionListener{
 		frontpanel.add(imgLabel, "wrap");
 		
 		//이름 
-		JLabel resLabel = new JLabel(dto.getName());
+		JLabel resLabel = new JLabel(dto.getMenu_name());
 		resLabel.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 20));
 		frontpanel.add(resLabel, "center, wrap");
 		
 		//가격
-		JLabel priceLabel = new JLabel(dto.getPrice());
+		JLabel priceLabel = new JLabel(dto.getPrice()+"");
 		priceLabel.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		frontpanel.add(priceLabel, "center, wrap");
 
@@ -267,7 +268,8 @@ public class mainView extends JFrame implements ActionListener{
 		frontpanel.add(chk,"center, wrap");
 		
 		//별점
-		JLabel scoreLabel = new JLabel("별점 : "+ dto.getScore());
+		MenuShowDto menushowDto = new MenuShowDto();
+		JLabel scoreLabel = new JLabel("별점 : "+ menushowDto.getAvgScore()+"");
 		scoreLabel.setFont(new Font("다음_Regular", Font.PLAIN, 14));
 		frontpanel.add(scoreLabel, "center, wrap");
 		
