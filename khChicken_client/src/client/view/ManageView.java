@@ -59,7 +59,7 @@ public class ManageView extends JFrame {
 		
 		setBounds(100, 100, 300, 280);
 		getContentPane().setBackground(Color.black);
-		setVisible(true);
+		setVisible(false);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
 	}

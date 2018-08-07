@@ -74,7 +74,7 @@ public class OrderDao {
 	
 	public List<OrderedMenuDto> select() {
 		
-		String sql = " SELECT MENU_NAME, BEV_COUPON, COUNT, b.PRICE "
+		String sql = " SELECT ORDER_DATE, MENU_NAME, COUNT, BEV_COUPON, b.PRICE "
 					+ " FROM ORDER_DETAIL a, "
 					+ " (SELECT DISTINCT PRICE "
 					+ " FROM ORDER_DETAIL a, MENU b "

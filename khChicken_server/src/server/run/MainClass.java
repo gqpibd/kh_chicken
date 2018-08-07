@@ -1,5 +1,6 @@
 package server.run;
 
+import server.communicator.SocketControl;
 import server.dao.MenuDao;
 import server.db.DBConnection;
 
@@ -9,12 +10,12 @@ public class MainClass {
 		/*System.out.println("hello");
 		new SocketControl().serverOpen();*/
 		
+		
+		
 		DBConnection.initConnect();
 		
-		new MenuDao().insert();
+		new SocketControl().serverOpen();
 		
-		
-		//new MenuDao().select();
 		
 	}
 
