@@ -103,6 +103,8 @@ public class mainView extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				//INSERT orderedMenuDto 
 				JOptionPane.showMessageDialog(null, "주문하기");
 				
 			}
@@ -117,38 +119,40 @@ public class mainView extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null, "관리");
 				
+				//new ManageView();
+				
 			}
 		});
 		
 		// if (MemberDto= 1)btn_Manage.setVisible(false); 
 		
 		
-	
+		//메뉴리스트 
+		List<MenuDto> list_menudto = new ArrayList<>();
+		
 		//메뉴들을 넣을 패널 설정   
 		JPanel panel_bigmenu = new JPanel();
 		panel_bigmenu.setBounds(10, 100, 570, 600);
 		panel_bigmenu.setLayout(new MigLayout("wrap", "", ""));
-		
+
 		//메뉴하나의 패널
 		JPanel panel_menu = new JPanel();
 		panel_menu.setLayout(new MigLayout());
 		
-		//메누 
-		List<MenuDto> list_menudto = new ArrayList<>();
 		
 		
 			/*//메뉴 추가삭제 
 		 * 
 		if (menuPlus) {		//승지 관리자 메뉴추가 true받아야 함 
 			
-			list_menudto.add(panel_menu);//리스트에 추가
+			list_menudto.add(menuDto);//menuDto를 리스트에 추가
 			menuPlus = false;
 			
 		}else if (menuMinus){	//승지 삭제할 메뉴삭제 true, String 받아와야함
 	
 			//리스트에서 삭제
 			for (int i = 0; i < list_menudto.size(); i++) {				
-				list_menuPn.equals(" 받은 메뉴 이름 ");
+				list_menuPn.equals(menuDto.getMenu_name);
 			}
 			menuMinus = false;
 		}*/
