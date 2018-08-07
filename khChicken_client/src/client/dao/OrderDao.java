@@ -20,6 +20,9 @@ public class OrderDao {
 	public List<OrderedMenuDto> select() {
 		
 		// reader
+		List<OrderedMenuDto> list = new ArrayList<OrderedMenuDto>();
+		
+		
 		
 		return null;
 	}

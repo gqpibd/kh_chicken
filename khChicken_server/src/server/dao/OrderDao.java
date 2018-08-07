@@ -75,11 +75,9 @@ public class OrderDao {
 	
 	public List<OrderedMenuDto> select() {
 		
-		String sql = " SELECT ORDER_DATE, MENU_NAME, COUNT, BEV_COUPON, b.PRICE "
-					+ " FROM ORDER_DETAIL a, "
-					+ " (SELECT DISTINCT PRICE "
+		String sql = " SELECT DISTINCT a.ORDER_DATE, a.menu_name, a.count, a.bev_coupon, b.price "
 					+ " FROM ORDER_DETAIL a, MENU b "
-					+ " WHERE a.menu_name = b.menu_name) b ";
+					+ " WHERE a.menu_name = b.menu_name ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -93,16 +91,15 @@ public class OrderDao {
 			psmt = conn.prepareStatement(sql);
 			rs = psmt.executeQuery();
 			
-			
 			while(rs.next()) {
 				
-				System.out.println("b.PRICE = "+ rs.getInt("b.PRICE"));
+				OrderedMenuDto omd = new OrderedMenuDto(rs.getDate("ORDER_DATE"),
+														rs.getNString("MENU_NAME"),
+														rs.getInt("COUNT"),
+														rs.getInt("BEV_COUPON"),
+														rs.getInt("b.PRICE"));
+				list.add(omd);
 				
-				/*OrderedMenuDto omd = new OrderedMenuDto(rs.getNString("MENU_NAME"), 
-														rs.getInt("b.PRICE"), 
-														rs.getInt("BEV_COUPON"), 
-														rs.getInt("COUNT"));
-				list.add(omd);*/
 			}
 			
 		} catch (SQLException e) {

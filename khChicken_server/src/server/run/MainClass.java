@@ -2,6 +2,7 @@ package server.run;
 
 import server.communicator.SocketControl;
 import server.dao.MenuDao;
+import server.dao.OrderDao;
 import server.db.DBConnection;
 
 public class MainClass {
@@ -14,7 +15,11 @@ public class MainClass {
 		
 		DBConnection.initConnect();
 		
-		new SocketControl().serverOpen();
+		// new SocketControl().serverOpen();
+		
+		new OrderDao().select();
+		
+		
 		
 		
 	}
