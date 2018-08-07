@@ -1,4 +1,4 @@
-package view;
+package client.view;
 import java.awt.Checkbox;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -67,8 +67,8 @@ public class mainView extends JFrame {
 		super("KH CHICKEN");
 		setLayout(null);
 		
-		//화면을open했을때 무조건 dto 가져옴 
-		
+		//관리자넘버
+		int auth = 3;
 		
 		//버튼설정 
 		btn_Login = new JButton("로그인");	//로그아웃으로 변환
@@ -80,6 +80,7 @@ public class mainView extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				JOptionPane.showMessageDialog(null, "로그인");
+				//로그인 뷰 open return auth
 				
 			}
 		});
@@ -91,7 +92,9 @@ public class mainView extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
 				JOptionPane.showMessageDialog(null, "회원가입");
+				//회원가입오픈
 				
 			}
 		});
@@ -110,8 +113,13 @@ public class mainView extends JFrame {
 			}
 		});
 		
-		btn_Manage = new JButton("관리");	
-		btn_Manage.setBounds(394,720,66, 34);
+		btn_Manage = new JButton("관리");		
+		btn_Manage.setBounds(394,720,66, 34);	
+		if (auth == 3) {
+				btn_Manage.setVisible(false);
+		} else if (auth == 1){
+			btn_Manage.setVisible(true);
+		}
 		btn_Manage.setFont(new Font("다음_Regular", Font.PLAIN, 14));
 		btn_Manage.addActionListener(new ActionListener() {
 			
@@ -123,9 +131,6 @@ public class mainView extends JFrame {
 				
 			}
 		});
-		
-		// if (MemberDto= 1)btn_Manage.setVisible(false); 
-		
 		
 		//메뉴리스트 
 		List<MenuDto> list_menudto = new ArrayList<>();
@@ -140,15 +145,14 @@ public class mainView extends JFrame {
 		panel_menu.setLayout(new MigLayout());
 		
 		
-		
 			/*//메뉴 추가삭제 
 		 * 
-		if (menuPlus) {		//승지 관리자 메뉴추가 true받아야 함 
+		if (menuPlus) {					//승지 관리자 메뉴추가 true받아야 함 
 			
 			list_menudto.add(menuDto);//menuDto를 리스트에 추가
 			menuPlus = false;
 			
-		}else if (menuMinus){	//승지 삭제할 메뉴삭제 true, String 받아와야함
+		}else if (menuMinus){			//승지 삭제할 메뉴삭제 true, String 받아와야함
 	
 			//리스트에서 삭제
 			for (int i = 0; i < list_menudto.size(); i++) {				
@@ -173,9 +177,6 @@ public class mainView extends JFrame {
 		scroll.setPreferredSize(new Dimension(700, 600));
 		panel_bigmenu.add(scroll);
 		
-	
-	
-	
 		 
 		//바탕에 저장
 		add(btn_Login);
