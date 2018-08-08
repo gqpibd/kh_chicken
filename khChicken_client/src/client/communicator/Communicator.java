@@ -1,8 +1,16 @@
 package client.communicator;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
+
+import client.dto.MenuShowDto;
 
 public class Communicator {
 	private Socket sock;
@@ -23,4 +31,52 @@ public class Communicator {
 			e.printStackTrace();
 		}
 	}
+	
+	public List<MenuShowDto> getShowMenu() {
+		
+		List<MenuShowDto> showDtoList = new ArrayList<>();
+		
+		//server에 요청 
+		
+		OutputStream output;
+		
+		try {
+			
+			output = sock.getOutputStream();
+			ObjectOutputStream oos = new ObjectOutputStream(output);	//보내고
+			oos.writeInt(val);
+			oos.writeObject(obj);
+			
+			
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
+		// receive 
+		InputStream input;
+		
+		try {
+			
+			input = sock.getInputStream();
+			ObjectInputStream ois = new ObjectInputStream(input); //dto받고
+			Object obj = ois.readObject();
+			showDtoList = (List<MenuShowDto>)obj;
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return showDtoList;
+		
+		
+	}
+	
+	
+	
 }

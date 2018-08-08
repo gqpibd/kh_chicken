@@ -4,10 +4,16 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,7 +21,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import client.dto.MenuDto;
+
+import client.controller.OrderController;
 import client.dto.MenuShowDto;
 import client.singleton.Singleton;
 import net.miginfocom.swing.MigLayout;
@@ -53,6 +60,8 @@ import net.miginfocom.swing.MigLayout;
 public class mainView extends JFrame {
 	
 	Singleton s = Singleton.getInstance();
+	OrderController orderCtrl = new OrderController();
+	List<MenuShowDto> list_showMenu;
 	
 	public mainView() {
 		super("KH CHICKEN");
@@ -63,9 +72,9 @@ public class mainView extends JFrame {
 		JButton btn_Register;
 		JButton btn_Order;
 		JButton btn_Manage;
+		
 		JButton btn_good;
 		JLabel label_goodCount;
-
 
 		boolean managerBtnOpen = false;
 		
@@ -143,7 +152,10 @@ public class mainView extends JFrame {
 		});
 		
 		//메뉴리스트 
-		List<MenuDto> list_menudto = new ArrayList<>();
+		//List<MenuDto> list_menudto = new ArrayList<>();
+		
+		//메뉴 리스트에 DB에서 가져온 메뉴 넣기 
+		list_showMenu  = orderCtrl.getShowMenu();
 		
 		//메뉴들을 넣을 패널 설정   
 		JPanel panel_bigmenu = new JPanel();
@@ -155,14 +167,14 @@ public class mainView extends JFrame {
 		panel_menu.setLayout(new MigLayout());
 		
 		//메뉴 출력 
-		for (int i = 0; i < list_menudto.size(); i++) {
+		for (int i = 0; i < list_showMenu.size(); i++) {
 			
 			if (i%2 == 1) {
-				panel_menu.add(setFrontPanel(list_menudto.get(i)),"wrap");
+				panel_menu.add(setFrontPanel(list_showMenu.get(i)),"wrap");
 				
 			}else {
 				
-				panel_menu.add(setFrontPanel(list_menudto.get(i)));
+				panel_menu.add(setFrontPanel(list_showMenu.get(i)));
 			}
 			panel_bigmenu.validate();
 		}
@@ -184,81 +196,71 @@ public class mainView extends JFrame {
 		
 	}
 
-	public JPanel setFrontPanel(MenuDto dto) {
+	public JPanel setFrontPanel(MenuShowDto showDto) {
+		
+		
 		
 		//하나하나의 패널사이즈
 		JPanel frontpanel = new JPanel();
-//	frontpanel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		frontpanel.setLayout(new MigLayout("","20","40"));
 		frontpanel.setSize(300, 100);
 
-		//이미지 판별
-		ImageIcon icon = null;
-		
-		//for menuDto 길이 
-		if (dto.getMenu_name().contains("치킨")) {	//db의 메뉴이름
-			
-			icon = new ImageIcon("chi.jpg");	//new ImageIcon( menuImgStr + ".jpg")
-		
-		}else if (dto.getMenu_name().contains("콜라")) {
-			
-			icon = new ImageIcon("cock.jpg");
-		}
-		else if (dto.getMenu_name().contains("사이다")) {
-			
-			icon = new ImageIcon("sprite.jpg");
-		}
+		//이미지
 
-		//이미지 들어가는 레이블
-		JLabel imgLabel = new JLabel(icon);
-		imgLabel.addMouseListener(new MouseListener() {
+		//메뉴, 사진 넣기
+
+		for (int i = 0; i < list_showMenu.size(); i++) {
 			
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
+			//DB에서 가져온 이미지 String
+			String path = list_showMenu.get(i).getImage();
+			BufferedImage im = null;
+			
+			try {
 				
+				im = ImageIO.read(new File(path));
+				
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
 			
-			@Override
-			public void mousePressed(MouseEvent e) {
+			//String 을 icon으로 변환
+			ImageIcon icon = new ImageIcon(im);	
+
+			//이미지 들어가는 레이블
+			JLabel imgLabel = new JLabel(icon);
+			imgLabel.addMouseListener(new MouseAdapter() {
 				
-				//누른 img파일명 의 menuName을 상필이한테 보내줌
-				//dao-->String pressImgName () { select MENU_NAME from MenuDto where 누른이미지 return MENU_NAME; } 
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					
+					String pressedImg = (String)e.getSource();
 				
-				JOptionPane.showMessageDialog(null, "치킨누름");
+				for (int j = 0; j < list_showMenu.size(); j++) {
+					
+					if (pressedImg == list_showMenu.get(j).getImage()) {
+						
+							String pressedMenu = list_showMenu.get(j).getMenu_name();
+					}
+				}
+				JOptionPane.showMessageDialog(null, "리뷰 open");
 				
-				//review open
+				//리뷰 view open (pressedMenu);
 				
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
+					
+				}
 				
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+			});
 		
 		frontpanel.add(imgLabel, "wrap");
 		
 		//이름 
-		JLabel resLabel = new JLabel(dto.getMenu_name());
+		JLabel resLabel = new JLabel(list_showMenu.get(i).getMenu_name());
 		resLabel.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 20));
 		frontpanel.add(resLabel, "center, wrap");
 		
 		//가격
-		JLabel priceLabel = new JLabel(dto.getPrice()+"");
+		JLabel priceLabel = new JLabel(list_showMenu.get(i).getPrice()+" 원");
 		priceLabel.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		frontpanel.add(priceLabel, "center, wrap");
 
@@ -273,6 +275,8 @@ public class mainView extends JFrame {
 		JLabel scoreLabel = new JLabel("별점 : "+ menushowDto.getAvgScore()+"");
 		scoreLabel.setFont(new Font("다음_Regular", Font.PLAIN, 14));
 		frontpanel.add(scoreLabel, "center, wrap");
+		
+		}
 		
 		return frontpanel;
 
