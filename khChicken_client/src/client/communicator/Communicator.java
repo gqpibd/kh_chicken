@@ -22,7 +22,7 @@ import client.dto.ReviewDto;
 import client.singleton.Singleton;
 import client.view.SaleManageView;
 
-public class Communicator extends Thread{
+public class Communicator {
 	private Socket sock;
 	
 
@@ -42,62 +42,47 @@ public class Communicator extends Thread{
 	
 	public void SendMessage(int number, Object o) {
 		
-		PrintWriter pw = null;
+		//PrintWriter pw = null;
 		ObjectOutputStream oos = null;
 		
 		
 		try {
 			OutputStream ops = sock.getOutputStream();
-			pw = new PrintWriter(new OutputStreamWriter(ops));
-			pw.println(number);
-			pw.flush();
+			//pw = new PrintWriter(new OutputStreamWriter(ops));
+			//pw.println(number);
+			//pw.flush();
 			
 			oos = new ObjectOutputStream(ops);
+			oos.writeInt(number);
 			oos.writeObject(o);
 			oos.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				pw.close();
-				oos.close();
+			/*try {
+				//pw.close();
+				//oos.close();
 			} catch (IOException e) {
 				e.printStackTrace();
-			}
+			}*/
 		}
 	}
 	
 	
 	
-	@Override
-	public void run() {
-		super.run();
+	public List<OrderedMenuDto> receiveMessage() {
 		
 		Singleton s = Singleton.getInstance();
-
-		//while (true) {
+		Object obj = null;
+		
 			try {
-				
-				//input. output 스트림 생성, printwriter 생성(번호 받기용)
-				InputStream input = sock.getInputStream();
-				//OutputStream out = sock.getOutputStream();
-				//PrintWriter pw = new PrintWriter(new OutputStreamWriter(out));
-
-				//pw.println("Welcome");
-				//pw.flush();
-
 				// receive
-				BufferedReader br = new BufferedReader(new InputStreamReader(input)); // client에서 받은 번호 input
-				int number;
-				number = Integer.parseInt(br.readLine());
-				System.out.println("received number : " + number);
-				
-				
+				InputStream input = sock.getInputStream();
 				ObjectInputStream ois = new ObjectInputStream(input); // dto받기
-				Object obj = ois.readObject();
-				System.out.println(obj.toString());
+				obj = ois.readObject();
+//				System.out.println(obj.toString());
 				
-				s.ordCtrl.select(obj);
+				
 				
 				
 				
@@ -137,8 +122,6 @@ public class Communicator extends Thread{
 //				// send (받는건 번호+dto 지만 보내는건 한번만 해도됨)
 //				ObjectOutputStream oos = new ObjectOutputStream(sock.getOutputStream());
 //				oos.writeObject(obj);
-				
-				sleep(100);
 
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
@@ -146,15 +129,10 @@ public class Communicator extends Thread{
 				e.printStackTrace();
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
+			} 
+	
 
-
-	public Object SendAndReceiveMessage() {
-		
-		return null;
+			return s.ordCtrl.select(obj);
 	}
 			
 			

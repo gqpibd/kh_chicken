@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -33,7 +34,7 @@ public class SaleManageView extends JFrame {
 	
 	DefaultTableModel model;
 	
-	List<OrderedMenuDto> list;
+	List<OrderedMenuDto> list = new ArrayList<OrderedMenuDto>();
 	
 	public SaleManageView() {
 		super("판매 내역");
@@ -42,10 +43,12 @@ public class SaleManageView extends JFrame {
 		Singleton s = Singleton.getInstance();
 		
 		
-		s.comm.SendMessage(6, null);
+		// number 6 보내주기
+		s.comm.SendMessage(6, "");
 		
+		// controller로 영수증 목록 취득
+		list = s.comm.receiveMessage();
 		
-		list = s.ordCtrl.select(obj);	// controller로 영수증 목록 취득
 		for (int i = 0; i < list.size(); i++) {
 			System.out.println(list.get(i));
 		}
@@ -54,7 +57,7 @@ public class SaleManageView extends JFrame {
 		label.setBounds(10, 10, 120, 15);
 		add(label);
 		
-		/*
+		
 		
 		int bbsNum = 1;
 		
@@ -106,7 +109,7 @@ public class SaleManageView extends JFrame {
 		
 		jScrPane = new JScrollPane(jTable);
 		jScrPane.setBounds(10, 50, 600, 300);
-		add(jScrPane);*/
+		add(jScrPane);
 		
 		
 		

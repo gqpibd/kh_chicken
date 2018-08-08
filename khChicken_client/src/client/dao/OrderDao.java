@@ -26,9 +26,8 @@ public class OrderDao {
 		
 		// reader
 		oList = (ArrayList<OrderedMenuDto>)obj;
-		
-		
 		return oList;
+		
 	}
 	
 	public void update() {
