@@ -15,9 +15,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import client.dto.MemberDto;
 import client.dto.MenuDto;
 import client.dto.MenuShowDto;
+import client.singleton.Singleton;
 import net.miginfocom.swing.MigLayout;
 
 /*CREATE TABLE MEMBER(
@@ -52,6 +52,7 @@ import net.miginfocom.swing.MigLayout;
 
 public class mainView extends JFrame {
 	
+	Singleton s = Singleton.getInstance();
 	
 	public mainView() {
 		super("KH CHICKEN");
@@ -64,17 +65,20 @@ public class mainView extends JFrame {
 		JButton btn_Manage;
 		JButton btn_good;
 		JLabel label_goodCount;
-		JPanel pn_menu;
-		
-		boolean menuPlus = false;
-		boolean menuMinus = false;
-		boolean managerBtn = false;
+
+
+		boolean managerBtnOpen = false;
 		
 		//버튼글씨
-		String loginOut = "로그인";
+		String loginStr = "로그인";
 		
+		if (  s.memCtrl.getLoginId() != null ) {
+			loginStr = "로그아웃"; 
+			if ( s.memCtrl.getAuth() ==1)	managerBtnOpen = true;
+	}
+
 		//버튼설정 
-		btn_Login = new JButton(loginOut);	//로그아웃으로 변환
+		btn_Login = new JButton(loginStr);	//로그아웃 / 인 으로 변환됨
 		btn_Login.setBounds(370, 50, 97, 30);
 		btn_Login.setFont(new Font("다음_Regular", Font.PLAIN, 14));
 		btn_Login.addActionListener(new ActionListener() {
@@ -84,18 +88,9 @@ public class mainView extends JFrame {
 				
 				JOptionPane.showMessageDialog(null, "로그인");
 				
-				//로그인 뷰 open return auth
-				
-			/*	if ( 로그인아이디 not null ) {
-					
-					loginOut = "로그아웃"; 
-					if ( 로그인 auth ==1)	managerBtn = true;
-
-				}
-				*/
+				//로그인 view open
 			}
 		});
-		
 		btn_Register = new JButton("회원가입");
 		btn_Register.setBounds(479,50, 97, 30);
 		btn_Register.setFont(new Font("다음_Regular", Font.PLAIN, 14));
@@ -105,7 +100,8 @@ public class mainView extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				JOptionPane.showMessageDialog(null, "회원가입");
-				//회원가입오픈
+				
+				//회원가입 view open
 				
 			}
 		});
@@ -118,15 +114,19 @@ public class mainView extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				//INSERT orderedMenuDto 
+				//INSERT 서버 요청 communicator - >
+				
 				JOptionPane.showMessageDialog(null, "주문하기");
+				
+				//주문하기 view open
+				//new OrderView();
 				
 			}
 		});
 		
 		btn_Manage = new JButton("관리");		
 		btn_Manage.setBounds(394,720,66, 34);	
-		btn_Manage.setVisible(managerBtn);
+		btn_Manage.setVisible(managerBtnOpen);
 		btn_Manage.setFont(new Font("다음_Regular", Font.PLAIN, 14));
 		btn_Manage.addActionListener(new ActionListener() {
 			
@@ -134,7 +134,8 @@ public class mainView extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null, "관리");
 				
-				//new ManageView();
+				//관리자 view open
+				//new ManageView();  
 				
 			}
 		});
@@ -151,24 +152,7 @@ public class mainView extends JFrame {
 		JPanel panel_menu = new JPanel();
 		panel_menu.setLayout(new MigLayout());
 		
-		
-			/*//메뉴 추가삭제 
-		 
-		 //menudao를 list.size로 봤을때 
-		if (menuPlus) {					//승지 관리자 메뉴추가 true받아야 함 
-			
-			list_menudto.add(menuDto);//menuDto를 리스트에 추가
-			menuPlus = false;
-			
-		}else if (menuMinus){			//승지 삭제할 메뉴삭제 true, String 받아와야함
-	
-			//리스트에서 삭제
-			for (int i = 0; i < list_menudto.size(); i++) {				
-				list_menuPn.equals(menuDto.getMenu_name);
-			}
-			menuMinus = false;
-		}*/
-		
+		//메뉴 출력 
 		for (int i = 0; i < list_menudto.size(); i++) {
 			
 			if (i%2 == 1) {
@@ -177,7 +161,6 @@ public class mainView extends JFrame {
 			}else {
 				
 				panel_menu.add(setFrontPanel(list_menudto.get(i)));
-				
 			}
 			panel_bigmenu.validate();
 		}
@@ -230,7 +213,7 @@ public class mainView extends JFrame {
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				//JOptionPane.showMessageDialog(null, "치킨누름");
+				// TODO Auto-generated method stub
 				
 			}
 			

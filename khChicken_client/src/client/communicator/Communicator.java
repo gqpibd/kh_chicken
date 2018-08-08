@@ -1,13 +1,8 @@
 package client.communicator;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class Communicator {
 	private Socket sock;
@@ -21,6 +16,7 @@ public class Communicator {
 
 			//BufferedReader br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 			
+			//insert orderedMenuDto 
 			
 
 		} catch (IOException e) {
