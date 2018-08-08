@@ -1,10 +1,12 @@
 package server.communicator;
 
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -31,17 +33,22 @@ public class SocketWriter<Type> {
 		ObjectOutputStream oos = null;
 		try {
 			oos = new ObjectOutputStream(sock.getOutputStream());
+			System.out.println(menus.size());
 			for (int i = 0; i < menus.size(); i++) {
-				BufferedImage im = ImageIO.read(new File("d:/images/"+menus.get(i).getMenu_name().replaceAll(" ", "_") + ".jpg"));
-				System.out.println(im.toString());
-				ImageIO.write(im, "jpg", oos);
-				oos.flush();
-			}
-			
-			oos.close();
-			// makeConnection();
-			System.out.println("sent");
+				File f = new File("d:/images/" + menus.get(i).getMenu_name().replaceAll(" ", "_") + ".jpg");
+				BufferedImage im = ImageIO.read(f);
 
+				ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+				ImageIO.write(im, "jpg", byteArrayOutputStream);
+				byte[] size = ByteBuffer.allocate(4).putInt(byteArrayOutputStream.size()).array();
+				oos.write(size);
+				oos.write(byteArrayOutputStream.toByteArray());
+				oos.flush();
+				//int size = (int) f.length();
+				//oos.writeInt(size);
+
+			}
+			System.out.println("sent");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
