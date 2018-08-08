@@ -1,6 +1,7 @@
 package client.controller;
 
 import client.dao.MenuDao;
+import dto.MenuShowDto;
 
 public class MenuController {
 	
@@ -10,12 +11,12 @@ public class MenuController {
 		return menDao;
 	}
 	
-	public void insert() {
-		menDao.insert();
+	public void insert(MenuShowDto dto, String imgPath) {
+		menDao.insert(dto,imgPath);
 	}
 	
 	public void select() {
-		menDao.select();
+		menDao.initList();
 	}
 	
 	public void delete() {

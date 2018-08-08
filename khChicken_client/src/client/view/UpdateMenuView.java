@@ -22,6 +22,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -105,14 +106,7 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 		getContentPane().add(imgFileField);
 
 		searchBtn = new JButton("검색");
-		searchBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String path = jFileChooserUtil();
-				System.out.println(path);
-				imgFileField.setText(path.substring(path.lastIndexOf("\\") + 1)); // 전체 경로에서 파일 이름과 확장자명만 가져온다.
-				setImage(path);
-			}
-		});
+		searchBtn.addActionListener(this);
 		searchBtn.setBounds(307, 244, 65, 23);
 		getContentPane().add(searchBtn);
 
@@ -152,8 +146,8 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 		System.out.println(topDto.toString());
 		nameField.setText(topDto.getMenu_name());
 		priceField.setText(topDto.getPrice() + "");
-		imgFileField.setText(topDto.getImage());
-		setImage(FOLDER_PATH + topDto.getImage());
+		imgFileField.setText(topDto.getMenu_name() + ".jpg");
+		setImage(FOLDER_PATH + topDto.getMenu_name().replaceAll(" ", "_") + ".jpg");
 
 		setVisible(true);
 	}
@@ -174,22 +168,17 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 		menuTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF); // 칼럼 크기가 모두 동일하게 들어가면 보기 좋지 않으므로 각각 셋팅해준다.
 		menuTable.getColumnModel().getColumn(NAME_COL).setPreferredWidth(120);
 		menuTable.getColumnModel().getColumn(PRICE_COL).setPreferredWidth(80);
-		menuTable.getColumnModel().getColumn(IMG_COL).setPreferredWidth(100);
+		menuTable.getColumnModel().getColumn(IMG_COL).setPreferredWidth(140);
 
 		menuTable.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// if (e.getClickCount() == 2) {
-				int row = menuTable.getSelectedRow(); // 선택된 열을 받아서
+				int row = menuTable.getSelectedRow();
 				nameField.setText(model.getValueAt(row, NAME_COL).toString());
 				priceField.setText(model.getValueAt(row, PRICE_COL).toString());
 				newPriceField.setText(model.getValueAt(row, PRICE_COL).toString());
 				imgFileField.setText(model.getValueAt(row, IMG_COL).toString());
-				// System.out.println("FilePath : " + FOLDER_PATH+model.getValueAt(row,
-				// IMG_COL).toString());
 				setImage(FOLDER_PATH + model.getValueAt(row, IMG_COL).toString());
-				// JLabel imgLabel;
-				// }
 			}
 		});
 
@@ -218,7 +207,7 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 		Object rowData[] = new Object[3];
 		rowData[NAME_COL] = menu.getMenu_name();
 		rowData[PRICE_COL] = menu.getPrice();
-		rowData[IMG_COL] = menu.getImage();
+		rowData[IMG_COL] = menu.getMenu_name().replaceAll(" ", "_") + ".jpg";
 		return rowData;
 	}
 
@@ -236,10 +225,8 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 				// menu.setPrice(newPrice);
 				s.getMenuCtrl().getMenDao().updatePrice(menu, newPrice);
 			}
-			if (!menu.getImage().equals(image)) {
-				s.getMenuCtrl().getMenDao().updateImage(menu, image);
-				model.setValueAt(image, row, IMG_COL);
-			}
+			s.getMenuCtrl().getMenDao().updateImage(menu, image);
+			model.setValueAt(image, row, IMG_COL);
 		} else if (e.getSource() == delBtn) {
 			MenuDto menu = s.getMenuCtrl().getMenDao().getMenuByName(nameField.getText());
 			int row = menuTable.getSelectedRow();
@@ -250,6 +237,12 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 			}
 		} else if (e.getSource() == backBtn) {
 			this.dispose();
+		} else if (e.getSource() == searchBtn) {
+			String path = jFileChooserUtil();
+			System.out.println(path);
+			imgFileField.setText(path.substring(path.lastIndexOf("\\") + 1)); // 전체 경로에서 파일 이름과 확장자명만 가져온다.
+			setImage(path);
+
 		}
 	}
 
@@ -263,9 +256,8 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 		chooser.setDialogTitle("파일 위치 검색"); // 창의 제목
 		chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES); // 파일 선택 모드
 
-		// FileNameExtensionFilter filter = new FileNameExtensionFilter("Binary File",
-		// "cd11"); // filter 확장자 추가
-		// chooser.setFileFilter(filter); // 파일 필터를 추가
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("jpg", "jpg"); // filter 확장자 추가
+		chooser.setFileFilter(filter); // 파일 필터를 추가
 
 		int returnVal = chooser.showOpenDialog(null); // 열기용 창 오픈
 

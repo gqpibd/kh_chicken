@@ -9,12 +9,12 @@ import client.controller.ReviewController;
 public class Singleton {
 	
 	private static Singleton single = new Singleton();
+	private Communicator comm = new Communicator();	
 	
 	private MemberController memCtrl = new MemberController();
 	private MenuController menCtrl = new MenuController();
 	private OrderController ordCtrl = new OrderController();
 	private ReviewController revCtrl = new ReviewController();
-	private Communicator comm = new Communicator();
 	
 	private Singleton() {
 	}

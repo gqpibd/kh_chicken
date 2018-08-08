@@ -1,18 +1,23 @@
 package client.communicator;
 
 import java.awt.image.BufferedImage;
+import java.io.EOFException;
 import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
 
 public class Communicator {
+	public static final int INSERT = 0;
+	public static final int SELECT = 1;
+	public static final int DELETE = 2;
+	public static final int UPDATE = 3;
+
 	private Socket sock;
 
 	public void makeConnection() {
@@ -22,9 +27,6 @@ public class Communicator {
 			sock.connect(sockAddr);
 			System.out.println("연결성공");
 
-			// BufferedReader br = new BufferedReader(new
-			// InputStreamReader(sock.getInputStream()));
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -32,52 +34,55 @@ public class Communicator {
 
 	public void SendMessage(int number, Object o) {
 		ObjectOutputStream oos = null;
-		ObjectInputStream ois = null;
-//		try {
-//			oos = new ObjectOutputStream(sock.getOutputStream());
-//			ois = new ObjectInputStream(sock.getInputStream());
-//
-//			oos.writeInt(number);
-//			oos.writeObject(o);
-//			oos.flush();
-//
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		} finally {
-//			// try {
-//			// oos.close();
-//			// } catch (IOException e) {
-//			// e.printStackTrace();
-//			// }
-//		}
-		sendImage();
-		sendImage();
-		
-		//sendImage();
-
-	}
-
-	public void sendImage() {
-		ObjectOutputStream oos = null;
-		ObjectInputStream ois = null;
 		try {
-			
 			oos = new ObjectOutputStream(sock.getOutputStream());
 
-			BufferedImage im = ImageIO.read(new File("d:\\images\\aa.jpg"));
+			oos.writeInt(number);
+			oos.writeObject(o);
+
+			oos.flush();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} 
+	}
+
+	public void sendImage(String path) {
+		ObjectOutputStream oos = null;
+		try {
+
+			oos = new ObjectOutputStream(sock.getOutputStream());
+
+			BufferedImage im = ImageIO.read(new File(path));
 			System.out.println(im.toString());
 			ImageIO.write(im, "jpg", oos);
-			oos.close();
-			makeConnection();
-			System.out.println("sent");
+			oos.flush();
+			return;		
+		////	oos.close();
+		//	makeConnection();
+		//	System.out.println("sent");
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public Object SendAndReceiveMessage() {
+	public ArrayList<Object> receiveMessage() {
+		// ObjectInputStream ois = null;
+		ArrayList<Object> objList = new ArrayList<>();
+		try {
+			ObjectInputStream ois = new ObjectInputStream(sock.getInputStream());
 
-		return null;
+			objList = (ArrayList<Object>) ois.readObject();
+			System.out.println("사이즈:" + objList.size());
+		} catch (EOFException e) {
+			System.out.println("파일을 다 읽었습니다.");
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		return objList;
 	}
 }

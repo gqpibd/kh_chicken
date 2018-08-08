@@ -58,6 +58,4 @@ public class OrderedMenuDto extends MenuDto implements Serializable {
 		return "OrderedMenuDto [coupon=" + coupon + ", count=" + count + ", totalPrice=" + totalPrice + "]";
 	}
 	
-	
-
 }
