@@ -10,8 +10,8 @@ public class MenuDao {
 	List<MenuDto> memList = new ArrayList<MenuDto>();
 	
 	public MenuDao() {
+		
 	}
-
 	
 	public void insert() {
 		

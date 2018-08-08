@@ -114,12 +114,14 @@ public class mainView extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				//INSERT 서버 요청 communicator - >
+				//loginStr , 체크한 메뉴 보내줌  List <String> orderedMenus = new ArrayList<>(); 
+				List<String> orderedMenus = new ArrayList<>();
+				orderedMenus.add("");
 				
 				JOptionPane.showMessageDialog(null, "주문하기");
 				
 				//주문하기 view open
-				//new OrderView();
+				//new OrderView(String loginStr, List <String> orderedMenus );
 				
 			}
 		});
