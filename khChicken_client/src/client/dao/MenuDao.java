@@ -1,5 +1,6 @@
 package client.dao;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,8 +41,12 @@ public class MenuDao {
 
 		s.getComm().SendMessage(Communicator.SELECT, dto);
 		ArrayList<Object> resultList = s.getComm().receiveMessage();
+		ArrayList<BufferedImage> imglist = s.getComm().receiveImage();
 		for (int i = 0; i < resultList.size(); i++) {
 			menList.add((MenuShowDto) resultList.get(i));
+			
+			
+			//menList.get(i).setImg(img);
 			System.out.println(resultList.get(i));
 		}
 	}

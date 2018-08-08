@@ -1,11 +1,21 @@
 package dto;
 
+import java.awt.image.BufferedImage;
 import java.io.Serializable;
 
 public class MenuShowDto extends MenuDto implements Serializable {
 
 	private static final long serialVersionUID = 7675418139620414668L;
 	private double avgScore;
+	private BufferedImage img;
+
+	public BufferedImage getImg() {
+		return img;
+	}
+
+	public void setImg(BufferedImage img) {
+		this.img = img;
+	}
 
 	public MenuShowDto() {
 	}
