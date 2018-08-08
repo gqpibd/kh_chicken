@@ -115,7 +115,6 @@ public class MenuDao {
 		}
 
 		SocketWriter.WriteAll(sock, list);
-		SocketWriter.sendImages(sock, list);
 	}
 
 	public void receiveAndSaveImage(String name, Socket sock) {
@@ -139,7 +138,5 @@ public class MenuDao {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
-
 }
