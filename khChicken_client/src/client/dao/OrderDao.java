@@ -25,13 +25,10 @@ public class OrderDao {
 		this.obj = obj;
 		
 		// reader
-		List<OrderedMenuDto> list = new ArrayList<OrderedMenuDto>();
-		list.add((OrderedMenuDto) obj);
+		oList = (ArrayList<OrderedMenuDto>)obj;
 		
 		
-		
-		
-		return list;
+		return oList;
 	}
 	
 	public void update() {

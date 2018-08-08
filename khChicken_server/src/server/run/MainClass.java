@@ -14,10 +14,7 @@ public class MainClass {
 		
 		
 		DBConnection.initConnect();
-		
-		// new SocketControl().serverOpen();
-		
-		new OrderDao().select();
+		new SocketControl().serverOpen();
 		
 		
 		

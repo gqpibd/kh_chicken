@@ -41,8 +41,9 @@ public class ManageView extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new SaleManageView().setVisible(true);
 				dispose();
+				new SaleManageView().setVisible(true);
+				
 				
 			}
 		});

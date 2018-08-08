@@ -2,6 +2,9 @@ package client.communicator;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.List;
@@ -27,6 +30,14 @@ public class Communicator {
 
 			Singleton s = Singleton.getInstance();
 			
+			
+			
+			OutputStream out = sock.getOutputStream();
+			PrintWriter pw = new PrintWriter(new OutputStreamWriter(out));
+				
+			
+			
+			
 			// reader
 			ObjectInputStream ois = new ObjectInputStream(sock.getInputStream());
 			Object obj = ois.readObject();
@@ -39,10 +50,13 @@ public class Communicator {
 			} else if (obj instanceof MenuShowDto) {
 				
 			} else if (obj instanceof OrderedMenuDto) {
+				pw.println("6");
+				pw.flush();
 				new SaleManageView().obj = obj;
 			} else if (obj instanceof ReviewDto) {
 				
 			}
+			
 			
 			
 			// writer

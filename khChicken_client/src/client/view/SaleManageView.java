@@ -40,30 +40,18 @@ public class SaleManageView extends JFrame {
 		setLayout(null);
 		
 		Singleton s = Singleton.getInstance();
-
-		Socket sock = s.comm.sock;
-		OutputStream out;
-		try {
-			out = sock.getOutputStream();
-			PrintWriter pw = new PrintWriter(new OutputStreamWriter(out));
-			pw.println("6");
-			pw.flush();
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-
 		
 		
 		list = s.ordCtrl.select(obj);	// controller로 영수증 목록 취득
+		for (int i = 0; i < list.size(); i++) {
+			System.out.println(list.get(i));
+		}
 		
 		JLabel label = new JLabel("판매 내역");
 		label.setBounds(10, 10, 120, 15);
 		add(label);
 		
-		
+		/*
 		
 		int bbsNum = 1;
 		
@@ -115,7 +103,7 @@ public class SaleManageView extends JFrame {
 		
 		jScrPane = new JScrollPane(jTable);
 		jScrPane.setBounds(10, 50, 600, 300);
-		add(jScrPane);
+		add(jScrPane);*/
 		
 		
 		
@@ -129,7 +117,7 @@ public class SaleManageView extends JFrame {
 		
 		
 		setBounds(100, 100, 640, 480);
-		getContentPane().setBackground(Color.black);
+		getContentPane().setBackground(Color.lightGray);
 		setVisible(false);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);			

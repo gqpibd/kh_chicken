@@ -37,11 +37,11 @@ public class ReadThread extends Thread {
 				
 				//input. output 스트림 생성, printwriter 생성(번호 받기용)
 				InputStream input = sock.getInputStream();
-				OutputStream out = sock.getOutputStream();
-				PrintWriter pw = new PrintWriter(new OutputStreamWriter(out));
+				//OutputStream out = sock.getOutputStream();
+				//PrintWriter pw = new PrintWriter(new OutputStreamWriter(out));
 
-				pw.println("Welcome");
-				pw.flush();
+				//pw.println("Welcome");
+				//pw.flush();
 
 				// receive
 				BufferedReader br = new BufferedReader(new InputStreamReader(input)); // client에서 받은 번호 input
