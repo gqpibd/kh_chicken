@@ -33,8 +33,8 @@ public class Window_Review extends JFrame implements ActionListener,  MouseListe
 		JLabel JLabe_explanation; // 음식소개글
 		
 		JButton JBut_Review;
-		
-	
+		JPanel container;
+		JScrollPane scrPane;
 		
 	public Window_Review() {
 		super("리뷰창");
@@ -66,7 +66,8 @@ public class Window_Review extends JFrame implements ActionListener,  MouseListe
 		JBut_Review.setBounds(200, 500, 100, 50);
 		add(JBut_Review);
 		
-		
+
+
 		
 		
 		
@@ -81,13 +82,25 @@ public class Window_Review extends JFrame implements ActionListener,  MouseListe
 	public void actionPerformed(ActionEvent e) {
 		
 		Object obj = e.getSource();
-		
 		if(obj == JBut_Review) {
+		if(JBut_Review.getText().equals("닫기")) {
+			JBut_Review.setText("리뷰");
+			
 			System.out.println("aa");
-		JPanel container = new JPanel(); 
+		//	container.setVisible(false);
+			scrPane.setVisible(false);
+			repaint();
+			//dispose();
+			//new Window_Review();
+		}else if(JBut_Review.getText().equals("리뷰")) {
+			JBut_Review.setText("닫기");
+			
+			
+			System.out.println("aa");
+		container = new JPanel(); 
 		
-		JScrollPane scrPane = new JScrollPane(container);
-		scrPane.setBounds(80, 200, 300, 200);
+		scrPane = new JScrollPane(container);
+		scrPane.setBounds(0, 0, 300, 200);
 		JLabel ja[] = new JLabel[100];
 		int i = 0;
 		for (i = 0; i < ja.length; i++) {
@@ -98,13 +111,6 @@ public class Window_Review extends JFrame implements ActionListener,  MouseListe
 		container.setLayout(new GridLayout(i, 0));
 		
 		add(scrPane);
-		repaint();
-		if(JBut_Review.getText().equals("닫기")) {
-			JBut_Review.setText("리뷰");
-			//dispose();
-			//new Window_Review();
-		}else if(JBut_Review.getText().equals("리뷰")) {
-			JBut_Review.setText("닫기");
 		}
 		
 		}
