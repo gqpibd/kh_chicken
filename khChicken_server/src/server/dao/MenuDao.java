@@ -90,7 +90,7 @@ public class MenuDao {
 	}
 
 	private void selectAll(Socket sock) {
-		ArrayList<Object> list = new ArrayList<>();
+		ArrayList<MenuShowDto> list = new ArrayList<>();
 
 		String sql = "SELECT * FROM MENU";
 		Connection conn = null;
@@ -115,7 +115,7 @@ public class MenuDao {
 		}
 
 		SocketWriter.WriteAll(sock, list);
-
+		SocketWriter.sendImages(sock, list);
 	}
 
 	public void receiveAndSaveImage(String name, Socket sock) {
@@ -135,7 +135,7 @@ public class MenuDao {
 				ImageIO.write(im, "jpg", new File("d:/images/" + name.replace(" ", "_") + ".jpg"));
 			}
 		} catch (SocketException e) {
-			System.out.println("이미지를 받음. 커넥션 리셋됨");
+			System.out.println("커넥션 리셋됨");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

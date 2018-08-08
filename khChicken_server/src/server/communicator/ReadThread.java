@@ -65,10 +65,6 @@ public class ReadThread extends Thread {
 				case 7: // 내 주문내역 불러오기
 
 				}
-
-				// // send (받는건 번호+dto 지만 보내는건 한번만 해도됨)
-				// ObjectOutputStream oos = new ObjectOutputStream(sock.getOutputStream());
-				// oos.writeObject(obj);
 				sleep(100);
 			}
 		} catch (EOFException e) {

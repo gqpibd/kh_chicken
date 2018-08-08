@@ -12,19 +12,19 @@ public class SocketControl {
 
 		try {
 			ServerSocket serSocket = new ServerSocket(6000);
-			// List<Socket> sockList = new ArrayList<Socket>();
 
 			while (true) {
 
 				System.out.println("접속 대기중...");
 				Socket socket = serSocket.accept();
-				// sockList.add(socket);
 				System.out.println("클라이언트 연결 ip:" + socket.getInetAddress());
 
 				new ReadThread(socket).start();
+				Thread.sleep(100);
 			}
-
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 

@@ -9,9 +9,11 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+import dto.MenuShowDto;
+
 public class SocketWriter<Type> {
 
-	public static  void WriteAll(Socket sock, ArrayList<Object> o) {
+	public static <Type> void WriteAll(Socket sock, ArrayList<Type> o) {
 		ObjectOutputStream oos = null;
 		try {
 
@@ -22,22 +24,22 @@ public class SocketWriter<Type> {
 			oos.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
-		} 
+		}
 	}
-	
-	public void sendImage(Socket sock, String path) {
+
+	public static void sendImages(Socket sock, ArrayList<MenuShowDto> menus) {
 		ObjectOutputStream oos = null;
 		try {
-
 			oos = new ObjectOutputStream(sock.getOutputStream());
-
-			BufferedImage im = ImageIO.read(new File(path));
-			System.out.println(im.toString());
-			ImageIO.write(im, "jpg", oos);
-			oos.flush();
-					
+			for (int i = 0; i < menus.size(); i++) {
+				BufferedImage im = ImageIO.read(new File("d:/images/"+menus.get(i).getMenu_name().replaceAll(" ", "_") + ".jpg"));
+				System.out.println(im.toString());
+				ImageIO.write(im, "jpg", oos);
+				oos.flush();
+			}
+			
 			oos.close();
-			//makeConnection();
+			// makeConnection();
 			System.out.println("sent");
 
 		} catch (IOException e) {
