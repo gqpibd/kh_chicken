@@ -41,8 +41,7 @@ public class ManageView extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				dispose();
-				new SaleManageView().setVisible(true);
+				new SaleManageView();
 				
 				
 			}
@@ -65,7 +64,7 @@ public class ManageView extends JFrame {
 		
 		setBounds(100, 100, 300, 280);
 		getContentPane().setBackground(Color.black);
-		setVisible(false);
+		setVisible(true);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
 	}

@@ -42,6 +42,9 @@ public class SaleManageView extends JFrame {
 		Singleton s = Singleton.getInstance();
 		
 		
+		s.comm.SendMessage(6, null);
+		
+		
 		list = s.ordCtrl.select(obj);	// controller로 영수증 목록 취득
 		for (int i = 0; i < list.size(); i++) {
 			System.out.println(list.get(i));
@@ -118,7 +121,7 @@ public class SaleManageView extends JFrame {
 		
 		setBounds(100, 100, 640, 480);
 		getContentPane().setBackground(Color.lightGray);
-		setVisible(false);
+		setVisible(true);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);			
 	}

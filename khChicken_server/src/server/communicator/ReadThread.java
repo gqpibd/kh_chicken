@@ -32,7 +32,7 @@ public class ReadThread extends Thread {
 		super.run();
 		Singleton s = Singleton.getInstance();
 
-		while (true) {
+		//while (true) {
 			try {
 				
 				//input. output 스트림 생성, printwriter 생성(번호 받기용)
@@ -45,49 +45,59 @@ public class ReadThread extends Thread {
 
 				// receive
 				BufferedReader br = new BufferedReader(new InputStreamReader(input)); // client에서 받은 번호 input
-
-				Object obj = null;
 				int number;
-
 				number = Integer.parseInt(br.readLine());
-				System.out.println("received: " + number);
+				System.out.println("received number : " + number);
 				
-				switch (number) {
-				case 0:	//insert	
-				case 1:	//select
-				case 2:	//delete
-				case 3:	//update
-					ObjectInputStream ois = new ObjectInputStream(input); // dto받기
-					obj = ois.readObject();
-					
-					//어떤 dto 인지 구분
-					if (obj instanceof MemberDto) {	
-
-					} else if (obj instanceof MenuDto) {
-
-					} else if (obj instanceof MenuShowDto) {
-
-					} else if (obj instanceof OrderedMenuDto) {
-
-					} else if (obj instanceof ReviewDto) {
-
-					}
-					break;
-
-				case 4: // menu 불러오기
-					
-				case 5: // review 불러오기
-					
-				case 6: // 전체매출 불러오기
+				
+				ObjectInputStream ois = new ObjectInputStream(input); // dto받기
+				Object obj = ois.readObject();
+				System.out.println(obj.toString());
+				
+				if(number==6) {
 					obj = s.ctrlOrder.select();
-					break;
-				case 7: // 내 주문내역 불러오기
-
+					ObjectOutputStream oos = new ObjectOutputStream(sock.getOutputStream());
+					oos.writeObject(obj);
 				}
-
-				// send (받는건 번호+dto 지만 보내는건 한번만 해도됨)
-				ObjectOutputStream oos = new ObjectOutputStream(sock.getOutputStream());
-				oos.writeObject(obj);
+				
+				
+//				switch (number) {
+//				case 0:	//insert	
+//				case 1:	//select
+//				case 2:	//delete
+//				case 3:	//update
+//					
+//					obj = ois.readObject();
+//					
+//					//어떤 dto 인지 구분
+//					if (obj instanceof MemberDto) {	
+//
+//					} else if (obj instanceof MenuDto) {
+//
+//					} else if (obj instanceof MenuShowDto) {
+//
+//					} else if (obj instanceof OrderedMenuDto) {
+//
+//					} else if (obj instanceof ReviewDto) {
+//
+//					}
+//					break;
+//
+//				case 4: // menu 불러오기
+//					
+//				case 5: // review 불러오기
+//					
+//				case 6: // 전체매출 불러오기
+//					obj = s.ctrlOrder.select();
+//					break;
+//				case 7: // 내 주문내역 불러오기
+//
+//				}
+//
+//				// send (받는건 번호+dto 지만 보내는건 한번만 해도됨)
+//				ObjectOutputStream oos = new ObjectOutputStream(sock.getOutputStream());
+//				oos.writeObject(obj);
+				
 				sleep(100);
 
 			} catch (FileNotFoundException e) {
@@ -101,5 +111,5 @@ public class ReadThread extends Thread {
 			}
 		}
 
-	}
+	
 }

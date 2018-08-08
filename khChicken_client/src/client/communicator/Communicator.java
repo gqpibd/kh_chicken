@@ -2,6 +2,7 @@ package client.communicator;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -18,7 +19,7 @@ import client.singleton.Singleton;
 import client.view.SaleManageView;
 
 public class Communicator {
-	public Socket sock;
+	private Socket sock;
 	
 
 	public void makeConnection() {
@@ -27,12 +28,50 @@ public class Communicator {
 			sock = new Socket();
 			sock.connect(sockAddr);
 			System.out.println("연결성공");
-
+			
+		} catch (IOException e) {
+					e.printStackTrace();
+		}
 			Singleton s = Singleton.getInstance();
+	
+	}
+	
+	
+	public void SendMessage(int number, Object o) {
+		
+		PrintWriter pw = null;
+		ObjectOutputStream oos = null;
+		
+		
+		try {
+			OutputStream ops = sock.getOutputStream();
+			pw = new PrintWriter(new OutputStreamWriter(ops));
+			pw.println(number);
+			pw.flush();
+			
+			oos = new ObjectOutputStream(ops);
+			oos.writeObject(o);
+			oos.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				pw.close();
+				oos.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
+	public Object SendAndReceiveMessage() {
+		
+		return null;
+	}
 			
 			
-			
-			OutputStream out = sock.getOutputStream();
+			/*OutputStream out = sock.getOutputStream();
 			PrintWriter pw = new PrintWriter(new OutputStreamWriter(out));
 				
 			
@@ -63,11 +102,12 @@ public class Communicator {
 			// 각 클래스 내부에서 구현
 			
 
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
+		 catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+	}*/
+
+
+
 }
