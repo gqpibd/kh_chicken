@@ -35,7 +35,8 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 	private final int NAME_COL = 0;
 	private final int PRICE_COL = 1;
 	private final int IMG_COL = 2;
-	private final String FOLDER_PATH = "d:\\images\\";
+//	private final String FOLDER_PATH = "d:\\images\\";
+	private final String FOLDER_PATH = "\\\\192.168.30.35\\share\\images\\";
 	private JTextField nameField;
 	private JTextField priceField;
 	private JTextField newPriceField;
@@ -277,6 +278,7 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 
 	public void setImage(String path) {
 		try {
+			System.out.println(path);
 			BufferedImage m_numberImage = ImageIO.read(new File(path));
 			ImageIcon icon = new ImageIcon(m_numberImage);
 

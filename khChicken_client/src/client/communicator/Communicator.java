@@ -1,13 +1,16 @@
 package client.communicator;
 
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.EOFException;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -84,27 +87,4 @@ public class Communicator {
 		return objList;
 	}
 
-	public ArrayList<BufferedImage> receiveImage() {
-		//BufferedImage img = null;
-		ArrayList<BufferedImage> imagelist = new ArrayList<BufferedImage>();
-		try {
-
-			ObjectInputStream ois = new ObjectInputStream(sock.getInputStream());
-			imagelist = (ArrayList<BufferedImage>) ois.readObject();
-			for(int i=0;i<imagelist.size();i++) {
-				System.out.println(imagelist.get(i));
-			}
-			System.out.println("receiving image");
-			//img = ImageIO.read(ois);
-
-		} catch (EOFException e) {
-			System.out.println("파일을 다 읽었습니다.");
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		//return img;
-		return imagelist;
-	}
 }
