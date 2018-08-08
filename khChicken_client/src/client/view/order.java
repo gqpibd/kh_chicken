@@ -6,17 +6,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+
+import client.dao.MemberDao;
+import client.dto.MemberDto;
+import client.dto.OrderedMenuDto;
 
 public class order extends JFrame implements ActionListener, ItemListener {
 
@@ -24,7 +32,16 @@ public class order extends JFrame implements ActionListener, ItemListener {
 	JButton btnArr[]= new JButton[6];
 	
 	private final Object[] colNames = { "ChkBox", "메뉴", "가격", "수량" };
-	private Object[][] datas = { { false, "후라이드치킨", "13000", 1 }, { true, "양념치킨", "15000", 1 } };
+	Object[][] datas = { { false, "후라이드치킨", "13000", 1 }, { true, "양념치킨", "15000", 1 } };
+	
+	private final Object[] OrderCol = { "ID", "주소", "전화번호", "날짜"};
+	//ID 주소 전화번호 날짜==SYSDATE
+	Object[][] OrderData = {
+			{"Kong", "강남 역세권", "010-2222-2222", "2018-01-08"}
+	};
+	
+	DefaultTableModel model;	// 테이블의 넓이 설정
+	List<MemberDto> list;	
 	
 	public order() {
 		super("주문 내역");
@@ -35,7 +52,7 @@ public class order extends JFrame implements ActionListener, ItemListener {
 		lblNewLabel.setBounds(14, 12, 129, 38);
 		add(lblNewLabel);
 		
-		JLabel label = new JLabel("주문자 ID");
+		/*JLabel label = new JLabel("주문자 ID");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setBounds(14, 51, 62, 18);
 		add(label);
@@ -54,6 +71,7 @@ public class order extends JFrame implements ActionListener, ItemListener {
 		label_3.setHorizontalAlignment(SwingConstants.CENTER);
 		label_3.setBounds(553, 51, 62, 18);
 		add(label_3);
+		*/
 		
 		JLabel label_4 = new JLabel("<주문 내역>");
 		label_4.setFont(new Font("굴림", Font.BOLD, 18));
@@ -61,8 +79,6 @@ public class order extends JFrame implements ActionListener, ItemListener {
 		add(label_4);
 
 		//수량을 정해줄 버튼들 [ -1 ]
-		
-	   //btnArr[] = new JButton[6];
 	   String btnName[] = { "-", "-", "-", "-", "-", "-" };
 	      
 	      for (int i = 0; i < btnArr.length; i++) {         
@@ -73,7 +89,6 @@ public class order extends JFrame implements ActionListener, ItemListener {
 	      }
 	      
 	      //[ +1 ]
-	  	//btnArrPlus[] = new JButton[6];
 	    String btnNamePl[] = { "+", "+", "+", "+", "+", "+" };
 	      
 	    for (int i = 0; i < btnArrPlus.length; i++) {         
@@ -89,7 +104,8 @@ public class order extends JFrame implements ActionListener, ItemListener {
 		label_6.setBounds(14, 378, 129, 38);
 		add(label_6);
 		
-		//사용할 쿠폰의 수를 보여줄 라벨
+		//사용 가능한 쿠폰의 수를 보여줄 라벨
+		
 		JLabel lblNewLabel_3 = new JLabel("0"+"장");
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_3.setBounds(14, 428, 62, 18);
@@ -110,13 +126,6 @@ public class order extends JFrame implements ActionListener, ItemListener {
 		add(lblNewLabel_4);
 		
 		//주문한 메뉴를 받아와서 테이블로 띄워줌
-	/*	JScrollPane scrollPaneMenu = new JScrollPane();
-		scrollPaneMenu.setBounds(14, 200, 532, 166);
-		add(scrollPaneMenu);
-		
-		JTable menuTable = new JTable();
-		scrollPaneMenu.setColumnHeaderView(menuTable);*/
-		///////////
 		DefaultTableModel dtm = new DefaultTableModel(datas, colNames);		//DefaultTableModel 
 		JTable menuTable = new JTable(dtm);
 		
@@ -133,28 +142,57 @@ public class order extends JFrame implements ActionListener, ItemListener {
 		pack();	
 		
 		//주문한 사람의 개인정보를 테이블로 띄워줌
-		/*JScrollPane scrollPaneOrder = new JScrollPane();
-		scrollPaneOrder.setBounds(14, 83, 634, 66);
-		add(scrollPaneOrder);
+		//현재날짜 : 주문한 날짜
+		Date today = new Date();
+		SimpleDateFormat date = new SimpleDateFormat("YYYY/MM/DD");
 		
-		JTable orderTable = new JTable();
-		scrollPaneOrder.setViewportView(orderTable);*/
-		////
-		DefaultTableModel dtm2 = new DefaultTableModel(datas, colNames);		//DefaultTableModel 
-		JTable orderTable = new JTable(dtm2);
+		//주문자 정보를 받아올 2차원 배열 ( ID , ADR, PHONE )
+		//dao
+		//list 
+		//OrderData = new Object[list.size()][3];	// 테이블의 2차원배열
 		
-		orderTable.getColumn("ChkBox").setCellRenderer(dcr);		//setCellRenderer
-		JCheckBox box2 = new JCheckBox();	//checkbox를 중앙정렬
-		box.setHorizontalAlignment(JLabel.CENTER);
-		orderTable.getColumn("ChkBox").setCellEditor(new DefaultCellEditor(box));		//setCellEditor	DefaultCellEditor
+		
+		/*
+		for (int i = 0; i < list.size(); i++) {
+			MemberDto Odto = list.get(i);
+			//BbsDto dto = list.get(i);
+			
+			OrderData[i][0] = Odto.getId();	// 아이디 , 
+			OrderData[i][1] = Odto.getAddress();	// 주소
+			OrderData[i][2] = Odto.getPhone();
+			OrderData[i][3] = date.format(today); //현재날짜
+		}
+		 */			
+		
+		// 테이블의 폭을 설정하기 위한 Model
+		model = new DefaultTableModel(OrderCol, 0);
+		model.setDataVector(OrderData, OrderCol);
+		
+		// 테이블 생성
+		JTable orderTable = new JTable(model);
+		
+		// 컬럼의 넓이를 설정
+		orderTable.getColumnModel().getColumn(0).setMaxWidth(100);	//ID 폭
+		orderTable.getColumnModel().getColumn(1).setMaxWidth(400);	// 주소 폭
+		orderTable.getColumnModel().getColumn(2).setMaxWidth(400);	// 폰번호 폭
+		orderTable.getColumnModel().getColumn(3).setMaxWidth(300);	//날짜 폭
+		
+		// 테이블 안의 컬럼의 쓰기 설정(왼쪽, 오른쪽, 중간)
+		DefaultTableCellRenderer celAlignCenter = new DefaultTableCellRenderer();
+		celAlignCenter.setHorizontalAlignment(JLabel.CENTER);
+		
+		orderTable.getColumn("ID").setCellRenderer(celAlignCenter);
+		orderTable.getColumn("주소").setCellRenderer(celAlignCenter);
+		orderTable.getColumn("전화번호").setCellRenderer(celAlignCenter);
+		orderTable.getColumn("날짜").setCellRenderer(celAlignCenter);
 		
 		JScrollPane scrollPaneOrder = new JScrollPane();
-		scrollPaneOrder.setBounds(14, 200, 532, 166);
+		scrollPaneOrder.setBounds(14, 83, 634, 66);
 		add(scrollPaneOrder);
-		
 		scrollPaneOrder.setViewportView(orderTable);
-		pack();	
+		
 		////
+		
 		JLabel lblNewLabel_5 = new JLabel("결제 금액");
 		lblNewLabel_5.setFont(new Font("굴림", Font.BOLD, 18));
 		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
@@ -169,10 +207,23 @@ public class order extends JFrame implements ActionListener, ItemListener {
 		add(label_7);
 		
 		//Order DB와 member DB에 INSERT 하는 버튼
-		JButton btnNewButton_2 = new JButton("결제");
-		btnNewButton_2.setFont(new Font("굴림", Font.BOLD, 18));
-		btnNewButton_2.setBounds(510, 414, 105, 88);
-		add(btnNewButton_2);
+		JButton paymentBtn = new JButton("결제");
+		paymentBtn.setFont(new Font("굴림", Font.BOLD, 18));
+		paymentBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// 관리자 DB에 INSERT시켜주고, 확인창을 띄워주자.
+				int yesNoBtn = JOptionPane.showConfirmDialog(null, "이대로 주문하시겠습니까?", "최종 주문 확인", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
+				if (yesNoBtn == JOptionPane.YES_OPTION) {
+					//DB에 INSERT 해주고 주문창 닫기
+					JOptionPane.showMessageDialog(null, "DB INSERT");
+					//this.dispose();
+				}
+			}
+		});
+		paymentBtn.setBounds(510, 414, 105, 88);
+		add(paymentBtn);
 		
 		setBounds(100, 100, 680, 600);
 		setVisible(true);
