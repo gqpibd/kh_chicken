@@ -101,8 +101,8 @@ public class Window_Review extends JFrame implements ActionListener,  MouseListe
 		repaint();
 		if(JBut_Review.getText().equals("닫기")) {
 			JBut_Review.setText("리뷰");
-			dispose();
-			new Window_Review();
+			//dispose();
+			//new Window_Review();
 		}else if(JBut_Review.getText().equals("리뷰")) {
 			JBut_Review.setText("닫기");
 		}
