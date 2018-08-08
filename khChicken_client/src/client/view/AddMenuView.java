@@ -135,7 +135,7 @@ public class AddMenuView extends JFrame {
 				System.out.println(dto.toString());
 				Singleton s = Singleton.getInstance();
 				s.getMenuCtrl().insert(dto,path);
-
+				dispose();
 			}
 		});
 

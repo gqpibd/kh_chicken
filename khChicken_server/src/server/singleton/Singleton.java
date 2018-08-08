@@ -9,6 +9,7 @@ public class Singleton {
 	
 	private static Singleton single = new Singleton();
 	
+	
 	MemberDao ctrlMember = new MemberDao();
 	MenuDao ctrlMenu = new MenuDao();
 	OrderDao ctrlOrder = new OrderDao();

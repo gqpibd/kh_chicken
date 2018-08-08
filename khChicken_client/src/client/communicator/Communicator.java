@@ -44,23 +44,21 @@ public class Communicator {
 
 		} catch (IOException e) {
 			e.printStackTrace();
-		} 
+		}
 	}
 
 	public void sendImage(String path) {
 		ObjectOutputStream oos = null;
 		try {
-
 			oos = new ObjectOutputStream(sock.getOutputStream());
 
 			BufferedImage im = ImageIO.read(new File(path));
 			System.out.println(im.toString());
 			ImageIO.write(im, "jpg", oos);
 			oos.flush();
-			return;		
-		////	oos.close();
-		//	makeConnection();
-		//	System.out.println("sent");
+			oos.close();
+			makeConnection();
+			System.out.println("sent");
 
 		} catch (IOException e) {
 			e.printStackTrace();
