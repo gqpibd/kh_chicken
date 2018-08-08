@@ -30,9 +30,8 @@ public class Communicator {
 			System.out.println("연결성공");
 			
 		} catch (IOException e) {
-					e.printStackTrace();
+			e.printStackTrace();
 		}
-			Singleton s = Singleton.getInstance();
 	
 	}
 	
