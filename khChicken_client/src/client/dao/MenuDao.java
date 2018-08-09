@@ -1,5 +1,6 @@
 package client.dao;
 
+import java.awt.MenuShortcut;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,12 +23,14 @@ public class MenuDao {
 	
 public List<MenuShowDto> getShowMenu(){
 		
+		//서버에서 받은 dto저장할 리스트
 		List<MenuShowDto> showDtoList = new ArrayList<>();
 		
 		//comm연결	
 		s.comm.makeConnection();
+		
 		showDtoList = s.comm.getShowMenu();
-
+		
 
 		return showDtoList;
 		

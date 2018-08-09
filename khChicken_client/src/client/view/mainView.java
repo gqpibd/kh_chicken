@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -12,7 +14,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -21,7 +22,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-
 import client.controller.MenuController;
 import client.controller.OrderController;
 import dto.MenuShowDto;
@@ -64,7 +64,7 @@ public class mainView extends JFrame {
 	Singleton s = Singleton.getInstance();
 	MenuController menuCtrl = new MenuController();
 	List<MenuShowDto> list_showMenu;
-	
+	List<String> checkedMenu = new ArrayList<>();
 	
 	public mainView() {
 		super("KH CHICKEN");
@@ -126,15 +126,12 @@ public class mainView extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				//loginStr , 체크한 메뉴 보내줌  List <String> orderedMenus = new ArrayList<>(); 
-				List<String> orderedMenus = new ArrayList<>();
-				orderedMenus.add("");
-				
+					
 				JOptionPane.showMessageDialog(null, "주문하기");
-				
 				//주문하기 view open
-				//new OrderView(String loginStr, List <String> orderedMenus );
+				String loginId = "";
 				
+				//new OrderView(loginId, checkedMenu );
 			}
 		});
 		
@@ -147,15 +144,10 @@ public class mainView extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null, "관리");
-				
 				//관리자 view open
-				//new ManageView();  
-				
+				//new ManageView();  	
 			}
-		});
-		
-
-		
+		});		
 		//DB에서 메뉴가져오기 (server통신)
 		list_showMenu  = menuCtrl.getShowMenu();
 		
@@ -200,26 +192,23 @@ public class mainView extends JFrame {
 
 	public JPanel setFrontPanel(MenuShowDto showDto) {
 		
+		//클릭시 review화면 띄울 메뉴이름
 		String menu_name="";
+		//체크한 메뉴 이름
+		
 		
 		//하나하나의 패널사이즈
 		JPanel frontpanel = new JPanel();
 		frontpanel.setLayout(new MigLayout("","20","40"));
 		frontpanel.setSize(300, 100);
 
-
-		//메뉴, 사진 넣기
-
 		for (int i = 0; i < list_showMenu.size(); i++) {
 			
-			
 			BufferedImage im = null;
-			
 			try {
-				
+			//이미지넣기	
 				//server에서 가져온 이미지 넣는 곳
 				String img = list_showMenu.get(i).getMenu_name().replaceAll(" ", "_") + ".jpg";
-			
 				//패널당 메뉴이름을 저장시켜줌
 				menu_name = list_showMenu.get(i).getMenu_name();
 				
@@ -229,7 +218,6 @@ public class mainView extends JFrame {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			
 			//FOLDER_PATH를 icon으로 변환
 			ImageIcon icon = new ImageIcon(im);	
 
@@ -238,15 +226,10 @@ public class mainView extends JFrame {
 			imgLabel.addMouseListener(new MouseAdapter() {
 				
 				@Override
-				public void mouseClicked(MouseEvent e) {
-				
-					
-					
-				JOptionPane.showMessageDialog(null, "리뷰 open");
-				
+				public void mouseClicked(MouseEvent e) {//누르면
+
+				JOptionPane.showMessageDialog(null, "리뷰 open");				
 				//리뷰 view open (menu_name);
-				
-					
 				}
 				
 			});
@@ -262,23 +245,28 @@ public class mainView extends JFrame {
 		JLabel priceLabel = new JLabel(list_showMenu.get(i).getPrice()+" 원");
 		priceLabel.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		frontpanel.add(priceLabel, "center, wrap");
-
 		
 		//체크박스
 		Checkbox chk = new Checkbox("선택");
 		chk.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
+		chk.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				
+				//체크된 이름을 저장
+				checkedMenu.add(list_showMenu.get(i).getMenu_name());
+			}
+		});
 		frontpanel.add(chk,"center, wrap");
 		
 		//별점
-		MenuShowDto menushowDto = new MenuShowDto();
 		JLabel scoreLabel = new JLabel("별점 : "+ list_showMenu.get(i).getavgScore()+"");
 		scoreLabel.setFont(new Font("다음_Regular", Font.PLAIN, 14));
 		frontpanel.add(scoreLabel, "center, wrap");
 		
 		}
-		
 		return frontpanel;
-
 	}
 	
 
