@@ -59,6 +59,7 @@ import net.miginfocom.swing.MigLayout;
 
 
 public class mainView extends JFrame {
+	
 	private final String FOLDER_PATH = "\\\\192.168.30.35\\share\\images\\";
 	Singleton s = Singleton.getInstance();
 	MenuController menuCtrl = new MenuController();
@@ -153,10 +154,9 @@ public class mainView extends JFrame {
 			}
 		});
 		
-		//메뉴리스트 
-		//List<MenuDto> list_menudto = new ArrayList<>();
+
 		
-		//메뉴 리스트에 DB에서 가져온 메뉴 넣기 
+		//DB에서 메뉴가져오기 (server통신)
 		list_showMenu  = menuCtrl.getShowMenu();
 		
 		//메뉴들을 넣을 패널 설정   
@@ -170,9 +170,7 @@ public class mainView extends JFrame {
 		
 		//메뉴 출력 
 		for (int i = 0; i < list_showMenu.size(); i++) {
-			
-			
-			
+
 			if (i%2 == 1) {
 				panel_menu.add(setFrontPanel(list_showMenu.get(i)),"wrap");
 				
@@ -214,14 +212,15 @@ public class mainView extends JFrame {
 
 		for (int i = 0; i < list_showMenu.size(); i++) {
 			
-			//server에서 가져온 이미지 String
-		
+			
 			BufferedImage im = null;
 			
 			try {
 				
+				//server에서 가져온 이미지 넣는 곳
 				String img = list_showMenu.get(i).getMenu_name().replaceAll(" ", "_") + ".jpg";
-				
+			
+				//패널당 메뉴이름을 저장시켜줌
 				menu_name = list_showMenu.get(i).getMenu_name();
 				
 				im = ImageIO.read(new File(FOLDER_PATH+img));
@@ -231,10 +230,10 @@ public class mainView extends JFrame {
 				e1.printStackTrace();
 			}
 			
-			//String 을 icon으로 변환
+			//FOLDER_PATH를 icon으로 변환
 			ImageIcon icon = new ImageIcon(im);	
 
-			//이미지 들어가는 레이블
+			//레이블에 icon을 넣음
 			JLabel imgLabel = new JLabel(icon);
 			imgLabel.addMouseListener(new MouseAdapter() {
 				

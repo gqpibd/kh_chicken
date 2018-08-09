@@ -25,7 +25,9 @@ public List<MenuShowDto> getShowMenu(){
 		List<MenuShowDto> showDtoList = new ArrayList<>();
 		
 		//comm연결	
-		s.comm.getShowMenu();
+		s.comm.makeConnection();
+		showDtoList = s.comm.getShowMenu();
+
 
 		return showDtoList;
 		
