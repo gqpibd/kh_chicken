@@ -1,5 +1,6 @@
 package client.view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -109,19 +110,23 @@ public class Window_Review extends JFrame implements ActionListener,  MouseListe
 			Jpanel_Review[i].add(jta[i]);
 			//add(Jpanel_Review[i]);
 			//scrPane = new JScrollPane(Jpanel_Review[i]);
-			container.add(Jpanel_Review[i]);
+			//container.add(Jpanel_Review[i]);
 			JPan_Model.addElement(Jpanel_Review[i]);
 			//add(new JScrollPane(Jpanel_Review[i]));
 		}
 	//	container.setLayout(new GridLayout(i, 0));
-		container.setLayout(null);
+		container.setLayout(new BorderLayout());
 		
 		JList<JPanel> list = new JList<>(JPan_Model);
+		
+		
+		container.setBackground(Color.WHITE);
+		container.add(new JScrollPane(list),BorderLayout.CENTER);
 		JScrollPane JSc =  new JScrollPane(container);
 		JSc.setBounds(0, 0, 400, 400);
-		
-		
 		add(JSc);
+		
+		//add(JSc);
 		
 		
 		
