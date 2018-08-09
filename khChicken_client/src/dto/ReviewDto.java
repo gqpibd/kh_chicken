@@ -1,4 +1,4 @@
-package client.dto;
+package dto;
 
 import java.io.Serializable;
 

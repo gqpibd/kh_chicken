@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import server.db.DBConnection;
-import server.dto.MenuShowDto;
+import dto.MenuShowDto;
 
 public class MenuDao {
 	
