@@ -59,10 +59,11 @@ import net.miginfocom.swing.MigLayout;
 
 
 public class mainView extends JFrame {
-	
+	private final String FOLDER_PATH = "\\\\192.168.30.35\\share\\images\\";
 	Singleton s = Singleton.getInstance();
 	MenuController menuCtrl = new MenuController();
 	List<MenuShowDto> list_showMenu;
+	
 	
 	public mainView() {
 		super("KH CHICKEN");
@@ -170,6 +171,8 @@ public class mainView extends JFrame {
 		//메뉴 출력 
 		for (int i = 0; i < list_showMenu.size(); i++) {
 			
+			
+			
 			if (i%2 == 1) {
 				panel_menu.add(setFrontPanel(list_showMenu.get(i)),"wrap");
 				
@@ -199,26 +202,29 @@ public class mainView extends JFrame {
 
 	public JPanel setFrontPanel(MenuShowDto showDto) {
 		
-		
+		String menu_name="";
 		
 		//하나하나의 패널사이즈
 		JPanel frontpanel = new JPanel();
 		frontpanel.setLayout(new MigLayout("","20","40"));
 		frontpanel.setSize(300, 100);
 
-		//이미지
 
 		//메뉴, 사진 넣기
 
 		for (int i = 0; i < list_showMenu.size(); i++) {
 			
-			//DB에서 가져온 이미지 String
-			String path = list_showMenu.get(i).getImage();
+			//server에서 가져온 이미지 String
+		
 			BufferedImage im = null;
 			
 			try {
 				
-				im = ImageIO.read(new File(path));
+				String img = list_showMenu.get(i).getMenu_name().replaceAll(" ", "_") + ".jpg";
+				
+				menu_name = list_showMenu.get(i).getMenu_name();
+				
+				im = ImageIO.read(new File(FOLDER_PATH+img));
 				
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
@@ -234,19 +240,12 @@ public class mainView extends JFrame {
 				
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					
-					String pressedImg = (String)e.getSource();
 				
-				for (int j = 0; j < list_showMenu.size(); j++) {
 					
-					if (pressedImg == list_showMenu.get(j).getImage()) {
-						
-							String pressedMenu = list_showMenu.get(j).getMenu_name();
-					}
-				}
+					
 				JOptionPane.showMessageDialog(null, "리뷰 open");
 				
-				//리뷰 view open (pressedMenu);
+				//리뷰 view open (menu_name);
 				
 					
 				}
