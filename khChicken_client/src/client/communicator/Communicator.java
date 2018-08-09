@@ -1,18 +1,27 @@
 package client.communicator;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.EOFException;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
-import client.dto.OrderedMenuDto;
+import javax.imageio.ImageIO;
 
 public class Communicator {
+	public static final int INSERT = 0;
+	public static final int SELECT = 1;
+	public static final int DELETE = 2;
+	public static final int UPDATE = 3;
+
 	private Socket sock;
-	
 
 	public void makeConnection() {
 		try {
@@ -20,43 +29,52 @@ public class Communicator {
 			sock = new Socket();
 			sock.connect(sockAddr);
 			System.out.println("연결성공");
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	
 	}
-	
-	
+
 	public void SendMessage(int number, Object o) {
-		
-		//PrintWriter pw = null;
 		ObjectOutputStream oos = null;
-		
-		
 		try {
 			oos = new ObjectOutputStream(sock.getOutputStream());
-			
+
 			oos.writeInt(number);
 			oos.writeObject(o);
-			
+
 			oos.flush();
+
 		} catch (IOException e) {
 			e.printStackTrace();
-		} 
+		}
 	}
-	
-	
-	
+
+	public void sendImage(String path) {
+		ObjectOutputStream oos = null;
+		try {
+			oos = new ObjectOutputStream(sock.getOutputStream());
+
+			BufferedImage im = ImageIO.read(new File(path));
+			System.out.println(im.toString());
+			ImageIO.write(im, "jpg", oos);
+			oos.flush();
+			oos.close();
+			makeConnection();
+			System.out.println("sent");
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public ArrayList<Object> receiveMessage() {
-		
+		// ObjectInputStream ois = null;
 		ArrayList<Object> objList = new ArrayList<>();
-		
 		try {
 			ObjectInputStream ois = new ObjectInputStream(sock.getInputStream());
 
 			objList = (ArrayList<Object>) ois.readObject();
-			System.out.println("사이즈:" + objList.size());
 		} catch (EOFException e) {
 			System.out.println("파일을 다 읽었습니다.");
 		} catch (IOException e) {
@@ -66,47 +84,6 @@ public class Communicator {
 		}
 
 		return objList;
-		
 	}
-			
-			
-			/*OutputStream out = sock.getOutputStream();
-			PrintWriter pw = new PrintWriter(new OutputStreamWriter(out));
-				
-			
-			
-			
-			// reader
-			ObjectInputStream ois = new ObjectInputStream(sock.getInputStream());
-			Object obj = ois.readObject();
-			
-			//어떤 dto 인지 구분
-			if (obj instanceof MemberDto) {
-				
-			} else if (obj instanceof MenuDto) {
-				
-			} else if (obj instanceof MenuShowDto) {
-				
-			} else if (obj instanceof OrderedMenuDto) {
-				pw.println("6");
-				pw.flush();
-				new SaleManageView().obj = obj;
-			} else if (obj instanceof ReviewDto) {
-				
-			}
-			
-			
-			
-			// writer
-			// 각 클래스 내부에서 구현
-			
-
-		 catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}*/
-
-
 
 }

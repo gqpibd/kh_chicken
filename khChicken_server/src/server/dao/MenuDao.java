@@ -133,8 +133,9 @@ public class MenuDao {
 				MenuShowDto dto = new MenuShowDto();
 				dto.setMenu_name(rs.getString(1));
 				dto.setPrice(rs.getInt(2));
-
-
+				dto.setType(rs.getString(3));
+				dto.setDescription(rs.getString(4));
+				dto.setavgScore(rs.getDouble(5));
 				// System.out.println(dto);
 				list.add(dto);
 			}
