@@ -44,8 +44,7 @@ public class Communicator {
 			
 			output = sock.getOutputStream();
 			ObjectOutputStream oos = new ObjectOutputStream(output);	//보내고
-			oos.writeInt(val);
-			oos.writeObject(obj);
+			oos.writeInt(4);
 			
 			
 		} catch (IOException e1) {
