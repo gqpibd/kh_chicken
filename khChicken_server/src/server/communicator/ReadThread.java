@@ -13,11 +13,11 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 import server.dao.MenuDao;
-import server.dto.MemberDto;
-import server.dto.MenuDto;
-import server.dto.MenuShowDto;
-import server.dto.OrderedMenuDto;
-import server.dto.ReviewDto;
+import dto.MemberDto;
+import dto.MenuDto;
+import dto.MenuShowDto;
+import dto.OrderedMenuDto;
+import dto.ReviewDto;
 import server.singleton.Singleton;
 
 public class ReadThread extends Thread {
