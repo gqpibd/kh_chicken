@@ -3,12 +3,14 @@ package client.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import client.singleton.Singleton;
 import dto.MenuDto;
 import dto.MenuShowDto;
 
 public class MenuDao {
 	
 	List<MenuDto> memList = new ArrayList<MenuDto>();
+	Singleton s = Singleton.getInstance();
 	
 	public MenuDao() {
 		
