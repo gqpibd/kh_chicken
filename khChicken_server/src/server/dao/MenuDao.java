@@ -34,7 +34,7 @@ public void getShowMenu(Socket sock) {
 		
 
 		//menu이름 별로 별점 가져옴 
-		String sql = " SELECT AVG_RATE, MENU_TYPE, PRICE, MENU_NAME  FROM MENU ";
+		String sql = " SELECT AVG_RATE, DESCRIPTION, MENU_TYPE, PRICE, MENU_NAME  FROM MENU ";
 		
 		
 		Connection conn = null;
@@ -49,8 +49,13 @@ public void getShowMenu(Socket sock) {
 			
 			if(rs.next()) {
 				
-				MenuShowDto showDto = new MenuShowDto(null, rs.getDouble("AVG_RATE"));
-				
+				MenuShowDto showDto = new MenuShowDto(
+																											rs.getString("MENU_NAME"), 
+																											rs.getInt("PRICE"), 
+																											rs.getString("MENU_TYPE"), 
+																											rs.getString("DESCRIPTION"), 
+																											rs.getDouble("AVG_RATE"));
+				showMenuList.add(showDto);
 			}
 		
 		} catch (SQLException e) {
@@ -72,7 +77,7 @@ public void getShowMenu(Socket sock) {
 			e.printStackTrace();
 		}
 
-//		sleep(100);
+		sleep(100);
 
 		
 		

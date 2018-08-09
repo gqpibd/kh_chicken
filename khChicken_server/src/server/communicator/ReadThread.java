@@ -67,7 +67,10 @@ public class ReadThread extends Thread {
 					} else if (obj instanceof MenuDto) {	//여기서 오류날 가능성 많음
 
 					} else if (obj instanceof MenuShowDto) {
-
+						
+						MenuDao menuDao = new MenuDao();
+						menuDao.getShowMenu(sock);
+						
 					} else if (obj instanceof OrderedMenuDto) {
 
 					} else if (obj instanceof ReviewDto) {
@@ -76,10 +79,7 @@ public class ReadThread extends Thread {
 					break;
 
 				case 4: // menu 불러오기
-					
-					MenuDao menuDao = new MenuDao();
-					menuDao.getShowMenu(sock);
-					
+
 				case 5: // review 불러오기
 					
 				case 6: // 전체매출 불러오기
