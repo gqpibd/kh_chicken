@@ -38,3 +38,4 @@ local.properties
 .buildpath
 .target
 /target/
+/kh_semi/
