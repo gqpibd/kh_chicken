@@ -10,7 +10,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-import client.dto.MenuShowDto;
+import dto.MenuShowDto;
 
 public class Communicator {
 	private Socket sock;

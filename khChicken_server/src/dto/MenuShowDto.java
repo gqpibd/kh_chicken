@@ -1,4 +1,4 @@
-package server.dto;
+package dto;
 
 import java.awt.Image;
 import java.io.Serializable;
