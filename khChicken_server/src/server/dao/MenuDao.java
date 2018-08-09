@@ -1,7 +1,5 @@
 package server.dao;
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,7 +32,7 @@ public void getShowMenu(Socket sock) {
 		
 
 		//menu이름 별로 별점 가져옴 
-		String sql = " SELECT AVG_RATE, DESCRIPTION, MENU_TYPE, PRICE, MENU_NAME  FROM MENU ";
+		String sql = " SELECT * FROM MENU ";
 		
 		
 		Connection conn = null;

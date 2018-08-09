@@ -26,9 +26,7 @@ public List<MenuShowDto> getShowMenu(){
 		
 		//comm연결	
 		s.comm.getShowMenu();
-		
-		
-		
+
 		return showDtoList;
 		
 	}
