@@ -35,7 +35,7 @@ public class Communicator {
 	public List<MenuShowDto> getShowMenu() {
 		
 		List<MenuShowDto> showDtoList = new ArrayList<>();
-		
+		Object obj = showDtoList;
 		//server에 요청 
 		
 		OutputStream output;
@@ -44,7 +44,8 @@ public class Communicator {
 			
 			output = sock.getOutputStream();
 			ObjectOutputStream oos = new ObjectOutputStream(output);	//보내고
-			oos.writeInt(4);
+			oos.writeInt(2);
+			oos.writeObject(obj);
 			
 			
 		} catch (IOException e1) {
@@ -60,7 +61,7 @@ public class Communicator {
 			
 			input = sock.getInputStream();
 			ObjectInputStream ois = new ObjectInputStream(input); //dto받고
-			Object obj = ois.readObject();
+			obj = ois.readObject();
 			showDtoList = (List<MenuShowDto>)obj;
 			
 		} catch (IOException e) {
