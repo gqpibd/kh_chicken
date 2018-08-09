@@ -68,8 +68,8 @@ public class ReadThread extends Thread {
 
 					} else if (obj instanceof MenuShowDto) {
 						
-						MenuDao menuDao = new MenuDao();
-						menuDao.getShowMenu(sock);
+						System.out.println("MenuShowDto received");
+						s.getMenuCtrl().execute(number, (MenuShowDto) obj, sock);
 						
 					} else if (obj instanceof OrderedMenuDto) {
 
