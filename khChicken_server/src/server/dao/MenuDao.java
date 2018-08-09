@@ -65,20 +65,8 @@ public void getShowMenu(Socket sock) {
 	
 		
 		// send 
+
 		
-		ObjectOutputStream oos;
-		try {
-			oos = new ObjectOutputStream(sock.getOutputStream());
-			Object obj = showMenuList;
-			oos.writeObject(obj);
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		sleep(100);
-
 		
 		
 	}
