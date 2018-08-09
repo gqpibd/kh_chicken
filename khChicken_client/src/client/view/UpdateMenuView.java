@@ -32,9 +32,10 @@ import dto.MenuDto;
 import dto.MenuShowDto;
 
 public class UpdateMenuView extends JFrame implements ActionListener {
-	private final int NAME_COL = 0;
-	private final int PRICE_COL = 1;
-	private final int IMG_COL = 2;
+	private final int TYPE_COL = 0;
+	private final int NAME_COL = 1;
+	private final int PRICE_COL = 2;
+	private final int IMG_COL = 3;
 	// private final String FOLDER_PATH = "d:\\images\\";
 	private final String FOLDER_PATH = "\\\\192.168.30.35\\share\\images\\";
 	private JTextField nameField;
@@ -49,70 +50,63 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 
 	private DefaultTableModel model; // 추가 버튼을 눌렀을 때 실시간으로 주문 내역 창에 반영하기 위해서 필요하다
 	private JTextField imgFileField;
+	private JTextField typeField;
 
 	public UpdateMenuView() {
 		setTitle("메뉴 수정, 삭제");
-		int frameWidth = 400;
-
-		setBounds(300, 150, frameWidth, 505);
+	
 		getContentPane().setLayout(null);
 
 		setTable();
-
-		JLabel titleLabel = new JLabel("메뉴 수정, 삭제");
-		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		titleLabel.setFont(new Font("돋움체", Font.BOLD, 20));
-		titleLabel.setBounds(0, 10, 384, 30);
-		getContentPane().add(titleLabel);
-
+		
 		nameField = new JTextField();
 		nameField.setEditable(false);
-		nameField.setBounds(95, 185, 173, 21);
+		nameField.setBounds(87, 205, 173, 21);
 		getContentPane().add(nameField);
 		nameField.setColumns(10);
 
 		JLabel menuNamelabel = new JLabel("메뉴 이름");
-		menuNamelabel.setBounds(20, 188, 57, 15);
+		menuNamelabel.setBounds(12, 208, 57, 15);
 		getContentPane().add(menuNamelabel);
 
 		JLabel priceLabel = new JLabel("가격");
-		priceLabel.setBounds(20, 219, 57, 15);
+		priceLabel.setBounds(12, 239, 57, 15);
 		getContentPane().add(priceLabel);
 
 		priceField = new JTextField();
 		priceField.setEditable(false);
-		priceField.setBounds(95, 216, 90, 21);
+		priceField.setBounds(87, 235, 90, 21);
 		getContentPane().add(priceField);
 		priceField.setColumns(10);
 
 		applyBtn = new JButton("적용");
-		applyBtn.setBounds(282, 334, 90, 34);
+		applyBtn.setBounds(319, 334, 90, 34);
 		applyBtn.addActionListener(this);
 		getContentPane().add(applyBtn);
 
 		delBtn = new JButton("메뉴 삭제");
-		delBtn.setBounds(282, 378, 90, 34);
+		delBtn.setBounds(319, 378, 90, 34);
 		delBtn.addActionListener(this);
 		getContentPane().add(delBtn);
 
 		backBtn = new JButton("뒤로가기");
-		backBtn.setBounds(282, 422, 90, 34);
+		backBtn.setBounds(319, 422, 90, 34);
 		backBtn.addActionListener(this);
 		getContentPane().add(backBtn);
 
 		imgFileField = new JTextField();
 		imgFileField.setEditable(false);
 		imgFileField.setColumns(10);
-		imgFileField.setBounds(95, 245, 173, 21);
+		imgFileField.setBounds(87, 265, 173, 21);
 		getContentPane().add(imgFileField);
 
 		searchBtn = new JButton("검색");
 		searchBtn.addActionListener(this);
-		searchBtn.setBounds(307, 244, 65, 23);
+		searchBtn.setBounds(299, 265, 65, 21);
 		getContentPane().add(searchBtn);
 
 		JLabel wonLabel = new JLabel("원");
-		wonLabel.setBounds(327, 219, 35, 15);
+		wonLabel.setBounds(319, 239, 35, 15);
 		getContentPane().add(wonLabel);
 
 		JScrollPane scrollPane = new JScrollPane(menuTable);
@@ -120,29 +114,50 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		// scrollPane.setBounds((frameWidth-menuTable.getPreferredSize().width)/2, 28,
 		// menuTable.getPreferredSize().width, 211);
+
+		int frameWidth =  menuTable.getPreferredSize().width + 50;
 		scrollPane.setBounds((frameWidth - menuTable.getPreferredSize().width) / 2, 47,
 				menuTable.getPreferredSize().width, 122);
 		getContentPane().add(scrollPane);
+		
+		JLabel titleLabel = new JLabel("메뉴 수정, 삭제");
+		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		titleLabel.setFont(new Font("돋움체", Font.BOLD, 20));
+		titleLabel.setBounds(0, 10, frameWidth, 30);
+		getContentPane().add(titleLabel);
 
 		newPriceField = new JTextField();
 		newPriceField.setColumns(10);
-		newPriceField.setBounds(225, 216, 90, 21);
+		newPriceField.setBounds(217, 235, 90, 21);
 		getContentPane().add(newPriceField);
 
 		JLabel lblNewLabel = new JLabel("==>");
-		lblNewLabel.setBounds(198, 219, 27, 15);
+		lblNewLabel.setBounds(190, 239, 27, 15);
 		getContentPane().add(lblNewLabel);
 
 		JLabel ilabel = new JLabel("이미지 파일");
-		ilabel.setBounds(20, 248, 83, 15);
+		ilabel.setBounds(12, 268, 83, 15);
 		getContentPane().add(ilabel);
 
 		imgLabel = new JLabel();
-		imgLabel.setBounds(30, 274, 225, 170);
+		imgLabel.setBounds(25, 296, 217, 160);
 		getContentPane().add(imgLabel);
+		
+		JLabel catLabel = new JLabel("카테고리");
+		catLabel.setBounds(12, 178, 57, 15);
+		getContentPane().add(catLabel);
+		
+		typeField = new JTextField();
+		typeField.setText((String) null);
+		typeField.setEditable(false);
+		typeField.setColumns(10);
+		typeField.setBounds(87, 175, 83, 21);
+		getContentPane().add(typeField);
 
 		initFields();
+		
 
+		setBounds(300, 150, frameWidth, 505);		
 		setVisible(true);
 	}
 
@@ -155,17 +170,19 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 		priceField.setText(topDto.getPrice() + "");
 		newPriceField.setText(topDto.getPrice() + "");
 		imgFileField.setText(topDto.getMenu_name() + ".jpg");
+		typeField.setText(topDto.getType());
 		
 		setImage(FOLDER_PATH + topDto.getMenu_name().replaceAll(" ", "_") + ".jpg");
 		menuTable.setRowSelectionInterval(0, 0);
+		
 	}
 
 	public void setTable() {
-		String colNames[] = { "이름", "가격", "이미지파일" };
+		String colNames[] = { "타입", "이름", "가격", "이미지파일" };
 		Object rowData[][] = setDataForTable();
 		model = new DefaultTableModel(rowData, colNames) {
 			// 테이블의 각 셀에 입력되어 있는 값을 임의로 변결할 수 없게 해 준다.
-			boolean[] columnEditables = new boolean[] { false, false, false };
+			boolean[] columnEditables = new boolean[] { false, false, false, false };
 
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
@@ -174,14 +191,16 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 
 		menuTable = new JTable(model);
 		menuTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF); // 칼럼 크기가 모두 동일하게 들어가면 보기 좋지 않으므로 각각 셋팅해준다.
+		menuTable.getColumnModel().getColumn(TYPE_COL).setPreferredWidth(70);
 		menuTable.getColumnModel().getColumn(NAME_COL).setPreferredWidth(120);
 		menuTable.getColumnModel().getColumn(PRICE_COL).setPreferredWidth(80);
-		menuTable.getColumnModel().getColumn(IMG_COL).setPreferredWidth(140);
+		menuTable.getColumnModel().getColumn(IMG_COL).setPreferredWidth(150);
 
 		menuTable.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int row = menuTable.getSelectedRow();
+				typeField.setText(model.getValueAt(row, TYPE_COL).toString());
 				nameField.setText(model.getValueAt(row, NAME_COL).toString());
 				priceField.setText(model.getValueAt(row, PRICE_COL).toString());
 				newPriceField.setText(model.getValueAt(row, PRICE_COL).toString());
@@ -203,7 +222,7 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 	public Object[][] setDataForTable() {
 		Singleton s = Singleton.getInstance();
 		Object rowData[][];
-		rowData = new Object[s.getMenuCtrl().getMenDao().getSize()][3];
+		rowData = new Object[s.getMenuCtrl().getMenDao().getSize()][4];
 
 		for (int j = 0; j < s.getMenuCtrl().getMenDao().getSize(); j++) { // 모든 메뉴를
 			MenuShowDto menu = (MenuShowDto) s.getMenuCtrl().getMenDao().get(j);
@@ -213,7 +232,8 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 	}
 
 	public Object[] addDataToRowArr(MenuShowDto menu) {
-		Object rowData[] = new Object[3];
+		Object rowData[] = new Object[4];
+		rowData[TYPE_COL] = menu.getType();
 		rowData[NAME_COL] = menu.getMenu_name();
 		rowData[PRICE_COL] = menu.getPrice();
 		rowData[IMG_COL] = menu.getMenu_name().replaceAll(" ", "_") + ".jpg";
@@ -287,7 +307,6 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 		getContentPane().add(imgLabel);
 
 		return folderPath;
-
 	}
 
 	public void setImage(String path) {
