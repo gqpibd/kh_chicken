@@ -42,7 +42,7 @@ public class ReadThread extends Thread {
 			while (true) {
 				int number = ois.readInt();
 				System.out.println(number);
-
+dd
 				switch (number) {
 				case 0: // insert
 				case 1: // select
