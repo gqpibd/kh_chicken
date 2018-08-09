@@ -9,20 +9,20 @@ public class Singleton {
 	
 	private static Singleton single = new Singleton();
 	
-	public MemberDao ctrlMember;
-	public MenuDao ctrlMenu;
-	public OrderDao ctrlOrder;
-	public ReviewDao ctrlReview;
+	MemberDao ctrlMember = new MemberDao();
+	MenuDao ctrlMenu = new MenuDao();
+	OrderDao ctrlOrder = new OrderDao();
+	ReviewDao ctrlReview = new ReviewDao();
 	
 	private Singleton() {
-		ctrlMember = new MemberDao();
-		ctrlMenu = new MenuDao();
-		ctrlOrder = new OrderDao();
-		ctrlReview = new ReviewDao();
 	}
 	
 	public static Singleton getInstance() {
 		return single;
+	}
+	
+	public OrderDao getOrderCtrl() {
+		return ctrlOrder;
 	}
 	
 

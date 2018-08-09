@@ -24,7 +24,7 @@ public class OrderDao {
 	
 	public ArrayList<Object> select() {
 		Singleton s = Singleton.getInstance();
-		s.comm.makeConnection();	// 소켓 연결
+		s.getComm().makeConnection();
 		
 		OrderedMenuDto dto = new OrderedMenuDto();
 		
@@ -32,9 +32,9 @@ public class OrderDao {
 		orderList.clear();
 		
 		// 6번 실행하라! 시그널 보내
-		s.comm.SendMessage(6, dto);
+		s.getComm().SendMessage(9, dto);
 		// db 결과 받아오기
-		ArrayList<Object> resultList = s.comm.receiveMessage();
+		ArrayList<Object> resultList = s.getComm().receiveMessage();
 		
 		for (int i = 0; i < resultList.size(); i++) {
 			// 실시간으로 받은 dto를 리스트에 저장

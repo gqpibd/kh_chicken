@@ -1,5 +1,6 @@
 package server.dao;
 
+import java.net.Socket;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import server.communicator.SocketWriter;
 import server.db.DBClose;
 import server.db.DBConnection;
 import server.dto.OrderedMenuDto;
@@ -20,7 +22,7 @@ public class OrderDao {
 	public void insert() {
 	}
 	
-	public List<OrderedMenuDto> select() {
+	public void select(Socket sock) {
 		
 		String sql = " SELECT DISTINCT a.ORDER_DATE, a.menu_name, a.counts, a.bev_coupon, b.price "
 					+ " FROM ORDER_DETAIL a, MENU b "
@@ -30,7 +32,7 @@ public class OrderDao {
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		
-		List<OrderedMenuDto> list = new ArrayList<OrderedMenuDto>();
+		ArrayList<OrderedMenuDto> list = new ArrayList<>();
 		
 		
 		try {
@@ -54,10 +56,11 @@ public class OrderDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
+			// 담은 리스트를 소켓에 실어 보내자!
+			SocketWriter.WriteAll(sock, list);
 			DBClose.close(psmt, conn, rs);			
 		}
 		
-		return list;
 		
 		
 	}

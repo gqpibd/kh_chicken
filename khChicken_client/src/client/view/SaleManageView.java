@@ -44,7 +44,7 @@ public class SaleManageView extends JFrame {
 		
 		
 		// controller로 영수증 목록 취득
-		list = s.ordCtrl.select();
+		list = s.getOrderCtrl().select();
 		
 		// 확인용
 		for (int i = 0; i < list.size(); i++) {

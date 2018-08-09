@@ -10,7 +10,7 @@ public class Main {
 	public static void main(String[] args) {
 		
 		Singleton s = Singleton.getInstance();
-		s.comm.makeConnection();
+		//s.getComm().makeConnection();
 		
 		
 		new ManageView();
