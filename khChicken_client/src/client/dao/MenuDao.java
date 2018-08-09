@@ -3,7 +3,8 @@ package client.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import client.dto.MenuDto;
+import dto.MenuDto;
+import dto.MenuShowDto;
 
 public class MenuDao {
 	
@@ -14,6 +15,19 @@ public class MenuDao {
 	}
 	
 	public void insert() {
+		
+	}
+	
+public List<MenuShowDto> getShowMenu(){
+		
+		List<MenuShowDto> showDtoList = new ArrayList<>();
+		
+		//comm연결	
+		s.comm.getShowMenu();
+		
+		
+		
+		return showDtoList;
 		
 	}
 	
