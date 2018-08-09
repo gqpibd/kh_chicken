@@ -14,8 +14,8 @@ public class OrderController {
 		ordDao.insert();
 	}
 	
-	public List<OrderedMenuDto> select(Object obj) {
-		return ordDao.select(obj);
+	public ArrayList<Object> select() {
+		return ordDao.select();
 	}
 	
 	public void delete() {

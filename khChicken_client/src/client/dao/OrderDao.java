@@ -7,11 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import client.dto.OrderedMenuDto;
+import client.singleton.Singleton;
 
 public class OrderDao {
 	
-	private Object obj;
-	List<OrderedMenuDto> oList = new ArrayList<OrderedMenuDto>();
+	List<OrderedMenuDto> orderList = new ArrayList<OrderedMenuDto>();
+	
 	
 	public OrderDao() {
 	}
@@ -21,12 +22,30 @@ public class OrderDao {
 		
 	}
 	
-	public List<OrderedMenuDto> select(Object obj) {
-		this.obj = obj;
+	public ArrayList<Object> select() {
+		Singleton s = Singleton.getInstance();
+		s.comm.makeConnection();	// 소켓 연결
 		
-		// reader
-		oList = (ArrayList<OrderedMenuDto>)obj;
-		return oList;
+		OrderedMenuDto dto = new OrderedMenuDto();
+		
+		// 리스트 초기화
+		orderList.clear();
+		
+		// 6번 실행하라! 시그널 보내
+		s.comm.SendMessage(6, dto);
+		// db 결과 받아오기
+		ArrayList<Object> resultList = s.comm.receiveMessage();
+		
+		for (int i = 0; i < resultList.size(); i++) {
+			// 실시간으로 받은 dto를 리스트에 저장
+			orderList.add((OrderedMenuDto)resultList.get(i));
+			// 받은 값 확인용
+			System.out.println(resultList.get(i));
+		}
+		
+		return resultList;
+		
+		
 		
 	}
 	

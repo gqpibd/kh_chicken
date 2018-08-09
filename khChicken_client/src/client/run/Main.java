@@ -13,7 +13,7 @@ public class Main {
 		s.comm.makeConnection();
 		
 		
-		new ManageView().setVisible(true);
+		new ManageView();
 		
 		
 		

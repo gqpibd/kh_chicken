@@ -34,7 +34,7 @@ public class SaleManageView extends JFrame {
 	
 	DefaultTableModel model;
 	
-	List<OrderedMenuDto> list = new ArrayList<OrderedMenuDto>();
+	List<Object> list = new ArrayList<Object>();
 	
 	public SaleManageView() {
 		super("판매 내역");
@@ -43,12 +43,10 @@ public class SaleManageView extends JFrame {
 		Singleton s = Singleton.getInstance();
 		
 		
-		// number 6 보내주기
-		s.comm.SendMessage(6, "");
-		
 		// controller로 영수증 목록 취득
-		list = s.comm.receiveMessage();
+		list = s.ordCtrl.select();
 		
+		// 확인용
 		for (int i = 0; i < list.size(); i++) {
 			System.out.println(list.get(i));
 		}
@@ -58,7 +56,7 @@ public class SaleManageView extends JFrame {
 		add(label);
 		
 		
-		
+		/*
 		int bbsNum = 1;
 		
 		rowData = new Object[list.size()][6];	// 테이블의 2차원배열
@@ -111,7 +109,7 @@ public class SaleManageView extends JFrame {
 		jScrPane.setBounds(10, 50, 600, 300);
 		add(jScrPane);
 		
-		
+		*/
 		
 		
 		

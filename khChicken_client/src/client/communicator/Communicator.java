@@ -1,26 +1,14 @@
 package client.communicator;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
+import java.io.EOFException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.util.List;
+import java.util.ArrayList;
 
-import client.dto.MemberDto;
-import client.dto.MenuDto;
-import client.dto.MenuShowDto;
 import client.dto.OrderedMenuDto;
-import client.dto.ReviewDto;
-import client.singleton.Singleton;
-import client.view.SaleManageView;
 
 public class Communicator {
 	private Socket sock;
@@ -47,92 +35,38 @@ public class Communicator {
 		
 		
 		try {
-			OutputStream ops = sock.getOutputStream();
-			//pw = new PrintWriter(new OutputStreamWriter(ops));
-			//pw.println(number);
-			//pw.flush();
+			oos = new ObjectOutputStream(sock.getOutputStream());
 			
-			oos = new ObjectOutputStream(ops);
 			oos.writeInt(number);
 			oos.writeObject(o);
+			
 			oos.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
-		} finally {
-			/*try {
-				//pw.close();
-				//oos.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}*/
-		}
+		} 
 	}
 	
 	
 	
-	public List<OrderedMenuDto> receiveMessage() {
+	public ArrayList<Object> receiveMessage() {
 		
-		Singleton s = Singleton.getInstance();
-		Object obj = null;
+		ArrayList<Object> objList = new ArrayList<>();
 		
-			try {
-				// receive
-				InputStream input = sock.getInputStream();
-				ObjectInputStream ois = new ObjectInputStream(input); // dto받기
-				obj = ois.readObject();
-//				System.out.println(obj.toString());
-				
-				
-				
-				
-				
-//				switch (number) {
-//				case 0:	//insert	
-//				case 1:	//select
-//				case 2:	//delete
-//				case 3:	//update
-//					
-//					obj = ois.readObject();
-//					
-//					//어떤 dto 인지 구분
-//					if (obj instanceof MemberDto) {	
-//
-//					} else if (obj instanceof MenuDto) {
-//
-//					} else if (obj instanceof MenuShowDto) {
-//
-//					} else if (obj instanceof OrderedMenuDto) {
-//
-//					} else if (obj instanceof ReviewDto) {
-//
-//					}
-//					break;
-//
-//				case 4: // menu 불러오기
-//					
-//				case 5: // review 불러오기
-//					
-//				case 6: // 전체매출 불러오기
-//					obj = s.ctrlOrder.select();
-//					break;
-//				case 7: // 내 주문내역 불러오기
-//
-//				}
-//
-//				// send (받는건 번호+dto 지만 보내는건 한번만 해도됨)
-//				ObjectOutputStream oos = new ObjectOutputStream(sock.getOutputStream());
-//				oos.writeObject(obj);
+		try {
+			ObjectInputStream ois = new ObjectInputStream(sock.getInputStream());
 
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			} 
-	
+			objList = (ArrayList<Object>) ois.readObject();
+			System.out.println("사이즈:" + objList.size());
+		} catch (EOFException e) {
+			System.out.println("파일을 다 읽었습니다.");
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 
-			return s.ordCtrl.select(obj);
+		return objList;
+		
 	}
 			
 			
