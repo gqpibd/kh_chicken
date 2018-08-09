@@ -10,23 +10,26 @@ public class Singleton {
 	
 	private static Singleton single = new Singleton();
 	
-	public MemberController memCtrl;
-	public MenuController menCtrl;
-	public OrderController ordCtrl;
-	public ReviewController revCtrl;
-	public Communicator comm;
+	private Communicator comm = new Communicator();	
+	
+	private MemberController memCtrl = new MemberController();
+	private MenuController menCtrl = new MenuController();
+	private OrderController ordCtrl = new OrderController();
+	private ReviewController revCtrl = new ReviewController();
 	
 	private Singleton() {
-		
-		 memCtrl = new MemberController();
-		 menCtrl = new MenuController();
-		 ordCtrl = new OrderController();
-		 revCtrl = new ReviewController();
-		 comm = new Communicator();
 	}
 	
 	public static Singleton getInstance() {
 		return single;
+	}
+	
+	public Communicator getComm() {
+		return comm;
+	}
+	
+	public OrderController getOrderCtrl() {
+		return ordCtrl;
 	}
 
 }

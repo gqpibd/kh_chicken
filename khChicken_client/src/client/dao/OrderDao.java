@@ -1,13 +1,18 @@
 package client.dao;
 
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 import client.dto.OrderedMenuDto;
+import client.singleton.Singleton;
 
 public class OrderDao {
 	
-	List<OrderedMenuDto> oList = new ArrayList<OrderedMenuDto>();
+	List<OrderedMenuDto> orderList = new ArrayList<OrderedMenuDto>();
+	
 	
 	public OrderDao() {
 	}
@@ -17,11 +22,31 @@ public class OrderDao {
 		
 	}
 	
-	public List<OrderedMenuDto> select() {
+	public ArrayList<Object> select() {
+		Singleton s = Singleton.getInstance();
+		s.getComm().makeConnection();
 		
-		// reader
+		OrderedMenuDto dto = new OrderedMenuDto();
 		
-		return null;
+		// 리스트 초기화
+		orderList.clear();
+		
+		// 6번 실행하라! 시그널 보내
+		s.getComm().SendMessage(9, dto);
+		// db 결과 받아오기
+		ArrayList<Object> resultList = s.getComm().receiveMessage();
+		
+		for (int i = 0; i < resultList.size(); i++) {
+			// 실시간으로 받은 dto를 리스트에 저장
+			orderList.add((OrderedMenuDto)resultList.get(i));
+			// 받은 값 확인용
+			System.out.println(resultList.get(i));
+		}
+		
+		return resultList;
+		
+		
+		
 	}
 	
 	public void update() {

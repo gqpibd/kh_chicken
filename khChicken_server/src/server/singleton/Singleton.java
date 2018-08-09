@@ -21,5 +21,9 @@ public class Singleton {
 		return single;
 	}
 	
+	public OrderDao getOrderCtrl() {
+		return ctrlOrder;
+	}
+	
 
 }

@@ -1,5 +1,6 @@
 package client.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import client.dao.OrderDao;
@@ -13,7 +14,7 @@ public class OrderController {
 		ordDao.insert();
 	}
 	
-	public List<OrderedMenuDto> select() {
+	public ArrayList<Object> select() {
 		return ordDao.select();
 	}
 	

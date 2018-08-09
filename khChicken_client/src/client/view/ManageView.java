@@ -3,9 +3,19 @@ package client.view;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import client.dto.OrderedMenuDto;
+import client.singleton.Singleton;
 
 public class ManageView extends JFrame {
 	
@@ -36,8 +46,9 @@ public class ManageView extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new SaleManageView().setVisible(true);
-				dispose();
+				new SaleManageView();
+				
+				
 				
 			}
 		});
