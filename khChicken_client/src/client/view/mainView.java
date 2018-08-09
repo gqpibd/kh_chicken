@@ -22,8 +22,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import client.controller.MenuController;
 import client.controller.OrderController;
-import client.dto.MenuShowDto;
+import dto.MenuShowDto;
 import client.singleton.Singleton;
 import net.miginfocom.swing.MigLayout;
 
@@ -60,7 +61,7 @@ import net.miginfocom.swing.MigLayout;
 public class mainView extends JFrame {
 	
 	Singleton s = Singleton.getInstance();
-	OrderController orderCtrl = new OrderController();
+	MenuController menuCtrl = new MenuController();
 	List<MenuShowDto> list_showMenu;
 	
 	public mainView() {
@@ -155,7 +156,7 @@ public class mainView extends JFrame {
 		//List<MenuDto> list_menudto = new ArrayList<>();
 		
 		//메뉴 리스트에 DB에서 가져온 메뉴 넣기 
-		list_showMenu  = orderCtrl.getShowMenu();
+		list_showMenu  = menuCtrl.getShowMenu();
 		
 		//메뉴들을 넣을 패널 설정   
 		JPanel panel_bigmenu = new JPanel();
@@ -272,7 +273,7 @@ public class mainView extends JFrame {
 		
 		//별점
 		MenuShowDto menushowDto = new MenuShowDto();
-		JLabel scoreLabel = new JLabel("별점 : "+ menushowDto.getAvgScore()+"");
+		JLabel scoreLabel = new JLabel("별점 : "+ list_showMenu.get(i).getavgScore()+"");
 		scoreLabel.setFont(new Font("다음_Regular", Font.PLAIN, 14));
 		frontpanel.add(scoreLabel, "center, wrap");
 		
