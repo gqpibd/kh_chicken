@@ -12,6 +12,12 @@ import server.dto.MemberDto;
 public class MemberDao {
 	
 	public MemberDao() {
+		
+	}
+	
+	public muneal() {
+		
+		
 	}
 	
 	public void insert(client.dto.MemberDto dto) {

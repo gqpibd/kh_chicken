@@ -71,12 +71,8 @@ public class ReadThread extends Thread {
 							oos.writeObject(join);
 							oos.flush();
 							
-							break;
-						case 2:	//delete
-							break;
-						case 3:	//update
-							break;
-						case 4 : //select login
+
+
 							boolean Loging = s.ctrlMember.select_loging(dto);
 							oos = new ObjectOutputStream(out);
 							System.out.println(Loging);

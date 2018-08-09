@@ -48,6 +48,12 @@ public class ReviewDao {
 	
 	public void select(ReviewDto dto) {
 		
+		String id = dto.getUserId();
+		
+		//String sql = "SELECT * "
+		//		+ " FROM OR
+				
+		
 	}
 	
 	public void update(ReviewDto dto) {
