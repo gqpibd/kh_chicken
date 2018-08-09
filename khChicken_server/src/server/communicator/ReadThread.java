@@ -12,6 +12,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import server.dao.MenuDao;
 import server.dto.MemberDto;
 import server.dto.MenuDto;
 import server.dto.MenuShowDto;
@@ -76,6 +77,9 @@ public class ReadThread extends Thread {
 
 				case 4: // menu 불러오기
 					
+					MenuDao menuDao = new MenuDao();
+					menuDao.getShowMenu(sock);
+					
 				case 5: // review 불러오기
 					
 				case 6: // 전체매출 불러오기
@@ -85,12 +89,6 @@ public class ReadThread extends Thread {
 				}
 					
 				
-				//각각따로 dao에서 
-				
-				// send (받는건 번호+dto 지만 보내는건 한번만 해도됨)
-				ObjectOutputStream oos = new ObjectOutputStream(sock.getOutputStream());
-				oos.writeObject(obj);
-				sleep(100);
 
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
@@ -98,9 +96,7 @@ public class ReadThread extends Thread {
 				e.printStackTrace();
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			} 
 		}
 
 	}
