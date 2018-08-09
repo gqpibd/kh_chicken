@@ -1,22 +1,14 @@
 package server.communicator;
 
-import java.io.BufferedReader;
+
 import java.io.EOFException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketException;
-
-import server.dao.MenuDao;
 import dto.MemberDto;
-import dto.MenuDto;
 import dto.MenuShowDto;
 import dto.OrderedMenuDto;
 import dto.ReviewDto;
