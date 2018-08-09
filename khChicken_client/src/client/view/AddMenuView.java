@@ -26,12 +26,14 @@ import javax.swing.filechooser.FileSystemView;
 import client.singleton.Singleton;
 import dto.MenuShowDto;
 
-public class AddMenuView extends JFrame {
+public class AddMenuView extends JFrame implements ActionListener {
 	private JTextField filePathField;
 	private JTextField nameField;
 	private JTextField priceField;
 	JLabel imgLabel;
 	JButton searchBtn;
+	JButton submitBtn;
+	JButton cancelBtn;
 	String path = "";
 
 	public AddMenuView() {
@@ -92,13 +94,7 @@ public class AddMenuView extends JFrame {
 		getContentPane().add(titleLabel);
 
 		searchBtn = new JButton("검색");
-		searchBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				path = jFileChooserUtil();
-				filePathField.setText(path.substring(path.lastIndexOf("\\") + 1)); // 전체 경로에서 파일 이름과 확장자명만 가져온다.
-				setImage(path);
-			}
-		});
+		searchBtn.addActionListener(this);
 		searchBtn.setBounds(186, 159, 65, 23);
 		getContentPane().add(searchBtn);
 
@@ -120,24 +116,15 @@ public class AddMenuView extends JFrame {
 		getContentPane().add(priceField);
 		priceField.setColumns(10);
 
-		JButton cancelBtn = new JButton("취소");
+		cancelBtn = new JButton("취소");
 		cancelBtn.setBounds(161, 346, 83, 34);
 		getContentPane().add(cancelBtn);
+		cancelBtn.addActionListener(this);
 
-		JButton submitBtn = new JButton("완료");
+		submitBtn = new JButton("완료");
 		submitBtn.setBounds(33, 346, 83, 34);
 		getContentPane().add(submitBtn);
-		submitBtn.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				MenuShowDto dto = new MenuShowDto(nameField.getText(), Integer.parseInt(priceField.getText()));
-				System.out.println(dto.toString());
-				Singleton s = Singleton.getInstance();
-				s.getMenuCtrl().insert(dto,path);
-				dispose();
-			}
-		});
+		submitBtn.addActionListener(this);
 
 		JLabel wonLabel = new JLabel("원");
 		wonLabel.setBounds(206, 134, 57, 15);
@@ -157,7 +144,7 @@ public class AddMenuView extends JFrame {
 		chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES); // 파일 선택 모드
 
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("이미지파일(.jpg)", "jpg"); // filter 확장자 추가
-		 chooser.setFileFilter(filter); // 파일 필터를 추가
+		chooser.setFileFilter(filter); // 파일 필터를 추가
 
 		int returnVal = chooser.showOpenDialog(null); // 열기용 창 오픈
 
@@ -167,7 +154,7 @@ public class AddMenuView extends JFrame {
 			System.out.println("cancel");
 			folderPath = "";
 		}
-		
+
 		ImageIcon icon = new ImageIcon(folderPath);
 		JLabel imgLabel = new JLabel(icon);
 		getContentPane().add(imgLabel);
@@ -195,6 +182,24 @@ public class AddMenuView extends JFrame {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == searchBtn) { // 이미지 검색 수행
+			path = jFileChooserUtil();
+			filePathField.setText(path.substring(path.lastIndexOf("\\") + 1)); // 전체 경로에서 파일 이름과 확장자명만 가져온다.
+			setImage(path);
+		} else if (e.getSource() == submitBtn) { // 새 메뉴를 추가한다
+			MenuShowDto dto = new MenuShowDto(nameField.getText(), Integer.parseInt(priceField.getText()));
+			System.out.println(dto.toString());
+			Singleton s = Singleton.getInstance();
+			s.getMenuCtrl().insert(dto, path);
+			dispose();
+		} else if (e.getSource() == cancelBtn) {
+			dispose();
+		}
+
 	}
 
 }

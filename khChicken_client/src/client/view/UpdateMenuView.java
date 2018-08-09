@@ -35,7 +35,7 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 	private final int NAME_COL = 0;
 	private final int PRICE_COL = 1;
 	private final int IMG_COL = 2;
-//	private final String FOLDER_PATH = "d:\\images\\";
+	// private final String FOLDER_PATH = "d:\\images\\";
 	private final String FOLDER_PATH = "\\\\192.168.30.35\\share\\images\\";
 	private JTextField nameField;
 	private JTextField priceField;
@@ -141,16 +141,23 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 		imgLabel.setBounds(30, 274, 225, 170);
 		getContentPane().add(imgLabel);
 
+		initFields();
+
+		setVisible(true);
+	}
+
+	public void initFields() {
 		// 나머지 필드가 기본적으로 맨 위에 로우값으로 보이게 한다.
 		Singleton s = Singleton.getInstance();
 		MenuShowDto topDto = (MenuShowDto) s.getMenuCtrl().getMenDao().get(0);
 		System.out.println(topDto.toString());
 		nameField.setText(topDto.getMenu_name());
 		priceField.setText(topDto.getPrice() + "");
+		newPriceField.setText(topDto.getPrice() + "");
 		imgFileField.setText(topDto.getMenu_name() + ".jpg");
+		
 		setImage(FOLDER_PATH + topDto.getMenu_name().replaceAll(" ", "_") + ".jpg");
-
-		setVisible(true);
+		menuTable.setRowSelectionInterval(0, 0);
 	}
 
 	public void setTable() {
@@ -189,6 +196,7 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 
 		menuTable.getColumn("가격").setCellRenderer(celAlignCenter);
 		menuTable.getColumn("이미지파일").setCellRenderer(celAlignCenter);
+		menuTable.setColumnSelectionAllowed(false);
 
 	}
 
@@ -215,7 +223,7 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Singleton s = Singleton.getInstance();
-		if (e.getSource() == applyBtn) {
+		if (e.getSource() == applyBtn) { // 적용 버튼 클릭
 			System.out.println("변경됨");
 			MenuShowDto menu = (MenuShowDto) s.getMenuCtrl().getMenDao().getMenuByName(nameField.getText());
 			int row = menuTable.getSelectedRow();
@@ -223,27 +231,33 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 			String image = imgFileField.getText();
 			if (menu.getPrice() != newPrice) {
 				model.setValueAt(newPrice, row, PRICE_COL);
-				// menu.setPrice(newPrice);
 				s.getMenuCtrl().getMenDao().updatePrice(menu, newPrice);
 			}
+
 			s.getMenuCtrl().getMenDao().updateImage(menu, image);
+			// 이미지 바뀐 경우 판단하는 코드 추가해야함.
 			model.setValueAt(image, row, IMG_COL);
-		} else if (e.getSource() == delBtn) {
+		} else if (e.getSource() == delBtn) { // 삭제 버튼 클릭
 			MenuDto menu = s.getMenuCtrl().getMenDao().getMenuByName(nameField.getText());
 			int row = menuTable.getSelectedRow();
 			int sel = JOptionPane.showConfirmDialog(null, "이 메뉴를 삭제하시겠습니까?", "", JOptionPane.YES_NO_OPTION);
-			if (sel == 0) {
+			if (sel == 0) { // 메뉴를 삭제하는 경우
 				model.removeRow(row);
 				s.getMenuCtrl().getMenDao().delete(menu);
-			}
-		} else if (e.getSource() == backBtn) {
-			this.dispose();
-		} else if (e.getSource() == searchBtn) {
-			String path = jFileChooserUtil();
-			System.out.println(path);
-			imgFileField.setText(path.substring(path.lastIndexOf("\\") + 1)); // 전체 경로에서 파일 이름과 확장자명만 가져온다.
-			setImage(path);
 
+				initFields(); // 필드의 내용을 다 초기로 돌린다.
+				
+
+			}
+		} else if (e.getSource() == backBtn) { // 뒤로가기 버튼 클릭
+			this.dispose();
+		} else if (e.getSource() == searchBtn) { // 검색 버튼 클릭 ( 이미지 검색 )
+			String path = jFileChooserUtil();
+			if (path.length() != 0) {
+				System.out.println(path);
+				imgFileField.setText(path.substring(path.lastIndexOf("\\") + 1)); // 전체 경로에서 파일 이름과 확장자명만 가져온다.
+				setImage(path);
+			}
 		}
 	}
 

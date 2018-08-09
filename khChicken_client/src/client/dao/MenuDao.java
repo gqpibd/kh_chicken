@@ -23,12 +23,10 @@ public class MenuDao {
 	}
 
 	public void insert(MenuShowDto dto,String imgFilePath) {
+		menList.add(dto);
 		Singleton s = Singleton.getInstance();
-		//s.getComm().makeConnection();
-
 		s.getComm().SendMessage(Communicator.INSERT, dto);
 		s.getComm().sendImage(imgFilePath);
-		
 	}
 
 	public void initList() { // 서버에서 다 읽어오기
@@ -76,17 +74,21 @@ public class MenuDao {
 
 	public void delete(MenuDto menu) {
 		menList.remove(menu);
-		// socket으로 전달
+		
+		Singleton s = Singleton.getInstance();
+		s.getComm().SendMessage(Communicator.DELETE, menu);
 
 	}
 
 	public void updatePrice(MenuDto menu, int newPrice) {
-		menu.setPrice(newPrice);
-		// socket으로 전달
+		menu.setPrice(newPrice); // 리스트에서 업데이트
 
+		// socket으로 전달
+		Singleton s = Singleton.getInstance();
+		s.getComm().SendMessage(Communicator.UPDATE, menu);
 	}
 
-	public void updateImage(MenuShowDto menu, String image) {
+	public void updateImage(MenuShowDto menu, String imagePath) {
 		
 		// socket으로 전달
 
