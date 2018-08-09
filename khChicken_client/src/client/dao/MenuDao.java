@@ -1,9 +1,7 @@
 package client.dao;
 
-import java.awt.MenuShortcut;
 import java.util.ArrayList;
 import java.util.List;
-
 import client.singleton.Singleton;
 import dto.MenuDto;
 import dto.MenuShowDto;
@@ -27,7 +25,7 @@ public List<MenuShowDto> getShowMenu(){
 		List<MenuShowDto> showDtoList = new ArrayList<>();
 		
 		//comm연결	
-		s.comm.makeConnection();
+		s.comm.makeConnection();	//main에서 연결해주는데 또 연결 해야되나?
 		
 		showDtoList = s.comm.getShowMenu();
 		

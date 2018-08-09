@@ -22,6 +22,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+
+import client.controller.MemberController;
 import client.controller.MenuController;
 import client.controller.OrderController;
 import dto.MenuShowDto;
@@ -99,7 +101,6 @@ public class mainView extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				JOptionPane.showMessageDialog(null, "로그인");
-				
 				//로그인 view open
 			}
 		});
@@ -112,9 +113,7 @@ public class mainView extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				JOptionPane.showMessageDialog(null, "회원가입");
-				
-				//회원가입 view open
-				
+				//회원가입 view open	
 			}
 		});
 		
@@ -126,12 +125,9 @@ public class mainView extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-					
 				JOptionPane.showMessageDialog(null, "주문하기");
-				//주문하기 view open
-				String loginId = "";
-				
-				//new OrderView(loginId, checkedMenu );
+				String loginId = s.memCtrl.getLoginId();
+				//주문 뷰 new OrderView(loginId, checkedMenu );
 			}
 		});
 		
@@ -148,15 +144,17 @@ public class mainView extends JFrame {
 				//new ManageView();  	
 			}
 		});		
+		
+		//메뉴출력 
 		//DB에서 메뉴가져오기 (server통신)
 		list_showMenu  = menuCtrl.getShowMenu();
 		
-		//메뉴들을 넣을 패널 설정   
+		//메뉴들을 넣을 큰 패널 설정   
 		JPanel panel_bigmenu = new JPanel();
 		panel_bigmenu.setBounds(10, 100, 570, 600);
 		panel_bigmenu.setLayout(new MigLayout("wrap", "", ""));
 
-		//메뉴하나의 패널
+		//메뉴하나의 작은패널
 		JPanel panel_menu = new JPanel();
 		panel_menu.setLayout(new MigLayout());
 		
@@ -165,9 +163,8 @@ public class mainView extends JFrame {
 
 			if (i%2 == 1) {
 				panel_menu.add(setFrontPanel(list_showMenu.get(i)),"wrap");
-				
+				//작은패널에 setFrontPanel 한 panel을 넣되 i가 홀수면 다음줄로 이동
 			}else {
-				
 				panel_menu.add(setFrontPanel(list_showMenu.get(i)));
 			}
 			panel_bigmenu.validate();
@@ -194,8 +191,6 @@ public class mainView extends JFrame {
 		
 		//클릭시 review화면 띄울 메뉴이름
 		String menu_name="";
-		//체크한 메뉴 이름
-		
 		
 		//하나하나의 패널사이즈
 		JPanel frontpanel = new JPanel();
@@ -268,6 +263,4 @@ public class mainView extends JFrame {
 		}
 		return frontpanel;
 	}
-	
-
 }
