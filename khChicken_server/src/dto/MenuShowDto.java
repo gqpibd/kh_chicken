@@ -5,6 +5,9 @@ import java.io.Serializable;
 public class MenuShowDto extends MenuDto implements Serializable {
 
 	private static final long serialVersionUID = 7675418139620414668L;
+
+	private String type;
+	private String description;
 	private double avgScore;
 
 	public MenuShowDto() {

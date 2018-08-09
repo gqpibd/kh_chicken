@@ -15,6 +15,8 @@ public class MenuDto implements Serializable {
 	public MenuDto(String menu_name, int price) {
 		this.menu_name = menu_name;
 		this.price = price;
+
+		
 	}
 
 	public String getMenu_name() {

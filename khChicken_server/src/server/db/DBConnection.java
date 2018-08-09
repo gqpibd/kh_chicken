@@ -22,7 +22,8 @@ public class DBConnection {
 
 		try {
 			// DriverManager.getConnection(db 주소, 계정 id,계정 pw) : DB 계정에 연결을 시도한다.
-			conn = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:xe", "hr", "hr");
+			// 192.168.30.16 승지
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@192.168.30.16:1521:xe", "hr", "hr");
 			System.out.println("DB Connection Success!!");
 		} catch (SQLException e) {
 			System.out.println("DB Connection Failed!!");
