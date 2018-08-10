@@ -17,13 +17,14 @@ public class Communicator {
 
 	public void makeConnection() {
 		try {
+			
 			InetSocketAddress sockAddr = new InetSocketAddress("192.168.30.5", 6000); // 포트번호는 서버의 포트번호와 동일하게 해준다.
 			sock = new Socket();
 			sock.connect(sockAddr);
+
 			System.out.println("연결성공");
 
 			//BufferedReader br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-			
 			//insert orderedMenuDto 
 			
 
@@ -35,18 +36,16 @@ public class Communicator {
 	public List<MenuShowDto> getShowMenu() {
 		
 		List<MenuShowDto> showDtoList = new ArrayList<>();
-		Object obj = showDtoList;
-		//server에 요청 
+		Object obj = new MenuShowDto();
 		
-		OutputStream output;
+		//server에 요청 
+		ObjectOutputStream oos = null;
 		
 		try {
-			
-			output = sock.getOutputStream();
-			ObjectOutputStream oos = new ObjectOutputStream(output);	//보내고
+			System.out.println(sock+"ddd");
+			oos = new ObjectOutputStream(sock.getOutputStream());	//보내고
 			oos.writeInt(2);
 			oos.writeObject(obj);
-			
 			
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block

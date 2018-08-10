@@ -23,10 +23,6 @@ public List<MenuShowDto> getShowMenu(){
 		
 		//서버에서 받은 dto저장할 리스트
 		List<MenuShowDto> showDtoList = new ArrayList<>();
-		
-	/*	//comm연결	
-		s.comm.makeConnection();	//main에서 연결해주는데 또 연결 해야되나?
-*/		
 		showDtoList = s.comm.getShowMenu();
 		
 
