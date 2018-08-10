@@ -1,5 +1,8 @@
 package client.singleton;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import client.communicator.Communicator;
 import client.controller.MemberController;
 import client.controller.MenuController;
@@ -15,6 +18,9 @@ public class Singleton {
 	public OrderController ordCtrl = new OrderController();
 	public ReviewController revCtrl = new ReviewController();
 	public Communicator comm = new Communicator();
+	public String reviewMenu = "";
+	public List<String> checkedMenu = new ArrayList<>();
+	
 	
 	private Singleton() {
 	}

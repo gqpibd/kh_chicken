@@ -67,7 +67,6 @@ public class mainView extends JFrame implements ItemListener{
 	Singleton s = Singleton.getInstance();
 	MenuController menuCtrl = new MenuController();
 	List<MenuShowDto> list_showMenu;
-	List<String> checkedMenu = new ArrayList<>();
 	int i = 0;
 	
 	//클릭시 review화면 띄울 메뉴이름
@@ -141,9 +140,10 @@ public class mainView extends JFrame implements ItemListener{
 				
 				System.out.println(loginId);
 				
-				for (int i = 0; i < checkedMenu.size(); i++) {
-					System.out.println(checkedMenu.get(i));
+				for (int i = 0; i < s.checkedMenu.size(); i++) {
+					System.out.println(s.checkedMenu.get(i));
 				}
+				
 				//주문 뷰 new OrderView(loginId, checkedMenu );
 			}
 		});
@@ -207,6 +207,7 @@ public class mainView extends JFrame implements ItemListener{
 	public JPanel setFrontPanel(MenuShowDto showDto) {
 		
 		JLabel imgLabel = new JLabel();
+		imgLabel.setSize(200,100);
 		
 		//하나하나의 패널사이즈
 		JPanel frontpanel = new JPanel();
@@ -233,10 +234,10 @@ public class mainView extends JFrame implements ItemListener{
 //				e1.printStackTrace();
 //			}
 			//FOLDER_PATH를 icon으로 변환
-			ImageIcon icon = new ImageIcon(im);	
+			//ImageIcon icon = new ImageIcon(im);	
 
 			//레이블에 icon을 넣음
-			imgLabel = new JLabel(icon);
+			//imgLabel = new JLabel(icon);
 			imgLabel.addMouseListener(new MouseAdapter() {
 				
 				@Override
@@ -244,12 +245,14 @@ public class mainView extends JFrame implements ItemListener{
 
 				JOptionPane.showMessageDialog(null, "리뷰 open");	
 				System.out.println("menu Name : "+menu_name);
+				s.reviewMenu = menu_name;
 				//리뷰 view open (menu_name);
+				
 				}
 				
 			});
 		
-		frontpanel.add(imgLabel, "wrap");
+		frontpanel.add(imgLabel, "center, wrap");
 		
 		//이름 
 		resLabel = new JLabel(list_showMenu.get(i).getMenu_name());
@@ -291,13 +294,14 @@ public class mainView extends JFrame implements ItemListener{
 		Checkbox chk = (Checkbox)e.getSource();
 
 		//체크된 이름을 저장
-		checkedMenu.add(list_showMenu.get(i).getMenu_name());
+		s.checkedMenu.add(list_showMenu.get(i).getMenu_name());
 		
 		
 	}
 	
 	public void setImage(String path, JLabel imgLabel) {
 	      try {
+	    	  System.out.println(path);
 	         BufferedImage m_numberImage = ImageIO.read(new File(path));
 	         ImageIcon icon = new ImageIcon(m_numberImage);
 
