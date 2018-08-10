@@ -26,7 +26,7 @@ public class Communicator {
 
 	public void makeConnection() {
 		try {
-			InetSocketAddress sockAddr = new InetSocketAddress("192.168.30.35", 6000); // 포트번호는 서버의 포트번호와 동일하게 해준다.
+			InetSocketAddress sockAddr = new InetSocketAddress("127.0.0.1", 8000); // 포트번호는 서버의 포트번호와 동일하게 해준다.
 			sock = new Socket();
 			sock.connect(sockAddr);
 			System.out.println("연결성공");

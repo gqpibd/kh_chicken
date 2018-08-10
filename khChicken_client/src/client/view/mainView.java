@@ -3,6 +3,7 @@ package client.view;
 import java.awt.Checkbox;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -69,7 +70,6 @@ public class mainView extends JFrame implements ItemListener {
 	// 클릭시 review화면 띄울 메뉴이름
 	String menu_name = "";
 
-	JLabel imgLabel;
 	JLabel resLabel;
 	JLabel priceLabel;
 	Checkbox chk;
@@ -170,16 +170,17 @@ public class mainView extends JFrame implements ItemListener {
 
 		// 메뉴하나의 작은패널
 		JPanel panel_menu = new JPanel();
+		panel_menu.setSize(400, 300);
 		panel_menu.setLayout(new MigLayout());
 
 		// 메뉴 출력
 		for (int i = 0; i < menCtrl.getSize() ; i++) {
 
 			if (i % 2 == 1) {
-				panel_menu.add(setFrontPanel(menCtrl.get(i)), "wrap");
+				panel_menu.add(setFrontPanel(menCtrl.get(i),i), "wrap");
 				// 작은패널에 setFrontPanel 한 panel을 넣되 i가 홀수면 다음줄로 이동
 			} else {
-				panel_menu.add(setFrontPanel(menCtrl.get(i)));
+				panel_menu.add(setFrontPanel(menCtrl.get(i),i));
 			}
 			panel_bigmenu.validate();
 		}
@@ -200,34 +201,33 @@ public class mainView extends JFrame implements ItemListener {
 
 	}
 
-	public JPanel setFrontPanel(MenuShowDto showDto) {
+	public JPanel setFrontPanel(MenuShowDto showDto, int i) {
+		
+		JLabel imgLabel = new JLabel();	//
+		imgLabel.setSize(249, 200);			//
 		
 		// 하나하나의 패널사이즈
 		JPanel frontpanel = new JPanel();
 		frontpanel.setLayout(new MigLayout("", "20", "40"));
-		frontpanel.setSize(300, 100);
+		frontpanel.setSize(400, 300);
 
-		for (i = 0; i < menCtrl.getSize(); i++) {
 
-			BufferedImage im = null;
-			try {
+
+			//BufferedImage im = null;
+
 				// 이미지넣기
 				// server에서 가져온 이미지 넣는 곳
 				String img = menCtrl.get(i).getMenu_name().replaceAll(" ", "_") + ".jpg";
 				// 패널당 메뉴이름을 저장시켜줌
 				menu_name = menCtrl.get(i).getMenu_name();
-
-				im = ImageIO.read(new File(FOLDER_PATH + img));
-
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+				setImage(FOLDER_PATH+img,imgLabel);
+				//im = ImageIO.read(new File(FOLDER_PATH + img));
+				
 			// FOLDER_PATH를 icon으로 변환
-			ImageIcon icon = new ImageIcon(im);
+			//ImageIcon icon = new ImageIcon(im);
 
 			// 레이블에 icon을 넣음
-			JLabel imgLabel = new JLabel(icon);
+			//JLabel imgLabel = new JLabel(icon);
 			imgLabel.addMouseListener(new MouseAdapter() {
 
 				@Override
@@ -235,12 +235,13 @@ public class mainView extends JFrame implements ItemListener {
 
 					JOptionPane.showMessageDialog(null, "리뷰 open");
 					System.out.println("menu Name : " + menu_name);
+					
+					//s.reviewMenu = menu_name;	리뷰에 보내줄 menuName 
 					// 리뷰 view open (menu_name);
 				}
-
 			});
 
-			frontpanel.add(imgLabel, "wrap");
+			frontpanel.add(imgLabel, "center, wrap");
 
 			// 이름
 			resLabel = new JLabel(menCtrl.get(i).getMenu_name());
@@ -270,7 +271,7 @@ public class mainView extends JFrame implements ItemListener {
 			scoreLabel.setFont(new Font("다음_Regular", Font.PLAIN, 14));
 			frontpanel.add(scoreLabel, "center, wrap");
 
-		}
+
 		return frontpanel;
 	}
 
@@ -283,4 +284,28 @@ public class mainView extends JFrame implements ItemListener {
 		checkedMenu.add(menCtrl.get(i).getMenu_name());
 
 	}
+	
+	public void setImage(String path, JLabel imgLabel) {
+	      try {
+	    	  System.out.println("path : "+path);
+	         BufferedImage m_numberImage = ImageIO.read(new File(path));
+	         ImageIcon icon = new ImageIcon(m_numberImage);
+
+	         // ImageIcon에서 Image를 추출
+	         Image originImg = icon.getImage();
+
+	         // 추출된 Image의 크기를 조절하여 새로운 Image객체 생성
+	         Image changedImg = originImg.getScaledInstance(imgLabel.getWidth(), imgLabel.getHeight(),
+	               Image.SCALE_SMOOTH);
+
+	         // 새로운 Image로 ImageIcon객체를 생성
+	         ImageIcon resizedIcon = new ImageIcon(changedImg);
+
+	         imgLabel.setIcon(resizedIcon);
+	      } catch (IOException e1) {
+	         e1.printStackTrace();
+	      }
+	   }
+	
 }
+
