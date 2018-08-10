@@ -3,7 +3,10 @@ package client.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import client.dto.MenuDto;
+import dto.MenuDto;
+import dto.OrderedMenuDto;
+
+
 
 public class MenuDao {
 	
@@ -13,8 +16,13 @@ public class MenuDao {
 	}
 
 	
-	public void insert() {
+	public List<MenuDto> insert() {
+		MenuDto nDto = new MenuDto("후라이드 치킨", 12000);
+		memList.add(nDto);
+		/*OrderedMenuDto oDto = new OrderedMenuDto(1, 1, 20000);
+		oList.add(oDto);*/
 		
+		return memList;
 	}
 	
 	public void select() {

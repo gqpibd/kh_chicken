@@ -10,11 +10,11 @@ public class Singleton {
 	
 	private static Singleton single = new Singleton();
 	
-	MemberController memCtrl = new MemberController();
-	MenuController menCtrl = new MenuController();
-	OrderController ordCtrl = new OrderController();
-	ReviewController revCtrl = new ReviewController();
-	Communicator comm = new Communicator();
+	public MemberController memCtrl = new MemberController();
+	public MenuController menCtrl = new MenuController();
+	public OrderController ordCtrl = new OrderController();
+	public ReviewController revCtrl = new ReviewController();
+	public Communicator comm = new Communicator();
 	
 	private Singleton() {
 	}

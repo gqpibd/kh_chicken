@@ -4,7 +4,7 @@ import client.dao.MemberDao;
 
 public class MemberController {
 	
-	MemberDao memDao = new MemberDao();
+	public MemberDao memDao = new MemberDao();
 	
 	public void insert() {
 		memDao.insert();

@@ -1,4 +1,4 @@
-package client.dto;
+package dto;
 
 import java.io.Serializable;
 
@@ -8,8 +8,13 @@ public class OrderedMenuDto extends MenuDto implements Serializable {
 	
 	private int coupon;
 	private int count;
-	private int totalPrice;
-	
+	private int totalPrice; //제거
+	/*
+	 * 치킨 이름
+	 * 치킨 가격
+	 * 쿠폰
+	 * 치킨 마릿 수
+	 */
 	
 	public OrderedMenuDto() {
 	}

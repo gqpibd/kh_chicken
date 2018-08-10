@@ -4,7 +4,7 @@ import client.dao.OrderDao;
 
 public class OrderController {
 	
-	OrderDao ordDao = new OrderDao();
+	public OrderDao ordDao = new OrderDao();
 	
 	public void insert() {
 		ordDao.insert();
