@@ -111,8 +111,7 @@ public class ReviewDao {
 					DBClose.close(psmt, conn, rs);
 				}
 		
-		System.out.println(list.get(0).getReview());
-		
+		System.out.println(list.size()+"사이즈");
 		return list;
 		
 	}

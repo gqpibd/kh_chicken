@@ -71,12 +71,11 @@ public class MemberDao {
 	}
 	
 	public boolean select(client.dto.MemberDto dto) {
-String id = dto.getId();
+		String id = dto.getId();
 		
 		String sql = "SELECT ID"
 				+ "	FROM MEMBER"
 				+ " WHERE ID = '"+id+"' ";
-		System.out.println(sql);
 		Connection conn = null;
 		PreparedStatement psmt  = null;
 		ResultSet rs = null;

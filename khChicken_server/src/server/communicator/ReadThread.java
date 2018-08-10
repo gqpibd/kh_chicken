@@ -41,14 +41,12 @@ public class ReadThread extends Thread {
 				
 				InputStream input = sock.getInputStream();
 				OutputStream out = sock.getOutputStream();
-				System.out.println("대기중"+ 1);
 				ObjectInputStream ois = new ObjectInputStream(input);
 				int number = ois.readInt();
 				
 
 				
 				Object obj = null;
-				System.out.println("대기중"+ 2);
 				ois = new ObjectInputStream(input);
 				obj = ois.readObject();
 				
@@ -73,11 +71,14 @@ public class ReadThread extends Thread {
 
 					} else if (obj instanceof client.dto.ReviewDto) {
 						ReviewDto dto = (ReviewDto) obj;
-						System.out.println(number);
 						List<client.dto.ReviewDto> list = single.ctrlReview.Choice(number,dto);
+						if(list == null) {
+						}else {
 						ObjectOutputStream oos = new ObjectOutputStream(out);
 						oos.writeObject(list);
 						oos.flush();
+						System.out.println(list+"1ggggg");
+						}
 					}
 		/*			break;
 
