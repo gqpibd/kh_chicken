@@ -60,13 +60,19 @@ import net.miginfocom.swing.MigLayout;
 	);*/
 
 
-public class mainView extends JFrame {
+public class mainView extends JFrame implements ItemListener{
 	
 	private final String FOLDER_PATH = "\\\\192.168.30.35\\share\\images\\";
 	Singleton s = Singleton.getInstance();
 	MenuController menuCtrl = new MenuController();
 	List<MenuShowDto> list_showMenu;
 	List<String> checkedMenu = new ArrayList<>();
+	int i = 0;
+
+	JLabel imgLabel; 
+	JLabel resLabel;
+	JLabel priceLabel; 
+	Checkbox chk;
 	
 	public mainView() {
 		super("KH CHICKEN");
@@ -197,7 +203,7 @@ public class mainView extends JFrame {
 		frontpanel.setLayout(new MigLayout("","20","40"));
 		frontpanel.setSize(300, 100);
 
-		for (int i = 0; i < list_showMenu.size(); i++) {
+		for (i = 0; i < list_showMenu.size(); i++) {
 			
 			BufferedImage im = null;
 			try {
@@ -232,19 +238,20 @@ public class mainView extends JFrame {
 		frontpanel.add(imgLabel, "wrap");
 		
 		//이름 
-		JLabel resLabel = new JLabel(list_showMenu.get(i).getMenu_name());
+		resLabel = new JLabel(list_showMenu.get(i).getMenu_name());
 		resLabel.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 20));
 		frontpanel.add(resLabel, "center, wrap");
 		
 		//가격
-		JLabel priceLabel = new JLabel(list_showMenu.get(i).getPrice()+" 원");
+		priceLabel = new JLabel(list_showMenu.get(i).getPrice()+" 원");
 		priceLabel.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		frontpanel.add(priceLabel, "center, wrap");
 		
 		//체크박스
-		Checkbox chk = new Checkbox("선택");
+		chk = new Checkbox( list_showMenu.get(i).getMenu_name()+" 선택");
 		chk.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
-		chk.addItemListener(new ItemListener() {
+		chk.addItemListener(this);
+		/*chk.addItemListener(new ItemListener() {
 			
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -252,7 +259,7 @@ public class mainView extends JFrame {
 				//체크된 이름을 저장
 				checkedMenu.add(list_showMenu.get(i).getMenu_name());
 			}
-		});
+		});*/
 		frontpanel.add(chk,"center, wrap");
 		
 		//별점
@@ -262,5 +269,16 @@ public class mainView extends JFrame {
 		
 		}
 		return frontpanel;
+	}
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		
+		Checkbox chk = (Checkbox)e.getSource();
+
+		//체크된 이름을 저장
+		checkedMenu.add(list_showMenu.get(i).getMenu_name());
+		
+		
 	}
 }
