@@ -38,8 +38,13 @@ public class AddMenuView extends JFrame implements ActionListener {
 
 	public AddMenuView() {
 		setTitle("메뉴 추가");
-		setBounds(300, 150, 285, 436);
+		setBounds(300, 150, 482, 502);
 		getContentPane().setLayout(null);
+		
+				priceField = new JTextField();
+				priceField.setBounds(273, 100, 103, 21);
+				getContentPane().add(priceField);
+				priceField.setColumns(10);
 
 		filePathField = new JTextField();
 		filePathField.setBounds(91, 160, 83, 21);
@@ -48,7 +53,7 @@ public class AddMenuView extends JFrame implements ActionListener {
 		filePathField.setEditable(false);
 
 		JLabel imgFileLabel = new JLabel("이미지 파일");
-		imgFileLabel.setBounds(12, 163, 83, 15);
+		imgFileLabel.setBounds(12, 149, 83, 15);
 		getContentPane().add(imgFileLabel);
 
 		imgLabel = new JLabel();
@@ -57,35 +62,41 @@ public class AddMenuView extends JFrame implements ActionListener {
 
 		ButtonGroup btnGroup = new ButtonGroup();
 
+		JRadioButton mainRadBtn = new JRadioButton("메인");
+		mainRadBtn.setHorizontalAlignment(SwingConstants.CENTER);
+		mainRadBtn.setBounds(5, 59, 83, 23);
+		mainRadBtn.setSelected(true);
+		btnGroup.add(mainRadBtn);
+		getContentPane().add(mainRadBtn);
+
+		JRadioButton sideRadBtn = new JRadioButton("사이드");
+		sideRadBtn.setHorizontalAlignment(SwingConstants.CENTER);
+		sideRadBtn.setBounds(93, 59, 83, 23);
+		btnGroup.add(sideRadBtn);
+		getContentPane().add(sideRadBtn);
+
 		JRadioButton beverageRadBtn = new JRadioButton("음료");
 		beverageRadBtn.setHorizontalAlignment(SwingConstants.CENTER);
-		beverageRadBtn.setBounds(151, 59, 83, 23);
+		beverageRadBtn.setBounds(181, 59, 83, 23);
 		btnGroup.add(beverageRadBtn);
 		getContentPane().add(beverageRadBtn);
-		beverageRadBtn.addChangeListener(new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				if (beverageRadBtn.isSelected()) {
-					searchBtn.setVisible(false);
-					filePathField.setVisible(false);
-					imgLabel.setVisible(false);
-					imgFileLabel.setVisible(false);
-				} else {
-					searchBtn.setVisible(true);
-					filePathField.setVisible(true);
-					imgLabel.setVisible(true);
-					imgFileLabel.setVisible(true);
-				}
-
-			}
-		});
-
-		JRadioButton chickenRadBtn = new JRadioButton("치킨");
-		chickenRadBtn.setHorizontalAlignment(SwingConstants.CENTER);
-		chickenRadBtn.setBounds(34, 59, 83, 23);
-		chickenRadBtn.setSelected(true);
-		btnGroup.add(chickenRadBtn);
-		getContentPane().add(chickenRadBtn);
+//		beverageRadBtn.addChangeListener(new ChangeListener() {
+//			@Override
+//			public void stateChanged(ChangeEvent e) {
+//				if (beverageRadBtn.isSelected()) {
+//					searchBtn.setVisible(false);
+//					filePathField.setVisible(false);
+//					imgLabel.setVisible(false);
+//					imgFileLabel.setVisible(false);
+//				} else {
+//					searchBtn.setVisible(true);
+//					filePathField.setVisible(true);
+//					imgLabel.setVisible(true);
+//					imgFileLabel.setVisible(true);
+//				}
+//
+//			}
+//		});
 
 		JLabel titleLabel = new JLabel("메뉴 추가");
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -99,35 +110,30 @@ public class AddMenuView extends JFrame implements ActionListener {
 		getContentPane().add(searchBtn);
 
 		nameField = new JTextField();
-		nameField.setBounds(91, 100, 103, 21);
+		nameField.setBounds(85, 100, 103, 21);
 		getContentPane().add(nameField);
 		nameField.setColumns(10);
 
 		JLabel label = new JLabel("메뉴 이름");
-		label.setBounds(12, 103, 57, 15);
+		label.setBounds(14, 103, 57, 15);
 		getContentPane().add(label);
 
 		JLabel priceLabel = new JLabel("가격");
-		priceLabel.setBounds(12, 134, 57, 15);
+		priceLabel.setBounds(230, 103, 46, 15);
 		getContentPane().add(priceLabel);
 
-		priceField = new JTextField();
-		priceField.setBounds(91, 131, 103, 21);
-		getContentPane().add(priceField);
-		priceField.setColumns(10);
-
 		cancelBtn = new JButton("취소");
-		cancelBtn.setBounds(161, 346, 83, 34);
+		cancelBtn.setBounds(273, 408, 83, 34);
 		getContentPane().add(cancelBtn);
 		cancelBtn.addActionListener(this);
 
 		submitBtn = new JButton("완료");
-		submitBtn.setBounds(33, 346, 83, 34);
+		submitBtn.setBounds(135, 408, 83, 34);
 		getContentPane().add(submitBtn);
 		submitBtn.addActionListener(this);
 
 		JLabel wonLabel = new JLabel("원");
-		wonLabel.setBounds(206, 134, 57, 15);
+		wonLabel.setBounds(390, 103, 57, 15);
 		getContentPane().add(wonLabel);
 
 		setVisible(true);
@@ -201,5 +207,4 @@ public class AddMenuView extends JFrame implements ActionListener {
 		}
 
 	}
-
 }
