@@ -1,6 +1,7 @@
 package client.controller;
 
 import client.dao.MenuDao;
+import dto.MenuShowDto;
 
 public class MenuController {
 	

@@ -60,7 +60,8 @@ import net.miginfocom.swing.MigLayout;
 	);*/
 
 public class mainView extends JFrame implements ItemListener {
-	private final String FOLDER_PATH = "\\\\192.168.30.35\\share\\images\\";
+	//private final String FOLDER_PATH = "\\\\192.168.30.35\\share\\images\\";
+	private final String FOLDER_PATH = "\\\\127.0.0.1\\images\\";
 	Singleton s = Singleton.getInstance();
 	MenuController menCtrl = Singleton.getInstance().getMenuCtrl();
 	//List<MenuShowDto> list_showMenu;

@@ -6,15 +6,9 @@ import client.view.mainView;
 public class Main {
 
 	public static void main(String[] args) {
-		
-		//Singleton s = Singleton.getInstance();
-		//s.getComm().makeConnection();
-		
-		Singleton s = Singleton.getInstance();
-		//s.getMenuCtrl().getMenDao().initList();
+		Singleton s = Singleton.getInstance(); 
+		s.getComm().makeConnection(); // 소켓 연결을 먼저 한다.
 		new mainView();
-		//s.getComm().SendMessage(3, new MenuShowDto("후라이드 치킨", 11000,"fried.jpg", 9.0));
-		//new MenuManagementView();
 		
 	}
 

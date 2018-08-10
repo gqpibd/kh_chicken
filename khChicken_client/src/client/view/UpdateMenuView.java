@@ -219,7 +219,7 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 				System.out.println(dto);
 				typeField.setText(dto.getType());
 				nameField.setText(dto.getMenu_name());
-				priceField.setText(dto.getPrice()+"");
+				priceField.setText(dto.getPrice() + "");
 				newPriceField.setText(model.getValueAt(row, PRICE_COL).toString());
 				imgFileField.setText(model.getValueAt(row, IMG_COL).toString());
 
