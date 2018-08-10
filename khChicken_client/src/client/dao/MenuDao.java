@@ -63,8 +63,8 @@ public class MenuDao {
 		return menList.get(i);
 	}
 
-	public MenuDto getMenuByName(String name) {
-		for (MenuDto dto : menList) {
+	public MenuShowDto getMenuByName(String name) {
+		for (MenuShowDto dto : menList) {
 			if (dto.getMenu_name().equals(name)) {
 				return dto;
 			}

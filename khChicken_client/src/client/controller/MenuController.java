@@ -27,4 +27,9 @@ public class MenuController {
 		menDao.update();
 	}
 
+	public MenuShowDto getMenuDto(String name) {
+		return menDao.getMenuByName(name);
+		
+	}
+
 }
