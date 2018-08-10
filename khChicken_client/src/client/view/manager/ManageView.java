@@ -1,4 +1,4 @@
-package client.view;
+package client.view.manager;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 
 import dto.OrderedMenuDto;
 import client.controller.MemberController;
+import client.controller.MenuController;
 import client.singleton.Singleton;
 
 public class ManageView extends JFrame implements ActionListener {
@@ -56,12 +57,13 @@ public class ManageView extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		MemberController memCtrl = Singleton.getInstance().getMemCtrl();
+		MenuController menCtrl = Singleton.getInstance().getMenuCtrl();
 		if (e.getSource() == btn_menu) {
-			memCtrl.menuManageView();
+			menCtrl.menuManageView(this);
 		} else if (e.getSource() == btn_sale) {
-			memCtrl.saleManageView();			
+			memCtrl.saleManageView(this);			
 		} else if (e.getSource() == btn_back) {
-
+			memCtrl.backToMain(this);
 		}
 
 	}

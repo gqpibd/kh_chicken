@@ -2,17 +2,16 @@ package dto;
 
 import java.io.Serializable;
 
-public class BestSaleMenuDto implements Serializable{
-	
+public class BestSaleMenuDto implements Serializable {
+
 	private static final long serialVersionUID = -2798385730859068125L;
-	
+
 	private String menu_type;
 	private String menu_name;
 	private int total_sale;
 	private int total_coupon;
 	private int total_price;
-	
-	
+
 	public BestSaleMenuDto(String menu_type, String menu_name, int total_sale, int total_coupon, int total_price) {
 		this.menu_type = menu_type;
 		this.menu_name = menu_name;
@@ -66,9 +65,5 @@ public class BestSaleMenuDto implements Serializable{
 		return "BestSaleMenuDto [menu_type=" + menu_type + ", menu_name=" + menu_name + ", total_sale=" + total_sale
 				+ ", total_coupon=" + total_coupon + ", total_price=" + total_price + "]";
 	}
-	
-	
-	
-	
 
 }

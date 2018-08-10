@@ -1,4 +1,4 @@
-package client.view;
+package client.view.manager;
 
 import java.awt.Font;
 import java.awt.Image;
@@ -172,7 +172,6 @@ public class AddMenuView extends JFrame implements ActionListener {
 		if (returnVal == JFileChooser.APPROVE_OPTION) { // 열기를 클릭
 			folderPath = chooser.getSelectedFile().toString();
 		} else if (returnVal == JFileChooser.CANCEL_OPTION) { // 취소를 클릭
-			System.out.println("cancel");
 			folderPath = "";
 		}
 
@@ -207,6 +206,7 @@ public class AddMenuView extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		Singleton s = Singleton.getInstance();
 		if (e.getSource() == searchBtn) { // 이미지 검색 수행
 			path = jFileChooserUtil();
 			if (path.length() != 0) {
@@ -218,11 +218,10 @@ public class AddMenuView extends JFrame implements ActionListener {
 			MenuShowDto dto = new MenuShowDto(nameField.getText(), Integer.parseInt(priceField.getText()), type,
 					description.getText(), 0);
 			System.out.println(dto.toString());
-			Singleton s = Singleton.getInstance();
 			s.getMenuCtrl().insert(dto, path);
-			dispose();
+			s.getMenuCtrl().menuManageView(this);
 		} else if (e.getSource() == cancelBtn) {
-			dispose();
+			s.getMenuCtrl().menuManageView(this);
 		}
 
 	}

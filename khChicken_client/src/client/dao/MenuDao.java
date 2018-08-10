@@ -9,17 +9,15 @@ import dto.MenuDto;
 import dto.MenuShowDto;
 
 public class MenuDao {
-	
-	List<MenuShowDto> menList = new ArrayList<MenuShowDto>();
-	
+	//public static final String FOLDER_PATH = "\\\\127.0.0.1\\images\\";
+	public static final String FOLDER_PATH = "images\\";
+	private List<MenuShowDto> menList = new ArrayList<MenuShowDto>();
+
 	public MenuDao() {
-		// menList.add(new MenuShowDto("후라이드 치킨", 11000,"fried.jpg", 9.0));
-		// menList.add(new MenuShowDto("양념 치킨", 12000, "seasoning.png", 8));
-		// menList.add(new MenuShowDto("반반 치킨", 12000, "half.png", 7.6));
-		// menList.add(new MenuShowDto("콜라", 3000, "cola.jpg", 10));
-		// menList.add(new MenuShowDto("사이다", 3000, "sprite.jpg", 10));
+		
 	}
-	public void insert(MenuShowDto dto,String imgFilePath) {
+
+	public void insert(MenuShowDto dto, String imgFilePath) {
 		menList.add(dto);
 		Singleton s = Singleton.getInstance();
 		s.getComm().SendMessage(Communicator.INSERT, dto);
@@ -28,28 +26,25 @@ public class MenuDao {
 
 	public void initList() { // 서버에서 다 읽어오기
 		Singleton s = Singleton.getInstance();
-		s.getComm().makeConnection();
-		// MenuController ctrl = s.getMenuCtrl();
+		//s.getComm().makeConnection();
 		MenuShowDto dto = new MenuShowDto();
-	
+
 		menList.clear();
-	
+
 		s.getComm().SendMessage(Communicator.SELECT, dto);
 		ArrayList<Object> resultList = s.getComm().receiveMessage();
-		
+
 		for (int i = 0; i < resultList.size(); i++) {
 			menList.add((MenuShowDto) resultList.get(i));
-			//menList.get(i).setImg(img);
-			System.out.println(resultList.get(i));
+		}
 	}
-	}
-	
+
 	public void update() {
-		
+
 	}
-	
+
 	public void delete() {
-		
+
 	}
 
 	public int getSize() {
@@ -71,7 +66,7 @@ public class MenuDao {
 
 	public void delete(MenuDto menu) {
 		menList.remove(menu);
-		
+
 		Singleton s = Singleton.getInstance();
 		s.getComm().SendMessage(Communicator.DELETE, menu);
 
@@ -86,19 +81,18 @@ public class MenuDao {
 	}
 
 	public void updateImage(MenuShowDto menu, String imagePath) {
-		
+
 		// socket으로 전달
 
 	}
-		
-//	public List<MenuShowDto> getShowMenu(){		
-//		//서버에서 받은 dto저장할 리스트
-//		List<MenuShowDto> showDtoList = new ArrayList<>();
-//	
-//		showDtoList = Singleton.getInstance().getComm().getShowMenu();
-//		return showDtoList;
-//		
-//	}
-	
+
+	// public List<MenuShowDto> getShowMenu(){
+	// //서버에서 받은 dto저장할 리스트
+	// List<MenuShowDto> showDtoList = new ArrayList<>();
+	//
+	// showDtoList = Singleton.getInstance().getComm().getShowMenu();
+	// return showDtoList;
+	//
+	// }
 
 }
