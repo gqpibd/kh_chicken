@@ -17,7 +17,7 @@ public class MenuController {
 		menDao.insert(dto,imgPath);
 	}
 	
-	public void select() {
+	public void initMenuList() {
 		menDao.initList();
 	}
 	
@@ -25,9 +25,9 @@ public class MenuController {
 		menDao.delete();
 	}
 	
-	public List<MenuShowDto> getShowMenu (){
-		return menDao.getShowMenu();
-	}
+//	public List<MenuShowDto> getShowMenu (){
+//		return menDao.getShowMenu();
+//	}
 	
 	public void update() {
 		menDao.update();
@@ -36,6 +36,14 @@ public class MenuController {
 	public MenuShowDto getMenuDto(String name) {
 		return menDao.getMenuByName(name);
 		
+	}
+
+	public int getSize() {
+		return menDao.getSize();
+	}
+
+	public MenuShowDto get(int i) {
+		return menDao.get(i);
 	}
 
 }
