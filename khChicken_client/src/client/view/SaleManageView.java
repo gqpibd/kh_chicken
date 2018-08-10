@@ -1,11 +1,6 @@
 package client.view;
 
 import java.awt.Color;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +11,8 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-import client.dto.OrderedMenuDto;
 import client.singleton.Singleton;
+import dto.OrderedMenuDto;
 
 public class SaleManageView extends JFrame {
 	
@@ -25,7 +20,7 @@ public class SaleManageView extends JFrame {
 	private JScrollPane jScrPane;
 	
 	String columNames[] = {
-			"번호", "주문일자", "주문메뉴", "수량", "음료쿠폰", "총액"
+			"번호", "메뉴타입",  "주문일자", "주문메뉴", "수량", "음료쿠폰", "총액"
 	};
 	
 	
@@ -34,7 +29,7 @@ public class SaleManageView extends JFrame {
 	
 	DefaultTableModel model;
 	
-	List<Object> list = new ArrayList<Object>();
+	ArrayList<Object> list = new ArrayList<Object>();
 	
 	public SaleManageView() {
 		super("판매 내역");
@@ -56,25 +51,34 @@ public class SaleManageView extends JFrame {
 		add(label);
 		
 		
-		/*
+		
 		int bbsNum = 1;
 		
-		rowData = new Object[list.size()][6];	// 테이블의 2차원배열
+		rowData = new Object[list.size()][8];	// 테이블의 2차원배열
 		
 		for (int i = 0; i < list.size(); i++) {
-			OrderedMenuDto dto = list.get(i);
+			OrderedMenuDto dto = (OrderedMenuDto) list.get(i);
+			int bev_price = 0;
 			
+			if(dto.getMenu_type().equals("drink") && dto.getCoupon() != 0) {
+				bev_price = dto.getPrice() * dto.getCoupon();
+			};
+			//Date order_date, String id, String menu_type, String menu_name, int count, int coupon, int price
 			rowData[i][0] = bbsNum;				// 글번호
 			
 			rowData[i][1] = dto.getOrder_date();// 주문일자
 			
-			rowData[i][2] = dto.getMenu_name();	// 주문메뉴
+			rowData[i][2] = dto.getId();		// 주문자 아이디
 			
-			rowData[i][3] = dto.getCount();		// 수량
+			rowData[i][3] = dto.getMenu_type();	// 메뉴타입
 			
-			rowData[i][4] = dto.getCoupon();	// 음료쿠폰
+			rowData[i][4] = dto.getMenu_name();	// 주문메뉴
 			
-			rowData[i][5] = dto.getPrice();		// 총액
+			rowData[i][5] = dto.getCount();		// 수량
+			
+			rowData[i][6] = dto.getCoupon();	// 음료쿠폰
+			
+			rowData[i][7] = (dto.getPrice() * dto.getCount()) - bev_price;		// 총액
 			bbsNum++;
 		}
 		
@@ -109,7 +113,7 @@ public class SaleManageView extends JFrame {
 		jScrPane.setBounds(10, 50, 600, 300);
 		add(jScrPane);
 		
-		*/
+		
 		
 		
 		

@@ -3,7 +3,7 @@ package client.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import client.dto.MemberDto;
+import dto.MemberDto;
 
 public class MemberDao {
 	

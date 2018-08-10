@@ -8,7 +8,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import client.dto.OrderedMenuDto;
+import dto.OrderedMenuDto;
 
 public class Communicator {
 	private Socket sock;

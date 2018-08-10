@@ -14,7 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import client.dto.OrderedMenuDto;
+import dto.OrderedMenuDto;
 import client.singleton.Singleton;
 
 public class ManageView extends JFrame {

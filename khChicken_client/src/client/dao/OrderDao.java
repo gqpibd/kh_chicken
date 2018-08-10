@@ -6,12 +6,12 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import client.dto.OrderedMenuDto;
+import dto.OrderedMenuDto;
 import client.singleton.Singleton;
 
 public class OrderDao {
 	
-	List<OrderedMenuDto> orderList = new ArrayList<OrderedMenuDto>();
+	ArrayList<Object> orderList = new ArrayList<Object>();
 	
 	
 	public OrderDao() {
@@ -32,16 +32,16 @@ public class OrderDao {
 		orderList.clear();
 		
 		// 6번 실행하라! 시그널 보내
-		s.getComm().SendMessage(9, dto);
+		s.getComm().SendMessage(6, dto);
 		// db 결과 받아오기
 		ArrayList<Object> resultList = s.getComm().receiveMessage();
 		
-		for (int i = 0; i < resultList.size(); i++) {
+		/*for (int i = 0; i < resultList.size(); i++) {
 			// 실시간으로 받은 dto를 리스트에 저장
 			orderList.add((OrderedMenuDto)resultList.get(i));
 			// 받은 값 확인용
 			System.out.println(resultList.get(i));
-		}
+		}*/
 		
 		return resultList;
 		

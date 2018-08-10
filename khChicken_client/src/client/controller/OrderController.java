@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import client.dao.OrderDao;
-import client.dto.OrderedMenuDto;
+import dto.OrderedMenuDto;
 
 public class OrderController {
 	
