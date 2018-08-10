@@ -49,6 +49,8 @@ public class order extends JFrame implements ActionListener, ItemListener {
 	public order() {
 		super("주문 내역");
 		setLayout(null);
+		
+		Singleton s = Singleton.getInstance();
 
 		JLabel lblNewLabel = new JLabel("<주문 정보>");
 		lblNewLabel.setFont(new Font("굴림", Font.BOLD, 18));
@@ -116,7 +118,10 @@ public class order extends JFrame implements ActionListener, ItemListener {
 						JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
 				if (yesNoBtn == JOptionPane.YES_OPTION) {
 					// DB에 INSERT 해주고 주문창 닫기
-					JOptionPane.showMessageDialog(null, "DB INSERT");
+					OrderedMenuDto oDto = new OrderedMenuDto();
+					
+					s.comm.SendOrderDto(oDto);
+					
 					// this.dispose();
 				}
 			}

@@ -1,6 +1,8 @@
 package client.dao;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import dto.OrderedMenuDto;
@@ -16,7 +18,10 @@ public class OrderDao {
 	}
 	
 	public List<OrderedMenuDto> insert() {
-		OrderedMenuDto oDto = new OrderedMenuDto(1, 1, 20000);
+		Date today = new Date();
+		SimpleDateFormat date = new SimpleDateFormat("YY/MM/dd hh:mm:ss");
+		//Date time = date.format(today);
+		OrderedMenuDto oDto = new OrderedMenuDto(today, "test1", "main", "후라이드치킨", 1, 1, 15000);
 		oList.add(oDto);
 		
 		return oList;
