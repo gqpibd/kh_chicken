@@ -16,7 +16,25 @@ public class MemberDao {
 		
 	}
 	
-	public void insert(client.dto.MemberDto dto) {
+	
+	public Object Choice(client.dto.MemberDto dto , int number) {
+		switch(number) {
+		case 0 :
+			return insert(dto);
+		case 1 :
+			return select(dto);
+		case 2 :
+		break;
+		case 3 :
+		break;
+		case 4 :
+			return select_loging(dto);
+		
+		}
+		return null;
+	}
+	
+	public Object insert(client.dto.MemberDto dto) {
 		
 		
 		 String id = dto.getId();
@@ -28,10 +46,10 @@ public class MemberDao {
 		 String phone = dto.getPhone();
 		
 		
-		String sql = "INSERT INTO MEMBER (name, pw, id, coupon, auth, adr, phone)"
-				+ " VALUES ( '"+ id + "', '" + pw + "', '"
-							   + name + "', " + coupon + ", "
-							   + auth + ", '"+ address +"', '" + phone + "' );";
+		String sql = "INSERT INTO MEMBER (name, id, pw, USEDCOUPON, auth, adr, phone)"
+				+ " VALUES ( '"+ name + "', '"+ id + "', '"
+							   + pw +"', "+ coupon +", "
+							   + auth +", '"+ address +"', '"+ phone +"' )";
 		
 		System.out.println(sql);
 		Connection conn = null;
@@ -40,14 +58,15 @@ public class MemberDao {
 		try {			
 			conn = DBConnection.getConnection();
 			psmt = conn.prepareStatement(sql);			
-			
+			psmt.executeQuery();
 			
 		} catch (SQLException e) {			
 			e.printStackTrace();
 		} finally{			
 			DBClose.close(psmt, conn, null);			
-		}
 		
+		}
+		return null;
 		
 	}
 	

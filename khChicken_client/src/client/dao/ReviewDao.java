@@ -5,12 +5,12 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import client.dto.ReviewDto;
 
 public class ReviewDao {
@@ -26,7 +26,27 @@ public class ReviewDao {
 		
 	}
 	
-	public void insert() {
+	public void insert(ReviewDto dto) {
+		try {
+			
+			
+			ObjectOutputStream oos = new ObjectOutputStream(sock.getOutputStream());
+			oos.writeInt(0);
+			oos.flush();
+			
+			
+			System.out.println("ss");
+			oos = new ObjectOutputStream(sock.getOutputStream());
+			oos.writeObject(dto);
+			oos.flush();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		
+		
 		
 	}
 	
@@ -39,17 +59,15 @@ public class ReviewDao {
 			oos= new ObjectOutputStream(sock.getOutputStream());
 			oos.writeInt(1);
 			oos.flush();
+	
+			
 			oos= new ObjectOutputStream(sock.getOutputStream());
 			oos.writeObject(dto);
 			oos.flush();
-			System.out.println(11);
 			
 			ObjectInputStream ois;
 			ois = new ObjectInputStream(sock.getInputStream());
-			System.out.println(ois);
 			list =(List<ReviewDto>)ois.readObject();
-			System.out.println(22);
-			
 		
 		
 		

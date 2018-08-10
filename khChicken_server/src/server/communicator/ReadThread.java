@@ -41,19 +41,17 @@ public class ReadThread extends Thread {
 				
 				InputStream input = sock.getInputStream();
 				OutputStream out = sock.getOutputStream();
-				
+				System.out.println("대기중"+ 1);
 				ObjectInputStream ois = new ObjectInputStream(input);
 				int number = ois.readInt();
 				
-				System.out.println(number);
+
 				
 				Object obj = null;
+				System.out.println("대기중"+ 2);
 				ois = new ObjectInputStream(input);
 				obj = ois.readObject();
 				
-				System.out.println(number);
-				
-				System.out.println("received: " + number);
 			/*	
 				switch (number) {
 				case 0:	//insert	
@@ -62,20 +60,24 @@ public class ReadThread extends Thread {
 				case 3:	//update
 			*/
 				Singleton single = Singleton.getInstance();
-					if (obj instanceof MemberDto) {	
-
-					} else if (obj instanceof MenuDto) {
-
+					if (obj instanceof client.dto.MemberDto) {	
+						client.dto.MemberDto dto = (client.dto.MemberDto)obj;
+						obj = single.ctrlMember.Choice(dto, number);
+						ObjectOutputStream oos = new ObjectOutputStream(out);
+						oos.writeObject(obj);
+						oos.flush();
+						
 					} else if (obj instanceof MenuShowDto) {
 
 					} else if (obj instanceof OrderedMenuDto) {
 
-					} else if (obj instanceof ReviewDto) {
-						List<client.dto.ReviewDto> list = single.ctrlReview.Choice(number);
+					} else if (obj instanceof client.dto.ReviewDto) {
+						ReviewDto dto = (ReviewDto) obj;
+						System.out.println(number);
+						List<client.dto.ReviewDto> list = single.ctrlReview.Choice(number,dto);
 						ObjectOutputStream oos = new ObjectOutputStream(out);
 						oos.writeObject(list);
 						oos.flush();
-
 					}
 		/*			break;
 
@@ -90,17 +92,12 @@ public class ReadThread extends Thread {
 				}*/
 
 				// send (諛쏅뒗嫄� 踰덊샇+dto 吏�留� 蹂대궡�뒗嫄� �븳踰덈쭔 �빐�룄�맖)
-				ObjectOutputStream oos = new ObjectOutputStream(sock.getOutputStream());
-				oos.writeObject(obj);
-				sleep(100);
 
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}

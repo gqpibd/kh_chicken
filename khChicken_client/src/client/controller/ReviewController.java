@@ -1,8 +1,10 @@
 package client.controller;
 
 import java.net.Socket;
+import java.util.List;
 
 import client.dao.ReviewDao;
+import client.dto.ReviewDto;
 
 public class ReviewController {
 	
@@ -10,15 +12,15 @@ public class ReviewController {
 	
 	
 	public void socketDao(Socket sock) {
-		revDao.SockReview(sock);
+		revDao.SockDao(sock);
 	}
 	
-	public void insert() {
-		revDao.insert();
+	public void insert(ReviewDto dto) {
+		revDao.insert(dto);
 	}
 	
-	public void select() {
-		revDao.select();
+	public List<ReviewDto> select() {
+		return revDao.select();
 	}
 	
 	public void delete() {

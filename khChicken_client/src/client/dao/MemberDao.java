@@ -47,24 +47,15 @@ public class MemberDao {
 		
 		
 		try {
-			
-			PrintWriter pw = new PrintWriter(sock.getOutputStream());
-			pw.println(0);
-			pw.flush();
-			
-			BufferedReader bf = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-			int number = Integer.parseInt(bf.readLine());
-			
-			if(number == 1 ) {
-			System.out.println(dto.getId() + "다오");
 			ObjectOutputStream oos = new ObjectOutputStream(sock.getOutputStream());
+			oos.writeInt(0);
+			oos.flush();
+			System.out.println(dto.getId() + "다오");
+			 oos = new ObjectOutputStream(sock.getOutputStream());
 			oos.writeObject(dto);
 			oos.flush();
-			}
 			
 			
-			//	HashMap<Integer, MemberDto> map = new HashMap<>();
-			//	map.put(1, dto);
 				
 			
 		} catch (IOException e) {
@@ -80,27 +71,21 @@ public class MemberDao {
 		boolean join = false;
 		
 		try {
-		PrintWriter pw;
 	
-			pw = new PrintWriter(sock.getOutputStream());
-	
-		pw.println(1);
-		pw.flush();
+			ObjectOutputStream oos = new ObjectOutputStream(sock.getOutputStream());
+			oos.writeInt(1);
+			oos.flush();
 		
-		BufferedReader bf = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-		int number = Integer.parseInt(bf.readLine());
 		
-		if(number == 1 ) {
 		System.out.println(dto.getId() + "다오");
-		ObjectOutputStream oos = new ObjectOutputStream(sock.getOutputStream());
+			oos = new ObjectOutputStream(sock.getOutputStream());
 		oos.writeObject(dto);
 		oos.flush();
-		}
 		
-		while(true) {
 			ObjectInputStream ois = new ObjectInputStream(sock.getInputStream());
-			join =  ois.readBoolean();
-		}
+				join = (boolean)ois.readObject();
+				
+			} catch (ClassNotFoundException e) {
 		}catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -123,24 +108,19 @@ public class MemberDao {
 	      try {
 	          PrintWriter pw;
 	          
-	          pw = new PrintWriter(sock.getOutputStream());
-	          
-	       pw.println(4);
-	       pw.flush();
+	          	ObjectOutputStream oos = new ObjectOutputStream(sock.getOutputStream());
+	          	oos.writeInt(4);
+	          	oos.flush();
 	      
-	      BufferedReader bf = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-	      int number = Integer.parseInt(bf.readLine());
 	      
-	      if(number == 1 ) {
 	      System.out.println(dto.getId() + "다오");
-	      ObjectOutputStream oos = new ObjectOutputStream(sock.getOutputStream());
+	      oos = new ObjectOutputStream(sock.getOutputStream());
 	      oos.writeObject(dto);
 	      oos.flush();
-	      }
 	      
-	         ObjectInputStream ois = new ObjectInputStream(sock.getInputStream());
-	         join =(boolean) ois.readObject();
-	         	System.out.println(join);
+	      ObjectInputStream ois = new ObjectInputStream(sock.getInputStream());
+	      join =(boolean) ois.readObject();
+	      	System.out.println(join);
 	      }catch (IOException e) {
 	         // TODO Auto-generated catch block
 	         e.printStackTrace();
