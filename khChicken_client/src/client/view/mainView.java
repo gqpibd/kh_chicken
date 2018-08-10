@@ -65,7 +65,6 @@ public class mainView extends JFrame {
 	MenuController menCtrl = Singleton.getInstance().getMenuCtrl();
 	//List<MenuShowDto> list_showMenu;
 	List<String> checkedMenu = new ArrayList<>();
-	int i = 0;
 
 	// 클릭시 review화면 띄울 메뉴이름
 	String menu_name = "";
