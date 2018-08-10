@@ -61,7 +61,7 @@ public class Communicator {
 			oos.flush();
 			oos.close();
 			makeConnection();
-			System.out.println("sent");
+			System.out.println("이미지 보냄");
 
 		} catch (IOException e) {
 			e.printStackTrace();
