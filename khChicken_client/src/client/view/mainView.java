@@ -59,7 +59,7 @@ import net.miginfocom.swing.MigLayout;
 	    REFERENCES MENU(MENU_NAME)
 	);*/
 
-public class mainView extends JFrame implements ItemListener {
+public class mainView extends JFrame {
 	private final String FOLDER_PATH = "\\\\192.168.30.35\\share\\images\\";
 	Singleton s = Singleton.getInstance();
 	MenuController menCtrl = Singleton.getInstance().getMenuCtrl();
@@ -135,12 +135,12 @@ public class mainView extends JFrame implements ItemListener {
 				JOptionPane.showMessageDialog(null, "주문하기");
 				String loginId = s.getMemCtrl().getLoginId();
 				new MenuManagementView();
-				System.out.println(loginId);
+				System.out.println("로그인 아이디 : "+loginId);	//확인용
+				
 				for (int i = 0; i < checkedMenu.size(); i++) {
-					System.out.println(checkedMenu.get(i));
-					
-					
+					System.out.println(i+"번째 체크 : "+checkedMenu.get(i));	//확인용 : 성공!
 				}
+				
 				// 주문 뷰 new OrderView(loginId, checkedMenu );
 			}
 		});
@@ -203,39 +203,33 @@ public class mainView extends JFrame implements ItemListener {
 
 	public JPanel setFrontPanel(MenuShowDto showDto, int i) {
 		
-		JLabel imgLabel = new JLabel();	//
-		imgLabel.setSize(249, 200);			//
+		//이미지 레이블
+		JLabel imgLabel = new JLabel();	
+		imgLabel.setSize(249, 200);			
 		
 		// 하나하나의 패널사이즈
 		JPanel frontpanel = new JPanel();
 		frontpanel.setLayout(new MigLayout("", "20", "40"));
 		frontpanel.setSize(400, 300);
 
-
-
-			//BufferedImage im = null;
-
-				// 이미지넣기
-				// server에서 가져온 이미지 넣는 곳
-				String img = menCtrl.get(i).getMenu_name().replaceAll(" ", "_") + ".jpg";
-				// 패널당 메뉴이름을 저장시켜줌
-				menu_name = menCtrl.get(i).getMenu_name();
-				setImage(FOLDER_PATH+img,imgLabel);
-				//im = ImageIO.read(new File(FOLDER_PATH + img));
+		// 이미지넣기
+		// server에서 가져온 이미지 넣는 곳
+		String img = menCtrl.get(i).getMenu_name().replaceAll(" ", "_") + ".jpg";
 				
-			// FOLDER_PATH를 icon으로 변환
-			//ImageIcon icon = new ImageIcon(im);
-
-			// 레이블에 icon을 넣음
-			//JLabel imgLabel = new JLabel(icon);
-			imgLabel.addMouseListener(new MouseAdapter() {
+		// 패널당 메뉴이름을 저장시켜줌
+		menu_name = menCtrl.get(i).getMenu_name();
+		setImage(FOLDER_PATH+img,imgLabel);
+		imgLabel.addMouseListener(new MouseAdapter() {
 
 				@Override
-				public void mouseClicked(MouseEvent e) {// 누르면
-
-					JOptionPane.showMessageDialog(null, "리뷰 open");
-					System.out.println("menu Name : " + menu_name);
+				public void mouseClicked(MouseEvent e) {
 					
+					//클릭한 메뉴이름
+					menu_name = menCtrl.get(i).getMenu_name();
+					System.out.println("menu Name : " + menu_name);	//확인용 : 성공!
+					
+					JOptionPane.showMessageDialog(null, "리뷰 open");
+
 					//s.reviewMenu = menu_name;	리뷰에 보내줄 menuName 
 					// 리뷰 view open (menu_name);
 				}
@@ -256,14 +250,15 @@ public class mainView extends JFrame implements ItemListener {
 			// 체크박스
 			chk = new Checkbox(menCtrl.get(i).getMenu_name() + " 선택");
 			chk.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
-			chk.addItemListener(this);
-			/*
-			 * chk.addItemListener(new ItemListener() {
-			 * 
-			 * @Override public void itemStateChanged(ItemEvent e) {
-			 * 
-			 * //체크된 이름을 저장 checkedMenu.add(list_showMenu.get(i).getMenu_name()); } });
-			 */
+			chk.addItemListener(new ItemListener() {
+				
+				@Override
+				public void itemStateChanged(ItemEvent e) {			
+					// 체크된 이름을 저장
+					checkedMenu.add(menCtrl.get(i).getMenu_name());
+				}
+			});
+			
 			frontpanel.add(chk, "center, wrap");
 
 			// 별점
@@ -274,7 +269,7 @@ public class mainView extends JFrame implements ItemListener {
 
 		return frontpanel;
 	}
-
+/*
 	@Override
 	public void itemStateChanged(ItemEvent e) {
 
@@ -284,7 +279,7 @@ public class mainView extends JFrame implements ItemListener {
 		checkedMenu.add(menCtrl.get(i).getMenu_name());
 
 	}
-	
+	*/
 	public void setImage(String path, JLabel imgLabel) {
 	      try {
 	    	  System.out.println("path : "+path);
