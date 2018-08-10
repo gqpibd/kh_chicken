@@ -63,7 +63,7 @@ public class OrderDao {
 			for (int i = 0; i < list.size(); i++) {
 				System.out.println(list.get(i));
 			}
-			SocketWriter.WriteAll(sock, list);
+			SocketWriter.Write(sock, list);
 			DBClose.close(psmt, conn, rs);			
 		}
 		

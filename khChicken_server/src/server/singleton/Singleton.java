@@ -34,4 +34,5 @@ public class Singleton {
 	public MenuDao getMenuCtrl() {
 		return ctrlMenu;
 	}
+	
 }

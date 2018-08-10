@@ -8,10 +8,10 @@ import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-public class MenuManagementView extends JFrame implements ActionListener{
+public class MenuManageView extends JFrame implements ActionListener{
 	JButton updMenuBtn;
 	JButton addMenuBtn;
-	public MenuManagementView() {
+	public MenuManageView() {
 		setTitle("메뉴 관리");
 
 		setBounds(300, 150, 274, 253);

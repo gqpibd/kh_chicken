@@ -5,6 +5,7 @@ import client.controller.MemberController;
 import client.controller.MenuController;
 import client.controller.OrderController;
 import client.controller.ReviewController;
+import client.view.MainView;
 
 public class Singleton {
 	
@@ -16,6 +17,7 @@ public class Singleton {
 	private MenuController menCtrl = new MenuController();
 	private OrderController ordCtrl = new OrderController();
 	private ReviewController revCtrl = new ReviewController();
+	private MainView mv;
 	
 	private Singleton() {
 	}
@@ -38,5 +40,13 @@ public class Singleton {
 	
 	public MemberController getMemCtrl() {
 		return memCtrl; 
+	}
+
+	public void setMainView(MainView mainView) {
+		this.mv = mainView;		
+	}
+	
+	public MainView getMainView() {
+		return mv;
 	}
 }

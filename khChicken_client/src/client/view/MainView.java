@@ -19,12 +19,15 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
+import client.controller.MemberController;
 import client.controller.MenuController;
 import client.singleton.Singleton;
 import dto.MenuShowDto;
@@ -59,26 +62,27 @@ import net.miginfocom.swing.MigLayout;
 	    REFERENCES MENU(MENU_NAME)
 	);*/
 
-public class mainView extends JFrame implements ItemListener {
-	//private final String FOLDER_PATH = "\\\\192.168.30.35\\share\\images\\";
+public class MainView extends JFrame implements ItemListener {
+	// private final String FOLDER_PATH = "\\\\192.168.30.35\\share\\images\\";
 	private final String FOLDER_PATH = "\\\\127.0.0.1\\images\\";
 	Singleton s = Singleton.getInstance();
 	MenuController menCtrl = Singleton.getInstance().getMenuCtrl();
-	//List<MenuShowDto> list_showMenu;
+	MemberController memCtrl = Singleton.getInstance().getMemCtrl();
 	List<String> checkedMenu = new ArrayList<>();
 	int i = 0;
 
 	// 클릭시 review화면 띄울 메뉴이름
 	String menu_name = "";
-
 	JLabel resLabel;
 	JLabel priceLabel;
-	Checkbox chk;
+	JCheckBox chk;
 
-	public mainView() {
+	public MainView() {
 		super("KH CHICKEN");
 		setLayout(null);
-
+		
+		s.setMainView(this);
+		
 		// 로고2, 버튼 4, 패널 1
 		JButton btn_Login;
 		JButton btn_Register;
@@ -134,13 +138,12 @@ public class mainView extends JFrame implements ItemListener {
 			public void actionPerformed(ActionEvent e) {
 
 				JOptionPane.showMessageDialog(null, "주문하기");
-				String loginId = s.getMemCtrl().getLoginId();
-				new MenuManagementView();
+				String loginId = memCtrl.getLoginId();
+				memCtrl.manageView(); // 관리자창
 				System.out.println(loginId);
 				for (int i = 0; i < checkedMenu.size(); i++) {
 					System.out.println(checkedMenu.get(i));
-					
-					
+
 				}
 				// 주문 뷰 new OrderView(loginId, checkedMenu );
 			}
@@ -161,7 +164,7 @@ public class mainView extends JFrame implements ItemListener {
 		});
 
 		// 메뉴출력
-		// DB에서 메뉴가져오기 (server통신)		
+		// DB에서 메뉴가져오기 (server통신)
 		menCtrl.initMenuList(); // menuDao에 있는 리스트를 초기화한다(서버에서 불러옴)
 
 		// 메뉴들을 넣을 큰 패널 설정
@@ -175,17 +178,18 @@ public class mainView extends JFrame implements ItemListener {
 		panel_menu.setLayout(new MigLayout());
 
 		// 메뉴 출력
-		for (int i = 0; i < menCtrl.getSize() ; i++) {
+		for (int i = 0; i < menCtrl.getSize(); i++) {
 
 			if (i % 2 == 1) {
-				panel_menu.add(setFrontPanel(menCtrl.get(i),i), "wrap");
+				panel_menu.add(setFrontPanel(menCtrl.get(i), i), "wrap");
 				// 작은패널에 setFrontPanel 한 panel을 넣되 i가 홀수면 다음줄로 이동
 			} else {
-				panel_menu.add(setFrontPanel(menCtrl.get(i),i));
+				panel_menu.add(setFrontPanel(menCtrl.get(i), i));
 			}
 			panel_bigmenu.validate();
 		}
 		JScrollPane scroll = new JScrollPane(panel_menu);
+		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scroll.setPreferredSize(new Dimension(700, 600));
 		panel_bigmenu.add(scroll);
 
@@ -203,75 +207,64 @@ public class mainView extends JFrame implements ItemListener {
 	}
 
 	public JPanel setFrontPanel(MenuShowDto showDto, int i) {
-		
-		JLabel imgLabel = new JLabel();	//
-		imgLabel.setSize(249, 200);			//
-		
+
+		JLabel imgLabel = new JLabel(); //
+		imgLabel.setSize(249, 200); //
+
 		// 하나하나의 패널사이즈
 		JPanel frontpanel = new JPanel();
 		frontpanel.setLayout(new MigLayout("", "20", "40"));
 		frontpanel.setSize(400, 300);
 
+		// 이미지넣기
+		// server에서 가져온 이미지 넣는 곳
+		String img = menCtrl.get(i).getMenu_name().replaceAll(" ", "_") + ".jpg";
+		// 패널당 메뉴이름을 저장시켜줌
+		menu_name = menCtrl.get(i).getMenu_name();
+		setImage(FOLDER_PATH + img, imgLabel);
 
+		imgLabel.addMouseListener(new MouseAdapter() {
 
-			//BufferedImage im = null;
+			@Override
+			public void mouseClicked(MouseEvent e) {// 누르면
 
-				// 이미지넣기
-				// server에서 가져온 이미지 넣는 곳
-				String img = menCtrl.get(i).getMenu_name().replaceAll(" ", "_") + ".jpg";
-				// 패널당 메뉴이름을 저장시켜줌
-				menu_name = menCtrl.get(i).getMenu_name();
-				setImage(FOLDER_PATH+img,imgLabel);
-				//im = ImageIO.read(new File(FOLDER_PATH + img));
-				
-			// FOLDER_PATH를 icon으로 변환
-			//ImageIcon icon = new ImageIcon(im);
+				JOptionPane.showMessageDialog(null, "리뷰 open");
+				System.out.println("menu Name : " + menu_name);
 
-			// 레이블에 icon을 넣음
-			//JLabel imgLabel = new JLabel(icon);
-			imgLabel.addMouseListener(new MouseAdapter() {
+				// s.reviewMenu = menu_name; 리뷰에 보내줄 menuName
+				// 리뷰 view open (menu_name);
+			}
+		});
 
-				@Override
-				public void mouseClicked(MouseEvent e) {// 누르면
+		frontpanel.add(imgLabel, "center, wrap");
 
-					JOptionPane.showMessageDialog(null, "리뷰 open");
-					System.out.println("menu Name : " + menu_name);
-					
-					//s.reviewMenu = menu_name;	리뷰에 보내줄 menuName 
-					// 리뷰 view open (menu_name);
-				}
-			});
+		// 이름
+		resLabel = new JLabel(menCtrl.get(i).getMenu_name());
+		resLabel.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 20));
+		frontpanel.add(resLabel, "center, wrap");
 
-			frontpanel.add(imgLabel, "center, wrap");
+		// 가격
+		priceLabel = new JLabel(menCtrl.get(i).getPrice() + " 원");
+		priceLabel.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
+		frontpanel.add(priceLabel, "center, wrap");
 
-			// 이름
-			resLabel = new JLabel(menCtrl.get(i).getMenu_name());
-			resLabel.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 20));
-			frontpanel.add(resLabel, "center, wrap");
+		// 체크박스
+		chk = new JCheckBox(menCtrl.get(i).getMenu_name() + " 선택");
+		chk.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
+		chk.addItemListener(this);
+		/*
+		 * chk.addItemListener(new ItemListener() {
+		 * 
+		 * @Override public void itemStateChanged(ItemEvent e) {
+		 * 
+		 * //체크된 이름을 저장 checkedMenu.add(list_showMenu.get(i).getMenu_name()); } });
+		 */
+		frontpanel.add(chk, "center, wrap");
 
-			// 가격
-			priceLabel = new JLabel(menCtrl.get(i).getPrice() + " 원");
-			priceLabel.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
-			frontpanel.add(priceLabel, "center, wrap");
-
-			// 체크박스
-			chk = new Checkbox(menCtrl.get(i).getMenu_name() + " 선택");
-			chk.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
-			chk.addItemListener(this);
-			/*
-			 * chk.addItemListener(new ItemListener() {
-			 * 
-			 * @Override public void itemStateChanged(ItemEvent e) {
-			 * 
-			 * //체크된 이름을 저장 checkedMenu.add(list_showMenu.get(i).getMenu_name()); } });
-			 */
-			frontpanel.add(chk, "center, wrap");
-
-			// 별점
-			JLabel scoreLabel = new JLabel("별점 : " + menCtrl.get(i).getavgScore() + "");
-			scoreLabel.setFont(new Font("다음_Regular", Font.PLAIN, 14));
-			frontpanel.add(scoreLabel, "center, wrap");
-
+		// 별점
+		JLabel scoreLabel = new JLabel("별점 : " + menCtrl.get(i).getavgScore() + "");
+		scoreLabel.setFont(new Font("다음_Regular", Font.PLAIN, 14));
+		frontpanel.add(scoreLabel, "center, wrap");
 
 		return frontpanel;
 	}
@@ -279,34 +272,33 @@ public class mainView extends JFrame implements ItemListener {
 	@Override
 	public void itemStateChanged(ItemEvent e) {
 
-		Checkbox chk = (Checkbox) e.getSource();
+		JCheckBox chk = (JCheckBox) e.getSource();
 
 		// 체크된 이름을 저장
 		checkedMenu.add(menCtrl.get(i).getMenu_name());
 
 	}
-	
+
 	public void setImage(String path, JLabel imgLabel) {
-	      try {
-	    	  System.out.println("path : "+path);
-	         BufferedImage m_numberImage = ImageIO.read(new File(path));
-	         ImageIcon icon = new ImageIcon(m_numberImage);
+		try {
+			System.out.println("path : " + path);
+			BufferedImage m_numberImage = ImageIO.read(new File(path));
+			ImageIcon icon = new ImageIcon(m_numberImage);
 
-	         // ImageIcon에서 Image를 추출
-	         Image originImg = icon.getImage();
+			// ImageIcon에서 Image를 추출
+			Image originImg = icon.getImage();
 
-	         // 추출된 Image의 크기를 조절하여 새로운 Image객체 생성
-	         Image changedImg = originImg.getScaledInstance(imgLabel.getWidth(), imgLabel.getHeight(),
-	               Image.SCALE_SMOOTH);
+			// 추출된 Image의 크기를 조절하여 새로운 Image객체 생성
+			Image changedImg = originImg.getScaledInstance(imgLabel.getWidth(), imgLabel.getHeight(),
+					Image.SCALE_SMOOTH);
 
-	         // 새로운 Image로 ImageIcon객체를 생성
-	         ImageIcon resizedIcon = new ImageIcon(changedImg);
+			// 새로운 Image로 ImageIcon객체를 생성
+			ImageIcon resizedIcon = new ImageIcon(changedImg);
 
-	         imgLabel.setIcon(resizedIcon);
-	      } catch (IOException e1) {
-	         e1.printStackTrace();
-	      }
-	   }
-	
+			imgLabel.setIcon(resizedIcon);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+	}
+
 }
-
