@@ -2,6 +2,7 @@ package client.view;
 import java.awt.Checkbox;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -72,7 +73,6 @@ public class mainView extends JFrame implements ItemListener{
 	//클릭시 review화면 띄울 메뉴이름
 	String menu_name="";
 
-	JLabel imgLabel; 
 	JLabel resLabel;
 	JLabel priceLabel; 
 	Checkbox chk;
@@ -137,9 +137,10 @@ public class mainView extends JFrame implements ItemListener{
 			public void actionPerformed(ActionEvent e) {
 				
 				JOptionPane.showMessageDialog(null, "주문하기");
-				String loginId = s.memCtrl.getLoginId();
+				String loginId = s.getLoginId();
 				
 				System.out.println(loginId);
+				
 				for (int i = 0; i < checkedMenu.size(); i++) {
 					System.out.println(checkedMenu.get(i));
 				}
@@ -205,7 +206,7 @@ public class mainView extends JFrame implements ItemListener{
 
 	public JPanel setFrontPanel(MenuShowDto showDto) {
 		
-		
+		JLabel imgLabel = new JLabel();
 		
 		//하나하나의 패널사이즈
 		JPanel frontpanel = new JPanel();
@@ -215,24 +216,27 @@ public class mainView extends JFrame implements ItemListener{
 		for (i = 0; i < list_showMenu.size(); i++) {
 			
 			BufferedImage im = null;
-			try {
+//			try {
+				
 			//이미지넣기	
 				//server에서 가져온 이미지 넣는 곳
 				String img = list_showMenu.get(i).getMenu_name().replaceAll(" ", "_") + ".jpg";
+				
 				//패널당 메뉴이름을 저장시켜줌
 				menu_name = list_showMenu.get(i).getMenu_name();
 				
-				im = ImageIO.read(new File(FOLDER_PATH+img));
+				setImage(FOLDER_PATH+img,imgLabel);
+				//im = ImageIO.read(new File(FOLDER_PATH+img));
 				
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+//			} catch (IOException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
 			//FOLDER_PATH를 icon으로 변환
 			ImageIcon icon = new ImageIcon(im);	
 
 			//레이블에 icon을 넣음
-			JLabel imgLabel = new JLabel(icon);
+			imgLabel = new JLabel(icon);
 			imgLabel.addMouseListener(new MouseAdapter() {
 				
 				@Override
@@ -291,4 +295,27 @@ public class mainView extends JFrame implements ItemListener{
 		
 		
 	}
+	
+	public void setImage(String path, JLabel imgLabel) {
+	      try {
+	         BufferedImage m_numberImage = ImageIO.read(new File(path));
+	         ImageIcon icon = new ImageIcon(m_numberImage);
+
+	         // ImageIcon에서 Image를 추출
+	         Image originImg = icon.getImage();
+
+	         // 추출된 Image의 크기를 조절하여 새로운 Image객체 생성
+	         Image changedImg = originImg.getScaledInstance(imgLabel.getWidth(), imgLabel.getHeight(),
+	               Image.SCALE_SMOOTH);
+
+	         // 새로운 Image로 ImageIcon객체를 생성
+	         ImageIcon resizedIcon = new ImageIcon(changedImg);
+
+	         imgLabel.setIcon(resizedIcon);
+	      } catch (IOException e1) {
+	         e1.printStackTrace();
+	      }
+	   }
+	
+	
 }

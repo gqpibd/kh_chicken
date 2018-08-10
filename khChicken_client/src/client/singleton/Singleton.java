@@ -22,5 +22,15 @@ public class Singleton {
 	public static Singleton getInstance() {
 		return single;
 	}
+	
+	public String getLoginId() {
+		String loginId = "admin";
+		return loginId;
+	}
+	public int getAuth() {
+		int auth = 1;
+		return auth;
+		
+	}
 
 }
