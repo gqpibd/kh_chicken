@@ -7,8 +7,10 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Enumeration;
 
 import javax.imageio.ImageIO;
+import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -16,10 +18,10 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
@@ -30,83 +32,85 @@ public class AddMenuView extends JFrame implements ActionListener {
 	private JTextField filePathField;
 	private JTextField nameField;
 	private JTextField priceField;
-	JLabel imgLabel;
-	JButton searchBtn;
-	JButton submitBtn;
-	JButton cancelBtn;
-	String path = "";
+	private JTextArea description;
+	private JLabel imgLabel;
+	private JButton searchBtn;
+	private JButton submitBtn;
+	private JButton cancelBtn;
+	private ButtonGroup btnGroup;
+	private String path = "";
 
 	public AddMenuView() {
 		setTitle("메뉴 추가");
-		setBounds(300, 150, 482, 502);
+		setBounds(300, 150, 482, 439);
 		getContentPane().setLayout(null);
-		
-				priceField = new JTextField();
-				priceField.setBounds(273, 100, 103, 21);
-				getContentPane().add(priceField);
-				priceField.setColumns(10);
+
+		priceField = new JTextField();
+		priceField.setBounds(328, 100, 86, 21);
+		getContentPane().add(priceField);
+		priceField.setColumns(10);
 
 		filePathField = new JTextField();
-		filePathField.setBounds(91, 160, 83, 21);
+		filePathField.setBounds(85, 132, 102, 21);
 		getContentPane().add(filePathField);
 		filePathField.setColumns(10);
 		filePathField.setEditable(false);
 
-		JLabel imgFileLabel = new JLabel("이미지 파일");
-		imgFileLabel.setBounds(12, 149, 83, 15);
+		JLabel imgFileLabel = new JLabel("이미지");
+		imgFileLabel.setBounds(12, 135, 83, 15);
 		getContentPane().add(imgFileLabel);
 
 		imgLabel = new JLabel();
-		imgLabel.setBounds(44, 198, 188, 138);
+		imgLabel.setBounds(12, 170, 244, 167);
 		getContentPane().add(imgLabel);
 
-		ButtonGroup btnGroup = new ButtonGroup();
+		btnGroup = new ButtonGroup();
 
 		JRadioButton mainRadBtn = new JRadioButton("메인");
 		mainRadBtn.setHorizontalAlignment(SwingConstants.CENTER);
-		mainRadBtn.setBounds(5, 59, 83, 23);
+		mainRadBtn.setBounds(54, 59, 83, 23);
 		mainRadBtn.setSelected(true);
 		btnGroup.add(mainRadBtn);
 		getContentPane().add(mainRadBtn);
 
 		JRadioButton sideRadBtn = new JRadioButton("사이드");
 		sideRadBtn.setHorizontalAlignment(SwingConstants.CENTER);
-		sideRadBtn.setBounds(93, 59, 83, 23);
+		sideRadBtn.setBounds(191, 59, 83, 23);
 		btnGroup.add(sideRadBtn);
 		getContentPane().add(sideRadBtn);
 
 		JRadioButton beverageRadBtn = new JRadioButton("음료");
 		beverageRadBtn.setHorizontalAlignment(SwingConstants.CENTER);
-		beverageRadBtn.setBounds(181, 59, 83, 23);
+		beverageRadBtn.setBounds(328, 59, 83, 23);
 		btnGroup.add(beverageRadBtn);
 		getContentPane().add(beverageRadBtn);
-//		beverageRadBtn.addChangeListener(new ChangeListener() {
-//			@Override
-//			public void stateChanged(ChangeEvent e) {
-//				if (beverageRadBtn.isSelected()) {
-//					searchBtn.setVisible(false);
-//					filePathField.setVisible(false);
-//					imgLabel.setVisible(false);
-//					imgFileLabel.setVisible(false);
-//				} else {
-//					searchBtn.setVisible(true);
-//					filePathField.setVisible(true);
-//					imgLabel.setVisible(true);
-//					imgFileLabel.setVisible(true);
-//				}
-//
-//			}
-//		});
+		// beverageRadBtn.addChangeListener(new ChangeListener() {
+		// @Override
+		// public void stateChanged(ChangeEvent e) {
+		// if (beverageRadBtn.isSelected()) {
+		// searchBtn.setVisible(false);
+		// filePathField.setVisible(false);
+		// imgLabel.setVisible(false);
+		// imgFileLabel.setVisible(false);
+		// } else {
+		// searchBtn.setVisible(true);
+		// filePathField.setVisible(true);
+		// imgLabel.setVisible(true);
+		// imgFileLabel.setVisible(true);
+		// }
+		//
+		// }
+		// });
 
 		JLabel titleLabel = new JLabel("메뉴 추가");
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setFont(new Font("돋움체", Font.BOLD, 20));
-		titleLabel.setBounds(0, 10, 269, 30);
+		titleLabel.setBounds(0, 10, 466, 30);
 		getContentPane().add(titleLabel);
 
 		searchBtn = new JButton("검색");
 		searchBtn.addActionListener(this);
-		searchBtn.setBounds(186, 159, 65, 23);
+		searchBtn.setBounds(199, 131, 75, 23);
 		getContentPane().add(searchBtn);
 
 		nameField = new JTextField();
@@ -119,23 +123,34 @@ public class AddMenuView extends JFrame implements ActionListener {
 		getContentPane().add(label);
 
 		JLabel priceLabel = new JLabel("가격");
-		priceLabel.setBounds(230, 103, 46, 15);
+		priceLabel.setBounds(288, 103, 46, 15);
 		getContentPane().add(priceLabel);
 
 		cancelBtn = new JButton("취소");
-		cancelBtn.setBounds(273, 408, 83, 34);
+		cancelBtn.setBounds(278, 354, 83, 34);
 		getContentPane().add(cancelBtn);
 		cancelBtn.addActionListener(this);
 
 		submitBtn = new JButton("완료");
-		submitBtn.setBounds(135, 408, 83, 34);
+		submitBtn.setBounds(136, 354, 83, 34);
 		getContentPane().add(submitBtn);
 		submitBtn.addActionListener(this);
 
 		JLabel wonLabel = new JLabel("원");
-		wonLabel.setBounds(390, 103, 57, 15);
+		wonLabel.setBounds(428, 103, 38, 15);
 		getContentPane().add(wonLabel);
 
+		JLabel label_1 = new JLabel("제품 설명");
+		label_1.setBounds(290, 131, 57, 15);
+		getContentPane().add(label_1);
+
+		description = new JTextArea();
+		description.setLineWrap(true);
+
+		JScrollPane scrollPane = new JScrollPane(description);
+		scrollPane.setBounds(288, 164, 150, 173);
+		getContentPane().add(scrollPane);
+		
 		setVisible(true);
 	}
 
@@ -194,10 +209,14 @@ public class AddMenuView extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == searchBtn) { // 이미지 검색 수행
 			path = jFileChooserUtil();
-			filePathField.setText(path.substring(path.lastIndexOf("\\") + 1)); // 전체 경로에서 파일 이름과 확장자명만 가져온다.
-			setImage(path);
+			if (path.length() != 0) {
+				filePathField.setText(path.substring(path.lastIndexOf("\\") + 1)); // 전체 경로에서 파일 이름과 확장자명만 가져온다.
+				setImage(path);
+			}
 		} else if (e.getSource() == submitBtn) { // 새 메뉴를 추가한다
-			MenuShowDto dto = new MenuShowDto(nameField.getText(), Integer.parseInt(priceField.getText()));
+			String type = getSelectedRadioBtn(btnGroup).getText();
+			MenuShowDto dto = new MenuShowDto(nameField.getText(), Integer.parseInt(priceField.getText()), type,
+					description.getText(), 0);
 			System.out.println(dto.toString());
 			Singleton s = Singleton.getInstance();
 			s.getMenuCtrl().insert(dto, path);
@@ -206,5 +225,18 @@ public class AddMenuView extends JFrame implements ActionListener {
 			dispose();
 		}
 
+	}
+
+	private JRadioButton getSelectedRadioBtn(ButtonGroup bGroup) {
+		Enumeration<AbstractButton> enums = bGroup.getElements(); // 요소의 수를 저장한다.
+		JRadioButton jb = null;
+		while (enums.hasMoreElements()) { // hasMoreElements() 다음 요소이 있는지 조사 (boolean)
+			AbstractButton ab = enums.nextElement(); // 다음 요소를 받아온다.
+			jb = (JRadioButton) ab; // 그 요소를 변환해주고
+			if (jb.isSelected()) { // 선택되었는지 확인한다.
+				break;
+			}
+		}
+		return jb;
 	}
 }

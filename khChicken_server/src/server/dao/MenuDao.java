@@ -35,8 +35,8 @@ public class MenuDao {
 	public MenuDao() {
 	}
 
-	public void insert(MenuDto dto) {
-		String sql = "INSERT INTO MENU VALUES ( ?, ? )";
+	public void insert(MenuShowDto dto) {
+		String sql = "INSERT INTO MENU (MENU_NAME, PRICE, MENU_TYPE, DESCRIPTION, AVG_RATE) VALUES ( ?, ?, ?, ?, ? )";
 		Connection conn = DBConnection.getConnection();
 		PreparedStatement psmt = null;
 
@@ -44,7 +44,9 @@ public class MenuDao {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, dto.getMenu_name());
 			psmt.setInt(2, dto.getPrice());
-
+			psmt.setString(3, dto.getType());
+			psmt.setString(4, dto.getDescription());
+			psmt.setDouble(5, dto.getavgScore());
 			psmt.executeQuery();
 
 		} catch (SQLException e) {
@@ -104,6 +106,7 @@ public class MenuDao {
 		switch (number) {
 		case 0: // insert
 			insert(dto);
+			System.out.println(dto.getMenu_name()+ "를 메뉴 테이블에 추가하였습니다");
 			receiveAndSaveImage(dto.getMenu_name(), sock);
 			break;
 		case 1: // select
@@ -111,6 +114,7 @@ public class MenuDao {
 			break;
 		case 2: // delete
 			delete(dto);
+			break;
 		case 3: // update			
 			updatePrice(dto);
 			break;
@@ -155,7 +159,7 @@ public class MenuDao {
 			BufferedImage im = null;// = ImageIO.read(ois);
 
 			im = ImageIO.read(ois);
-			System.out.println("받음");
+			System.out.println("이미지 받음");
 			if (im == null) {
 				System.out.println("이미지 파일을 받지 못했습니다.");
 				return;

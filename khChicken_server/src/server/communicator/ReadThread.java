@@ -30,8 +30,8 @@ public class ReadThread extends Thread {
 		ObjectInputStream ois = null;
 
 		try {
-			ois = new ObjectInputStream(sock.getInputStream()); // dto받기
 			while (true) {
+				ois = new ObjectInputStream(sock.getInputStream()); // dto받기
 				int number = ois.readInt();
 				System.out.println(number);
 
@@ -71,9 +71,8 @@ public class ReadThread extends Thread {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (SocketException e){
-			System.out.println("소켓이 닫힙니다");
 		}catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("소켓이 닫혔습니다");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
