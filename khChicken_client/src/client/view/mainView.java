@@ -68,6 +68,9 @@ public class mainView extends JFrame implements ItemListener{
 	List<MenuShowDto> list_showMenu;
 	List<String> checkedMenu = new ArrayList<>();
 	int i = 0;
+	
+	//클릭시 review화면 띄울 메뉴이름
+	String menu_name="";
 
 	JLabel imgLabel; 
 	JLabel resLabel;
@@ -94,8 +97,10 @@ public class mainView extends JFrame implements ItemListener{
 		
 		if (  s.memCtrl.getLoginId() != null ) {
 			loginStr = "로그아웃"; 
+			System.out.println(s.memCtrl.getAuth());
 			if ( s.memCtrl.getAuth() ==1)	managerBtnOpen = true;
 	}
+		
 
 		//버튼설정 
 		btn_Login = new JButton(loginStr);	//로그아웃 / 인 으로 변환됨
@@ -133,6 +138,11 @@ public class mainView extends JFrame implements ItemListener{
 				
 				JOptionPane.showMessageDialog(null, "주문하기");
 				String loginId = s.memCtrl.getLoginId();
+				
+				System.out.println(loginId);
+				for (int i = 0; i < checkedMenu.size(); i++) {
+					System.out.println(checkedMenu.get(i));
+				}
 				//주문 뷰 new OrderView(loginId, checkedMenu );
 			}
 		});
@@ -195,8 +205,7 @@ public class mainView extends JFrame implements ItemListener{
 
 	public JPanel setFrontPanel(MenuShowDto showDto) {
 		
-		//클릭시 review화면 띄울 메뉴이름
-		String menu_name="";
+		
 		
 		//하나하나의 패널사이즈
 		JPanel frontpanel = new JPanel();
@@ -229,7 +238,8 @@ public class mainView extends JFrame implements ItemListener{
 				@Override
 				public void mouseClicked(MouseEvent e) {//누르면
 
-				JOptionPane.showMessageDialog(null, "리뷰 open");				
+				JOptionPane.showMessageDialog(null, "리뷰 open");	
+				System.out.println("menu Name : "+menu_name);
 				//리뷰 view open (menu_name);
 				}
 				
