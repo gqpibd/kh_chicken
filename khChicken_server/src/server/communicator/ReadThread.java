@@ -26,28 +26,27 @@ public class ReadThread extends Thread {
 	public void run() {
 		super.run();
 		Singleton s = Singleton.getInstance();
-		//ObjectOutputStream oos = null;
-		//ObjectInputStream ois = null;
-		
+		ObjectInputStream ois = null;
+
 		try {
-			
-			
 			while (true) {
-				ObjectInputStream ois = new ObjectInputStream(sock.getInputStream()); // dto받기
+				ois = new ObjectInputStream(sock.getInputStream()); // dto받기
+
 				int number = ois.readInt();
-				System.out.println("number = "+number);
-				Object obj = ois.readObject();
-				
+				System.out.println(number);
+
 				switch (number) {
 				case 0: // insert
 				case 1: // select
 				case 2: // delete
 				case 3: // update
 
-					
+					Object obj = ois.readObject();
 					// 어떤 dto 인지 구분
 					if (obj instanceof MemberDto) {
 					} else if (obj instanceof MenuShowDto) {
+						System.out.println("MenuShowDto received");
+						s.getMenuCtrl().execute(number, (MenuShowDto) obj, sock);
 					} else if (obj instanceof OrderedMenuDto) {
 						// orderDao에 소켓 넘겨주기. 나머지 작업은 타고타고 들어가서 전송까지 해줄것.
 						
@@ -73,7 +72,7 @@ public class ReadThread extends Thread {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("소켓이 닫혔습니다");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
