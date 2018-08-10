@@ -45,20 +45,20 @@ public class BestSaleMenuDao {
 				BestSaleMenuDto omd = new BestSaleMenuDto(rs.getString("MENU_TYPE"), rs.getString("MENU_NAME"),
 						rs.getInt("판매량"), rs.getInt("사용쿠폰"), rs.getInt("총판매액"));
 				list.add(omd);
-
 			}
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			// 담은 리스트를 소켓에 실어 보내자!
-			for (int i = 0; i < list.size(); i++) {
-				System.out.println(list.get(i));
-			}
-			SocketWriter.Write(sock, list);
+
 			DBClose.close(psmt, conn, rs);
 		}
+		// 담은 리스트를 소켓에 실어 보내자!
+//		for (int i = 0; i < list.size(); i++) {
+//			System.out.println(list.get(i));
+//		}
+		SocketWriter.Write(sock, list);
 
 	}
 
