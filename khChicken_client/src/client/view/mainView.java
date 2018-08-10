@@ -95,10 +95,10 @@ public class mainView extends JFrame implements ItemListener{
 		//버튼글씨
 		String loginStr = "로그인";
 		
-		if (  s.memCtrl.getLoginId() != null ) {
+		if (  s.getLoginId() != null ) {
 			loginStr = "로그아웃"; 
-			System.out.println(s.memCtrl.getAuth());
-			if ( s.memCtrl.getAuth() ==1)	managerBtnOpen = true;
+			System.out.println(s.getAuth());
+			if ( s.getAuth() ==1)	managerBtnOpen = true;
 	}
 		
 
