@@ -23,6 +23,7 @@ public class Communicator {
 			
 			Singleton single = Singleton.getInstance();
 			single.memCtrl.Sockdao(sock);
+			single.revCtrl.socketDao(sock);
 			
 			
 			//BufferedReader br = new BufferedReader(new InputStreamReader(sock.getInputStream()));

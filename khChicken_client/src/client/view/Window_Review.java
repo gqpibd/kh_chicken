@@ -23,7 +23,6 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import net.miginfocom.swing.MigLayout;
 
 import com.sun.xml.internal.ws.api.server.Container;
 
