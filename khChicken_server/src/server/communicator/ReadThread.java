@@ -7,7 +7,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/daseul
 import dto.MemberDto;
 import dto.MenuShowDto;
 import dto.OrderedMenuDto;
@@ -30,8 +33,13 @@ public class ReadThread extends Thread {
 		ObjectInputStream ois = null;
 
 		try {
+<<<<<<< HEAD
 			while (true) {
 				ois = new ObjectInputStream(sock.getInputStream()); // dto받기
+=======
+			ois = new ObjectInputStream(sock.getInputStream()); // dto받기
+			while (true) {
+>>>>>>> refs/remotes/origin/daseul
 				int number = ois.readInt();
 				System.out.println(number);
 
@@ -48,6 +56,10 @@ public class ReadThread extends Thread {
 					} else if (obj instanceof MenuShowDto) {
 						System.out.println("MenuShowDto received");
 						s.getMenuCtrl().execute(number, (MenuShowDto) obj, sock);
+<<<<<<< HEAD
+=======
+						
+>>>>>>> refs/remotes/origin/daseul
 					} else if (obj instanceof OrderedMenuDto) {
 
 					} else if (obj instanceof ReviewDto) {
@@ -71,8 +83,14 @@ public class ReadThread extends Thread {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (SocketException e){
+<<<<<<< HEAD
 		}catch (IOException e) {
 			System.out.println("소켓이 닫혔습니다");
+=======
+			System.out.println("소켓이 닫힙니다");
+		}catch (IOException e) {
+			e.printStackTrace();
+>>>>>>> refs/remotes/origin/daseul
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {

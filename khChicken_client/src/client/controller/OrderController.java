@@ -1,10 +1,12 @@
 package client.controller;
 
+import java.util.List;
 import client.dao.OrderDao;
 
 public class OrderController {
 	
 	OrderDao ordDao = new OrderDao();
+	
 	
 	public void insert() {
 		ordDao.insert();
@@ -13,6 +15,7 @@ public class OrderController {
 	public void select() {
 		ordDao.select();
 	}
+	
 	
 	public void delete() {
 		ordDao.delete();

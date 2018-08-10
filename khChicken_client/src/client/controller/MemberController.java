@@ -21,5 +21,16 @@ public class MemberController {
 	public void update() {
 		memDao.update();
 	}
+	
+	
+	//------------------ 로그인아이디 / auth 얻는 메소드
+	public String getLoginId() {
+		return memDao.getLoginId();
+	}
+	
+	public int getAuth() {
+		return memDao.getAuth();
+	}
+	
 
 }

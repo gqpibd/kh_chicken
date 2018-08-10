@@ -3,6 +3,9 @@ package client.dao;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+import client.singleton.Singleton;
+import dto.MenuDto;
+import dto.MenuShowDto;
 
 import client.communicator.Communicator;
 import client.controller.MenuController;
@@ -21,7 +24,6 @@ public class MenuDao {
 		// menList.add(new MenuShowDto("콜라", 3000, "cola.jpg", 10));
 		// menList.add(new MenuShowDto("사이다", 3000, "sprite.jpg", 10));
 	}
-
 	public void insert(MenuShowDto dto,String imgFilePath) {
 		menList.add(dto);
 		Singleton s = Singleton.getInstance();
@@ -93,5 +95,21 @@ public class MenuDao {
 		// socket으로 전달
 
 	}
+		
+	public List<MenuShowDto> getShowMenu(){
+		
+		//서버에서 받은 dto저장할 리스트
+		List<MenuShowDto> showDtoList = new ArrayList<>();
+		
+	/*	//comm연결	
+		s.comm.makeConnection();	//main에서 연결해주는데 또 연결 해야되나?
+*/		
+		showDtoList = s.comm.getShowMenu();
+		
+
+		return showDtoList;
+		
+	}
+	
 
 }
