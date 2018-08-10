@@ -1,25 +1,104 @@
 package dto;
 
 import java.io.Serializable;
+import java.sql.Date;
+
+
+/*
+CREATE TABLE MEMBER(
+    NAME VARCHAR2(20) NOT NULL,
+    ID VARCHAR2(10) PRIMARY KEY,
+    PW VARCHAR2(20) NOT NULL,
+    USEDCOUPON NUMBER(2),
+    AUTH NUMBER(1) NOT NULL,
+    ADR VARCHAR2(50) NOT NULL,
+    PHONE VARCHAR2(20) NOT NULL
+);
+
+CREATE TABLE MENU(
+    MENU_NAME VARCHAR2(30) PRIMARY KEY,
+    PRICE NUMBER(5) NOT NULL,
+    MENU_TYPE VARCHAR2(10) NOT NULL,
+    DESCRIPTION VARCHAR2(1000) NOT NULL,
+    AVG_RATE NUMBER(2)
+);
+
+
+CREATE TABLE ORDER_DETAIL(
+    ID VARCHAR2(10),
+    MENU_NAME VARCHAR2(30),
+    COUNTS NUMBER(10) NOT NULL,
+    BEV_COUPON NUMBER(3),
+    ORDER_DATE DATE NOT NULL,
+    REVIEW VARCHAR2(1000),
+    SCORE NUMBER(5),
+    CONSTRAINT FK_ID FOREIGN KEY(ID)
+    REFERENCES MEMBER(ID),
+    CONSTRAINT FK_MENU FOREIGN KEY(MENU_NAME)
+    REFERENCES MENU(MENU_NAME)
+);
+*/
 
 public class OrderedMenuDto extends MenuDto implements Serializable {
 	
 	private static final long serialVersionUID = 8611197365865197331L;
 	
-	private int coupon;
+	private Date order_date;
+	private String id;
+	private String menu_type;
+	private int coupon = 0;
 	private int count;
-	private int totalPrice;
-	
+	private int price;
 	
 	public OrderedMenuDto() {
 	}
 
 
-	public OrderedMenuDto(int coupon, int count, int totalPrice) {
-		super();
+	public OrderedMenuDto(Date order_date, String id, String menu_type, String menu_name, int count, int coupon, int price) {
+		
+		this.order_date = order_date;
+		this.id = id;
+		this.menu_type = menu_type;
+		super.setMenu_name(menu_name);
+		super.setPrice(price);
 		this.coupon = coupon;
 		this.count = count;
-		this.totalPrice = totalPrice;
+		this.price = price;
+		
+	}
+	
+	
+	
+	
+
+
+	public String getMenu_type() {
+		return menu_type;
+	}
+
+
+	public void setMenu_type(String menu_type) {
+		this.menu_type = menu_type;
+	}
+
+
+	public String getId() {
+		return id;
+	}
+
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+
+	public Date getOrder_date() {
+		return order_date;
+	}
+
+
+	public void setOrder_date(Date order_date) {
+		this.order_date = order_date;
 	}
 
 
@@ -43,20 +122,49 @@ public class OrderedMenuDto extends MenuDto implements Serializable {
 	}
 
 
-	public int getTotalPrice() {
-		return totalPrice;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 
-	public void setTotalPrice(int totalPrice) {
-		this.totalPrice = totalPrice;
+	public int getPrice() {
+		return price;
+	}
+
+
+	public void setPrice(int price) {
+		this.price = price;
 	}
 
 
 	@Override
 	public String toString() {
-		return "OrderedMenuDto [coupon=" + coupon + ", count=" + count + ", totalPrice=" + totalPrice + "]";
+		return super.toString() + "OrderedMenuDto [order_date=" + order_date + ", id=" + id + ", menu_type=" + menu_type + ", coupon="
+				+ coupon + ", count=" + count + ", price=" + price + "]";
 	}
+
+
+	
+
+
+	
+
+	
+	
+	
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
 	
 	
 

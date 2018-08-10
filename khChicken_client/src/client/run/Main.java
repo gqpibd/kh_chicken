@@ -1,16 +1,23 @@
 package client.run;
 
+import client.communicator.Communicator;
 import client.singleton.Singleton;
-import client.view.mainView;
+import client.view.ManageView;
+import client.view.SaleManageView;
 
 public class Main {
 
 	public static void main(String[] args) {
+		
+		//Singleton s = Singleton.getInstance();
+		//s.getComm().makeConnection();
+		
 		Singleton s = Singleton.getInstance();
-		//s.getMenuCtrl().getMenDao().initList();
-		new mainView();
-		//s.getComm().SendMessage(3, new MenuShowDto("후라이드 치킨", 11000,"fried.jpg", 9.0));
-		//new MenuManagementView();
+		s.getComm().makeConnection();
+		new ManageView();
+		
+		
+		
 		
 	}
 

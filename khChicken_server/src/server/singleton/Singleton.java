@@ -1,5 +1,6 @@
 package server.singleton;
 
+import server.dao.BestSaleMenuDao;
 import server.dao.MemberDao;
 import server.dao.MenuDao;
 import server.dao.OrderDao;
@@ -9,10 +10,11 @@ public class Singleton {
 	
 	private static Singleton single = new Singleton();
 	
-	private MemberDao ctrlMember = new MemberDao();
-	private MenuDao ctrlMenu = new MenuDao();
-	private OrderDao ctrlOrder = new OrderDao();
-	private ReviewDao ctrlReview = new ReviewDao();
+	MemberDao ctrlMember = new MemberDao();
+	MenuDao ctrlMenu = new MenuDao();
+	OrderDao ctrlOrder = new OrderDao();
+	ReviewDao ctrlReview = new ReviewDao();
+	BestSaleMenuDao ctrlBestOrder = new BestSaleMenuDao();
 	
 	private Singleton() {
 	}
@@ -21,8 +23,13 @@ public class Singleton {
 		return single;
 	}
 	
-	public MenuDao getMenuCtrl() {
-		return ctrlMenu;
-	}	
+	public OrderDao getOrderCtrl() {
+		return ctrlOrder;
+	}
+	
+	public BestSaleMenuDao getBestCtrl() {
+		return ctrlBestOrder;
+	}
+	
 
 }

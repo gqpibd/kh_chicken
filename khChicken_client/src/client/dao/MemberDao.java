@@ -8,10 +8,8 @@ import dto.MemberDto;
 public class MemberDao {
 	
 	List<MemberDto> mList = new ArrayList<MemberDto>();
-	MemberDto memDto = new MemberDto();
 	
 	public MemberDao() {
-	
 	}
 	
 	public void insert() {
@@ -28,21 +26,6 @@ public class MemberDao {
 	
 	public void delete() {
 		
-	}	
-	
-	
-	public String getLoginId() {	//로그인 아이디 가져오기
-		
-		String loginId = memDto.getId();
-		return loginId;
 	}
-	
-	public int getAuth() {
-		
-		int auth = memDto.getAuth();
-		return auth;
-		
-	}
-	
 
 }

@@ -2,21 +2,20 @@ package server.dao;
 
 import java.net.Socket;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
+import dto.BestSaleMenuDto;
+import dto.OrderedMenuDto;
 import server.communicator.SocketWriter;
 import server.db.DBClose;
 import server.db.DBConnection;
-import dto.OrderedMenuDto;
 
-public class OrderDao {
+public class BestSaleMenuDao {
 	
-	public OrderDao() {
+	public BestSaleMenuDao() {
 	}
 	
 	
@@ -25,16 +24,19 @@ public class OrderDao {
 	
 	public void select(Socket sock) {
 		
-		String sql = " SELECT DISTINCT A.ORDER_DATE, A.ID, B.MENU_TYPE,  A.MENU_NAME, A.COUNTS, A.BEV_COUPON, B.PRICE "
-					+ " FROM ORDER_DETAIL A, MENU B "
-					+ " WHERE A.MENU_NAME = B.MENU_NAME "
-					+ " ORDER BY A.ORDER_DATE DESC ";
+		String sql = " SELECT b.menu_type, A.menu_name, A.판매량, A.사용쿠폰, (B.PRICE*A.판매량) 총판매액 "
+					+ " FROM (SELECT 정렬.menu_name , 정렬.판매량 , 정렬.쿠폰 사용쿠폰 "
+					+ " FROM(SELECT menu_name , SUM(counts) 판매량, SUM(BEV_COUPON) 쿠폰 "
+					+ " FROM ORDER_DETAIL "
+					+ " GROUP BY menu_name) 정렬) A, MENU B "
+					+ " WHERE A.menu_name = B.MENU_NAME "
+					+ " ORDER BY (B.PRICE*A.판매량) DESC ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		
-		ArrayList<OrderedMenuDto> list = new ArrayList<>();
+		ArrayList<BestSaleMenuDto> list = new ArrayList<>();
 		
 		try {
 			conn = DBConnection.getConnection();
@@ -42,14 +44,12 @@ public class OrderDao {
 			rs = psmt.executeQuery();
 			
 			while(rs.next()) {
-				
-				OrderedMenuDto omd = new OrderedMenuDto(rs.getDate("ORDER_DATE"),
-														rs.getString("ID"),
-														rs.getString("MENU_TYPE"),
-														rs.getNString("MENU_NAME"),
-														rs.getInt("COUNTS"),
-														rs.getInt("BEV_COUPON"),
-														rs.getInt("PRICE"));
+				// b.menu_type, A.menu_name, A.판매량, A.사용쿠폰, (B.PRICE*A.판매량) 총판매액
+				BestSaleMenuDto omd = new BestSaleMenuDto(rs.getString("MENU_TYPE"), 
+															rs.getString("MENU_NAME"), 
+															rs.getInt("판매량"), 
+															rs.getInt("사용쿠폰"), 
+															rs.getInt("총판매액"));
 				list.add(omd);
 				
 				
