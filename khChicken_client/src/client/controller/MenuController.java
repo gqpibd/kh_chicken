@@ -10,12 +10,12 @@ public class MenuController {
 		return menDao;
 	}
 	
-	public void insert() {
-		menDao.insert();
+	public void insert(MenuShowDto dto, String imgPath) {
+		menDao.insert(dto,imgPath);
 	}
 	
-	public void select() {
-		menDao.select();
+	public void initMenuList() {
+		menDao.initList();
 	}
 	
 	public void delete() {
@@ -24,6 +24,19 @@ public class MenuController {
 	
 	public void update() {
 		menDao.update();
+	}
+
+	public MenuShowDto getMenuDto(String name) {
+		return menDao.getMenuByName(name);
+		
+	}
+
+	public int getSize() {
+		return menDao.getSize();
+	}
+
+	public MenuShowDto get(int i) {
+		return menDao.get(i);
 	}
 
 }

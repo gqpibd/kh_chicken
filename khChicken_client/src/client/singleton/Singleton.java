@@ -24,6 +24,10 @@ public class Singleton {
 		return single;
 	}
 	
+	public MenuController getMenuCtrl() {
+		return menCtrl;
+	}
+
 	public Communicator getComm() {
 		return comm;
 	}
@@ -31,5 +35,8 @@ public class Singleton {
 	public OrderController getOrderCtrl() {
 		return ordCtrl;
 	}
-
+	
+	public MemberController getMemCtrl() {
+		return memCtrl; 
+	}
 }

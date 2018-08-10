@@ -15,7 +15,6 @@ public class MenuDto implements Serializable{
 
 
 	public MenuDto(String menu_name, int price) {
-		super();
 		this.menu_name = menu_name;
 		this.price = price;
 	}
@@ -38,11 +37,6 @@ public class MenuDto implements Serializable{
 
 	public void setPrice(int price) {
 		this.price = price;
-	}
-
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
 	}
 
 
