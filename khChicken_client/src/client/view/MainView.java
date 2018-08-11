@@ -27,11 +27,14 @@ import javax.swing.ScrollPaneConstants;
 
 import client.controller.MemberController;
 import client.controller.MenuController;
+import client.controller.OrderController;
 import client.dao.MemberDao;
 import client.dao.MenuDao;
 import client.singleton.Singleton;
 import dto.MemberDto;
+import dto.MenuDto;
 import dto.MenuShowDto;
+import dto.OrderedMenuDto;
 import net.miginfocom.swing.MigLayout;
 
 public class MainView extends JFrame implements ItemListener, ActionListener {
@@ -40,6 +43,7 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 	Singleton s = Singleton.getInstance();
 	MenuController menCtrl = Singleton.getInstance().getMenuCtrl();
 	MemberController memCtrl = Singleton.getInstance().getMemCtrl();
+	
 	List<String> checkedMenu = new ArrayList<>();
 	int i = 0;
 
@@ -223,8 +227,12 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 		} else if (o == btn_Register) { // 회원가입
 			memCtrl.AccountView(this);
 		} else if (o == btn_Order) { // 주문하기
-			String loginId = memCtrl.getLoginId();
-			// 주문 뷰 new OrderView(loginId, checkedMenu );
+			// orderMenuDto에 선택한 메뉴 이름, 타입, 가격 넣어서 넘겨주기 
+			OrderController ordCtrl = Singleton.getInstance().getOrderCtrl();
+			ordCtrl.getList().add(new OrderedMenuDto((MenuDto) menCtrl.get(0)));
+			ordCtrl.getList().add(new OrderedMenuDto((MenuDto) menCtrl.get(1)));
+			ordCtrl.getList().add(new OrderedMenuDto((MenuDto) menCtrl.get(2)));
+			ordCtrl.OrderView(this);
 		} else if (o == btn_Manage) {
 			memCtrl.manageView(this); // 관리자창
 		}

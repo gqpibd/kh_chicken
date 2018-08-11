@@ -11,7 +11,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
-
+ 
 public class Communicator {
 	public static int INSERT = 0;
 	public static int SELECT = 1;

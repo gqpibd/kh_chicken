@@ -12,7 +12,7 @@ import client.view.manager.ManageView;
 
 public class Singleton {
 
-	private static Singleton single = new Singleton();
+	private static Singleton single = new Singleton(); 
 
 	private Communicator comm = new Communicator();
 

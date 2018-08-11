@@ -25,7 +25,7 @@ public class ManageView extends JFrame implements ActionListener {
 	private JButton btn_sale;
 	private JButton btn_back;
 
-	public ManageView() {
+	public ManageView() { 
 		super("매니저 창");
 		setLayout(null);
 

@@ -9,7 +9,7 @@ import client.view.Window_Login;
 import client.view.manager.ManageView;
 import dto.MemberDto;
 
-public class MemberController {
+public class MemberController { 
 
 	private MemberDao memDao = new MemberDao();
 
@@ -82,5 +82,9 @@ public class MemberController {
 			logView.setVisible(true); // 보여만 준다.
 		}
 
+	}
+
+	public MemberDto getCurrentUser() {
+		return memDao.getCurrentUser();
 	}
 }

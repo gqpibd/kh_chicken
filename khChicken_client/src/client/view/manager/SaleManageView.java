@@ -25,7 +25,7 @@ public class SaleManageView extends JFrame implements ActionListener {
 	private String columNames[] = { "번호", "주문일자", "아이디", "메뉴타입", "주문메뉴", "수량", "음료쿠폰", "총액" };
 	Object rowData[][];
 	DefaultTableModel model;
-	ArrayList<Object> list = new ArrayList<Object>();
+//	ArrayList<Object> list = new ArrayList<Object>();
 	DefaultTableCellRenderer celAlignCenter; // 셀 가운데 정렬용
 	JButton backBtn; // 돌아가기 버튼
 	// 정렬 기준
@@ -43,7 +43,7 @@ public class SaleManageView extends JFrame implements ActionListener {
 			}
 		};
 		jTable = new JTable();
-		celAlignCenter = new DefaultTableCellRenderer();
+		celAlignCenter = new DefaultTableCellRenderer(); 
 		celAlignCenter.setHorizontalAlignment(SwingConstants.CENTER);
 
 		setTableByDate();
@@ -82,12 +82,10 @@ public class SaleManageView extends JFrame implements ActionListener {
 			String selectedItem = choiceList.getSelectedItem().toString();
 
 			if (selectedItem.equals("날짜순")) {
-				list = s.getOrderCtrl().select(4);
 				setTableByDate();
 			//} else if (selectedItem.equals("별점순")) {
 			} else if (selectedItem.equals("매출순")) {
-				list = s.getOrderCtrl().select(5);
-				setTableByScore();
+				setTableBySales();
 			}
 		} else if ( e.getSource() == backBtn) {
 			s.getMemCtrl().manageView(this);
@@ -97,18 +95,18 @@ public class SaleManageView extends JFrame implements ActionListener {
 	public void setTableByDate() {
 		Singleton s = Singleton.getInstance();
 
-		// controller로 영수증 목록 취득() -> server에 switch문 중 6번을 실행하라!
-		list = s.getOrderCtrl().select(6);
+		// controller로 영수증 목록 취득() -> server에 switch문 중 4번을 실행하라!
+		ArrayList<OrderedMenuDto> list = s.getOrderCtrl().selectByDate(4);
 
 		int bbsNum = 1;
 
 		rowData = new Object[list.size()][8]; // 테이블의 2차원배열
 
 		for (int i = 0; i < list.size(); i++) {
-			OrderedMenuDto dto1 = (OrderedMenuDto) list.get(i);
+			OrderedMenuDto dto1 = list.get(i);
 			int bev_price = 0;
 
-			if (dto1.getMenu_type().equals("drink") && dto1.getCoupon() != 0) {
+			if (dto1.getType().equals("drink") && dto1.getCoupon() != 0) {
 				bev_price = dto1.getPrice() * dto1.getCoupon();
 			}
 			// Date order_date, String id, String menu_type, String menu_name, int count,
@@ -116,11 +114,12 @@ public class SaleManageView extends JFrame implements ActionListener {
 			rowData[i][0] = bbsNum; // 글번호
 			rowData[i][1] = dto1.getOrder_date(); // 주문일자
 			rowData[i][2] = dto1.getId(); // 주문자 아이디
-			rowData[i][3] = dto1.getMenu_type(); // 메뉴타입
+			rowData[i][3] = dto1.getType(); // 메뉴타입
 			rowData[i][4] = dto1.getMenu_name(); // 주문메뉴
 			rowData[i][5] = dto1.getCount(); // 수량
 			rowData[i][6] = dto1.getCoupon(); // 음료쿠폰
-			rowData[i][7] = (dto1.getPrice() * dto1.getCount()) - bev_price;
+			rowData[i][7] = (dto1.getTotalPrice() * dto1.getCount()) - bev_price;
+		
 			bbsNum++;
 		}
 
@@ -147,13 +146,17 @@ public class SaleManageView extends JFrame implements ActionListener {
 		}
 	}
 
-	public void setTableByScore() {
+	public void setTableBySales() {
+		Singleton s = Singleton.getInstance();
+		ArrayList<BestSaleMenuDto> list = s.getOrderCtrl().selectBySales(5);
+		
 		rowData = new Object[list.size()][6];
 		int bbsNum = 1;
 		String[] columNames2 = { "번호", "메뉴타입", "메뉴이름", "총 판매 수량", "총 사용 쿠폰", "총 판매액" };
 
+		
 		for (int i = 0; i < list.size(); i++) {
-			BestSaleMenuDto dto = (BestSaleMenuDto) list.get(i);
+			BestSaleMenuDto dto = list.get(i);
 
 			// String menu_type, String menu_name, int total_sale, int total_coupon, int
 			// total_price

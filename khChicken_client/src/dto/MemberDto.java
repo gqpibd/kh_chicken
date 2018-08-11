@@ -32,7 +32,7 @@ public class MemberDto implements Serializable{
 	private String phone;
 	
 	public MemberDto() {
-	}
+	} 
 
 	public MemberDto(String id, String pw, String name, int coupon, int auth, String address, String phone) {
 		super();

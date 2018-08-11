@@ -12,13 +12,18 @@ public class BestSaleMenuDto implements Serializable {
 	private int total_coupon;
 	private int total_price;
 
+	public BestSaleMenuDto() {
+	
+	}
+	
 	public BestSaleMenuDto(String menu_type, String menu_name, int total_sale, int total_coupon, int total_price) {
 		this.menu_type = menu_type;
 		this.menu_name = menu_name;
 		this.total_sale = total_sale;
 		this.total_coupon = total_coupon;
-		this.total_price = total_price;
+		this.total_price = total_price; 
 	}
+
 
 	public String getMenu_type() {
 		return menu_type;

@@ -163,33 +163,71 @@ public class Window_Review extends JFrame implements ActionListener {
 		return progressBar;
 	}
 
-	public JProgressBar getStarBar(JProgressBar progressBar, int value) {
+//	public JProgressBar getStarBar(JProgressBar progressBar, int value) {
+//		progressBar.setForeground(Color.YELLOW);
+//		progressBar.setValue(value);
+//		progressBar.setMaximum(10);
+//
+//		// int scalefactor = 5;
+//		// int width = 62 / scalefactor;
+//		// int height = 13 / scalefactor;
+//		// 비율 : 가로 62, 세로 13
+//		int height = (int) progressBar.getPreferredSize().getHeight();
+//		int width = (int) height * 62 / 13;
+//		JLabel label = new JLabel();
+////		label.setSize(progressBar.getPreferredSize());
+//		label.setPreferredSize(progressBar.getPreferredSize());
+//		//Size(progressBar.getPreferredSize().width,progressBar.getPreferredSize().height);
+//		//label.setSize(width,height);
+//		try {
+//			ImageIcon icon = new ImageIcon(ImageIO.read(new File("star.png")));
+//			Image changedImg = icon.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH);
+//			ImageIcon resizedIcon = new ImageIcon(changedImg);
+//
+//			label.setIcon(resizedIcon);
+//
+//			progressBar.add(label);
+//			
+//		} catch (IOException e1) {
+//			e1.printStackTrace();
+//		}
+//		return progressBar;
+//	}
+	
+	public JPanel getStarBarPan(JPanel panel, int value) {
+		panel.setLayout(null);
+		JProgressBar progressBar = new JProgressBar();
 		progressBar.setForeground(Color.YELLOW);
 		progressBar.setValue(value);
 		progressBar.setMaximum(10);
-
-		// int scalefactor = 5;
-		// int width = 62 / scalefactor;
-		// int height = 13 / scalefactor;
+		 int scalefactor = 2;
+		 int width = 62 * scalefactor;
+		 int height = 13 * scalefactor;
 		// 비율 : 가로 62, 세로 13
-		int height = (int) progressBar.getPreferredSize().getHeight();
-		int width = (int) height * 62 / 13;
+		
+
+		progressBar.setSize(new Dimension(width, height));
 		JLabel label = new JLabel();
-		label.setSize(progressBar.getPreferredSize());
+		label.setSize(progressBar.getSize());
+		label.setLocation(progressBar.getLocation());
+	//	label.setPreferredSize(progressBar.getPreferredSize());
+		//Size(progressBar.getPreferredSize().width,progressBar.getPreferredSize().height);
+		//label.setSize(width,height);
 		try {
 			ImageIcon icon = new ImageIcon(ImageIO.read(new File("star.png")));
-			Image changedImg = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+			Image changedImg = icon.getImage().getScaledInstance(progressBar.getWidth(), progressBar.getHeight(), Image.SCALE_SMOOTH);
 			ImageIcon resizedIcon = new ImageIcon(changedImg);
 
 			label.setIcon(resizedIcon);
 
 			progressBar.add(label);
+			
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		return progressBar;
+		panel.add(progressBar);
+		return panel;
 	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
@@ -242,10 +280,11 @@ public class Window_Review extends JFrame implements ActionListener {
 		JPanel_Review.add(new JLabel("작성자 : "), "cell 0 0 1 1");
 		JPanel_Review.add(JLabel_ReviewName, "cell 1 0 1 1");
 
-		JProgressBar star = new JProgressBar();
+		//JProgressBar star = new JProgressBar();
 		// JPanel_Review[i].add(getStarBar(star, list.get(i).getScore()), "cell 3 0 1 1,
 		// gapleft 30");
-		JPanel_Review.add(getStarBar(star, dto.getScore()), "w :66:, wrap, gapleft 30");
+//		JPanel_Review.add(getStarBar(star, dto.getScore()), "w :66:, wrap, gapleft 30");
+		JPanel_Review.add(getStarBarPan(new JPanel(), dto.getScore()), "w :180:, h :30:, wrap, gapleft 30");
 		JPanel_Review.add(JTextA_Review, "span 4, w 300!, h 40:60:80");
 
 		return JPanel_Review;

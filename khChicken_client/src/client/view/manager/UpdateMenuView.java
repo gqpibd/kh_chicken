@@ -176,7 +176,6 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 
 		setBounds(300, 150, frameWidth, 505);
 		setVisible(true);
-		
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 	}
 
@@ -220,6 +219,7 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 				int row = menuTable.getSelectedRow();
 
 				MenuShowDto dto = s.getMenuCtrl().getMenuDto(model.getValueAt(row, NAME_COL).toString());
+			
 				typeField.setText(dto.getType());
 				nameField.setText(dto.getMenu_name());
 				priceField.setText(dto.getPrice() + "");

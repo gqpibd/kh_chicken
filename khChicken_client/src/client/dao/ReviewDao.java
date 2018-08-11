@@ -3,7 +3,7 @@ package client.dao;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-
+ 
 import client.communicator.Communicator;
 import client.singleton.Singleton;
 import dto.ReviewDto;

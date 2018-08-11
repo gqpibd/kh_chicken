@@ -9,7 +9,7 @@ import client.communicator.Communicator;
 import client.singleton.Singleton;
 import dto.MemberDto;
 
-public class MemberDao {
+public class MemberDao { 
 
 	List<MemberDto> mList = new ArrayList<MemberDto>();
 	MemberDto CurrentUser;
@@ -64,5 +64,9 @@ public class MemberDao {
 		int auth = CurrentUser.getAuth();
 		return auth;
 
+	}
+
+	public MemberDto getCurrentUser() {
+		return CurrentUser;
 	}
 }

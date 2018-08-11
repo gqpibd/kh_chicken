@@ -64,7 +64,7 @@ public class Window_Account extends JFrame implements ActionListener {
 		Jbut_Check.addActionListener(this);
 		Jbut_Check.setBounds(241, 253, 101, 32);
 
-		Jbut_Back = new JButton("이전으로");
+		Jbut_Back = new JButton("메인으로");
 		Jbut_Back.addActionListener(this);
 		Jbut_Back.setBounds(12, 10, 101, 23);
 
@@ -164,8 +164,7 @@ public class Window_Account extends JFrame implements ActionListener {
 			}
 
 		} else if (obj == Jbut_Back) {
-			single.getMemCtrl().loginView(this);
-			// single.Win_Loging = new Window_Login();
+			Singleton.getInstance().backToMain(this);
 		}
 	}
 }
