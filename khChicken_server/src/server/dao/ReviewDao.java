@@ -8,69 +8,38 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dto.OrderedMenuDto;
 import dto.ReviewDto;
+import server.communicator.SocketWriter;
 import server.db.DBClose;
 import server.db.DBConnection;
+import server.singleton.Singleton;
 
 public class ReviewDao {
-	/*
-	 * CREATE TABLE ORDER_DETAIL( ID VARCHAR2(10), MENU_NAME VARCHAR2(30), COUNT1
-	 * NUMBER(10) NOT NULL, BEV_COUPON NUMBER(3), ORDER_DATE DATE NOT NULL, REVIEW
-	 * VARCHAR2(1000), SCORE NUMBER(5), );
-	 */
-
-	Socket sock;
-
-	public void Sock_Daoreview(Socket sock) {
-		this.sock = sock;
+	
+	public ReviewDao() {
 	}
 
-	public List<dto.ReviewDto> Choice(int number, dto.ReviewDto dto) {
+	public void execute(int number, ReviewDto dto, Socket sock) {
 		switch (number) {
-		case 0:
-			return insert(dto);
-		case 1:
-			return select();
-		case 2:
+		case Singleton.INSERT: // 주문 내역 없는 리뷰를 추가하는 경우는 없다.
 			break;
-		case 3:
+		case Singleton.SELECT: // 리뷰 불러오기 - 윤상필
+			List<ReviewDto> list = select(dto);
+			SocketWriter.Write(sock, list);
+			break;
+		case Singleton.DELETE: 
+			break;
+		case Singleton.UPDATE: // 기존 주문한 내역에 리뷰 추가하기 - 윤상필
+			update(dto);
 			break;
 		}
-		return select();
 	}
 
-	public List<dto.ReviewDto> insert(dto.ReviewDto dto) {
-		String id = dto.getUserId();
-		String MenuName = dto.getMenuName();
-		String Review = dto.getReview();
-		int score = dto.getScore();
-
-		String sql = " INSERT INTO ORDER_DETAIL (ID, MENU_NAME, COUNT1, BEV_COUPON, ORDER_DATE,REVIEW, SCORE ) "
-				+ "VALUES ( '" + id + "', '" + MenuName + "', " + 0 + ", " + 0 + ", TO_DATE(sysdate , 'yyyy/mm/dd'), '"
-				+ Review + "', " + 1 + " )";
-		System.out.println(sql);
-		Connection conn = null;
-		PreparedStatement psmt = null;
-
-		try {
-			conn = DBConnection.getConnection();
-			psmt = conn.prepareStatement(sql);
-			psmt.executeQuery();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DBClose.close(psmt, conn, null);
-		}
-		return null;
-	}
-
-	public List<dto.ReviewDto> select() {
-
-		String sql = "SELECT ID, MENU_NAME, ORDER_DATE, REVIEW, SCORE " + " FROM ORDER_DETAIL ";
-
-		System.out.println(sql);
-		int i = 0;
+	public List<ReviewDto> select(ReviewDto dto) {
+		String sql = "SELECT ID, MENU_NAME, ORDER_DATE, REVIEW, SCORE " + 
+				    " FROM ORDER_DETAIL " +
+				    " WHERE MENU_NAME = ? ";
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -81,15 +50,16 @@ public class ReviewDao {
 
 			conn = DBConnection.getConnection();
 			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, dto.getMenuName());
 			rs = psmt.executeQuery();
 
 			while (rs.next()) {
 				// ID, MENU_NAME, ORDER_DATE, REVIEW, SCORE
-				ReviewDto dto = new dto.ReviewDto(rs.getString(1), rs.getString(2), rs.getString(3),
+				ReviewDto resultDto = new dto.ReviewDto(rs.getString(1), rs.getString(2), rs.getString(3),
 						rs.getString(4), rs.getInt(5));
 
-				list.add(dto);
-				System.out.println(dto.toString());
+				list.add(resultDto);
+				//System.out.println(dto.toString());
 			}
 
 		} catch (SQLException e) {
@@ -98,17 +68,42 @@ public class ReviewDao {
 			DBClose.close(psmt, conn, rs);
 		}
 
-		System.out.println(list.size() + "사이즈");
 		return list;
 
 	}
 
-	public void update(ReviewDto dto) {
+	public void update(ReviewDto dto) { // 기존 주문한 내역에 리뷰 추가하기
+		String sql = " UPDATE ORDER_DETAIL " + 
+					 " SET REVIEW = ?, SCORE = ? " +
+					 " WHERE ID = ? AND MENU_NAME = ? AND ORER_DATE = ? ";
 
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, dto.getReview());
+			psmt.setInt(2, dto.getScore());
+			psmt.setString(3, dto.getUserId());
+			psmt.setString(4, dto.getMenuName());
+			psmt.setString(5, dto.getOrderDate());
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				System.out.println(dto.getUserId() + "님의 " + dto.getMenuName() + "에 대한 리뷰가 업데이트 되었습니다.");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, null);
+		}
 	}
 
 	public void delete() {
 
 	}
+
+	
 
 }

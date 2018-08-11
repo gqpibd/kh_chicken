@@ -6,9 +6,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class SocketWriter<Type> {
+public class SocketWriter<T> {
 
-	public static <Type> void Write(Socket sock, Type o) {
+	public static <T> void Write(Socket sock, T o) {
 		ObjectOutputStream oos = null;
 		try {
 			oos = new ObjectOutputStream(sock.getOutputStream());
@@ -19,5 +19,4 @@ public class SocketWriter<Type> {
 			e.printStackTrace();
 		}
 	}
-
 }

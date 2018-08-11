@@ -1,13 +1,4 @@
 package server.db;
-<<<<<<< HEAD
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
-public class DBConnection {
-	
-	public static void initConnect() {
-=======
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,7 +8,6 @@ import java.sql.SQLException;
 
 public class DBConnection {
 	public static void initConnection() {
->>>>>>> refs/remotes/origin/도현+다슬+승지
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			System.out.println("Driver Loading Success!!");			
