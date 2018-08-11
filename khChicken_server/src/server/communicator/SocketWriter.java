@@ -14,7 +14,6 @@ public class SocketWriter<T> {
 			oos = new ObjectOutputStream(sock.getOutputStream());
 			oos.writeObject(o);
 			oos.flush();
-			System.out.println("write");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
