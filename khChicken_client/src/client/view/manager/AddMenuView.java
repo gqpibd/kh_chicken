@@ -150,7 +150,7 @@ public class AddMenuView extends JFrame implements ActionListener {
 		JScrollPane scrollPane = new JScrollPane(description);
 		scrollPane.setBounds(288, 164, 150, 173);
 		getContentPane().add(scrollPane);
-		
+
 		setVisible(true);
 	}
 

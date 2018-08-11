@@ -9,7 +9,7 @@ import javax.swing.JTextField;
 import dto.MemberDto;
 import client.singleton.Singleton;
 
-public class Window_ACount extends JFrame implements ActionListener{
+public class Window_Account extends JFrame implements ActionListener{
 
 	JTextField JtextF_Id;
 	JTextField JtextF_pwd;
@@ -24,7 +24,7 @@ public class Window_ACount extends JFrame implements ActionListener{
 
 	String Str_ID_Check = "";
 
-	public Window_ACount() {
+	public Window_Account() {
 
 		setTitle("회원가입창");
 		setLayout(null);
@@ -101,10 +101,10 @@ public class Window_ACount extends JFrame implements ActionListener{
 		}else {
 			MemberDto dto = new MemberDto();
 				dto.setId(id);
-				boolean Join = single.memCtrl.select(dto);
+				boolean Join = single.getMemCtrl().select(dto);
 				if(Join == true) {
 					Str_ID_Check = id;
-				JOptionPane.showMessageDialog(null,"사용 가능하신 아이디입니다.");
+				JOptionPane.showMessageDialog(null,"사용 가능한 아이디입니다.");
 				}else if (Join == false) {
 				JOptionPane.showMessageDialog(null,"이미 있는 아이디입니다.");
 			}
@@ -124,14 +124,14 @@ public class Window_ACount extends JFrame implements ActionListener{
 				JOptionPane.showMessageDialog(null,"회원가입이 완료되었습니다.");
 				JOptionPane.showMessageDialog(null,"로그인 해주세요.");
 				MemberDto dto = new MemberDto(id, pw, name, 0, 0, address, phone);
-				single.memCtrl.insert(dto);
-				dispose();
-				single.Win_Loging = new Window_Loging();
+				single.getMemCtrl().insert(dto);
+				single.getMemCtrl().backToMain(this);
+				//single.Win_Loging = new Window_Login();
 			}
 
 		}else if(obj == Jbut_Back) {
-			dispose();
-			single.Win_Loging = new Window_Loging();
+			single.getMemCtrl().loginView(this);
+			//single.Win_Loging = new Window_Login();
 		}
 	}
 }

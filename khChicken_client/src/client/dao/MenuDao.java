@@ -3,22 +3,17 @@ package client.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-<<<<<<< HEAD
-import dto.MenuDto;
-=======
 import client.communicator.Communicator;
 import client.singleton.Singleton;
 import dto.MenuDto;
 import dto.MenuShowDto;
->>>>>>> refs/remotes/origin/도현+다슬+승지
 
 public class MenuDao {
-	//public static final String FOLDER_PATH = "\\\\127.0.0.1\\images\\";
+	// public static final String FOLDER_PATH = "\\\\127.0.0.1\\images\\";
 	public static final String FOLDER_PATH = "images\\";
 	private List<MenuShowDto> menList = new ArrayList<MenuShowDto>();
 
 	public MenuDao() {
-		
 	}
 
 	public void insert(MenuShowDto dto, String imgFilePath) {
@@ -30,7 +25,7 @@ public class MenuDao {
 
 	public void initList() { // 서버에서 다 읽어오기
 		Singleton s = Singleton.getInstance();
-		//s.getComm().makeConnection();
+		// s.getComm().makeConnection();
 		MenuShowDto dto = new MenuShowDto();
 
 		menList.clear();

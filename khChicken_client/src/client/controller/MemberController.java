@@ -1,55 +1,30 @@
 package client.controller;
 
-<<<<<<< HEAD
-import java.net.Socket;
-=======
 import javax.swing.JFrame;
->>>>>>> refs/remotes/origin/도현+다슬+승지
 
 import client.dao.MemberDao;
-<<<<<<< HEAD
-import dto.MemberDto;
-=======
 import client.singleton.Singleton;
+import client.view.Window_Account;
+import client.view.Window_Login;
 import client.view.manager.ManageView;
 import client.view.manager.SaleManageView;
->>>>>>> refs/remotes/origin/도현+다슬+승지
+import dto.MemberDto;
 
 public class MemberController {
-<<<<<<< HEAD
-	
-	
-=======
 
->>>>>>> refs/remotes/origin/도현+다슬+승지
-	MemberDao memDao = new MemberDao();
-<<<<<<< HEAD
-	
-	
-	public void Sockdao(Socket sock) {
-		 memDao.MemberDao(sock);
-=======
-	ManageView manView;
-	SaleManageView salManView;
+	private MemberDao memDao = new MemberDao();
 
-	public void insert() {
-		memDao.insert();
->>>>>>> refs/remotes/origin/도현+다슬+승지
-	}
-<<<<<<< HEAD
-	
+	private ManageView manView;
+	private SaleManageView salManView;
+	private Window_Account accView;
+	private Window_Login logView;
+
 	public void insert(MemberDto dto) {
-		System.out.println(dto.getId() + "컨트롤");
 		memDao.insert(dto);
 	}
-	
+
 	public boolean select(MemberDto dto) {
 		return memDao.select(dto);
-=======
-
-	public void select() {
-		memDao.select();
->>>>>>> refs/remotes/origin/도현+다슬+승지
 	}
 
 	public void delete() {
@@ -59,9 +34,9 @@ public class MemberController {
 	public void update() {
 		memDao.update();
 	}
-	
-	public boolean select_loging(MemberDto dto) {
-		return memDao.select_loging(dto);
+
+	public boolean select_login(MemberDto dto) {
+		return memDao.select_login(dto);
 	}
 
 	// ------------------ 로그인아이디 / auth 얻는 메소드
@@ -97,5 +72,24 @@ public class MemberController {
 		currentView.setVisible(false);
 		Singleton.getInstance().getMainView().setVisible(true); // 메인 화면을 보이게 한다.
 	}
-	
+
+	public void AccountView(JFrame currentView) {
+		currentView.setVisible(false);
+		if (accView == null) { // 없을 땐
+			accView = new Window_Account(); // 만들고
+		} else { // 있을 땐
+			accView.setVisible(true); // 보여만 준다.
+		}
+		
+	}
+
+	public void loginView(JFrame currentView) {
+		currentView.setVisible(false);
+		if ( logView == null) { // 없을 땐
+			logView = new Window_Login(); // 만들고
+		} else { // 있을 땐
+			logView.setVisible(true); // 보여만 준다.
+		}
+		
+	}
 }

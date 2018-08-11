@@ -193,7 +193,7 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 			public void mouseClicked(MouseEvent e) {// 누르면
 
 				JOptionPane.showMessageDialog(null, "리뷰 open");
-				//System.out.println("menu Name : " + menu_name);
+				// System.out.println("menu Name : " + menu_name);
 
 				// s.reviewMenu = menu_name; 리뷰에 보내줄 menuName
 				// 리뷰 view open (menu_name);
@@ -245,7 +245,7 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 
 	public void setImage(String path, JLabel imgLabel) {
 		try {
-			//System.out.println("path : " + path);
+			// System.out.println("path : " + path);
 			BufferedImage m_numberImage = ImageIO.read(new File(path));
 			ImageIcon icon = new ImageIcon(m_numberImage);
 
@@ -270,11 +270,11 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 
 		Object o = e.getSource();
 		if (o == btn_Login) {
-			JOptionPane.showMessageDialog(null, "로그인");
+			memCtrl.loginView(this);
 		} else if (o == btn_Register) {
-			JOptionPane.showMessageDialog(null, "회원가입");
+			memCtrl.AccountView(this);
 		} else if (o == btn_Order) {
-			//JOptionPane.showMessageDialog(null, "주문하기");
+			// JOptionPane.showMessageDialog(null, "주문하기");
 			String loginId = memCtrl.getLoginId();
 			memCtrl.manageView(this); // 관리자창
 			System.out.println(loginId);

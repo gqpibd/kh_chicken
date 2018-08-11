@@ -17,8 +17,6 @@ import javax.imageio.ImageIO;
 
 import dto.MenuShowDto;
 
-import client.singleton.Singleton;
-
 public class Communicator {
 	public static int INSERT = 0;
 	public static int SELECT = 1;
@@ -32,16 +30,6 @@ public class Communicator {
 			sock = new Socket();
 			sock.connect(sockAddr);
 			System.out.println("연결성공");
-<<<<<<< HEAD
-			
-			Singleton single = Singleton.getInstance();
-			single.memCtrl.Sockdao(sock);
-			single.revCtrl.socketDao(sock);
-			
-			
-			//BufferedReader br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-=======
->>>>>>> refs/remotes/origin/도현+다슬+승지
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -119,6 +107,23 @@ public class Communicator {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public Object receiveObject() {
+		ObjectInputStream ois = null;
+		Object obj = null;
+		try {
+			ois = new ObjectInputStream(sock.getInputStream());
+			obj = ois.readObject();
+		} catch (EOFException e) {
+			System.out.println("파일을 다 읽었습니다.");
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		return obj;
 	}
 
 	public ArrayList<Object> receiveMessage() {

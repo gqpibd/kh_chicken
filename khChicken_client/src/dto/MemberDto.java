@@ -3,8 +3,7 @@ package dto;
 import java.io.Serializable;
 
 public class MemberDto implements Serializable{
-	
-<<<<<<< HEAD
+
 	
 	/*
 	CREATE TABLE MEMBER(
@@ -18,10 +17,7 @@ public class MemberDto implements Serializable{
 		);*/
 	
 	
-	
-	
-=======
->>>>>>> refs/remotes/origin/도현+다슬+승지
+
 	private static final long serialVersionUID = -2270144856528113975L;
 	
 	public static final int MANAGER = 1;

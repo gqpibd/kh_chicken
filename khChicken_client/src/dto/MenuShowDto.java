@@ -5,42 +5,53 @@ import java.io.Serializable;
 
 public class MenuShowDto extends MenuDto implements Serializable {
 	
-	private static final long OserialVersionUID = 7675418139620414668L;
+	private static final long serialVersionUID = 7675418139620414668L;
 	
-	private String image;
-	private int reviewCount;
+	private String type;
+	private String description;
+	private double avgScore;
 	
 	public MenuShowDto() {
 	}
 
-	public MenuShowDto(String image, int reviewCount) {
-		super();
-		this.image = image;
-		this.reviewCount = reviewCount;
+	public MenuShowDto(String name, int price) {
+		super(name, price);
+		this.avgScore = 0;
 	}
 
-	public String getImage() {
-		return image;
+	public MenuShowDto(String name, int price, String type, String description, double avgScore) {
+		super(name, price);
+		this.type = type;
+		this.description = description;
+		this.avgScore = avgScore;
 	}
 
-	public void setImage(String image) {
-		this.image = image;
+	public double getavgScore() {
+		return avgScore;
 	}
 
-
-	public int getReviewCount() {
-		return reviewCount;
+	public void setavgScore(double avgScore) {
+		this.avgScore = avgScore;
 	}
 
-	public void setReviewCount(int reviewCount) {
-		this.reviewCount = reviewCount;
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+	
+	public String getDescription() {
+		return description;
+	}
+	
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@Override
 	public String toString() {
-		return "MenuShowDto [image=" + image + ", reviewCount=" + reviewCount + "]";
+		return "MenuShowDto [ menuName =" + super.getMenu_name() + ", price = " + super.getPrice() + ", type=" + type + ", description=" + description + ", avgScore=" + avgScore + "]";
 	}
-	
-	
-
 }

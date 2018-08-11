@@ -3,13 +3,9 @@ package client.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-<<<<<<< HEAD
-import dto.OrderedMenuDto;
-=======
 import dto.BestSaleMenuDto;
 import dto.OrderedMenuDto;
 import client.singleton.Singleton;
->>>>>>> refs/remotes/origin/도현+다슬+승지
 
 public class OrderDao {
 
