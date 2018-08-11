@@ -62,7 +62,8 @@ public class SaleManageView extends JFrame implements ActionListener {
 		add(backBtn);
 
 		// 정렬기준 바꾸기
-		String[] selects = new String[] { "날짜순", "별점순" };
+//		String[] selects = new String[] { "날짜순", "별점순" };
+		String[] selects = new String[] { "날짜순", "매출순" };
 		choiceList = new JComboBox<>(selects);
 		choiceList.setBounds(20, 380, 80, 20);
 		choiceList.addActionListener(this);
@@ -81,10 +82,11 @@ public class SaleManageView extends JFrame implements ActionListener {
 			String selectedItem = choiceList.getSelectedItem().toString();
 
 			if (selectedItem.equals("날짜순")) {
-				list = s.getOrderCtrl().select(6);
+				list = s.getOrderCtrl().select(4);
 				setTableByDate();
-			} else if (selectedItem.equals("별점순")) {
-				list = s.getOrderCtrl().select(7);
+			//} else if (selectedItem.equals("별점순")) {
+			} else if (selectedItem.equals("매출순")) {
+				list = s.getOrderCtrl().select(5);
 				setTableByScore();
 			}
 		} else if ( e.getSource() == backBtn) {
