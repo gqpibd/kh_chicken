@@ -25,8 +25,7 @@ public class ReviewDao {
 		case Singleton.INSERT: // 주문 내역 없는 리뷰를 추가하는 경우는 없다.
 			break;
 		case Singleton.SELECT: // 리뷰 불러오기 - 윤상필
-			List<ReviewDto> list = select(dto);
-			SocketWriter.Write(sock, list);
+			select(dto, sock);
 			break;
 		case Singleton.DELETE: 
 			break;
@@ -36,7 +35,7 @@ public class ReviewDao {
 		}
 	}
 
-	public List<ReviewDto> select(ReviewDto dto) {
+	public void select(ReviewDto dto, Socket sock) {
 		String sql = "SELECT ID, MENU_NAME, ORDER_DATE, REVIEW, SCORE " + 
 				    " FROM ORDER_DETAIL " +
 				    " WHERE MENU_NAME = ? ";
@@ -44,7 +43,6 @@ public class ReviewDao {
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
-
 		List<ReviewDto> list = new ArrayList<>();
 		try {
 
@@ -53,7 +51,9 @@ public class ReviewDao {
 			psmt.setString(1, dto.getMenuName());
 			rs = psmt.executeQuery();
 
+			System.out.println(sql);
 			while (rs.next()) {
+				System.out.println(dto.getMenuName());
 				// ID, MENU_NAME, ORDER_DATE, REVIEW, SCORE
 				ReviewDto resultDto = new dto.ReviewDto(rs.getString(1), rs.getString(2), rs.getString(3),
 						rs.getString(4), rs.getInt(5));
@@ -68,7 +68,7 @@ public class ReviewDao {
 			DBClose.close(psmt, conn, rs);
 		}
 
-		return list;
+		SocketWriter.Write(sock, list);
 
 	}
 

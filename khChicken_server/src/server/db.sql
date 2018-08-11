@@ -49,6 +49,8 @@ CREATE TABLE ORDER_DETAIL(
     SCORE NUMBER(5)
 );
 
+
+
  INSERT INTO ORDER_DETAIL (ID, MENU_NAME, COUNT1, BEV_COUPON, ORDER_DATE,REVIEW, SCORE )
  VALUES ( '윤상필', 'null', 0, 0, TO_DATE(sysdate , 'yyyy/mm/dd') , '히히히히 맛있어요', 1 )
 
