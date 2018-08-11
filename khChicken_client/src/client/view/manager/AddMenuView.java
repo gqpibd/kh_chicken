@@ -84,23 +84,6 @@ public class AddMenuView extends JFrame implements ActionListener {
 		beverageRadBtn.setBounds(328, 59, 83, 23);
 		btnGroup.add(beverageRadBtn);
 		getContentPane().add(beverageRadBtn);
-		// beverageRadBtn.addChangeListener(new ChangeListener() {
-		// @Override
-		// public void stateChanged(ChangeEvent e) {
-		// if (beverageRadBtn.isSelected()) {
-		// searchBtn.setVisible(false);
-		// filePathField.setVisible(false);
-		// imgLabel.setVisible(false);
-		// imgFileLabel.setVisible(false);
-		// } else {
-		// searchBtn.setVisible(true);
-		// filePathField.setVisible(true);
-		// imgLabel.setVisible(true);
-		// imgFileLabel.setVisible(true);
-		// }
-		//
-		// }
-		// });
 
 		JLabel titleLabel = new JLabel("메뉴 추가");
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);

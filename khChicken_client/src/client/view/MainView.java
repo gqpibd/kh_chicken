@@ -90,8 +90,6 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 		super("KH CHICKEN");
 		setLayout(null);
 
-		s.setMainView(this);
-
 		// 로고2, 버튼 4, 패널 1
 
 		boolean managerBtnOpen = false;
@@ -191,12 +189,7 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {// 누르면
-
-				JOptionPane.showMessageDialog(null, "리뷰 open");
-				// System.out.println("menu Name : " + menu_name);
-
-				// s.reviewMenu = menu_name; 리뷰에 보내줄 menuName
-				// 리뷰 view open (menu_name);
+				s.getRevCtrl().reviewView(s.getMainView(), menu_name);
 			}
 		});
 

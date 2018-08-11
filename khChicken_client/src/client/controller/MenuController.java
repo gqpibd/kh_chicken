@@ -31,10 +31,6 @@ public class MenuController {
 		menDao.delete();
 	}
 
-	public void update() {
-		menDao.update();
-	}
-
 	public MenuShowDto getMenuDto(String name) {
 		return menDao.getMenuByName(name);
 
@@ -47,10 +43,11 @@ public class MenuController {
 	public MenuShowDto get(int i) {
 		return menDao.get(i);
 	}
-	public void updatePrice(MenuShowDto menu, int newPrice) {
-		menDao.updatePrice(menu, newPrice);
-		
+
+	public void update(MenuShowDto menu, int newPrice, String description) {
+		menDao.update(menu, newPrice, description);
 	}
+
 	public void menuManageView(JFrame currentView) {
 		currentView.setVisible(false);// 관리자 창을 안 보이게 하고
 		// 메뉴관리 창을 보여준다.
@@ -80,7 +77,5 @@ public class MenuController {
 			updManView.setVisible(true); // 보여만 준다.
 		}
 	}
-
-	
 
 }

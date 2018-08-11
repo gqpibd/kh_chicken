@@ -5,7 +5,6 @@ import java.util.List;
 
 import client.communicator.Communicator;
 import client.singleton.Singleton;
-import dto.MenuDto;
 import dto.MenuShowDto;
 
 public class MenuDao {
@@ -63,7 +62,7 @@ public class MenuDao {
 		return null;
 	}
 
-	public void delete(MenuDto menu) {
+	public void delete(MenuShowDto menu) {
 		menList.remove(menu);
 
 		Singleton s = Singleton.getInstance();
@@ -71,27 +70,20 @@ public class MenuDao {
 
 	}
 
-	public void updatePrice(MenuDto menu, int newPrice) {
-		menu.setPrice(newPrice); // 리스트에서 업데이트
-
+	public void update(MenuShowDto menu, int newPrice, String description) {
+		// 리스트에서 업데이트
+		menu.setPrice(newPrice); 
+		menu.setDescription(description);
+		
 		// socket으로 전달
 		Singleton s = Singleton.getInstance();
 		s.getComm().SendMessage(Communicator.UPDATE, menu);
 	}
 
-	public void updateImage(MenuShowDto menu, String imagePath) {
-
-		// socket으로 전달
-
+	public void updateImage(MenuShowDto menu, String newImgPath) {
+		Singleton s = Singleton.getInstance();
+		s.getComm().SendMessage(4, menu);
+		s.getComm().sendImage(newImgPath);		
 	}
-
-	// public List<MenuShowDto> getShowMenu(){
-	// //서버에서 받은 dto저장할 리스트
-	// List<MenuShowDto> showDtoList = new ArrayList<>();
-	//
-	// showDtoList = Singleton.getInstance().getComm().getShowMenu();
-	// return showDtoList;
-	//
-	// }
 
 }

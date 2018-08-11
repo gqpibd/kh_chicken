@@ -56,6 +56,7 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 	private JTextField typeField;
 
 	private JTextArea descriptionArea;
+	private String NewImgPath = "";
 
 	public UpdateMenuView() {
 		setTitle("메뉴 수정, 삭제");
@@ -180,8 +181,8 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 	public void initFields() {
 		// 나머지 필드가 기본적으로 맨 위에 로우값으로 보이게 한다.
 		Singleton s = Singleton.getInstance();
-		MenuShowDto topDto = (MenuShowDto) s.getMenuCtrl().getMenDao().get(0);
-		//System.out.println(topDto.toString());
+		MenuShowDto topDto = s.getMenuCtrl().getMenDao().get(0);
+		// System.out.println(topDto.toString());
 		nameField.setText(topDto.getMenu_name());
 		priceField.setText(topDto.getPrice() + "");
 		newPriceField.setText(topDto.getPrice() + "");
@@ -190,7 +191,7 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 		descriptionArea.setText(topDto.getDescription());
 
 		setImage(MenuDao.FOLDER_PATH + topDto.getMenu_name().replaceAll(" ", "_") + ".jpg");
-		menuTable.setRowSelectionInterval(0, 0);
+		menuTable.setRowSelectionInterval(0, 0); // 맨 위 칼럼이 선택된 상태로 표시함
 	}
 
 	public void setTable() {
@@ -260,7 +261,7 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 		return rowData;
 	}
 
-	public String jFileChooserUtil() {
+	public String jFileChooserUtil() { // 이미지 파일 선택창
 
 		String folderPath = "";
 
@@ -316,21 +317,21 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 			MenuShowDto menu = (MenuShowDto) s.getMenuCtrl().getMenDao().getMenuByName(nameField.getText());
 			int row = menuTable.getSelectedRow();
 			int newPrice = Integer.parseInt(newPriceField.getText());
-			String image = imgFileField.getText();
-			if (menu.getPrice() != newPrice) {
-				model.setValueAt(newPrice, row, PRICE_COL);
-				s.getMenuCtrl().updatePrice(menu, newPrice);
-			}
+			String description = descriptionArea.getText();
 
-			s.getMenuCtrl().getMenDao().updateImage(menu, image);
-			// 이미지 바뀐 경우 판단하는 코드 추가해야함.
-			model.setValueAt(image, row, IMG_COL);
+			model.setValueAt(newPrice, row, PRICE_COL);
+			s.getMenuCtrl().update(menu, newPrice, description);
+
+			String currentImgPath = MenuDao.FOLDER_PATH + model.getValueAt(row, IMG_COL).toString();
+			if (NewImgPath.length() > 0 && !NewImgPath.equals(currentImgPath)) { // 이미지 경로가 달라졌으면 소켓을 통해 새로운 이미지를 보낸다.
+				s.getMenuCtrl().getMenDao().updateImage(menu, NewImgPath);
+			}
 		} else if (e.getSource() == delBtn) { // 삭제 버튼 클릭
-			MenuDto menu = s.getMenuCtrl().getMenDao().getMenuByName(nameField.getText());
+			MenuShowDto menu = s.getMenuCtrl().getMenDao().getMenuByName(nameField.getText());
 			int row = menuTable.getSelectedRow();
 			int sel = JOptionPane.showConfirmDialog(null, "이 메뉴를 삭제하시겠습니까?", "", JOptionPane.YES_NO_OPTION);
 			if (sel == 0) { // 메뉴를 삭제하는 경우
-				model.removeRow(row);
+				model.removeRow(row); // JTable에서 삭제
 				s.getMenuCtrl().getMenDao().delete(menu);
 				initFields(); // 필드의 내용을 다 초기로 돌린다.
 			}
@@ -338,10 +339,11 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 			MenuController menCtrl = Singleton.getInstance().getMenuCtrl();
 			menCtrl.menuManageView(this);
 		} else if (e.getSource() == searchBtn) { // 검색 버튼 클릭 ( 이미지 검색 )
-			String path = jFileChooserUtil();
-			if (path.length() != 0) {				
-				imgFileField.setText(path.substring(path.lastIndexOf("\\") + 1)); // 전체 경로에서 파일 이름과 확장자명만 가져온다.
-				setImage(path);
+			NewImgPath = jFileChooserUtil();
+			if (NewImgPath.length() != 0) {
+				imgFileField.setText(NewImgPath.substring(NewImgPath.lastIndexOf("\\") + 1)); // 전체 경로에서 파일 이름과 확장자명만
+																								// 가져온다.
+				setImage(NewImgPath);
 			}
 		}
 	}

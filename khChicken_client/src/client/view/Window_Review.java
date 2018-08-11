@@ -42,9 +42,11 @@ public class Window_Review extends JFrame implements ActionListener {
 	JScrollPane JScroll_Review;
 	JButton JBut_reviewInput;
 
-	public Window_Review() {
-
+	private String menuName = "";
+	
+	public Window_Review(String menuName) {
 		super("리뷰");
+		this.menuName = menuName;
 		setLayout(null);
 
 		List<ReviewDto> list = new ArrayList<ReviewDto>();
@@ -103,7 +105,7 @@ public class Window_Review extends JFrame implements ActionListener {
 		panel_menu.setLayout(new MigLayout());
 
 		Singleton single = Singleton.getInstance();
-		list = single.getRevCtrl().select(); // 리뷰를 불러와줌
+		list = single.getRevCtrl().select(menuName); // 리뷰를 불러와줌
 
 		int Int_Dex = list.size();
 		JLabel JLabel_ReviewName[] = new JLabel[Int_Dex]; // 리뷰 작성자
