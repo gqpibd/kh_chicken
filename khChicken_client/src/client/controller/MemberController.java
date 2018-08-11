@@ -3,7 +3,7 @@ package client.controller;
 import java.net.Socket;
 
 import client.dao.MemberDao;
-import client.dto.MemberDto;
+import dto.MemberDto;
 
 public class MemberController {
 	

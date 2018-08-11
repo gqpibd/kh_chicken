@@ -17,7 +17,7 @@ public class MemberDao {
 	}
 	
 	
-	public Object Choice(client.dto.MemberDto dto , int number) {
+	public Object Choice(dto.MemberDto dto , int number) {
 		switch(number) {
 		case 0 :
 			return insert(dto);
@@ -34,7 +34,7 @@ public class MemberDao {
 		return null;
 	}
 	
-	public Object insert(client.dto.MemberDto dto) {
+	public Object insert(dto.MemberDto dto) {
 		
 		
 		 String id = dto.getId();
@@ -70,7 +70,7 @@ public class MemberDao {
 		
 	}
 	
-	public boolean select(client.dto.MemberDto dto) {
+	public boolean select(dto.MemberDto dto) {
 		String id = dto.getId();
 		
 		String sql = "SELECT ID"
@@ -115,7 +115,7 @@ public class MemberDao {
 		
 	}
 	
-	public boolean select_loging(client.dto.MemberDto dto) {
+	public boolean select_loging(dto.MemberDto dto) {
 		   String id = dto.getId();
 		   String pw = dto.getPw();
 		   String sql = "SELECT ID ,PW "

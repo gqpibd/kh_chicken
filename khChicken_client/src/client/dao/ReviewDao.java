@@ -1,17 +1,13 @@
 package client.dao;
 
 import java.io.IOException;
-import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import client.dto.ReviewDto;
+import dto.ReviewDto;
 
 public class ReviewDao {
 	

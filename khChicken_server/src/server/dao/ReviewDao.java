@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import client.dto.ReviewDto;
+import dto.ReviewDto;
 import server.db.DBClose;
 import server.db.DBConnection;
 
@@ -31,7 +31,7 @@ public class ReviewDao {
 		this.sock = sock;
 	}
 	
-	public List<client.dto.ReviewDto> Choice(int number ,client.dto.ReviewDto dto) {
+	public List<dto.ReviewDto> Choice(int number ,dto.ReviewDto dto) {
 		switch(number) {
 		case 0 :
 			return insert(dto);
@@ -47,7 +47,7 @@ public class ReviewDao {
 	
 	
 	
-	public List<client.dto.ReviewDto> insert(client.dto.ReviewDto dto) {
+	public List<dto.ReviewDto> insert(dto.ReviewDto dto) {
 		String id = dto.getUserId();
 		String MenuName = dto.getMenuName();
 		String Review = dto.getReview();
@@ -74,7 +74,7 @@ public class ReviewDao {
 		return null;
 	}
 	
-	public List<client.dto.ReviewDto> select() {
+	public List<dto.ReviewDto> select() {
 		
 		String sql = "SELECT ID, MENU_NAME, COUNT1, BEV_COUPON, ORDER_DATE, REVIEW, SCORE "
 				+ " FROM ORDER_DETAIL ";
@@ -87,7 +87,7 @@ public class ReviewDao {
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		
-		List<client.dto.ReviewDto> list = new ArrayList<>();
+		List<dto.ReviewDto> list = new ArrayList<>();
 				try {
 				
 					conn = DBConnection.getConnection();
@@ -96,8 +96,8 @@ public class ReviewDao {
 					
 					
 					while(rs.next()) {
-					client.dto.ReviewDto dto = 
-					new client.dto.ReviewDto(rs.getString(1), rs.getString(2), rs.getInt(3),
+					dto.ReviewDto dto = 
+					new dto.ReviewDto(rs.getString(1), rs.getString(2), rs.getInt(3),
 							rs.getInt(4), rs.getString(5), rs.getString(6), rs.getInt(7));
 						
 						list.add(dto);

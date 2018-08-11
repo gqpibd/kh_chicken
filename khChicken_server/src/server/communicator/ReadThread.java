@@ -14,7 +14,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.List;
 
-import client.dto.ReviewDto;
+import dto.ReviewDto;
 import server.dto.MemberDto;
 import server.dto.MenuDto;
 import server.dto.MenuShowDto;
@@ -58,8 +58,8 @@ public class ReadThread extends Thread {
 				case 3:	//update
 			*/
 				Singleton single = Singleton.getInstance();
-					if (obj instanceof client.dto.MemberDto) {	
-						client.dto.MemberDto dto = (client.dto.MemberDto)obj;
+					if (obj instanceof dto.MemberDto) {	
+						dto.MemberDto dto = (dto.MemberDto)obj;
 						obj = single.ctrlMember.Choice(dto, number);
 						ObjectOutputStream oos = new ObjectOutputStream(out);
 						oos.writeObject(obj);
@@ -69,9 +69,9 @@ public class ReadThread extends Thread {
 
 					} else if (obj instanceof OrderedMenuDto) {
 
-					} else if (obj instanceof client.dto.ReviewDto) {
+					} else if (obj instanceof dto.ReviewDto) {
 						ReviewDto dto = (ReviewDto) obj;
-						List<client.dto.ReviewDto> list = single.ctrlReview.Choice(number,dto);
+						List<dto.ReviewDto> list = single.ctrlReview.Choice(number,dto);
 						if(list == null) {
 						}else {
 						ObjectOutputStream oos = new ObjectOutputStream(out);

@@ -1,43 +1,27 @@
 package client.view;
 
-import java.awt.BorderLayout;
-
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.security.Signature;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Single;
-
-import client.dto.ReviewDto;
 import client.singleton.Singleton;
-import javafx.scene.control.Button;
+import dto.ReviewDto;
 import net.miginfocom.swing.MigLayout;
-import sun.management.snmp.util.MibLogger;
-import sun.net.www.content.image.png;
 
 
 
@@ -185,7 +169,7 @@ public class Window_Review extends JFrame implements ActionListener,  MouseListe
 			single.revCtrl.insert(dto);
 			JOptionPane.showMessageDialog(null, "작성이 완료되었습니다.");
 			dispose();
-			single.Win_Review =new Window_Review();
+			//single.Win_Review =new Window_Review();
 			
 		}
 		

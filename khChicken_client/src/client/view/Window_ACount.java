@@ -6,7 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import client.dto.MemberDto;
+import dto.MemberDto;
 import client.singleton.Singleton;
 
 public class Window_ACount extends JFrame implements ActionListener{

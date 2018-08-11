@@ -10,8 +10,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import client.dto.MemberDto;
 import client.singleton.Singleton;
+import dto.MemberDto;
 
 public class Window_Loging extends JFrame implements ActionListener {
 

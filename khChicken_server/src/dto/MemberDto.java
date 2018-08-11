@@ -1,29 +1,20 @@
-package client.dto;
+package dto;
 
 import java.io.Serializable;
 
-public class MemberDto implements Serializable{
-	
-	
+public class MemberDto implements Serializable {
+
 	/*
-	CREATE TABLE MEMBER(
-		    NAME VARCHAR2(20) NOT NULL,
-		    ID VARCHAR2(10) PRIMARY KEY,
-		    PW VARCHAR2(20) NOT NULL,
-		    COUPON NUMBER(1),
-		    AUTH NUMBER(1) NOT NULL,
-		    ADR VARCHAR2(50) NOT NULL,
-		    PHONE VARCHAR2(20) NOT NULL
-		);*/
-	
-	
-	
-	
+	 * CREATE TABLE MEMBER( NAME VARCHAR2(20) NOT NULL, ID VARCHAR2(10) PRIMARY KEY,
+	 * PW VARCHAR2(20) NOT NULL, COUPON NUMBER(1), AUTH NUMBER(1) NOT NULL, ADR
+	 * VARCHAR2(50) NOT NULL, PHONE VARCHAR2(20) NOT NULL );
+	 */
+
 	private static final long serialVersionUID = -2270144856528113975L;
-	
+
 	public static final int MANAGER = 1;
 	public static final int MEMBER = 3;
-	
+
 	private String id;
 	private String pw;
 	private String name;
@@ -31,7 +22,7 @@ public class MemberDto implements Serializable{
 	private int auth;
 	private String address;
 	private String phone;
-	
+
 	public MemberDto() {
 	}
 
@@ -119,11 +110,5 @@ public class MemberDto implements Serializable{
 		return "MemberDto [id=" + id + ", pw=" + pw + ", name=" + name + ", coupon=" + coupon + ", auth=" + auth
 				+ ", address=" + address + ", phone=" + phone + "]";
 	}
-	
-	
-
-	
-	
-	
 
 }

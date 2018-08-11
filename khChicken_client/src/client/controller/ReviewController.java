@@ -4,7 +4,7 @@ import java.net.Socket;
 import java.util.List;
 
 import client.dao.ReviewDao;
-import client.dto.ReviewDto;
+import dto.ReviewDto;
 
 public class ReviewController {
 	
