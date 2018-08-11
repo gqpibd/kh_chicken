@@ -11,6 +11,7 @@ import java.util.List;
 import dto.MemberDto;
 
 public class MemberDao {
+<<<<<<< HEAD
 	
 	
 	
@@ -23,16 +24,31 @@ public class MemberDao {
 	private String address;
 	private String phone;
 	
+=======
+
+>>>>>>> refs/remotes/origin/도현+다슬+승지
 	List<MemberDto> mList = new ArrayList<MemberDto>();
+<<<<<<< HEAD
 	
 	Socket sock;
 	
+=======
+	MemberDto CurrentUser;
+
+>>>>>>> refs/remotes/origin/도현+다슬+승지
 	public MemberDao() {
 	}
+<<<<<<< HEAD
 	
 	public void MemberDao(Socket sock) {
 		this.sock=sock;
+=======
+
+	public void insert() {
+
+>>>>>>> refs/remotes/origin/도현+다슬+승지
 	}
+<<<<<<< HEAD
 	
 	public void insert(MemberDto dto) {
   
@@ -56,7 +72,13 @@ public class MemberDao {
 		}
 	
 	
+=======
+
+	public void select() {
+
+>>>>>>> refs/remotes/origin/도현+다슬+승지
 	}
+<<<<<<< HEAD
 	
 	public boolean select(MemberDto dto) {
 		
@@ -85,12 +107,29 @@ public class MemberDao {
 		return join;
 }
 	
+=======
+
+>>>>>>> refs/remotes/origin/도현+다슬+승지
 	public void update() {
-		
+
 	}
-	
+
 	public void delete() {
-		
+
+	}
+
+	public String getLoginId() { // 로그인 아이디 가져오기
+		if (CurrentUser == null) {
+			return null;
+		} else {
+			return CurrentUser.getId();
+		}
+	}
+
+	public int getAuth() {
+		int auth = CurrentUser.getAuth();
+		return auth;
+
 	}
 	
 	public boolean select_loging(MemberDto dto) {

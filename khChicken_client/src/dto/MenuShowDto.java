@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 public class MenuShowDto extends MenuDto implements Serializable {
 	
-	private static final long serialVersionUID = 7675418139620414668L;
+	private static final long OserialVersionUID = 7675418139620414668L;
 	
 	private String image;
 	private int reviewCount;
