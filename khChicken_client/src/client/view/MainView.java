@@ -21,46 +21,18 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
 import client.controller.MemberController;
 import client.controller.MenuController;
+import client.dao.MemberDao;
 import client.dao.MenuDao;
 import client.singleton.Singleton;
+import dto.MemberDto;
 import dto.MenuShowDto;
 import net.miginfocom.swing.MigLayout;
-
-/*CREATE TABLE MEMBER(
-	    NAME VARCHAR2(20) NOT NULL,
-	    ID VARCHAR2(10) PRIMARY KEY,
-	    PW VARCHAR2(20) NOT NULL,
-	    COUPON NUMBER(1),
-	    AUTH NUMBER(1) NOT NULL,
-	    ADR VARCHAR2(30) NOT NULL,
-	    PHONE VARCHAR2(20) NOT NULL
-	);
-
-	CREATE TABLE MENU(
-	    MENU_NAME VARCHAR2(50) PRIMARY KEY,
-	    PRICE NUMBER(5) NOT NULL
-	);
-
-	CREATE TABLE ORDER_DETAIL(
-	    ID VARCHAR2(10),
-	    MENU_NAME VARCHAR2(15),
-	    COUNT NUMBER(10) NOT NULL,
-	    BEV_COUPON NUMBER(10),
-	    ORDER_DATE DATE NOT NULL,
-	    REVIEW VARCHAR2(1000),
-	    SCORE NUMBER(5),
-	    CONSTRAINT FK_ID FOREIGN KEY(ID)
-	    REFERENCES MEMBER(ID),
-	    CONSTRAINT FK_MENU FOREIGN KEY(MENU_NAME)
-	    REFERENCES MENU(MENU_NAME)
-	);*/
 
 public class MainView extends JFrame implements ItemListener, ActionListener {
 	// private final String FOLDER_PATH = "\\\\192.168.30.35\\share\\images\\";
@@ -71,9 +43,7 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 	List<String> checkedMenu = new ArrayList<>();
 	int i = 0;
 
-	// 클릭시 review화면 띄울 메뉴이름
-	String menu_name = "";
-	JLabel resLabel;
+	JLabel menuLabel;
 	JLabel priceLabel;
 	JCheckBox chk;
 
@@ -88,21 +58,12 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 
 	public MainView() {
 		super("KH CHICKEN");
-		setLayout(null);
+		getContentPane().setLayout(null);
 
 		// 로고2, 버튼 4, 패널 1
 
-		boolean managerBtnOpen = false;
-
 		// 버튼글씨
-		String loginStr = "로그인";
-
-		if (s.getMemCtrl().getLoginId() != null) {
-			loginStr = "로그아웃";
-			System.out.println(s.getMemCtrl().getAuth());
-			if (s.getMemCtrl().getAuth() == 1)
-				managerBtnOpen = true;
-		}
+		String loginStr = "로그인";		
 
 		// 버튼설정
 		btn_Login = new JButton(loginStr); // 로그아웃 / 인 으로 변환됨
@@ -120,9 +81,9 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 		btn_Order.addActionListener(this);
 
 		btn_Manage = new JButton("관리");
-		btn_Manage.setBounds(394, 720, 66, 34);
-		btn_Manage.setVisible(managerBtnOpen);
-		btn_Manage.setFont(new Font("다음_Regular", Font.PLAIN, 14));
+		btn_Manage.setBounds(370, 700, 90, 54);
+		//btn_Manage.setVisible(false);
+		btn_Manage.setFont(new Font("다음_Regular", Font.PLAIN, 15));
 		btn_Manage.addActionListener(this);
 
 		// 메뉴출력
@@ -156,11 +117,11 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 		panel_bigmenu.add(scroll);
 
 		// 바탕에 저장
-		add(btn_Login);
-		add(btn_Register);
-		add(btn_Order);
-		add(btn_Manage);
-		add(panel_bigmenu);
+		getContentPane().add(btn_Login);
+		getContentPane().add(btn_Register);
+		getContentPane().add(btn_Order);
+		getContentPane().add(btn_Manage);
+		getContentPane().add(panel_bigmenu);
 
 		setBounds(400, 0, 600, 800);
 		setVisible(true);
@@ -168,8 +129,7 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 
 	}
 
-	public JPanel setFrontPanel(MenuShowDto showDto, int i) {
-
+	public JPanel setFrontPanel(MenuShowDto showDto, int i) {	
 		JLabel imgLabel = new JLabel(); //
 		imgLabel.setSize(249, 200); //
 
@@ -177,18 +137,20 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 		JPanel frontpanel = new JPanel();
 		frontpanel.setLayout(new MigLayout("", "20", "40"));
 		frontpanel.setSize(400, 300);
-
+		
 		// 이미지넣기
 		// server에서 가져온 이미지 넣는 곳
 		String img = menCtrl.get(i).getMenu_name().replaceAll(" ", "_") + ".jpg";
 		// 패널당 메뉴이름을 저장시켜줌
-		menu_name = menCtrl.get(i).getMenu_name();
+		
 		setImage(MenuDao.FOLDER_PATH + img, imgLabel);
-
+		imgLabel.setName(menCtrl.get(i).getMenu_name()); // 라벨 자체에 메뉴 이름을 저장해준다.
 		imgLabel.addMouseListener(new MouseAdapter() {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {// 누르면
+				String menu_name = ((JLabel) e.getSource()).getName(); // 클릭된 라벨의 이름을 받아온다	
+				System.out.println(menu_name);
 				s.getRevCtrl().reviewView(s.getMainView(), menu_name);
 			}
 		});
@@ -196,9 +158,9 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 		frontpanel.add(imgLabel, "center, wrap");
 
 		// 이름
-		resLabel = new JLabel(menCtrl.get(i).getMenu_name());
-		resLabel.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 20));
-		frontpanel.add(resLabel, "center, wrap");
+		menuLabel = new JLabel(menCtrl.get(i).getMenu_name());
+		menuLabel.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 20));
+		frontpanel.add(menuLabel, "center, wrap");
 
 		// 가격
 		priceLabel = new JLabel(menCtrl.get(i).getPrice() + " 원");
@@ -209,13 +171,6 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 		chk = new JCheckBox(menCtrl.get(i).getMenu_name() + " 선택");
 		chk.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		chk.addItemListener(this);
-		/*
-		 * chk.addItemListener(new ItemListener() {
-		 * 
-		 * @Override public void itemStateChanged(ItemEvent e) {
-		 * 
-		 * //체크된 이름을 저장 checkedMenu.add(list_showMenu.get(i).getMenu_name()); } });
-		 */
 		frontpanel.add(chk, "center, wrap");
 
 		// 별점
@@ -227,7 +182,7 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 	}
 
 	@Override
-	public void itemStateChanged(ItemEvent e) {
+	public void itemStateChanged(ItemEvent e) { // 미완성
 
 		JCheckBox chk = (JCheckBox) e.getSource();
 
@@ -262,23 +217,27 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		Object o = e.getSource();
-		if (o == btn_Login) {
+		if (o == btn_Login) { // 로그인
 			memCtrl.loginView(this);
-		} else if (o == btn_Register) {
+		} else if (o == btn_Register) { // 회원가입
 			memCtrl.AccountView(this);
-		} else if (o == btn_Order) {
-			// JOptionPane.showMessageDialog(null, "주문하기");
+		} else if (o == btn_Order) { // 주문하기
 			String loginId = memCtrl.getLoginId();
-			memCtrl.manageView(this); // 관리자창
-			System.out.println(loginId);
-			for (int i = 0; i < checkedMenu.size(); i++) {
-				System.out.println(checkedMenu.get(i));
-			}
 			// 주문 뷰 new OrderView(loginId, checkedMenu );
 		} else if (o == btn_Manage) {
-			JOptionPane.showMessageDialog(null, "관리");
+			memCtrl.manageView(this); // 관리자창
 		}
-
 	}
 
+	public void Login() { // 로그인 상태에서의 뷰
+		btn_Login.setText("로그아웃");
+		System.out.println(s.getMemCtrl().getAuth());
+		if (s.getMemCtrl().getAuth() == MemberDto.MANAGER) {
+			btn_Manage.setVisible(true);
+		}
+	}
+	public void Logout()  { // 로그아웃 상태에서의 뷰
+		btn_Login.setText("로그인");
+		btn_Manage.setVisible(false);				
+	}
 }

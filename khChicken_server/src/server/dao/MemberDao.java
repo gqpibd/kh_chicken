@@ -22,16 +22,14 @@ public class MemberDao {
 			System.out.println(dto.getId() + "를 멤버 테이블에 추가하였습니다");
 			break;
 		case Singleton.SELECT: // 아이데 중복 체크 - 윤상필
-			boolean isExistingId = select(dto);
-			System.out.println("존재하는 아이디 : " + isExistingId);
-			SocketWriter.Write(sock, isExistingId);
+			select(dto,sock);			
 			break;
 		case Singleton.DELETE:
 			break;
 		case Singleton.UPDATE:
 			break;
 		case 4: // 로그인 - 윤상필
-			select_login(dto);
+			select_login(dto, sock);
 			break;
 		}
 	}
@@ -73,11 +71,10 @@ public class MemberDao {
 		} finally {
 			DBClose.close(psmt, conn, null);
 		}
-		
-		return;
 	}
 
-	public boolean select(MemberDto dto) {
+	public void select(MemberDto dto, Socket sock) {
+		boolean isExistingId = false;
 		// 존재하는 아이디인지 확인
 		String sql = " SELECT ID " +
 				     " FROM MEMBER " + 
@@ -92,7 +89,7 @@ public class MemberDao {
 			rs = psmt.executeQuery();
 
 			if (rs.next()) {
-				return true;
+				isExistingId = true;
 			}
 
 		} catch (SQLException e) {
@@ -100,9 +97,13 @@ public class MemberDao {
 		} finally {
 			DBClose.close(psmt, conn, rs);
 		}
+		if(isExistingId) {
+			System.out.println("중복되는 아이디 입니다");
+		}else {
+			System.out.println("사용 가능한 아이디 입니다");
+		}
 
-		return false;
-
+		SocketWriter.Write(sock, isExistingId);
 	}
 
 	public void update() {
@@ -115,7 +116,8 @@ public class MemberDao {
 
 	}
 
-	public boolean select_login(dto.MemberDto dto) {
+	public void select_login(dto.MemberDto dto, Socket sock) {
+		boolean loginSuccess = false;
 		String id = dto.getId();
 		String pw = dto.getPw();
 		String sql = "SELECT ID ,PW " + 
@@ -132,7 +134,7 @@ public class MemberDao {
 			rs = psmt.executeQuery();
 
 			if (rs.next()) { // 일치하는 결과가 있으면 로그인 성공
-				return true;
+				loginSuccess = true;
 			}
 
 		} catch (SQLException e) {
@@ -140,6 +142,14 @@ public class MemberDao {
 		} finally {
 			DBClose.close(psmt, conn, rs);
 		}
-		return false; // 결과가 없으면 일치하지 않는 것이므로 false를 리턴
+		if(loginSuccess) {
+			System.out.println("로그인에 성공했습니다");
+		}else {
+
+			System.out.println("아이디 또는 패스워드가 틀렸습니다");
+		}
+
+		SocketWriter.Write(sock, loginSuccess);
+		
 	}
 }

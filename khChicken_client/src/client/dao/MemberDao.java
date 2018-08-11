@@ -1,12 +1,9 @@
 package client.dao;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JOptionPane;
 
 import client.communicator.Communicator;
 import client.singleton.Singleton;
@@ -20,21 +17,18 @@ public class MemberDao {
 	public MemberDao() {
 	}
 
-	public void MemberDao() {
-	}
-
 	public void insert(MemberDto dto) {
 		Singleton.getInstance().getComm().SendMessage(Communicator.INSERT, dto);
 	}
 
-	public boolean select(MemberDto dto) {
+	public boolean select(MemberDto dto) { // 아이디 중복 확인
 		Communicator comm = Singleton.getInstance().getComm();
-		boolean join = false;
+		boolean exsitingId = false;
 
 		comm.SendMessage(Communicator.SELECT, dto);
-		join = (Boolean) comm.receiveObject();
+		exsitingId = (Boolean) comm.receiveObject();
 		
-		return join;
+		return exsitingId;
 	}
 
 	public void update() {
@@ -52,6 +46,7 @@ public class MemberDao {
 		comm.SendMessage(4, dto);
 		loginSuccess = (Boolean) comm.receiveObject();
 		if(loginSuccess) {
+			JOptionPane.showMessageDialog(null, dto.getId() + "님 환영합니다");
 			CurrentUser = dto;
 		}
 		return loginSuccess;

@@ -72,7 +72,7 @@ public class SaleManageView extends JFrame implements ActionListener {
 		setBounds(100, 100, 640, 480);
 		getContentPane().setBackground(Color.lightGray);
 		setVisible(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 	}
 
 	@Override

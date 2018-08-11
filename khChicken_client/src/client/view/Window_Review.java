@@ -35,6 +35,7 @@ public class Window_Review extends JFrame implements ActionListener {
 	JLabel JLabe_explanation;
 
 	JButton JBut_ReviewRead;
+	JButton JBut_Back;
 	JPanel container;
 	JScrollPane scrPane;
 
@@ -47,7 +48,7 @@ public class Window_Review extends JFrame implements ActionListener {
 	public Window_Review(String menuName) {
 		super("리뷰");
 		this.menuName = menuName;
-		setLayout(null);
+		getContentPane().setLayout(null);
 
 		List<ReviewDto> list = new ArrayList<ReviewDto>();
 
@@ -81,7 +82,7 @@ public class Window_Review extends JFrame implements ActionListener {
 		// //add(JBut_ReviewRead);
 
 		JPanel JPan_Review_While = new JPanel();
-		JPan_Review_While.setLayout(new GridLayout(2, 1));
+		JPan_Review_While.setLayout(new GridLayout(3, 1));
 		JPan_Review_While.setBounds(420, 200, 200, 200);
 
 		JTextA_Review = new JTextArea();
@@ -92,21 +93,23 @@ public class Window_Review extends JFrame implements ActionListener {
 
 		JPan_Review_While.add(JScroll_Review);
 		JPan_Review_While.add(JBut_reviewInput);
-		add(JPan_Review_While);
+		getContentPane().add(JPan_Review_While);
+		
+		JBut_Back = new JButton("뒤로가기");
+		JBut_Back.addActionListener(this);
+		JPan_Review_While.add(JBut_Back);
 
 		JPanel jp = new JPanel();
 		jp.setLayout(new MigLayout("wrap", "", ""));
 
 		JPanel panel_bigmenu = new JPanel(); // 전체 패널
-		panel_bigmenu.setBounds(10, 100, 570, 600);
+		panel_bigmenu.setBounds(10, 100, 414, 314);
 		panel_bigmenu.setLayout(new MigLayout());
 
 		JPanel panel_menu = new JPanel(); // 리뷰 하나하나 들어갈 패널 (스크롤)
 		panel_menu.setLayout(new MigLayout());
 
-		Singleton single = Singleton.getInstance();
-		list = single.getRevCtrl().select(menuName); // 리뷰를 불러와줌
-
+		list = Singleton.getInstance().getRevCtrl().getList();
 		int Int_Dex = list.size();
 		JLabel JLabel_ReviewName[] = new JLabel[Int_Dex]; // 리뷰 작성자
 		JTextArea JTextA_Review[] = new JTextArea[Int_Dex]; // 리뷰
@@ -133,7 +136,7 @@ public class Window_Review extends JFrame implements ActionListener {
 		JScrollPane scroll = new JScrollPane(panel_menu);
 		scroll.setPreferredSize(new Dimension(400, 300));
 		panel_bigmenu.add(scroll);
-		add(panel_bigmenu);
+		getContentPane().add(panel_bigmenu);
 
 		setBounds(0, 0, 640, 480);
 		setVisible(true);
@@ -153,9 +156,9 @@ public class Window_Review extends JFrame implements ActionListener {
 		if (obj == JBut_reviewInput) {
 			single.getRevCtrl().insert(dto);
 			JOptionPane.showMessageDialog(null, "작성이 완료되었습니다.");
-			single.getMemCtrl().backToMain(this);
-			// single.Win_Review =new Window_Review();
-
+		
+		} else if (obj == JBut_Back) {
+			single.backToMain(this);
 		}
 
 		// 밑에 기능 무시해두됨
@@ -173,5 +176,4 @@ public class Window_Review extends JFrame implements ActionListener {
 		 */
 
 	}
-
 }

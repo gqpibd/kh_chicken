@@ -53,6 +53,8 @@ public class MenuManageView extends JFrame implements ActionListener{
 		backBtn.addActionListener(this);
 		backBtn.setBackground(Color.white);
 		getContentPane().add(backBtn);
+		
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 	}
 
 	@Override

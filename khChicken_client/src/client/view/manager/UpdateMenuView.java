@@ -176,6 +176,8 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 
 		setBounds(300, 150, frameWidth, 505);
 		setVisible(true);
+		
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 	}
 
 	public void initFields() {

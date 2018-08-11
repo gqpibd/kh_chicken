@@ -11,6 +11,7 @@ import dto.MenuShowDto;
 public class MenuController {
 
 	private MenuDao menDao = new MenuDao();
+	
 	private MenuManageView menManView;
 	private UpdateMenuView updManView;
 	private AddMenuView addManView;
@@ -49,7 +50,7 @@ public class MenuController {
 	}
 
 	public void menuManageView(JFrame currentView) {
-		currentView.setVisible(false);// 관리자 창을 안 보이게 하고
+		currentView.setVisible(false);
 		// 메뉴관리 창을 보여준다.
 		if (menManView == null) { // 없을 땐
 			menManView = new MenuManageView(); // 만들고
@@ -59,7 +60,7 @@ public class MenuController {
 	}
 
 	public void addMenuView() {
-		menManView.setVisible(false);// 관리자 창을 안 보이게 하고
+		menManView.setVisible(false);
 		// 메뉴관리 창을 보여준다.
 		if (addManView == null) { // 없을 땐
 			addManView = new AddMenuView(); // 만들고
@@ -69,7 +70,7 @@ public class MenuController {
 	}
 
 	public void updateMenuView() {
-		menManView.setVisible(false);// 관리자 창을 안 보이게 하고
+		menManView.setVisible(false);
 		// 메뉴관리 창을 보여준다.
 		if (updManView == null) { // 없을 땐
 			updManView = new UpdateMenuView(); // 만들고

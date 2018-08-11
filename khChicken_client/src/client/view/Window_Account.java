@@ -9,7 +9,7 @@ import javax.swing.JTextField;
 import dto.MemberDto;
 import client.singleton.Singleton;
 
-public class Window_Account extends JFrame implements ActionListener{
+public class Window_Account extends JFrame implements ActionListener {
 
 	JTextField JtextF_Id;
 	JTextField JtextF_pwd;
@@ -45,14 +45,13 @@ public class Window_Account extends JFrame implements ActionListener{
 		JtextF_name.setText("닉네임");
 		JtextF_name.setBounds(64, 146, 116, 21);
 
-		JtextF_address =new JTextField(10);
+		JtextF_address = new JTextField(10);
 		JtextF_address.setText("주소");
 		JtextF_address.setBounds(65, 177, 116, 21);
 
 		JtextF_phone = new JTextField(10);
 		JtextF_phone.setText("핸드폰번호");
 		JtextF_phone.setBounds(65, 208, 116, 21);
-
 
 		Jbut_Join = new JButton("중복확인");
 		Jbut_Join.addActionListener(this);
@@ -63,7 +62,7 @@ public class Window_Account extends JFrame implements ActionListener{
 		Jbut_Check.setBounds(85, 239, 84, 32);
 
 		Jbut_Back = new JButton("이전으로");
-		Jbut_Back.addActionListener(this);		
+		Jbut_Back.addActionListener(this);
 		Jbut_Back.setBounds(12, 10, 58, 23);
 
 		add(JtextF_Id);
@@ -78,14 +77,13 @@ public class Window_Account extends JFrame implements ActionListener{
 
 		setBounds(100, 100, 267, 362);
 		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 	}
-
 
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
 		Singleton single = Singleton.getInstance();
-		
+
 		// 보기쉽게 텍스트에있는거 전부다 스트린으로 옮김
 		String id = JtextF_Id.getText();
 		String pw = JtextF_pwd.getText();
@@ -94,44 +92,43 @@ public class Window_Account extends JFrame implements ActionListener{
 		String phone = JtextF_phone.getText();
 		System.out.println(id + "뷰");
 
-		
-	if (obj == Jbut_Join) {
-		if(id.equals("")) {
-			JOptionPane.showMessageDialog(null,"아이디를 입려해주세요.");	
-		}else {
-			MemberDto dto = new MemberDto();
+		if (obj == Jbut_Join) {
+			if (id.equals("")) {
+				JOptionPane.showMessageDialog(null, "아이디를 입려해주세요.");
+			} else {
+				MemberDto dto = new MemberDto();
 				dto.setId(id);
-				boolean Join = single.getMemCtrl().select(dto);
-				if(Join == true) {
+				boolean existingId = single.getMemCtrl().select(dto);
+				if (existingId == false) {
 					Str_ID_Check = id;
-				JOptionPane.showMessageDialog(null,"사용 가능한 아이디입니다.");
-				}else if (Join == false) {
-				JOptionPane.showMessageDialog(null,"이미 있는 아이디입니다.");
+					JOptionPane.showMessageDialog(null, "사용 가능한 아이디입니다.");
+				} else if (existingId == true) {
+					JOptionPane.showMessageDialog(null, "이미 있는 아이디입니다.");
+				}
 			}
-		}
 			// 밑에껀 무시 아직 준비중
-		}else if(obj == Jbut_Check) {
-			
-			if(!Str_ID_Check.equals(id) && Str_ID_Check.equals("")) {
-				JOptionPane.showMessageDialog(null,"중복확인을 눌러주세요.");
-			}else if(name.equals("")) {
-				JOptionPane.showMessageDialog(null,"닉네임을 입력해주세요");
-			}else if(address.equals("")) {
-				JOptionPane.showMessageDialog(null,"주소를 입력해주세요");
-			}else if(phone.equals("")) {
-				JOptionPane.showMessageDialog(null,"핸드폰 번호를 입력해주세요.");
-			}else {
-				JOptionPane.showMessageDialog(null,"회원가입이 완료되었습니다.");
-				JOptionPane.showMessageDialog(null,"로그인 해주세요.");
+		} else if (obj == Jbut_Check) {
+
+			if (!Str_ID_Check.equals(id) && Str_ID_Check.equals("")) {
+				JOptionPane.showMessageDialog(null, "중복확인을 눌러주세요.");
+			} else if (name.equals("")) {
+				JOptionPane.showMessageDialog(null, "닉네임을 입력해주세요");
+			} else if (address.equals("")) {
+				JOptionPane.showMessageDialog(null, "주소를 입력해주세요");
+			} else if (phone.equals("")) {
+				JOptionPane.showMessageDialog(null, "핸드폰 번호를 입력해주세요.");
+			} else {
+				JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다.");
+				JOptionPane.showMessageDialog(null, "로그인 해주세요.");
 				MemberDto dto = new MemberDto(id, pw, name, 0, 0, address, phone);
 				single.getMemCtrl().insert(dto);
-				single.getMemCtrl().backToMain(this);
-				//single.Win_Loging = new Window_Login();
+				single.backToMain(this);
+				// single.Win_Loging = new Window_Login();
 			}
 
-		}else if(obj == Jbut_Back) {
+		} else if (obj == Jbut_Back) {
 			single.getMemCtrl().loginView(this);
-			//single.Win_Loging = new Window_Login();
+			// single.Win_Loging = new Window_Login();
 		}
 	}
 }

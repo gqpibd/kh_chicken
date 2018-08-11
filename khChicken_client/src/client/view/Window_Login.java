@@ -58,7 +58,7 @@ public class Window_Login extends JFrame implements ActionListener {
 
 		setBounds(100, 100, 372, 239);
 		setVisible(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class Window_Login extends JFrame implements ActionListener {
 				dto.setPw(pw);
 				boolean login = s.getMemCtrl().select_login(dto);
 				if (login == true) {
-					s.getMemCtrl().backToMain(this);
+					s.backToMain(this);
 				} else if (login == false) {
 					JOptionPane.showMessageDialog(null, "아이디 또는 비밀번호가 틀리셨습니다.");
 				}
@@ -88,7 +88,7 @@ public class Window_Login extends JFrame implements ActionListener {
 		} else if (obj == Jbut_Account) {
 			s.getMemCtrl().AccountView(this);
 		} else if (obj == Jbut_Exit) {
-			s.getMemCtrl().backToMain(this);
+			s.backToMain(this);
 		}
 	}
 

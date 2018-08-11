@@ -135,6 +135,7 @@ public class AddMenuView extends JFrame implements ActionListener {
 		getContentPane().add(scrollPane);
 
 		setVisible(true);
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 	}
 
 	public String jFileChooserUtil() {

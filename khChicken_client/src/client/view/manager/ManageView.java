@@ -51,19 +51,19 @@ public class ManageView extends JFrame implements ActionListener {
 		getContentPane().setBackground(Color.black);
 		setVisible(true);
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		MemberController memCtrl = Singleton.getInstance().getMemCtrl();
-		MenuController menCtrl = Singleton.getInstance().getMenuCtrl();
+		Singleton s = Singleton.getInstance();
+		
 		if (e.getSource() == btn_menu) {
-			menCtrl.menuManageView(this);
+			s.getMenuCtrl().menuManageView(this);
 		} else if (e.getSource() == btn_sale) {
-			memCtrl.saleManageView(this);			
+			s.getOrderCtrl().saleManageView(this);			
 		} else if (e.getSource() == btn_back) {
-			memCtrl.backToMain(this);
+			s.backToMain(this);
 		}
 
 	}

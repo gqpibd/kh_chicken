@@ -34,6 +34,7 @@ public class ReviewDao {
 		List<ReviewDto> list = new ArrayList<>();
 
 		ArrayList<Object> resultList = comm.receiveMessage();
+		System.out.println(resultList);
 		for (int i = 0; i < resultList.size(); i++) {
 			// 받은 dto 형식에 맞게 변환해 저장
 			list.add((ReviewDto) resultList.get(i));
@@ -48,6 +49,10 @@ public class ReviewDao {
 
 	public void delete() {
 
+	}
+
+	public List<ReviewDto> getList() {
+		return rList;
 	}
 
 }

@@ -1,11 +1,14 @@
 package client.singleton;
 
+import javax.swing.JFrame;
+
 import client.communicator.Communicator;
 import client.controller.MemberController;
 import client.controller.MenuController;
 import client.controller.OrderController;
 import client.controller.ReviewController;
 import client.view.MainView;
+import client.view.manager.ManageView;
 
 public class Singleton {
 
@@ -56,4 +59,10 @@ public class Singleton {
 	public ReviewController getRevCtrl() {
 		return revCtrl;
 	}
+	
+	public void backToMain(JFrame currentView) {
+		currentView.setVisible(false);
+		mv.setVisible(true); // 메인 화면을 보이게 한다.
+	}
+
 }
