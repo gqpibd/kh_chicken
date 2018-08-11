@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 
+import dto.BestSaleMenuDto;
 import dto.MemberDto;
 import dto.MenuShowDto;
 import dto.OrderedMenuDto;
@@ -36,7 +37,7 @@ public class ReadThread extends Thread {
 					s.getMemCtrl().execute(number, (MemberDto) obj, sock);					
 				} else if (obj instanceof MenuShowDto) { 	// 메뉴 보여주기, 추가 삭제
 					s.getMenuCtrl().execute(number, (MenuShowDto) obj, sock);
-				} else if (obj instanceof OrderedMenuDto) { // 주문하기, 매출관리
+				} else if ((obj instanceof OrderedMenuDto) || (obj instanceof BestSaleMenuDto)) { // 주문하기, 매출관리
 					s.getOrderCtrl().execute(number, (OrderedMenuDto) obj, sock);
 				} else if (obj instanceof ReviewDto) { 		// 리뷰보기
 					s.getRevCtrl().execute(number, (ReviewDto) obj, sock);

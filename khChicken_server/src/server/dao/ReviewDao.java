@@ -37,7 +37,7 @@ public class ReviewDao {
 
 	public void select(ReviewDto dto, Socket sock) {
 		String sql = "SELECT ID, MENU_NAME, ORDER_DATE, REVIEW, SCORE " + " FROM ORDER_DETAIL "
-				+ " WHERE MENU_NAME = ? ";
+				+ " WHERE MENU_NAME = ? AND REVIEW IS NOT NULL";
 
 		Connection conn = null;
 		PreparedStatement psmt = null;

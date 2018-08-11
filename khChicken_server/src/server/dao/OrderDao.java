@@ -2,6 +2,7 @@ package server.dao;
 
 import java.net.Socket;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,6 +27,8 @@ public class OrderDao {
 
 		switch (number) {
 		case Singleton.INSERT: // 주문 내역 추가 - 우진영
+			insert(dto);
+			System.out.println("주문 내역에 추가하였습니다");
 			break;
 		case Singleton.SELECT: // select
 			break;
@@ -45,7 +48,31 @@ public class OrderDao {
 		}
 	}
 
-	public void insert() {
+	public void insert(OrderedMenuDto dto) {
+		String sql = " INSERT INTO ORDER_DETAIL (ID, MENU_NAME, COUNTS, BEV_COUPON, ORDER_DATE) "
+				+ " VALUES (?, ?, ?, ?, SYSDATE) ";
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, dto.getId());
+			psmt.setString(2, dto.getMenu_name());
+			psmt.setInt(3, dto.getCount());
+			psmt.setInt(4, dto.getCoupon());
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				System.out.println("주문 내역을 저장하였습니다.");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+
 	}
 
 	public ArrayList<BestSaleMenuDto> selectBySalse() {
@@ -83,8 +110,7 @@ public class OrderDao {
 	public ArrayList<OrderedMenuDto> selectByDate() {
 
 		String sql = " SELECT DISTINCT A.ORDER_DATE, A.ID, B.MENU_TYPE,  A.MENU_NAME, A.COUNTS, A.BEV_COUPON, B.PRICE "
-				+ " FROM ORDER_DETAIL A, MENU B " 
-				+ " WHERE A.MENU_NAME = B.MENU_NAME "
+				+ " FROM ORDER_DETAIL A, MENU B " + " WHERE A.MENU_NAME = B.MENU_NAME "
 				+ " ORDER BY A.ORDER_DATE DESC ";
 
 		Connection conn = null;
@@ -99,10 +125,15 @@ public class OrderDao {
 			rs = psmt.executeQuery();
 
 			while (rs.next()) {
-
-				OrderedMenuDto omd = new OrderedMenuDto(rs.getDate("ORDER_DATE"), rs.getString("ID"),
-						rs.getString("MENU_TYPE"), rs.getNString("MENU_NAME"), rs.getInt("COUNTS"),
-						rs.getInt("BEV_COUPON"), rs.getInt("PRICE"));
+				OrderedMenuDto omd = new OrderedMenuDto(
+						rs.getDate("ORDER_DATE"), 
+						rs.getString("ID"),
+						rs.getString("MENU_TYPE"), 
+						rs.getNString("MENU_NAME"), 
+						rs.getInt("COUNTS"),
+						rs.getInt("BEV_COUPON"), 
+						rs.getInt("PRICE")
+						);
 				list.add(omd);
 			}
 
@@ -113,7 +144,7 @@ public class OrderDao {
 			DBClose.close(psmt, conn, rs);
 		}
 		return list;
-	}	
+	}
 
 	public void delete() {
 
