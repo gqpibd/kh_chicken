@@ -5,7 +5,6 @@ import java.util.List;
 import javax.swing.JFrame;
 
 import client.dao.ReviewDao;
-import client.singleton.Singleton;
 import client.view.Window_Review;
 import dto.ReviewDto;
 

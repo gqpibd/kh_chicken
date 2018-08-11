@@ -27,19 +27,18 @@ public class ReviewDao {
 
 	public List<ReviewDto> select(String menuName) { // 특정 메뉴에 대한 리뷰 정보를 불러온다
 		ReviewDto dto = new ReviewDto();
-		dto.setMenuName(menuName);
+		dto.setMenuName(menuName); 
 
 		Communicator comm = Singleton.getInstance().getComm();
 		comm.SendMessage(Communicator.SELECT, dto);
-		List<ReviewDto> list = new ArrayList<>();
-
+		rList.clear(); // 일단 내용일 있을지도 모르니 비워준다.
 		ArrayList<Object> resultList = comm.receiveMessage();
 		System.out.println(resultList);
 		for (int i = 0; i < resultList.size(); i++) {
 			// 받은 dto 형식에 맞게 변환해 저장
-			list.add((ReviewDto) resultList.get(i));
+			rList.add((ReviewDto) resultList.get(i));
 		}
-		return list;
+		return rList;
 	}
 
 	public void update(ReviewDto dto) { // 작성한 리뷰를 등록한다. 기존 구매 내역에 추가됨.

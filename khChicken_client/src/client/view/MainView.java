@@ -115,6 +115,7 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scroll.setPreferredSize(new Dimension(700, 600));
 		panel_bigmenu.add(scroll);
+		scroll.getVerticalScrollBar().setUnitIncrement(15);
 
 		// 바탕에 저장
 		getContentPane().add(btn_Login);
@@ -137,7 +138,7 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 		JPanel frontpanel = new JPanel();
 		frontpanel.setLayout(new MigLayout("", "20", "40"));
 		frontpanel.setSize(400, 300);
-		
+		 
 		// 이미지넣기
 		// server에서 가져온 이미지 넣는 곳
 		String img = menCtrl.get(i).getMenu_name().replaceAll(" ", "_") + ".jpg";

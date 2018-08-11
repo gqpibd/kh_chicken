@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import client.singleton.Singleton;
@@ -15,7 +16,7 @@ import dto.MemberDto;
 
 public class Window_Login extends JFrame implements ActionListener {
 	JTextField JTextF_ID;
-	JTextField JTextF_PW;
+	JPasswordField JTextF_PW;
 
 	JButton Jbut_login;
 	JButton Jbut_Account;
@@ -29,7 +30,7 @@ public class Window_Login extends JFrame implements ActionListener {
 
 		JTextF_ID = new JTextField(10);
 		Jpanl_JTextF.add(JTextF_ID);
-		JTextF_PW = new JTextField(10);
+		JTextF_PW = new JPasswordField(10);
 		Jpanl_JTextF.add(JTextF_PW);
 		add(Jpanl_JTextF);
 
@@ -67,7 +68,7 @@ public class Window_Login extends JFrame implements ActionListener {
 		Object obj = e.getSource();
 		Singleton s = Singleton.getInstance();
 		String id = JTextF_ID.getText();
-		String pw = JTextF_PW.getText();
+		String pw = new String(JTextF_PW.getPassword());
 		MemberDto dto = new MemberDto();
 		if (obj == Jbut_login) {
 
