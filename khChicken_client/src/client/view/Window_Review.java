@@ -170,7 +170,7 @@ public class Window_Review extends JFrame implements ActionListener,  MouseListe
 			JOptionPane.showMessageDialog(null, "작성이 완료되었습니다.");
 			dispose();
 			//single.Win_Review =new Window_Review();
-			
+		
 		}
 		
 		

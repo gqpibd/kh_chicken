@@ -1,6 +1,5 @@
 package server.dao;
 
-import java.net.Socket;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,7 +7,6 @@ import java.sql.SQLException;
 
 import server.db.DBClose;
 import server.db.DBConnection;
-import server.dto.MemberDto;
 
 public class MemberDao {
 	
