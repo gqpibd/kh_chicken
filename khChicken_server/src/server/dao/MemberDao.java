@@ -22,7 +22,7 @@ public class MemberDao {
 			System.out.println(dto.getId() + "를 멤버 테이블에 추가하였습니다");
 			break;
 		case Singleton.SELECT: // 아이데 중복 체크 - 윤상필
-			select(dto,sock);			
+			select(dto, sock);
 			break;
 		case Singleton.DELETE:
 			break;
@@ -47,8 +47,8 @@ public class MemberDao {
 		String address = dto.getAddress();
 		String phone = dto.getPhone();
 
-		String sql = "INSERT INTO MEMBER (name, id, pw, USEDCOUPON, auth, adr, phone)" 
-				  + " VALUES ( ?, ?, ?, ?, ?, ?, ? )";
+		String sql = "INSERT INTO MEMBER (name, id, pw, USEDCOUPON, auth, adr, phone)"
+				+ " VALUES ( ?, ?, ?, ?, ?, ?, ? )";
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -63,7 +63,7 @@ public class MemberDao {
 			psmt.setInt(5, auth);
 			psmt.setString(6, address);
 			psmt.setString(7, phone);
-			
+
 			psmt.executeQuery();
 
 		} catch (SQLException e) {
@@ -76,9 +76,7 @@ public class MemberDao {
 	public void select(MemberDto dto, Socket sock) {
 		boolean isExistingId = false;
 		// 존재하는 아이디인지 확인
-		String sql = " SELECT ID " +
-				     " FROM MEMBER " + 
-				     " WHERE ID = '" + dto.getId() + "' ";
+		String sql = " SELECT ID " + " FROM MEMBER " + " WHERE ID = '" + dto.getId() + "' ";
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
@@ -97,9 +95,9 @@ public class MemberDao {
 		} finally {
 			DBClose.close(psmt, conn, rs);
 		}
-		if(isExistingId) {
+		if (isExistingId) {
 			System.out.println("중복되는 아이디 입니다");
-		}else {
+		} else {
 			System.out.println("사용 가능한 아이디 입니다");
 		}
 
@@ -116,13 +114,12 @@ public class MemberDao {
 
 	}
 
-	public void select_login(dto.MemberDto dto, Socket sock) {
-		boolean loginSuccess = false;
+	public void select_login(MemberDto dto, Socket sock) {
+		MemberDto loginUser = null;
 		String id = dto.getId();
 		String pw = dto.getPw();
-		String sql = "SELECT ID ,PW " + 
-		            " FROM MEMBER " + 
-				    " WHERE ID = '" + id + "' AND PW = '" + pw + "' ";
+		String sql = "SELECT NAME, USEDCOUPON, AUTH, ADR, PHONE " + " FROM MEMBER " + " WHERE ID = '" + id + "' AND PW = '"
+				+ pw + "' ";
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -133,8 +130,18 @@ public class MemberDao {
 			psmt = conn.prepareStatement(sql);
 			rs = psmt.executeQuery();
 
-			if (rs.next()) { // 일치하는 결과가 있으면 로그인 성공
-				loginSuccess = true;
+			if (rs.next()) {
+				loginUser = new MemberDto();
+				loginUser.setId(id);
+				loginUser.setPw(pw);
+				loginUser.setName(rs.getString(1));
+				loginUser.setCoupon(rs.getInt(2));
+				loginUser.setAuth(rs.getInt(3));
+				loginUser.setAddress(rs.getString(4));
+				loginUser.setPhone(rs.getString(5));
+				System.out.println(loginUser.getName() + "님이 로그인 했습니다");
+			} else {
+				System.out.println("아이디 또는 패스워드가 틀렸습니다");
 			}
 
 		} catch (SQLException e) {
@@ -142,14 +149,6 @@ public class MemberDao {
 		} finally {
 			DBClose.close(psmt, conn, rs);
 		}
-		if(loginSuccess) {
-			System.out.println("로그인에 성공했습니다");
-		}else {
-
-			System.out.println("아이디 또는 패스워드가 틀렸습니다");
-		}
-
-		SocketWriter.Write(sock, loginSuccess);
-		
+		SocketWriter.Write(sock, loginUser);
 	}
 }
