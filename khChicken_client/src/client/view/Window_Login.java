@@ -31,7 +31,9 @@ public class Window_Login extends JFrame implements ActionListener {
 		JTextF_ID = new JTextField(10);
 		Jpanl_JTextF.add(JTextF_ID);
 		JTextF_PW = new JPasswordField(10);
+		JTextF_PW.addActionListener(this);
 		Jpanl_JTextF.add(JTextF_PW);
+		
 		add(Jpanl_JTextF);
 
 		JLabel JLabel_ID = new JLabel("아이디");
@@ -70,7 +72,7 @@ public class Window_Login extends JFrame implements ActionListener {
 		String id = JTextF_ID.getText();
 		String pw = new String(JTextF_PW.getPassword());
 		MemberDto dto = new MemberDto();
-		if (obj == Jbut_login) {
+		if (obj == Jbut_login || obj == JTextF_PW) {
 
 			if (id.trim().equals("")) {
 				JOptionPane.showMessageDialog(null, "아이디를 입력해주세요.");
@@ -82,6 +84,7 @@ public class Window_Login extends JFrame implements ActionListener {
 				boolean login = s.getMemCtrl().select_login(dto);
 				if (login == true) {
 					s.backToMain(this);
+					s.getMainView().login();
 				} else if (login == false) {
 					JOptionPane.showMessageDialog(null, "아이디 또는 비밀번호가 틀리셨습니다.");
 				}

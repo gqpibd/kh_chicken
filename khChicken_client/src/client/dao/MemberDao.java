@@ -9,7 +9,7 @@ import client.communicator.Communicator;
 import client.singleton.Singleton;
 import dto.MemberDto;
 
-public class MemberDao { 
+public class MemberDao {
 
 	List<MemberDto> mList = new ArrayList<MemberDto>();
 	MemberDto CurrentUser;
@@ -17,7 +17,7 @@ public class MemberDao {
 	public MemberDao() {
 	}
 
-	public void insert(MemberDto dto) {
+	public void insert(MemberDto dto) { // 회원가입
 		Singleton.getInstance().getComm().SendMessage(Communicator.INSERT, dto);
 	}
 
@@ -27,7 +27,7 @@ public class MemberDao {
 
 		comm.SendMessage(Communicator.SELECT, dto);
 		exsitingId = (Boolean) comm.receiveObject();
-		
+
 		return exsitingId;
 	}
 
@@ -39,17 +39,15 @@ public class MemberDao {
 
 	}
 
-	public boolean select_login(MemberDto dto) {
-		boolean loginSuccess = false;
+	public boolean select_login(MemberDto dto) { // 로그인
 		Communicator comm = Singleton.getInstance().getComm();
-		
 		comm.SendMessage(4, dto);
-		loginSuccess = (Boolean) comm.receiveObject();
-		if(loginSuccess) {
-			JOptionPane.showMessageDialog(null, dto.getId() + "님 환영합니다");
-			CurrentUser = dto;
+		CurrentUser = (MemberDto) comm.receiveObject();
+		if (CurrentUser != null) {
+			JOptionPane.showMessageDialog(null, CurrentUser.getId() + "님 환영합니다");
+			return true;
 		}
-		return loginSuccess;
+		return false;
 	}
 
 	public String getLoginId() { // 로그인 아이디 가져오기
@@ -61,12 +59,19 @@ public class MemberDao {
 	}
 
 	public int getAuth() {
-		int auth = CurrentUser.getAuth();
-		return auth;
+		if (CurrentUser == null) {
+			return 0;
+		} else {
+			return CurrentUser.getAuth();
+		}
 
 	}
 
 	public MemberDto getCurrentUser() {
 		return CurrentUser;
+	}
+
+	public void logout() {
+		CurrentUser = null;
 	}
 }

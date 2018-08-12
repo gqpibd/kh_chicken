@@ -157,7 +157,7 @@ public class Window_Account extends JFrame implements ActionListener {
 			} else {
 				JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다.");
 				JOptionPane.showMessageDialog(null, "로그인 해주세요.");
-				MemberDto dto = new MemberDto(id, pw, name, 0, 0, address, phone);
+				MemberDto dto = new MemberDto(id, pw, name, 0, MemberDto.MEMBER, address, phone);
 				single.getMemCtrl().insert(dto);
 				single.backToMain(this);
 				// single.Win_Loging = new Window_Login();

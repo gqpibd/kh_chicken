@@ -15,7 +15,6 @@ public class MemberController {
 
 	private ManageView manView;
 	private Window_Account accView;
-	private Window_Login logView;
 
 	public void insert(MemberDto dto) {
 		memDao.insert(dto);
@@ -37,7 +36,7 @@ public class MemberController {
 		boolean loginSuccess = memDao.select_login(dto);
 		
 		if (loginSuccess) {
-			Singleton.getInstance().getMainView().Login();			
+			Singleton.getInstance().getMainView().login();			
 		}
 		
 		return loginSuccess;
@@ -76,15 +75,15 @@ public class MemberController {
 
 	public void loginView(JFrame currentView) {
 		currentView.setVisible(false);
-		if (logView == null) { // 없을 땐
-			logView = new Window_Login(); // 만들고
-		} else { // 있을 땐
-			logView.setVisible(true); // 보여만 준다.
-		}
-
+		new Window_Login(); // 만들고		
 	}
 
 	public MemberDto getCurrentUser() {
 		return memDao.getCurrentUser();
+	}
+
+	public void logout() {
+		memDao.logout();
+		
 	}
 }
