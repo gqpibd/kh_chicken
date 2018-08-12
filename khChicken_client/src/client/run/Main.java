@@ -1,15 +1,13 @@
 package client.run;
 
-import client.communicator.Communicator;
+import client.singleton.Singleton;
 
 public class Main {
 
 	public static void main(String[] args) {
-		new Communicator().makeConnection();
-		// dohyeon_client branch test
-		
-		// hello_ hello_ hello_
-		
+		Singleton s = Singleton.getInstance(); 
+		s.getComm().makeConnection(); // 소켓 연결을 먼저 한다.
+		s.getMainView();		
 	}
 
 }

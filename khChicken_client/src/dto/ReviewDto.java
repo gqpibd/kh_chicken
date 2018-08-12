@@ -1,4 +1,4 @@
-package server.dto;
+package dto;
 
 import java.io.Serializable;
 
@@ -8,7 +8,7 @@ public class ReviewDto implements Serializable{
 	
 	private String menuName;
 	private String review;
-	private String userId;
+	private String userId; 
 	private String orderDate;
 	private int score;
 	
