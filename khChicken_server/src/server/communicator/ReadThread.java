@@ -71,9 +71,11 @@ public class ReadThread extends Thread {
 
 					} else if (obj instanceof client.dto.ReviewDto) {
 						ReviewDto dto = (ReviewDto) obj;
-						List<client.dto.ReviewDto> list = single.ctrlReview.Choice(number,dto);
-						if(list == null) {
-						}else {
+						obj = single.ctrlReview.Choice(number,dto);
+						if(obj == null) {
+							return;
+						}else if(obj instanceof List<ReviewDto>){
+							List<ReviewDto>list = (List<ReviewDto>)obj;
 						ObjectOutputStream oos = new ObjectOutputStream(out);
 						oos.writeObject(list);
 						oos.flush();

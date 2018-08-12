@@ -31,7 +31,7 @@ public class ReviewDao {
 		this.sock = sock;
 	}
 	
-	public List<client.dto.ReviewDto> Choice(int number ,client.dto.ReviewDto dto) {
+	public Object Choice(int number ,client.dto.ReviewDto dto) {
 		switch(number) {
 		case 0 :
 			return insert(dto);
@@ -47,7 +47,7 @@ public class ReviewDao {
 	
 	
 	
-	public List<client.dto.ReviewDto> insert(client.dto.ReviewDto dto) {
+	public Object insert(client.dto.ReviewDto dto) {
 		String id = dto.getUserId();
 		String MenuName = dto.getMenuName();
 		String Review = dto.getReview();
@@ -74,7 +74,7 @@ public class ReviewDao {
 		return null;
 	}
 	
-	public List<client.dto.ReviewDto> select() {
+	public Object select() {
 		
 		String sql = "SELECT ID, MENU_NAME, COUNT1, BEV_COUPON, ORDER_DATE, REVIEW, SCORE "
 				+ " FROM ORDER_DETAIL ";
