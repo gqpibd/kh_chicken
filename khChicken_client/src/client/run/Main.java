@@ -6,7 +6,9 @@ public class Main {
 
 	public static void main(String[] args) {
 		new Communicator().makeConnection();
-		//kkkkk
+		// dohyeon_client branch test
+		
+		// hello_ hello_ hello_
 		
 	}
 
