@@ -1,5 +1,7 @@
 package client.singleton;
 
+import java.util.List;
+
 import javax.swing.JFrame;
 
 import client.communicator.Communicator;
@@ -8,7 +10,6 @@ import client.controller.MenuController;
 import client.controller.OrderController;
 import client.controller.ReviewController;
 import client.view.MainView;
-import client.view.manager.ManageView;
 
 public class Singleton {
 
@@ -21,6 +22,7 @@ public class Singleton {
 	private OrderController ordCtrl = new OrderController();
 	private ReviewController revCtrl = new ReviewController();
 	private MainView mv;
+
 
 	private Singleton() {
 	}
@@ -48,6 +50,7 @@ public class Singleton {
 	public void setMainView(MainView mainView) {
 		this.mv = mainView;
 	}
+
 
 	public MainView getMainView() {
 		if (mv == null) {

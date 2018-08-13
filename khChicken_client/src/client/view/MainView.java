@@ -1,5 +1,6 @@
 package client.view;
 
+import java.awt.Checkbox;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
@@ -43,8 +44,7 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 	Singleton s = Singleton.getInstance();
 	MenuController menCtrl = Singleton.getInstance().getMenuCtrl();
 	MemberController memCtrl = Singleton.getInstance().getMemCtrl();
-	
-	List<String> checkedMenu = new ArrayList<>();
+	List<String> checkedMenu;
 	int i = 0;
 
 	JLabel menuLabel;
@@ -192,8 +192,9 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 		JCheckBox chk = (JCheckBox) e.getSource();
 
 		// 체크된 이름을 저장
+		
 		checkedMenu.add(menCtrl.get(i).getMenu_name());
-
+		
 	}
 
 	public void setImage(String path, JLabel imgLabel) {
@@ -233,6 +234,13 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 			ordCtrl.getList().add(new OrderedMenuDto((MenuDto) menCtrl.get(1)));
 			ordCtrl.getList().add(new OrderedMenuDto((MenuDto) menCtrl.get(2)));
 			ordCtrl.OrderView(this);
+			
+			//확인용
+			for (int i = 0; i < checkedMenu.size(); i++) {
+				System.out.println(checkedMenu.get(i));
+				
+			}
+			
 		} else if (o == btn_Manage) {
 			memCtrl.manageView(this); // 관리자창
 		}
