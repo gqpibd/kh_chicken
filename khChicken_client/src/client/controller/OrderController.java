@@ -48,4 +48,9 @@ public class OrderController {
 		}
 	}
 
+	public String getCoupons() {
+		// TODO Auto-generated method stub
+		return ordDao.getCoupon();
+	}
+
 }

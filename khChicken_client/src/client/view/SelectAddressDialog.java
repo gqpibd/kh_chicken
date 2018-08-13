@@ -19,7 +19,7 @@ import javax.swing.event.ListSelectionListener;
 import client.communicator.Communicator;
 import client.singleton.Singleton;
 
-public class SelectAddressView extends JDialog implements ActionListener {
+public class SelectAddressDialog extends JDialog implements ActionListener {
 	private JTextField loadNameField;
 	private JList<String> list;
 	private JButton searchBtn;
@@ -28,7 +28,7 @@ public class SelectAddressView extends JDialog implements ActionListener {
 	private JTextField detailAddField;
 	
 	
-	public SelectAddressView(JFrame parent, boolean modal) {
+	public SelectAddressDialog(JFrame parent, boolean modal) {
 		super(parent,modal);
 		setBounds(300, 200, 392, 413);
 		getContentPane().setLayout(null);
