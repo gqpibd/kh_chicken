@@ -175,7 +175,7 @@ public class OrderDao {
 			psmt = conn.prepareStatement(sql);
 			rs = psmt.executeQuery();
 			while (rs.next()) {
-				// b.menu_type, A.menu_name, A.판매량, A.사용쿠폰, (B.PRICE*A.판매량) 총판매액
+				// b.menu_type, A.menu_name, B.price, A.판매량, A.사용쿠폰, (B.PRICE*A.판매량) 총판매액, A.별점
 				BestSaleMenuDto omd = new BestSaleMenuDto(rs.getString("MENU_TYPE"), rs.getString("MENU_NAME"), 
 						rs.getInt("PRICE"), rs.getInt("판매량"), rs.getInt("사용쿠폰"), rs.getInt("총판매액"), rs.getDouble("별점"));
 				list.add(omd);
