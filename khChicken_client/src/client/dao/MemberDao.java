@@ -12,7 +12,7 @@ import dto.MemberDto;
 public class MemberDao {
 
 	List<MemberDto> mList = new ArrayList<MemberDto>();
-	MemberDto CurrentUser;
+	MemberDto CurrentUser = null;
 
 	public MemberDao() {
 	}
