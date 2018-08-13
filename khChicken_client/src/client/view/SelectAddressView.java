@@ -116,7 +116,7 @@ public class SelectAddressView extends JDialog implements ActionListener {
 			String load = loadNameField.getText();
 			Communicator comm = Singleton.getInstance().getComm();
 			comm.SendMessage(Communicator.SELECT, load);
-			ArrayList<Object> results = (ArrayList<Object>) comm.receiveMessage();
+			ArrayList<Object> results = (ArrayList<Object>) comm.receiveObject();
 			String resArr[] = new String[results.size()];
 			for (int i = 0; i < resArr.length; i++) {
 				resArr[i] = results.get(i).toString();

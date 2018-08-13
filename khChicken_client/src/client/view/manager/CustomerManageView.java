@@ -14,8 +14,8 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import client.controller.StatisticsController;
 import client.singleton.Singleton;
-import dto.CustomerManageDto;
 
 public class CustomerManageView extends JFrame implements ActionListener {
 
@@ -77,23 +77,23 @@ public class CustomerManageView extends JFrame implements ActionListener {
 	public void setTableByCustomerOrder() {
 		Singleton s = Singleton.getInstance();
 
-		// controller로 영수증 목록 취득() -> server에 switch문 중 4번을 실행하라!
-		ArrayList<CustomerManageDto> list = s.getCusCtrl().customerOrder(1);
+		// controller로 영수증 목록 취득() -> server에 switch문 중 6번을 실행하라!
+		ArrayList<String> list = (ArrayList<String>) s.getStaCtrl().getStatistics(StatisticsController.CUSTOMER);
 
 		int bbsNum = 1;
 
 		rowData = new Object[list.size()][6]; // 테이블의 2차원배열
 
 		for (int i = 0; i < list.size(); i++) {
-			CustomerManageDto dto1 = list.get(i);
+			String result[] = list.get(i).split("__");
 
 			// A.ID, A.NAME, A.ADR, A.PHONE, B.주문건수
 			rowData[i][0] = bbsNum; // 글번호
-			rowData[i][1] = dto1.getId(); // 주문자 아이디
-			rowData[i][2] = dto1.getName(); // 주문자 이름
-			rowData[i][3] = dto1.getAdr(); // 주소
-			rowData[i][4] = dto1.getPhone(); // 전화번호
-			rowData[i][5] = dto1.getOrderCount(); // 주문건수
+			rowData[i][1] = result[0]; // 주문자 아이디
+			rowData[i][2] = result[1]; // 주문자 이름
+			rowData[i][3] = result[2]; // 주소
+			rowData[i][4] = result[3]; // 전화번호
+			rowData[i][5] = result[4]; // 주문건수
 
 			bbsNum++;
 		}

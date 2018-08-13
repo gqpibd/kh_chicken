@@ -68,9 +68,9 @@ public class ManageView extends JFrame implements ActionListener {
 		if (e.getSource() == btn_menu) {
 			s.getMenuCtrl().menuManageView(this);
 		} else if (e.getSource() == btn_sale) {
-			s.getOrderCtrl().saleManageView(this);			
+			s.getStaCtrl().saleManageView(this);			
 		} else if (e.getSource() == btn_customer) {
-			s.getCusCtrl().CustomerManageView(this);
+			s.getStaCtrl().CustomerManageView(this);
 		}
 		
 		else if (e.getSource() == btn_back) {

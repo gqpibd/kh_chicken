@@ -3,11 +3,11 @@ package client.singleton;
 import javax.swing.JFrame;
 
 import client.communicator.Communicator;
-import client.controller.CustomerManageController;
 import client.controller.MemberController;
 import client.controller.MenuController;
 import client.controller.OrderController;
 import client.controller.ReviewController;
+import client.controller.StatisticsController;
 import client.view.MainView;
 
 public class Singleton {
@@ -20,7 +20,7 @@ public class Singleton {
 	private MenuController menCtrl = new MenuController();
 	private OrderController ordCtrl = new OrderController();
 	private ReviewController revCtrl = new ReviewController();
-	private CustomerManageController cusCtrl = new CustomerManageController();
+	private StatisticsController staCtrl = new StatisticsController();
 	private MainView mv;
 
 	private Singleton() {
@@ -46,8 +46,8 @@ public class Singleton {
 		return memCtrl;
 	}
 	
-	public CustomerManageController getCusCtrl() {
-		return cusCtrl;
+	public StatisticsController getStaCtrl() {
+		return staCtrl;
 	}
 
 	public void setMainView(MainView mainView) {

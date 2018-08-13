@@ -20,15 +20,13 @@ public class OrderedMenuDto extends MenuDto implements Serializable {
 		super(dto);
 		count = 1;
 	}
-	
-	public OrderedMenuDto(Date order_date, String id, String type, String menu_name, int count, int coupon, int totalPrice) {
+
+	public OrderedMenuDto(Date order_date, String id, String type, String menu_name, int count, int coupon, int price) {
+		super(type,menu_name,price);
 		this.order_date = order_date;
 		this.id = id;
-		super.setMenu_name(menu_name);
-		super.setType(type);
 		this.coupon = coupon;
 		this.count = count;
-		this.totalPrice = totalPrice;
 	}
 
 	public String getId() {

@@ -32,12 +32,7 @@ public class ReviewDao {
 		Communicator comm = Singleton.getInstance().getComm();
 		comm.SendMessage(Communicator.SELECT, dto);
 		rList.clear(); // 일단 내용일 있을지도 모르니 비워준다.
-		ArrayList<Object> resultList = comm.receiveMessage();
-		System.out.println(resultList);
-		for (int i = 0; i < resultList.size(); i++) {
-			// 받은 dto 형식에 맞게 변환해 저장
-			rList.add((ReviewDto) resultList.get(i));
-		}
+		rList = (ArrayList<ReviewDto>)comm.receiveObject();
 		return rList;
 	}
 

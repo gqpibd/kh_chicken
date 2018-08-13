@@ -15,6 +15,8 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import client.controller.StatisticsController;
+import client.dao.StatisticsDao;
 import client.singleton.Singleton;
 import dto.BestSaleMenuDto;
 import dto.OrderedMenuDto;
@@ -94,8 +96,9 @@ public class SaleManageView extends JFrame implements ActionListener {
 	public void setTableByDate() {
 		Singleton s = Singleton.getInstance();
 
-		// controller로 영수증 목록 취득() -> server에 switch문 중 4번을 실행하라!
-		ArrayList<OrderedMenuDto> list = s.getOrderCtrl().selectByDate(4);
+		// controller로 영수증 목록 취득() 
+		//ArrayList<OrderedMenuDto> list = s.getStaCtrl().selectByDate(4);
+		ArrayList<OrderedMenuDto> list = (ArrayList<OrderedMenuDto>) s.getStaCtrl().getStatistics(StatisticsController.DATE);
 
 		int bbsNum = 1;
 
@@ -147,12 +150,12 @@ public class SaleManageView extends JFrame implements ActionListener {
 
 		}
 	}
-	
-	
+		
 	// 매출순
 	public void setTableBySales() {
 		Singleton s = Singleton.getInstance();
-		ArrayList<BestSaleMenuDto> list = s.getOrderCtrl().selectBySales(5);
+//		ArrayList<BestSaleMenuDto> list = s.getStaCtrl().selectBySales(5);
+		ArrayList<BestSaleMenuDto> list = (ArrayList<BestSaleMenuDto>) s.getStaCtrl().getStatistics(StatisticsController.SALES);
 		
 		rowData = new Object[list.size()][7];
 		int bbsNum = 1;
@@ -196,7 +199,8 @@ public class SaleManageView extends JFrame implements ActionListener {
 	// 별점순
 	public void setTableByScore() {
 		Singleton s = Singleton.getInstance();
-		ArrayList<BestSaleMenuDto> list = s.getOrderCtrl().selectBySales(6);
+//		ArrayList<BestSaleMenuDto> list = s.getStaCtrl().selectBySales(6);
+		ArrayList<BestSaleMenuDto> list = (ArrayList<BestSaleMenuDto>) s.getStaCtrl().getStatistics(StatisticsController.SCORE);
 		
 		rowData = new Object[list.size()][8];
 		int bbsNum = 1;
