@@ -2,43 +2,25 @@ package dto;
 
 import java.io.Serializable;
 
-public class BestSaleMenuDto implements Serializable {
+public class BestSaleMenuDto extends MenuDto implements Serializable {
 
 	private static final long serialVersionUID = -2798385730859068125L;
 
-	private String menu_type;
-	private String menu_name;
 	private int total_sale;
 	private int total_coupon;
 	private int total_price;
+	private double score;
 
 	public BestSaleMenuDto() {
 	
 	}
 	
-	public BestSaleMenuDto(String menu_type, String menu_name, int total_sale, int total_coupon, int total_price) {
-		this.menu_type = menu_type;
-		this.menu_name = menu_name;
+	public BestSaleMenuDto(String menu_type, String menu_name, int price, int total_sale, int total_coupon, int total_price, double score) {
+		super(menu_name, menu_type, price);
 		this.total_sale = total_sale;
 		this.total_coupon = total_coupon;
-		this.total_price = total_price; 
-	}
-
-
-	public String getMenu_type() {
-		return menu_type;
-	}
-
-	public void setMenu_type(String menu_type) {
-		this.menu_type = menu_type;
-	}
-
-	public String getMenu_name() {
-		return menu_name;
-	}
-
-	public void setMenu_name(String menu_name) {
-		this.menu_name = menu_name;
+		this.total_price = total_price;
+		this.score = score;
 	}
 
 	public int getTotal_sale() {
@@ -64,10 +46,18 @@ public class BestSaleMenuDto implements Serializable {
 	public void setTotal_price(int total_price) {
 		this.total_price = total_price;
 	}
+	
+	public double getScore() {
+		return score;
+	}
+
+	public void setScore(double score) {
+		this.score = score;
+	}
 
 	@Override
 	public String toString() {
-		return "BestSaleMenuDto [menu_type=" + menu_type + ", menu_name=" + menu_name + ", total_sale=" + total_sale
+		return "BestSaleMenuDto [" + super.toString() + " total_sale=" + total_sale
 				+ ", total_coupon=" + total_coupon + ", total_price=" + total_price + "]";
 	}
 

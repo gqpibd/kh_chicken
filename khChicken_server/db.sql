@@ -50,7 +50,7 @@ select * from Menu;
 CREATE TABLE ORDER_DETAIL(
     ID VARCHAR2(10),
     MENU_NAME VARCHAR2(30),
-    COUNT NUMBER(10) NOT NULL,
+    COUNTS NUMBER(10) NOT NULL,
     BEV_COUPON NUMBER(3),
     ORDER_DATE DATE NOT NULL,
     REVIEW VARCHAR2(1000),
@@ -61,9 +61,13 @@ CREATE TABLE ORDER_DETAIL(
     REFERENCES MENU(MENU_NAME)
 );
 
-ALTER TABLE ORDER_DETAIL
+SELECT * FROM ORDER_DETAIL;
+
+
 DROP TABLE ORDER_DETAIL
 
+ALTER TABLE ORDER_DETAIL
+RENAME COLUMN COUNT TO COUNTS;
 
 INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '후라이드 치킨', 1, 0, sysdate, '맛있음', 9);
 
@@ -76,3 +80,49 @@ INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '해쉬 브라운', 1, 0, sysdate, '
 INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '콜라', 1, 0, sysdate, null , null);
    
 SELECT * FROM ORDER_DETAIL;
+
+
+
+
+-- 날짜순
+SELECT DISTINCT A.ORDER_DATE, A.ID, B.MENU_TYPE,  A.MENU_NAME, B.PRICE, A.COUNTS, A.BEV_COUPON, B.PRICE
+FROM ORDER_DETAIL A, MENU B
+WHERE A.MENU_NAME = B.MENU_NAME
+ORDER BY A.ORDER_DATE DESC;
+
+
+-- 매출순
+SELECT b.menu_type, A.menu_name, B.price, A.판매량, A.사용쿠폰, (B.PRICE*A.판매량) 총판매액
+FROM (SELECT 정렬.menu_name , 정렬.판매량 , 정렬.쿠폰 사용쿠폰
+FROM(SELECT menu_name , SUM(counts) 판매량, SUM(BEV_COUPON) 쿠폰
+FROM ORDER_DETAIL
+GROUP BY menu_name) 정렬) A, MENU B
+WHERE A.menu_name = B.MENU_NAME
+ORDER BY (B.PRICE*A.판매량) DESC;
+
+-- 별점순
+SELECT b.menu_type, A.menu_name, B.price, A.판매량, A.사용쿠폰, (B.PRICE*A.판매량) 총판매액, A.별점
+FROM (SELECT 정렬.menu_name , 정렬.판매량 , 정렬.쿠폰 사용쿠폰, 정렬.별점
+FROM(SELECT menu_name , SUM(counts) 판매량, SUM(BEV_COUPON) 쿠폰, ROUND(AVG(SCORE), 2) 별점
+FROM ORDER_DETAIL
+GROUP BY menu_name
+HAVING AVG(SCORE) IS NOT NULL
+ORDER BY AVG(SCORE) DESC) 정렬) A, MENU B
+WHERE A.menu_name = B.MENU_NAME;
+
+-- 고객관리
+SELECT A.ID, A.NAME, A.ADR, A.PHONE, B.주문건수
+FROM MEMBER A,
+(SELECT A.ID, COUNT(*) 주문건수
+FROM ORDER_DETAIL A, MENU B
+WHERE A.MENU_NAME = B.MENU_NAME
+AND B.MENU_TYPE = '메인'
+GROUP BY ID
+ORDER BY COUNT(*) DESC) B
+WHERE A.ID = B.ID;
+
+
+
+
+
+

@@ -22,10 +22,9 @@ import dto.OrderedMenuDto;
 public class SaleManageView extends JFrame implements ActionListener {
 	private JTable jTable;
 	private JScrollPane jScrPane;
-	private String columNames[] = { "번호", "주문일자", "아이디", "메뉴타입", "주문메뉴", "수량", "음료쿠폰", "총액" };
+	private String columNames[] = { "번호", "주문일자", "아이디", "메뉴타입", "주문메뉴", "단가", "수량", "음료쿠폰", "총액" };
 	Object rowData[][];
 	DefaultTableModel model;
-//	ArrayList<Object> list = new ArrayList<Object>();
 	DefaultTableCellRenderer celAlignCenter; // 셀 가운데 정렬용
 	JButton backBtn; // 돌아가기 버튼
 	// 정렬 기준
@@ -38,7 +37,6 @@ public class SaleManageView extends JFrame implements ActionListener {
 		model = new DefaultTableModel() {
 			@Override
 			public boolean isCellEditable(int row, int column) {
-				// TODO Auto-generated method stub
 				return false;
 			}
 		};
@@ -62,8 +60,7 @@ public class SaleManageView extends JFrame implements ActionListener {
 		add(backBtn);
 
 		// 정렬기준 바꾸기
-//		String[] selects = new String[] { "날짜순", "별점순" };
-		String[] selects = new String[] { "날짜순", "매출순" };
+		String[] selects = new String[] { "날짜순", "매출순", "별점순" };
 		choiceList = new JComboBox<>(selects);
 		choiceList.setBounds(20, 380, 80, 20);
 		choiceList.addActionListener(this);
@@ -83,15 +80,17 @@ public class SaleManageView extends JFrame implements ActionListener {
 
 			if (selectedItem.equals("날짜순")) {
 				setTableByDate();
-			//} else if (selectedItem.equals("별점순")) {
 			} else if (selectedItem.equals("매출순")) {
 				setTableBySales();
+			} else if (selectedItem.equals("별점순")) {
+				setTableByScore();
 			}
 		} else if ( e.getSource() == backBtn) {
 			s.getMemCtrl().manageView(this);
 		}
 	}
-
+	
+	// 날짜순
 	public void setTableByDate() {
 		Singleton s = Singleton.getInstance();
 
@@ -100,13 +99,14 @@ public class SaleManageView extends JFrame implements ActionListener {
 
 		int bbsNum = 1;
 
-		rowData = new Object[list.size()][8]; // 테이블의 2차원배열
+		rowData = new Object[list.size()][9]; // 테이블의 2차원배열
 
 		for (int i = 0; i < list.size(); i++) {
 			OrderedMenuDto dto1 = list.get(i);
 			int bev_price = 0;
-
-			if (dto1.getType().equals("drink") && dto1.getCoupon() != 0) {
+			
+			// 음료주문의 경우, 쿠폰을 썼을때 가격*쿠폰수량만큼 할인가를 적용.
+			if (dto1.getType().equals("음료") && dto1.getCoupon() != 0) {
 				bev_price = dto1.getPrice() * dto1.getCoupon();
 			}
 			// Date order_date, String id, String menu_type, String menu_name, int count,
@@ -116,9 +116,10 @@ public class SaleManageView extends JFrame implements ActionListener {
 			rowData[i][2] = dto1.getId(); // 주문자 아이디
 			rowData[i][3] = dto1.getType(); // 메뉴타입
 			rowData[i][4] = dto1.getMenu_name(); // 주문메뉴
-			rowData[i][5] = dto1.getCount(); // 수량
-			rowData[i][6] = dto1.getCoupon(); // 음료쿠폰
-			rowData[i][7] = (dto1.getTotalPrice() * dto1.getCount()) - bev_price;
+			rowData[i][5] = dto1.getPrice();	// 단가
+			rowData[i][6] = dto1.getCount(); // 수량
+			rowData[i][7] = dto1.getCoupon(); // 음료쿠폰
+			rowData[i][8] = (dto1.getPrice() * dto1.getCount()) - bev_price;	// 총액
 		
 			bbsNum++;
 		}
@@ -136,36 +137,39 @@ public class SaleManageView extends JFrame implements ActionListener {
 		jTable.getColumnModel().getColumn(2).setMaxWidth(100); // 아이디 폭
 		jTable.getColumnModel().getColumn(3).setMaxWidth(100); // 메뉴타입 폭
 		jTable.getColumnModel().getColumn(4).setMaxWidth(500); // 주문메뉴 폭
-		jTable.getColumnModel().getColumn(5).setMaxWidth(50); // 수량 폭
-		jTable.getColumnModel().getColumn(6).setMaxWidth(100); // 음료쿠폰 폭
-		jTable.getColumnModel().getColumn(7).setMaxWidth(100); // 총액 폭
+		jTable.getColumnModel().getColumn(5).setMaxWidth(50); // 개당가 폭
+		jTable.getColumnModel().getColumn(6).setMaxWidth(50); // 수량 폭
+		jTable.getColumnModel().getColumn(7).setMaxWidth(100); // 음료쿠폰 폭
+		jTable.getColumnModel().getColumn(8).setMaxWidth(100); // 총액 폭
 
 		for (int i = 0; i < model.getColumnCount(); i++) { // 칼럼 내용 가운데 정렬
 			jTable.getColumnModel().getColumn(i).setCellRenderer(celAlignCenter);
 
 		}
 	}
-
+	
+	
+	// 매출순
 	public void setTableBySales() {
 		Singleton s = Singleton.getInstance();
 		ArrayList<BestSaleMenuDto> list = s.getOrderCtrl().selectBySales(5);
 		
-		rowData = new Object[list.size()][6];
+		rowData = new Object[list.size()][7];
 		int bbsNum = 1;
-		String[] columNames2 = { "번호", "메뉴타입", "메뉴이름", "총 판매 수량", "총 사용 쿠폰", "총 판매액" };
+		String[] columNames2 = { "번호", "메뉴타입", "메뉴이름", "단가", "총 판매 수량", "총 사용 쿠폰", "총 판매액" };
 
 		
 		for (int i = 0; i < list.size(); i++) {
 			BestSaleMenuDto dto = list.get(i);
 
-			// String menu_type, String menu_name, int total_sale, int total_coupon, int
-			// total_price
+			// String menu_type, String menu_name, int price, int total_sale, int total_coupon, int total_price
 			rowData[i][0] = bbsNum; // 글번호
-			rowData[i][1] = dto.getMenu_type(); // 메뉴타입
-			rowData[i][2] = dto.getMenu_name(); // 메뉴이름
-			rowData[i][3] = dto.getTotal_sale(); // 총 판매 수량
-			rowData[i][4] = dto.getTotal_coupon(); // 총 사용 쿠폰
-			rowData[i][5] = dto.getTotal_price(); // 총 판매액
+			rowData[i][1] = dto.getType();		// 메뉴타입
+			rowData[i][2] = dto.getMenu_name();		// 메뉴이름
+			rowData[i][3] = dto.getPrice();			// 단가
+			rowData[i][4] = dto.getTotal_sale();	// 총 판매 수량
+			rowData[i][5] = dto.getTotal_coupon();	// 총 사용 쿠폰
+			rowData[i][6] = dto.getTotal_price();	// 총 판매액
 			bbsNum++;
 		}
 
@@ -176,9 +180,56 @@ public class SaleManageView extends JFrame implements ActionListener {
 		jTable.getColumnModel().getColumn(0).setMaxWidth(50); // 글번호 폭
 		jTable.getColumnModel().getColumn(1).setMaxWidth(200); // 메뉴타입 폭
 		jTable.getColumnModel().getColumn(2).setMaxWidth(500); // 메뉴이름 폭
-		jTable.getColumnModel().getColumn(3).setMaxWidth(200); // 총 판매 수량 폭
-		jTable.getColumnModel().getColumn(4).setMaxWidth(200); // 총 사용 쿠폰 폭
-		jTable.getColumnModel().getColumn(5).setMaxWidth(200); // 총 판매액 폭
+		jTable.getColumnModel().getColumn(3).setMaxWidth(200); // 단가 폭
+		jTable.getColumnModel().getColumn(4).setMaxWidth(200); // 총 판매 수량 폭
+		jTable.getColumnModel().getColumn(5).setMaxWidth(200); // 총 사용 쿠폰 폭
+		jTable.getColumnModel().getColumn(6).setMaxWidth(200); // 총 판매액 폭
+
+		for (int i = 0; i < model.getColumnCount(); i++) { // 칼럼 내용 가운데 정렬
+			jTable.getColumnModel().getColumn(i).setCellRenderer(celAlignCenter);
+
+		}
+
+	}
+	
+	
+	// 별점순
+	public void setTableByScore() {
+		Singleton s = Singleton.getInstance();
+		ArrayList<BestSaleMenuDto> list = s.getOrderCtrl().selectBySales(6);
+		
+		rowData = new Object[list.size()][8];
+		int bbsNum = 1;
+		String[] columNames2 = { "번호", "메뉴타입", "메뉴이름", "단가", "총 판매 수량", "총 사용 쿠폰", "총 판매액", "평균 별점" };
+	
+		
+		for (int i = 0; i < list.size(); i++) {
+			BestSaleMenuDto dto = list.get(i);
+
+			// String menu_type, String menu_name, int price, int total_sale, int total_coupon, int total_price, double score
+			rowData[i][0] = bbsNum; // 글번호
+			rowData[i][1] = dto.getType(); // 메뉴타입
+			rowData[i][2] = dto.getMenu_name(); // 메뉴이름
+			rowData[i][3] = dto.getPrice(); // 개당가
+			rowData[i][4] = dto.getTotal_sale(); // 총 판매 수량
+			rowData[i][5] = dto.getTotal_coupon(); // 총 사용 쿠폰
+			rowData[i][6] = dto.getTotal_price(); // 총 판매액
+			rowData[i][7] = dto.getScore(); // 평균 별점
+			bbsNum++;
+		}
+
+		// 테이블의 폭을 설정하기 위한 Model(중요!)
+		model.setDataVector(rowData, columNames2);
+
+		// 컬럼의 넓이를 설정
+		jTable.getColumnModel().getColumn(0).setMaxWidth(50); // 글번호 폭
+		jTable.getColumnModel().getColumn(1).setMaxWidth(200); // 메뉴타입 폭
+		jTable.getColumnModel().getColumn(2).setMaxWidth(550); // 메뉴이름 폭
+		jTable.getColumnModel().getColumn(3).setMaxWidth(200); // 개당가 폭
+		jTable.getColumnModel().getColumn(4).setMaxWidth(200); // 총 판매 수량 폭
+		jTable.getColumnModel().getColumn(5).setMaxWidth(200); // 총 사용 쿠폰 폭
+		jTable.getColumnModel().getColumn(6).setMaxWidth(200); // 총 판매액 폭
+		jTable.getColumnModel().getColumn(7).setMaxWidth(200); // 평균 별점 폭
 
 		for (int i = 0; i < model.getColumnCount(); i++) { // 칼럼 내용 가운데 정렬
 			jTable.getColumnModel().getColumn(i).setCellRenderer(celAlignCenter);

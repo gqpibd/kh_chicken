@@ -96,19 +96,7 @@ public class MemberDto implements Serializable {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	public static int getManager() {
-		return MANAGER;
-	}
-
-	public static int getMember() {
-		return MEMBER;
-	}
-
+	
 	@Override
 	public String toString() {
 		return "MemberDto [id=" + id + ", pw=" + pw + ", name=" + name + ", coupon=" + coupon + ", auth=" + auth

@@ -23,6 +23,7 @@ public class ManageView extends JFrame implements ActionListener {
 
 	private JButton btn_menu;
 	private JButton btn_sale;
+	private JButton btn_customer;
 	private JButton btn_back;
 
 	public ManageView() { 
@@ -40,14 +41,20 @@ public class ManageView extends JFrame implements ActionListener {
 		btn_sale.addActionListener(this);
 		btn_sale.setBackground(Color.pink);
 		add(btn_sale);
+		
+		btn_customer = new JButton("3. 고객 관리");
+		btn_customer.setBounds(60, 170, 150, 50);
+		btn_customer.addActionListener(this);
+		btn_customer.setBackground(Color.pink);
+		add(btn_customer);
 
 		btn_back = new JButton("뒤로");
-		btn_back.setBounds(60, 170, 150, 50);
+		btn_back.setBounds(60, 240, 150, 50);
 		btn_back.addActionListener(this);
 		btn_back.setBackground(Color.white);
 		add(btn_back);
 
-		setBounds(100, 100, 300, 280);
+		setBounds(100, 100, 300, 400);
 		getContentPane().setBackground(Color.black);
 		setVisible(true);
 
@@ -62,7 +69,11 @@ public class ManageView extends JFrame implements ActionListener {
 			s.getMenuCtrl().menuManageView(this);
 		} else if (e.getSource() == btn_sale) {
 			s.getOrderCtrl().saleManageView(this);			
-		} else if (e.getSource() == btn_back) {
+		} else if (e.getSource() == btn_customer) {
+			s.getCusCtrl().CustomerManageView(this);
+		}
+		
+		else if (e.getSource() == btn_back) {
 			s.backToMain(this);
 		}
 

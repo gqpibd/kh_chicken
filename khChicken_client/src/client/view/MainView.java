@@ -184,7 +184,7 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 		chk.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		chk.setName(menCtrl.get(i).getMenu_name());	//체크박스에 이름을 저장
 		chk.addItemListener(this);
-		chk.setBackground(new Color(0, 0, 0));
+		chk.setBackground(new Color(255, 255, 255));
 		frontpanel.add(chk, "center, wrap");
 
 		// 별점
