@@ -1,11 +1,13 @@
 package server.db;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+// connection을 만들 때 사용하는 static class
+
 public class DBConnection {
-	
-	public static void initConnect() {
+	public static void initConnection() {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			System.out.println("Driver Loading Success!!");			

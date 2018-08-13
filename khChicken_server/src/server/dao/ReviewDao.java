@@ -1,127 +1,113 @@
 package server.dao;
 
 import java.net.Socket;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import client.dto.ReviewDto;
+import dto.OrderedMenuDto;
+import dto.ReviewDto;
+import server.communicator.SocketWriter;
 import server.db.DBClose;
 import server.db.DBConnection;
+import server.singleton.Singleton;
 
 public class ReviewDao {
-/*	CREATE TABLE ORDER_DETAIL(
-    ID VARCHAR2(10),
-    MENU_NAME VARCHAR2(30),
-    COUNT1 NUMBER(10) NOT NULL,
-    BEV_COUPON NUMBER(3),
-    ORDER_DATE DATE NOT NULL,
-    REVIEW VARCHAR2(1000),
-    SCORE NUMBER(5),
-		);*/
 
-	Socket sock;
-	
-	public void Sock_Daoreview(Socket sock) {
-		this.sock = sock;
+	public ReviewDao() {
 	}
-	
-	public Object Choice(int number ,client.dto.ReviewDto dto) {
-		switch(number) {
-		case 0 :
-			return insert(dto);
-		case 1 :
-			return select();
-		case 2 :
+
+	public void execute(int number, ReviewDto dto, Socket sock) {
+		switch (number) {
+		case Singleton.INSERT: // 주문 내역 없는 리뷰를 추가하는 경우는 없다.
 			break;
-		case 3 :
+		case Singleton.SELECT: // 리뷰 불러오기 - 윤상필
+			select(dto, sock);
+			break;
+		case Singleton.DELETE:
+			break;
+		case Singleton.UPDATE: // 기존 주문한 내역에 리뷰 추가하기 - 윤상필
+			update(dto);
 			break;
 		}
-		return select();
 	}
-	
-	
-	
-	public Object insert(client.dto.ReviewDto dto) {
-		String id = dto.getUserId();
-		String MenuName = dto.getMenuName();
-		String Review = dto.getReview();
-		int score = dto.getScore();
-	
-		
-		String sql = " INSERT INTO ORDER_DETAIL (ID, MENU_NAME, COUNT1, BEV_COUPON, ORDER_DATE,REVIEW, SCORE ) "
-				+ "VALUES ( '" + id + "', '"+MenuName+"', " + 0 +", " + 0 + ", TO_DATE(sysdate , 'yyyy/mm/dd'), '"
-							   + Review + "', " + 1 + " )";
+
+	public void select(ReviewDto dto, Socket sock) {
+		String sql = "SELECT ID, MENU_NAME, ORDER_DATE, REVIEW, SCORE " + " FROM ORDER_DETAIL "
+				+ " WHERE MENU_NAME = ? AND REVIEW IS NOT NULL";
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		List<ReviewDto> list = new ArrayList<>();
+		try {
+
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, dto.getMenuName());
+			rs = psmt.executeQuery();
+
+			while (rs.next()) {
+				System.out.println(dto.getMenuName());
+				// ID, MENU_NAME, ORDER_DATE, REVIEW, SCORE
+				ReviewDto resultDto = new dto.ReviewDto();
+				resultDto.setUserId(rs.getString(1));
+				resultDto.setMenuName(rs.getString(2));
+				resultDto.setOrderDate(rs.getString(3));
+				resultDto.setReview(rs.getString(4));
+				resultDto.setScore(rs.getInt(5));
+
+				list.add(resultDto);
+				// System.out.println(dto.toString());
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+
+		SocketWriter.Write(sock, list);
+
+	}
+
+	public void update(ReviewDto dto) { // 기존 주문한 내역에 리뷰 추가하기
+		System.out.println(dto.toString());
+		int Int_return;
+		/*UPDATE ORDER_DETAIL
+		SET REVIEW = '들어가줘 제발', SCORE = 2
+		WHERE ID = '2' AND MENU_NAME = '후라이드 치킨' 
+		AND REVIEW is null AND (TO_DATE(sysdate, 'yyyy/mm/dd') - TO_DATE(ORDER_DATE, 'yyyy/mm/dd')) <= '2'
+		ORDER BY ORDER_DATE DESC
+		*/
+		String sql = " UPDATE ORDER_DETAIL " + 
+					 " SET REVIEW = ?, SCORE = ? " +
+				     " WHERE ID = ? AND MENU_NAME = ? AND REVIEW is null AND (TO_DATE(sysdate, 'yyyy/mm/dd') - TO_DATE(ORDER_DATE, 'yyyy/mm/dd')) <= '2'";
 		System.out.println(sql);
 		Connection conn = null;
 		PreparedStatement psmt = null;
-		
 		try {
 			conn = DBConnection.getConnection();
 			psmt = conn.prepareStatement(sql);
-			psmt.executeQuery();
+			psmt.setString(1, dto.getReview());
+			psmt.setInt(2, dto.getScore());
+			psmt.setString(3, dto.getUserId());
+			psmt.setString(4, dto.getMenuName());
+		    psmt.executeQuery();
 			
-		}catch (SQLException e) {
+		} catch (SQLException e) {
+			
 			e.printStackTrace();
 		} finally {
 			DBClose.close(psmt, conn, null);
 		}
-		return null;
 	}
-	
-	public Object select() {
-		
-		String sql = "SELECT ID, MENU_NAME, COUNT1, BEV_COUPON, ORDER_DATE, REVIEW, SCORE "
-				+ " FROM ORDER_DETAIL ";
-		
-		
-		System.out.println(sql);
-		int i  = 0;
-		
-		Connection conn = null;
-		PreparedStatement psmt = null;
-		ResultSet rs = null;
-		
-		List<client.dto.ReviewDto> list = new ArrayList<>();
-				try {
-				
-					conn = DBConnection.getConnection();
-					psmt = conn.prepareStatement(sql);
-					rs = psmt.executeQuery();
-					
-					
-					while(rs.next()) {
-					client.dto.ReviewDto dto = 
-					new client.dto.ReviewDto(rs.getString(1), rs.getString(2), rs.getInt(3),
-							rs.getInt(4), rs.getString(5), rs.getString(6), rs.getInt(7));
-						
-						list.add(dto);
-						System.out.println(dto.toString());
-					}
-					
-					
-				}catch (SQLException e) {
-					e.printStackTrace();
-				}finally {
-					DBClose.close(psmt, conn, rs);
-				}
-		
-		System.out.println(list.size()+"사이즈");
-		return list;
-		
-	}
-	
-	public void update(ReviewDto dto) {
-		
-	}
-	
+
 	public void delete() {
-		
+
 	}
 
 }

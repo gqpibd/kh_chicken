@@ -1,29 +1,19 @@
 package server.communicator;
 
-import java.io.BufferedReader;
-
+import java.io.EOFException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.List;
 
-import client.dto.ReviewDto;
-import server.dto.MemberDto;
-import server.dto.MenuDto;
-import server.dto.MenuShowDto;
-import server.dto.OrderedMenuDto;
-
+import dto.BestSaleMenuDto;
+import dto.MemberDto;
+import dto.MenuShowDto;
+import dto.OrderedMenuDto;
+import dto.ReviewDto;
 import server.singleton.Singleton;
 
 public class ReadThread extends Thread {
-
 	Socket sock;
 
 	public ReadThread(Socket sock) {
@@ -34,76 +24,36 @@ public class ReadThread extends Thread {
 	public void run() {
 		super.run();
 		Singleton s = Singleton.getInstance();
+		ObjectInputStream ois = null;
 
-		while (true) {
-			try {
+		try {
+			while (true) {
+				ois = new ObjectInputStream(sock.getInputStream()); // dto받기
+
+				int number = ois.readInt();		
+				Object obj = ois.readObject();
 				
-				
-				InputStream input = sock.getInputStream();
-				OutputStream out = sock.getOutputStream();
-				ObjectInputStream ois = new ObjectInputStream(input);
-				int number = ois.readInt();
-				
-
-				
-				Object obj = null;
-				ois = new ObjectInputStream(input);
-				obj = ois.readObject();
-				
-			/*	
-				switch (number) {
-				case 0:	//insert	
-				case 1:	//select
-				case 2:	//delete
-				case 3:	//update
-			*/
-				Singleton single = Singleton.getInstance();
-					if (obj instanceof client.dto.MemberDto) {	
-						client.dto.MemberDto dto = (client.dto.MemberDto)obj;
-						obj = single.ctrlMember.Choice(dto, number);
-						ObjectOutputStream oos = new ObjectOutputStream(out);
-						oos.writeObject(obj);
-						oos.flush();
-						
-					} else if (obj instanceof MenuShowDto) {
-
-					} else if (obj instanceof OrderedMenuDto) {
-
-					} else if (obj instanceof client.dto.ReviewDto) {
-						ReviewDto dto = (ReviewDto) obj;
-						obj = single.ctrlReview.Choice(number,dto);
-						if(obj == null) {
-							return;
-						}else if(obj instanceof List<ReviewDto>){
-							List<ReviewDto>list = (List<ReviewDto>)obj;
-						ObjectOutputStream oos = new ObjectOutputStream(out);
-						oos.writeObject(list);
-						oos.flush();
-						System.out.println(list+"1ggggg");
-						}
-					}
-		/*			break;
-
-				case 4: // menu 遺덈윭�삤湲�
-					
-				case 5: // review 遺덈윭�삤湲�
-					
-				case 6: // �쟾泥대ℓ異� 遺덈윭�삤湲�
-					
-				case 7: // �궡 二쇰Ц�궡�뿭 遺덈윭�삤湲�
-
-				}*/
-
-				// send (諛쏅뒗嫄� 踰덊샇+dto 吏�留� 蹂대궡�뒗嫄� �븳踰덈쭔 �빐�룄�맖)
-
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
+				if (obj instanceof MemberDto) { 			// 로그인, 회원가입
+					s.getMemCtrl().execute(number, (MemberDto) obj, sock);					
+				} else if (obj instanceof MenuShowDto) { 	// 메뉴 보여주기, 추가 삭제
+					s.getMenuCtrl().execute(number, (MenuShowDto) obj, sock);
+				} else if ((obj instanceof OrderedMenuDto)) { // 주문하기, 매출관리
+					s.getOrderCtrl().execute(number, (OrderedMenuDto) obj, sock);
+				} else if (obj instanceof ReviewDto) { 		// 리뷰보기
+					s.getRevCtrl().execute(number, (ReviewDto) obj, sock);
+				} 
+				sleep(100);
 			}
+		} catch (EOFException e) {
+			System.out.println("다 읽음");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.out.println("소켓이 닫혔습니다");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
-
 	}
 }

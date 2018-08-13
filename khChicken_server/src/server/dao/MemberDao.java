@@ -6,158 +6,157 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import dto.MemberDto;
+import server.communicator.SocketWriter;
 import server.db.DBClose;
 import server.db.DBConnection;
-import server.dto.MemberDto;
+import server.singleton.Singleton;
 
 public class MemberDao {
-	
-	public MemberDao() {
-		
-	}
-	
-	
-	public Object Choice(client.dto.MemberDto dto , int number) {
-		switch(number) {
-		case 0 :
-			return insert(dto);
-		case 1 :
-			return select(dto);
-		case 2 :
-		break;
-		case 3 :
-		break;
-		case 4 :
-			return select_loging(dto);
-		
+
+	public void execute(int number, MemberDto dto, Socket sock) {
+
+		switch (number) {
+		case Singleton.INSERT: // 회원가입 - 윤상필
+			insert(dto);
+			System.out.println(dto.getId() + "를 멤버 테이블에 추가하였습니다");
+			break;
+		case Singleton.SELECT: // 아이데 중복 체크 - 윤상필
+			select(dto,sock);			
+			break;
+		case Singleton.DELETE:
+			break;
+		case Singleton.UPDATE:
+			break;
+		case 4: // 로그인 - 윤상필
+			select_login(dto, sock);
+			break;
 		}
-		return null;
 	}
-	
-	public Object insert(client.dto.MemberDto dto) {
-		
-		
-		 String id = dto.getId();
-		 String pw = dto.getPw();
-		 String name = dto.getName();
-		 int coupon = dto.getCoupon();
-		 int auth = dto.getAuth();
-		 String address = dto.getAddress();
-		 String phone = dto.getPhone();
-		
-		
-		String sql = "INSERT INTO MEMBER (name, id, pw, USEDCOUPON, auth, adr, phone)"
-				+ " VALUES ( '"+ name + "', '"+ id + "', '"
-							   + pw +"', "+ coupon +", "
-							   + auth +", '"+ address +"', '"+ phone +"' )";
-		
-		System.out.println(sql);
+
+	public MemberDao() {
+
+	}
+
+	public void insert(MemberDto dto) {
+		String name = dto.getName();
+		String id = dto.getId();
+		String pw = dto.getPw();
+		int coupon = dto.getCoupon();
+		int auth = dto.getAuth();
+		String address = dto.getAddress();
+		String phone = dto.getPhone();
+
+		String sql = "INSERT INTO MEMBER (name, id, pw, USEDCOUPON, auth, adr, phone)" 
+				  + " VALUES ( ?, ?, ?, ?, ?, ?, ? )";
+
 		Connection conn = null;
 		PreparedStatement psmt = null;
-		
-		try {			
+
+		try {
 			conn = DBConnection.getConnection();
-			psmt = conn.prepareStatement(sql);			
-			psmt.executeQuery();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, name);
+			psmt.setString(2, id);
+			psmt.setString(3, pw);
+			psmt.setInt(4, coupon);
+			psmt.setInt(5, auth);
+			psmt.setString(6, address);
+			psmt.setString(7, phone);
 			
-		} catch (SQLException e) {			
+			psmt.executeQuery();
+
+		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally{			
-			DBClose.close(psmt, conn, null);			
-		
+		} finally {
+			DBClose.close(psmt, conn, null);
 		}
-		return null;
-		
 	}
-	
-	public boolean select(client.dto.MemberDto dto) {
-		String id = dto.getId();
-		
-		String sql = "SELECT ID"
-				+ "	FROM MEMBER"
-				+ " WHERE ID = '"+id+"' ";
+
+	public void select(MemberDto dto, Socket sock) {
+		boolean isExistingId = false;
+		// 존재하는 아이디인지 확인
+		String sql = " SELECT ID " +
+				     " FROM MEMBER " + 
+				     " WHERE ID = '" + dto.getId() + "' ";
 		Connection conn = null;
-		PreparedStatement psmt  = null;
+		PreparedStatement psmt = null;
 		ResultSet rs = null;
-		
+
 		try {
 			conn = DBConnection.getConnection();
 			psmt = conn.prepareStatement(sql);
 			rs = psmt.executeQuery();
-			//rs.updateString(1, id);
-			
-			dto.setId(null);
-			while(rs.next()) {
-				 dto.setId(rs.getString(1));
+
+			if (rs.next()) {
+				isExistingId = true;
 			}
-			
-		}catch (SQLException e) {
+
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			DBClose.close(psmt, conn, rs);
 		}
-		if(dto.getId() == null) {
-			return true;
+		if(isExistingId) {
+			System.out.println("중복되는 아이디 입니다");
 		}else {
-			return false;
+			System.out.println("사용 가능한 아이디 입니다");
 		}
-		
-		
+
+		SocketWriter.Write(sock, isExistingId);
 	}
-	
+
 	public void update() {
 		String sql = "";
-		
+
 	}
-	
+
 	public void delete() {
 		String sql = "";
+
+	}
+
+	public void select_login(dto.MemberDto dto, Socket sock) {
+		boolean loginSuccess = false;
+		String id = dto.getId();
+		String pw = dto.getPw();
+		
+		String sql = "SELECT * " + 
+		            " FROM MEMBER " + 
+				    " WHERE ID = '" + id + "' AND PW = '" + pw + "' ";
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			if (rs.next()) { // 일치하는 결과가 있으면 로그인 성공
+				dto.setName(rs.getString(1));
+				dto.setId(rs.getString(2));
+				dto.setPw(rs.getString(3));
+				dto.setCoupon(rs.getInt(4));
+				dto.setAuth(rs.getShort(5));
+				dto.setAddress(rs.getString(6));
+				dto.setPhone(rs.getString(7));
+				loginSuccess = true;
+			}
+			System.out.println(dto.toString());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		if(loginSuccess) {
+			System.out.println("로그인에 성공했습니다");
+		}else {
+
+			System.out.println("아이디 또는 패스워드가 틀렸습니다");
+		}
+
+		SocketWriter.Write(sock, loginSuccess);
 		
 	}
-	
-	public boolean select_loging(client.dto.MemberDto dto) {
-		   String id = dto.getId();
-		   String pw = dto.getPw();
-		   String sql = "SELECT ID ,PW "
-		   		+ " FROM MEMBER "
-		   		+ " WHERE ID = '"+id+ "' AND PW = '"+pw+"' ";
-		   
-			System.out.println(sql);
-			Connection conn = null;
-			PreparedStatement psmt  = null;
-			ResultSet rs = null;
-			
-			dto.setId(null);
-			dto.setPw(null);
-			
-			try {
-				conn = DBConnection.getConnection();
-				psmt = conn.prepareStatement(sql);
-				rs = psmt.executeQuery();
-				
-				
-				
-				while(rs.next()) {
-					 System.out.println("11");
-					 dto.setId(rs.getString(1));
-					 dto.setPw(rs.getString(2));
-					 System.out.println(dto.getId());
-				}
-				
-			}catch(SQLException e ) {	
-				e.printStackTrace();
-			}finally {
-				DBClose.close(psmt, conn, rs);
-			}
-		   if(dto.getId() == null && dto.getPw() == null) {
-			   return false;
-		   }else {
-			   return true;
-		   }
-	   
-	   }
-
-	
-	
-
 }

@@ -1,17 +1,16 @@
 package server.db;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DBClose {
 	
-	public static void close(PreparedStatement psmt, Connection conn, ResultSet rs) {
+	public static void close(Statement stmt, Connection conn, ResultSet rs) {
 		
 		try {
-			if(psmt != null) {
-				psmt.close();
+			if(stmt != null) {
+				stmt.close();
 			}
 			if(conn != null) {
 				conn.close();
