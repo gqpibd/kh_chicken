@@ -54,6 +54,7 @@ public class MenuDao {
 		case Singleton.UPDATE: // 메뉴 수정 - 이도현			
 			update(dto);
 			System.out.println(dto.getMenu_name() + "의 정보를 수정하였습니다.");
+			break;
 		case 4: // 이미지 수정 - 이도현
 			receiveAndSaveImage(dto.getMenu_name(), sock);
 			System.out.println(dto.getMenu_name() + "의 이미지를 수정하였습니다.");			
@@ -123,7 +124,7 @@ public class MenuDao {
 		
 	private void select(Socket sock) {
 		ArrayList<MenuShowDto> list = new ArrayList<>();
-		String sql = "SELECT MENU_NAME, PRICE, MENU_TYPE, DESCRIPTION, AVG_RATE FROM MENU";
+		String sql = "SELECT MENU_NAME, PRICE, MENU_TYPE, DESCRIPTION, AVG_RATE FROM MENU ORDER BY MENU_TYPE";
 		Connection conn = null;
 		PreparedStatement psmt;
 		ResultSet rs = null;
