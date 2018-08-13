@@ -144,14 +144,18 @@ public class order extends JFrame implements ActionListener, ItemListener {
 
 		// 주문자 정보를 받아올 2차원 배열 ( ID , ADR, PHONE )
 		mList = s.memCtrl.memDao.insert();
+		s.comm.sendMemberInfo();
 		OrderData = new Object[mList.size()][4]; // 테이블의 2차원배열
 
 		for (int i = 0; i < mList.size(); i++) {
 			MemberDto Mdto = mList.get(i);
 
 			OrderData[i][0] = Mdto.getId(); // 아이디 ,
+			
+			System.out.println(Mdto.getId());
+			
 			OrderData[i][1] = Mdto.getAddress(); // 주소
-			OrderData[i][2] = Mdto.getPhone();
+			OrderData[i][2] = Mdto.getPhone();	//폰남바
 			OrderData[i][3] = date.format(today); // 현재날짜
 		}
 

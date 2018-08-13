@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+import client.singleton.Singleton;
 import dto.OrderedMenuDto;
 
 public class Communicator {
@@ -37,6 +38,28 @@ public class Communicator {
 		}
 	}
 
+	public void sendMemberInfo() {	// 주문정보 보내기
+		Singleton s = Singleton.getInstance();
+		String id = s.memCtrl.memDao.select(); // id를 가져왔어
+		
+		//서버에 보내줘야지
+		ObjectOutputStream oos = null;
+		try {
+			oos = new ObjectOutputStream(sock.getOutputStream());
+			
+			System.out.println("ID = "+ id);
+			
+			oos.writeInt(9);
+			oos.writeObject(id);
+
+			oos.flush();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	public void SendOrderDto(OrderedMenuDto oDto) {
 		ObjectOutputStream oos = null;
 		try {
