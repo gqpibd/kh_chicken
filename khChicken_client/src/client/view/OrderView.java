@@ -50,6 +50,8 @@ public class OrderView extends JFrame implements ActionListener, ItemListener {
 
 	DefaultTableModel dtm; // 상세 주문내역을 보관하고 있는 모델
 
+	int usedCoupon = 0;	//쿠폰 사용 갯수
+	
 	public OrderView() {
 		super("주문 내역");
 		setLayout(null);
@@ -73,17 +75,27 @@ public class OrderView extends JFrame implements ActionListener, ItemListener {
 		add(label_6);
 
 		// 사용 가능한 쿠폰의 수를 보여줄 라벨
-
-		JLabel lblNewLabel_3 = new JLabel("0" + "장");
-		lblNewLabel_3.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_3.setBounds(14, 428, 62, 18);
-		add(lblNewLabel_3);
-
 		// 눌렀을 때 memberDto의 Coupon - 1
 		// 위의 변수 - 1 : 라벨에 바로 적용
 		JButton couponUseBtn = new JButton("사용");
 		couponUseBtn.setBounds(80, 424, 63, 27);
+		couponUseBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				//if ()		쿠폰이 0개 이하 안됨 ,  가진 쿠폰보다 많으면 안됨
+				usedCoupon++;
+			}
+		});
 		add(couponUseBtn);
+
+		JLabel usedCouponLabel = new JLabel(usedCoupon + "장");
+		usedCouponLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		usedCouponLabel.setBounds(14, 428, 62, 18);
+		add(usedCouponLabel);
+		
+		
 
 		// memberDto에서 쿠폰 수를 바로 받아와서 라벨에 띄우기
 		// SELECT 로 COUNT(리뷰) / 3 + 1 을 보여줄껀데.
@@ -107,11 +119,12 @@ public class OrderView extends JFrame implements ActionListener, ItemListener {
 		add(lblNewLabel_5);
 
 		// 결제금액을 보여줄 라벨
-		JLabel label_7 = new JLabel("15000원"); // 결제금액 == 치킨값 * 수량 넣기.
-		label_7.setHorizontalAlignment(SwingConstants.CENTER);
-		label_7.setFont(new Font("굴림", Font.BOLD, 18));
-		label_7.setBounds(347, 460, 158, 49);
-		add(label_7);
+		// 결제금액 == 치킨값 * 수량 + 사이드 + 음료 넣기.
+		JLabel totallPriceLabel = new JLabel("15000원"); 
+		totallPriceLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		totallPriceLabel.setFont(new Font("굴림", Font.BOLD, 18));
+		totallPriceLabel.setBounds(347, 460, 158, 49);
+		add(totallPriceLabel);
 
 		// Order DB와 member DB에 INSERT 하는 버튼
 		JButton paymentBtn = new JButton("결제");

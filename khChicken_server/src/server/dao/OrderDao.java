@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
 
 import dto.BestSaleMenuDto;
+import dto.MemberDto;
 import dto.OrderedMenuDto;
 import dto.ReviewDto;
 import server.communicator.SocketWriter;
@@ -30,7 +31,9 @@ public class OrderDao {
 			insert(dto);
 			System.out.println("주문 내역에 추가하였습니다");
 			break;
-		case Singleton.SELECT: // select
+		case Singleton.SELECT: // select : 2
+			String coupon = selectAvailableCoupon(dto);
+			SocketWriter.Write(sock, coupon);	
 			break;
 		case Singleton.DELETE: // delete
 			break;
@@ -146,6 +149,44 @@ public class OrderDao {
 		return list;
 	}
 
+	public String selectAvailableCoupon(OrderedMenuDto oDto) {	//socket , 클라에서 넘어온 id : ?에 들어갈꺼.
+		String sql = "SELECT TRUNC(COUNT( O.REVIEW )/3)  " + 
+							"FROM MENU N, ORDER_DETAIL O " + 
+							"WHERE N.MENU_NAME = O.MENU_NAME " + 
+								"AND N.MENU_TYPE = '메인' " + 
+								"AND REVIEW IS NOT NULL " + 
+							"GROUP BY ID " + 
+							"HAVING O.ID = ?";
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		//쿠폰수를 저장할 변수
+		String couponEA = "";
+
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1,oDto.getId()); 
+			rs = psmt.executeQuery();
+
+		
+			
+			if(rs.next()) {
+				//sql문에서 얻어낸 값 저장.(쿠폰수)
+				couponEA = rs.getString(1);	//()안의 숫자는 select의 칼럼 순서						
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+			
+		return couponEA;
+	}
+	
 	public void delete() {
 
 	}
