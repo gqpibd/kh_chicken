@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -26,7 +27,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
-import com.sun.javafx.tk.Toolkit;
+
 
 import client.controller.MemberController;
 import client.controller.MenuController;
@@ -65,9 +66,10 @@ public class MainView extends JFrame implements ItemListener,ActionListener {
 	public MainView() {
 		super("KH CHICKEN");
 		getContentPane().setLayout(null);
-
-
-
+		
+		Toolkit tk = Toolkit.getDefaultToolkit();		
+		img = tk.getImage("mainView.jpg");
+		
 		// 버튼글씨
 		String loginStr = "로그인";		
 
@@ -76,17 +78,17 @@ public class MainView extends JFrame implements ItemListener,ActionListener {
 		btn_Login.setBounds(370, 50, 97, 30);
 		btn_Login.setFont(new Font("다음_Regular", Font.PLAIN, 14));
 		btn_Login.addActionListener(this);
-		btn_Register = new JButton("회원가입");
-		btn_Register.setBounds(479, 50, 97, 30);
+		btn_Register = new JButton(new ImageIcon("signBtn.jpg"));
+		btn_Register.setBounds(470, 50, 97, 40);
 		btn_Register.setFont(new Font("다음_Regular", Font.PLAIN, 14));
 		btn_Register.addActionListener(this);
 
-		btn_Order = new JButton("주문하기");
+		btn_Order = new JButton(new ImageIcon("orderBtn.jpg"));
 		btn_Order.setBounds(475, 700, 97, 55);
 		btn_Order.setFont(new Font("다음_Regular", Font.PLAIN, 15));
 		btn_Order.addActionListener(this);
 
-		btn_Manage = new JButton("관리");
+		btn_Manage = new JButton(new ImageIcon("manageBtn.jpg"));
 		btn_Manage.setBounds(370, 700, 90, 54);
 		//btn_Manage.setVisible(false);
 		btn_Manage.setFont(new Font("다음_Regular", Font.PLAIN, 15));
@@ -98,7 +100,7 @@ public class MainView extends JFrame implements ItemListener,ActionListener {
 
 		// 메뉴들을 넣을 큰 패널 설정
 		JPanel panel_bigmenu = new JPanel();
-		panel_bigmenu.setBounds(10, 100, 570, 600);
+		panel_bigmenu.setBounds(0, 100, 580, 600);
 		panel_bigmenu.setBackground(new Color(255, 255, 255));
 		panel_bigmenu.setLayout(new MigLayout("wrap", "", ""));
 
@@ -134,30 +136,29 @@ public class MainView extends JFrame implements ItemListener,ActionListener {
 		getContentPane().add(btn_Manage);
 		getContentPane().add(panel_bigmenu);
 		getContentPane().setBackground(new Color(255, 255, 255));
+		
+
 		setBounds(400, 0, 600, 800);
-		
-		
-		
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 	}
-/*	
-	//배경삽입
 	@Override
 	public void paint(Graphics g) {
 		// TODO Auto-generated method stub
 		super.paint(g);
-		
 		if (img == null) {
 			return;
 		}
 		
 		int imgWidth = img.getWidth(this);
-		int imgHeight = img.getHeight(this);
+		int imgHeight = img.getHeight(this);//가져온 이미지의 높이와 넓이를 취득
+		
 		//이미지를 프레임 중앙에 출력
 		g.drawImage(img, (getWidth()-imgWidth)/2, (getHeight()-imgHeight)/2, this);
-	}*/
+		
+		
+	}
 	
 	
 
@@ -267,6 +268,7 @@ public class MainView extends JFrame implements ItemListener,ActionListener {
 			memCtrl.AccountView(this);
 		} else if (o == btn_Order) { // 주문하기
 			System.out.println(checkedMenu);
+			
 			// orderMenuDto에 선택한 메뉴 이름, 타입, 가격 넣어서 넘겨주기 
 			OrderController ordCtrl = Singleton.getInstance().getOrderCtrl();
 			
