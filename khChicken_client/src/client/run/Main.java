@@ -11,6 +11,7 @@ public class Main {
 		s.getComm().makeConnection(); // 소켓 연결을 먼저 한다.
 		s.getMainView();
 		//new Window_Account();
+		new Window_Review("후라이드 치킨");
 	}
 
 }

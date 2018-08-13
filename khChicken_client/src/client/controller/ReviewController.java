@@ -42,7 +42,6 @@ public class ReviewController {
 	}
 	
 	public void reviewWhilView(JFrame currentFrame, String menuName) {
-		currentFrame.setVisible(false);
 		if (reviewWhileView== null ) {
 			reviewWhileView =new Window_Review_While(menuName);
 		}else {

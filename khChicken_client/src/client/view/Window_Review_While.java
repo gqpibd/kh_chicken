@@ -57,7 +57,6 @@ public class Window_Review_While extends JFrame implements ActionListener {
 	
 	
 	JLabel_Logo = new JLabel("");
-	JLabel_Logo.setBackground(Color.WHITE);
 	JLabel_Logo.setOpaque(true);
 	JLabel_Logo.setBounds(12, 138, 97, 34);
 	add(JLabel_Logo);
@@ -67,8 +66,13 @@ public class Window_Review_While extends JFrame implements ActionListener {
 	JBut_back.setBounds(327, 22, 57, 15);
 	add(JBut_back);
 	
+	JProgressBar myScore = new JProgressBar();
+	myScore.setBounds(12, 12, 130, 30);
+	getActiveStarBar(myScore);
+	getContentPane().add(myScore);
+	
 	setVisible(true);
-	setBounds(0, 0, 640, 480);
+	setBounds(100, 100, 414, 221);
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
@@ -88,6 +92,10 @@ public class Window_Review_While extends JFrame implements ActionListener {
 			single.getRevCtrl().update(dto);
 			JOptionPane.showMessageDialog(null, "작성이 완료되었습니다.");
 		}
+		
+		
+
+		
 	}
 	
 	public JProgressBar getActiveStarBar(JProgressBar progressBar) {
@@ -98,7 +106,7 @@ public class Window_Review_While extends JFrame implements ActionListener {
 		JLabel label = new JLabel();
 		label.setSize(progressBar.getSize());
 		progressBar.addMouseListener(new MouseAdapter() {
-
+			
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				super.mouseReleased(e);

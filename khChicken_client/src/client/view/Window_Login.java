@@ -81,6 +81,7 @@ public class Window_Login extends JFrame implements ActionListener {
 				dto.setPw(pw);
 				boolean login = s.getMemCtrl().select_login(dto);
 				if (login == true) {
+					
 					s.backToMain(this);
 				} else if (login == false) {
 					JOptionPane.showMessageDialog(null, "아이디 또는 비밀번호가 틀리셨습니다.");
