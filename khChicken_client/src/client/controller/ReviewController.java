@@ -7,7 +7,6 @@ import javax.swing.JFrame;
 import client.dao.ReviewDao;
 import client.view.Window_Review;
 import client.view.Window_Testview;
-import client.view.Window_reviewWhile;
 import dto.ReviewDto;
 
 public class ReviewController {
@@ -16,7 +15,7 @@ public class ReviewController {
 
 	//private Window_Review reviewView; // 리뷰창
 	private Window_Testview reviewView;
-	private Window_reviewWhile
+	private Window_ReviewWhile reviewWhilView;
 
 	public void insert(ReviewDto dto) {
 		revDao.insert(dto);
