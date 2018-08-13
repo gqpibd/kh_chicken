@@ -8,13 +8,15 @@ public class BestSaleMenuDto implements Serializable {
 
 	private String menu_type;
 	private String menu_name;
+	private int price;
 	private int total_sale;
 	private int total_coupon;
 	private int total_price;
 
-	public BestSaleMenuDto(String menu_type, String menu_name, int total_sale, int total_coupon, int total_price) {
+	public BestSaleMenuDto(String menu_type, String menu_name, int price, int total_sale, int total_coupon, int total_price) {
 		this.menu_type = menu_type;
 		this.menu_name = menu_name;
+		this.price = price;
 		this.total_sale = total_sale;
 		this.total_coupon = total_coupon;
 		this.total_price = total_price;
@@ -34,6 +36,14 @@ public class BestSaleMenuDto implements Serializable {
 
 	public void setMenu_name(String menu_name) {
 		this.menu_name = menu_name;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
 	}
 
 	public int getTotal_sale() {
@@ -62,8 +72,11 @@ public class BestSaleMenuDto implements Serializable {
 
 	@Override
 	public String toString() {
-		return "BestSaleMenuDto [menu_type=" + menu_type + ", menu_name=" + menu_name + ", total_sale=" + total_sale
-				+ ", total_coupon=" + total_coupon + ", total_price=" + total_price + "]";
+		return "BestSaleMenuDto [menu_type=" + menu_type + ", menu_name=" + menu_name + ", price=" + price
+				+ ", total_sale=" + total_sale + ", total_coupon=" + total_coupon + ", total_price=" + total_price
+				+ "]";
 	}
+
+	
 
 }

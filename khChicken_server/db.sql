@@ -23,6 +23,9 @@ values ('admin', 'admin', 'admin', 1, 'KH CHICKEN', '010-0000-0000');
 insert into member (name,id,pw,auth,adr,phone)
 values ('도현', 'dohyeon', 'dh', 3, '모란역', '010-1234-5678');
 
+insert into member (name,id,pw,auth,adr,phone)
+values ('승지', 'seungji', 'sj', 3, '부천역', '010-7639-3949');
+
 select * from member;
 
 CREATE TABLE MENU(
@@ -64,7 +67,6 @@ RENAME COLUMN COUNT TO COUNTS;
 
 
 INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '후라이드 치킨', 1, 0, sysdate, '맛있음', 9);
-
 INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '후라이드 치킨', 1, 0, sysdate, '맛없음', 1);
 INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '후라이드 치킨', 1, 0, sysdate, '그냥그냥 먹을만 함', 7);
 INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '후라이드 치킨', 1, 0, sysdate, '최고', 10);
@@ -76,6 +78,9 @@ INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '후라이드 치킨', 1, 0, sysdate
 INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '후라이드 치킨', 1, 0, sysdate, '맛있음', 9);
 INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '해쉬 브라운', 1, 0, sysdate, '비쌈', 7);
 INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '콜라', 1, 0, sysdate, null , null);
+
+INSERT INTO ORDER_DETAIL VALUES ('seungji', '후라이드 치킨', 2, 0, sysdate, '바-삭!', 8);
+INSERT INTO ORDER_DETAIL VALUES ('seungji', '사이다', 1, 1, sysdate, null , null);
    
 SELECT * FROM ORDER_DETAIL;
 
@@ -95,7 +100,7 @@ ORDER BY A.ORDER_DATE DESC;
 
 
 -- 매출별
-SELECT b.menu_type, A.menu_name, A.판매량, A.사용쿠폰, (B.PRICE*A.판매량) 총판매액
+SELECT b.menu_type, A.menu_name, B.price, A.판매량, A.사용쿠폰, (B.PRICE*A.판매량) 총판매액
 FROM (SELECT 정렬.menu_name , 정렬.판매량 , 정렬.쿠폰 사용쿠폰
 FROM(SELECT menu_name , SUM(counts) 판매량, SUM(BEV_COUPON) 쿠폰
 FROM ORDER_DETAIL

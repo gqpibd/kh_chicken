@@ -78,7 +78,7 @@ public class OrderDao {
 
 	public ArrayList<BestSaleMenuDto> selectBySalse() {
 
-		String sql = " SELECT b.menu_type, A.menu_name, A.판매량, A.사용쿠폰, (B.PRICE*A.판매량) 총판매액 "
+		String sql = " SELECT b.menu_type, A.menu_name, B.price, A.판매량, A.사용쿠폰, (B.PRICE*A.판매량) 총판매액 "
 				+ " FROM (SELECT 정렬.menu_name , 정렬.판매량 , 정렬.쿠폰 사용쿠폰 "
 				+ " FROM(SELECT menu_name , SUM(counts) 판매량, SUM(BEV_COUPON) 쿠폰 " + " FROM ORDER_DETAIL "
 				+ " GROUP BY menu_name) 정렬) A, MENU B " + " WHERE A.menu_name = B.MENU_NAME "
@@ -96,8 +96,8 @@ public class OrderDao {
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				// b.menu_type, A.menu_name, A.판매량, A.사용쿠폰, (B.PRICE*A.판매량) 총판매액
-				BestSaleMenuDto omd = new BestSaleMenuDto(rs.getString("MENU_TYPE"), rs.getString("MENU_NAME"),
-						rs.getInt("판매량"), rs.getInt("사용쿠폰"), rs.getInt("총판매액"));
+				BestSaleMenuDto omd = new BestSaleMenuDto(rs.getString("MENU_TYPE"), rs.getString("MENU_NAME"), 
+						rs.getInt("PRICE"), rs.getInt("판매량"), rs.getInt("사용쿠폰"), rs.getInt("총판매액"));
 				list.add(omd);
 			}
 		} catch (SQLException e) {
