@@ -78,3 +78,27 @@ INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '해쉬 브라운', 1, 0, sysdate, '
 INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '콜라', 1, 0, sysdate, null , null);
    
 SELECT * FROM ORDER_DETAIL;
+
+
+
+
+
+
+
+
+
+-- 날짜별
+SELECT DISTINCT A.ORDER_DATE, A.ID, B.MENU_TYPE,  A.MENU_NAME, B.PRICE, A.COUNTS, A.BEV_COUPON, B.PRICE
+FROM ORDER_DETAIL A, MENU B
+WHERE A.MENU_NAME = B.MENU_NAME
+ORDER BY A.ORDER_DATE DESC;
+
+
+-- 매출별
+SELECT b.menu_type, A.menu_name, A.판매량, A.사용쿠폰, (B.PRICE*A.판매량) 총판매액
+FROM (SELECT 정렬.menu_name , 정렬.판매량 , 정렬.쿠폰 사용쿠폰
+FROM(SELECT menu_name , SUM(counts) 판매량, SUM(BEV_COUPON) 쿠폰
+FROM ORDER_DETAIL
+GROUP BY menu_name) 정렬) A, MENU B
+WHERE A.menu_name = B.MENU_NAME
+ORDER BY (B.PRICE*A.판매량) DESC;

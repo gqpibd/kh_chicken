@@ -11,7 +11,7 @@ public class OrderedMenuDto extends MenuDto implements Serializable {
 	private String id;
 	private int coupon;
 	private int count;
-	private int totalPrice;
+	private int price;
 
 	public OrderedMenuDto() {
 	}
@@ -21,14 +21,14 @@ public class OrderedMenuDto extends MenuDto implements Serializable {
 		count = 1;
 	}
 
-	public OrderedMenuDto(Date order_date, String id, String type, String menu_name, int count, int coupon, int totalPrice) {
+	public OrderedMenuDto(Date order_date, String id, String type, String menu_name, int count, int coupon, int price) {
 		this.order_date = order_date;
 		this.id = id;
 		super.setMenu_name(menu_name);
 		super.setType(type);
 		this.coupon = coupon;
 		this.count = count;
-		this.totalPrice = totalPrice;
+		this.price = price;
 	}
 
 	public String getId() {
@@ -63,21 +63,17 @@ public class OrderedMenuDto extends MenuDto implements Serializable {
 		this.order_date = order_date;
 	}
 
-	public int getTotalPrice() {
-		return totalPrice;
+	public int getPrice() {
+		return price;
 	}
 
 	public void setPrice(int price) {
-		super.setPrice(price);
-	}
-
-	public void setTotalPrice(int totalPrice) {
-		this.totalPrice = totalPrice;
+		this.price = price;
 	}
 
 	@Override
 	public String toString() {
 		return  "OrderedMenuDto [ " + super.toString() + ", order_date=" + order_date + ", id=" + id + ", coupon=" + coupon
-				+ ", count=" + count + ", totalPrice=" + totalPrice + "]";
+				+ ", count=" + count + ", price=" + price + "]";
 	}
 }
