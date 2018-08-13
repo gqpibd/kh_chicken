@@ -198,8 +198,7 @@ public class Window_Testview extends JFrame implements ActionListener {
 		}else if(JBut_Back == obj) {
 			System.out.println("dd");
 			single.backToMain(this);
-		}else if(JBUt_)
-		
+		}
 	}
 }
 	
