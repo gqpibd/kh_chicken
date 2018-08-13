@@ -33,6 +33,8 @@ CREATE TABLE MENU(
     AVG_RATE NUMBER(2)
 );
 
+DROP TABLE MENU
+
 INSERT INTO MENU VALUES ('후라이드 치킨', 11000, '메인', '바삭바삭 맛있는 후라이드 치킨입니다. 매일 신선한 기름으로 튀겨냅니다', 10);
 INSERT INTO MENU VALUES ('양념 치킨', 12000, '메인', '매콤달콤 양념치킨', 9);
 INSERT INTO MENU VALUES ('반반 치킨', 12000, '메인', '싸우지 말고 반반치킨', 10);
@@ -60,7 +62,7 @@ CREATE TABLE ORDER_DETAIL(
 );
 
 ALTER TABLE ORDER_DETAIL
-RENAME COLUMN COUNT TO COUNTS;
+DROP TABLE ORDER_DETAIL
 
 
 INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '후라이드 치킨', 1, 0, sysdate, '맛있음', 9);
