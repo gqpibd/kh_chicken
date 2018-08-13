@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
 
 import dto.BestSaleMenuDto;
+import dto.CustomerManageDto;
 import dto.OrderedMenuDto;
 import dto.ReviewDto;
 import server.communicator.SocketWriter;
@@ -134,6 +135,51 @@ public class OrderDao {
 						rs.getInt("COUNTS"),
 						rs.getInt("BEV_COUPON"), 
 						rs.getInt("PRICE")
+						);
+				list.add(omd);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		return list;
+	}
+	
+	
+	
+	public ArrayList<CustomerManageDto> customerManage() {
+
+		String sql = " SELECT A.ID, A.NAME, A.ADR, A.PHONE, B.주문건수 "
+				+ " FROM MEMBER A, "
+				+ " (SELECT A.ID, COUNT(*) 주문건수 "
+				+ " FROM ORDER_DETAIL A, MENU B "
+				+ " WHERE A.MENU_NAME = B.MENU_NAME "
+				+ " AND B.MENU_TYPE = '메인' "
+				+ " GROUP BY ID "
+				+ " ORDER BY COUNT(*) DESC) B "
+				+ " WHERE A.ID = B.ID ";
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		ArrayList<CustomerManageDto> list = new ArrayList<>();
+
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+
+			while (rs.next()) {
+				// A.ID, A.NAME, A.ADR, A.PHONE, B.주문건수
+				CustomerManageDto omd = new CustomerManageDto(
+						rs.getString("ID"), 
+						rs.getString("NAME"),
+						rs.getString("ADR"),
+						rs.getString("PHONE"),
+						rs.getInt("주문건수")
 						);
 				list.add(omd);
 			}
