@@ -6,6 +6,7 @@ cascade constraints;
 
 drop table order_detail
 cascade constraints;
+
 CREATE TABLE MEMBER(
     NAME VARCHAR2(20) NOT NULL,
     ID VARCHAR2(10) PRIMARY KEY,
@@ -20,7 +21,7 @@ insert into member (name,id,pw,auth,adr,phone)
 values ('admin', 'admin', 'admin', 1, 'KH CHICKEN', '010-0000-0000');
 
 insert into member (name,id,pw,auth,adr,phone)
-values ('�룄�쁽', 'dohyeon', 'dh', 3, '紐⑤��뿭', '010-1234-5678');
+values ('도현', 'dohyeon', 'dh', 3, '모란역', '010-1234-5678');
 
 select * from member;
 
@@ -32,16 +33,16 @@ CREATE TABLE MENU(
     AVG_RATE NUMBER(2)
 );
 
-INSERT INTO MENU VALUES ('�썑�씪�씠�뱶 移섑궓', 11000, '硫붿씤', '諛붿궘諛붿궘 留쏆엳�뒗 �썑�씪�씠�뱶 移섑궓�엯�땲�떎. 留ㅼ씪 �떊�꽑�븳 湲곕쫫�쑝濡� ��寃⑤깄�땲�떎', 10);
-INSERT INTO MENU VALUES ('�뼇�뀗 移섑궓', 12000, '硫붿씤', '留ㅼ숴�떖肄� �뼇�뀗移섑궓', 9);
-INSERT INTO MENU VALUES ('諛섎컲 移섑궓', 12000, '硫붿씤', '�떥�슦吏� 留먭퀬 諛섎컲移섑궓', 10);
-INSERT INTO MENU VALUES ('耳��씠以� 移섑궓 �깘�윭�뱶', 5000, '�궗�씠�뱶', '移섑궓�뿏 移섑궓�깘�윭�뱶吏�', 7.9);
-INSERT INTO MENU VALUES ('媛먯옄��源�', 2000, '�궗�씠�뱶', '�뼵�젣 癒뱀뼱�룄 留쏆엳�뒗 媛먯옄��源�', 8.6);
-INSERT INTO MENU VALUES ('移섏쫰�뒪�떛', 3800, '�궗�씠�뱶', '移섏쫰�뒗 吏꾨━', 9.5);
-INSERT INTO MENU VALUES ('�빐�돩 釉뚮씪�슫', 6000, '�궗�씠�뱶', '�떥怨� �뼇 留롮� �빐�돩 釉뚮씪�슫', 9.5);
-INSERT INTO MENU VALUES ('肄� �깘�윭�뱶', 2400, '�궗�씠�뱶', '�삦�닔�닔 留쏆엳�뼱', 8);
-INSERT INTO MENU (MENU_NAME, PRICE, MENU_TYPE, DESCRIPTION) VALUES ('肄쒕씪', 3000, '�쓬猷�', '�쓬猷뚮뒗 肄쒕씪');
-INSERT INTO MENU (MENU_NAME, PRICE, MENU_TYPE, DESCRIPTION) VALUES ('�궗�씠�떎', 3000, '�쓬猷�', '�쓬猷뚮뒗 �궗�씠�떎');
+INSERT INTO MENU VALUES ('후라이드 치킨', 11000, '메인', '바삭바삭 맛있는 후라이드 치킨입니다. 매일 신선한 기름으로 튀겨냅니다', 10);
+INSERT INTO MENU VALUES ('양념 치킨', 12000, '메인', '매콤달콤 양념치킨', 9);
+INSERT INTO MENU VALUES ('반반 치킨', 12000, '메인', '싸우지 말고 반반치킨', 10);
+INSERT INTO MENU VALUES ('케이준 치킨 샐러드', 5000, '사이드', '치킨엔 치킨샐러드지', 7.9);
+INSERT INTO MENU VALUES ('감자튀김', 2000, '사이드', '언제 먹어도 맛있는 감자튀김', 8.6);
+INSERT INTO MENU VALUES ('치즈스틱', 3800, '사이드', '치즈는 진리', 9.5);
+INSERT INTO MENU VALUES ('해쉬 브라운', 6000, '사이드', '싸고 양 많은 해쉬 브라운', 9.5);
+INSERT INTO MENU VALUES ('콘 샐러드', 2400, '사이드', '옥수수 맛있어', 8);
+INSERT INTO MENU (MENU_NAME, PRICE, MENU_TYPE, DESCRIPTION) VALUES ('콜라', 3000, '음료', '음료는 콜라');
+INSERT INTO MENU (MENU_NAME, PRICE, MENU_TYPE, DESCRIPTION) VALUES ('사이다', 3000, '음료', '음료는 사이다');
 select * from Menu;
 
 CREATE TABLE ORDER_DETAIL(
@@ -58,36 +59,22 @@ CREATE TABLE ORDER_DETAIL(
     REFERENCES MENU(MENU_NAME)
 );
 
-
-
 ALTER TABLE ORDER_DETAIL
 RENAME COLUMN COUNT TO COUNTS;
 
 
-INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '�썑�씪�씠�뱶 移섑궓', 1, 0, sysdate, '留쏆엳�쓬', 9);
+INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '후라이드 치킨', 1, 0, sysdate, '맛있음', 9);
 
-INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '�썑�씪�씠�뱶 移섑궓', 1, 0, sysdate, '留쏆뾾�쓬', 1);
-INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '�썑�씪�씠�뱶 移섑궓', 1, 0, sysdate, '洹몃깷洹몃깷 癒뱀쓣留� �븿', 7);
-INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '�썑�씪�씠�뱶 移섑궓', 1, 0, sysdate, '理쒓퀬', 10);
-INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '�썑�씪�씠�뱶 移섑궓', 1, 0, sysdate, '留쏆엳�쓬', 9);
-INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '�썑�씪�씠�뱶 移섑궓', 1, 0, sysdate, '留쏆엳�쓬', 9);
-INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '�썑�씪�씠�뱶 移섑궓', 1, 0, sysdate, '留쏆엳�쓬', 9);
-INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '�썑�씪�씠�뱶 移섑궓', 1, 0, sysdate, '留쏆엳�쓬', 9);
-INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '�썑�씪�씠�뱶 移섑궓', 1, 0, sysdate, '留쏆엳�쓬', 9);
-INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '�썑�씪�씠�뱶 移섑궓', 1, 0, sysdate, '留쏆엳�쓬', 9);
-INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '�빐�돩 釉뚮씪�슫', 1, 0, sysdate, '鍮꾩뙂', 7);
-INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '肄쒕씪', 1, 0, sysdate, null , null);
+INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '후라이드 치킨', 1, 0, sysdate, '맛없음', 1);
+INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '후라이드 치킨', 1, 0, sysdate, '그냥그냥 먹을만 함', 7);
+INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '후라이드 치킨', 1, 0, sysdate, '최고', 10);
+INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '후라이드 치킨', 1, 0, sysdate, '맛있음', 9);
+INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '후라이드 치킨', 1, 0, sysdate, '맛있음', 9);
+INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '후라이드 치킨', 1, 0, sysdate, '맛있음', 9);
+INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '후라이드 치킨', 1, 0, sysdate, '맛있음', 9);
+INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '후라이드 치킨', 1, 0, sysdate, '맛있음', 9);
+INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '후라이드 치킨', 1, 0, sysdate, '맛있음', 9);
+INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '해쉬 브라운', 1, 0, sysdate, '비쌈', 7);
+INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '콜라', 1, 0, sysdate, null , null);
    
 SELECT * FROM ORDER_DETAIL;
-
-
-
-CREATE TABLE LOADNAME_ADD(
-	LOAD VARCHAR2(80),	
-	SIDO VARCHAR2(20),
-	SIGUNGU VARCHAR2(20),
-	EUBMEONDONG VARCHAR2(20)
-);
-
-);
-
