@@ -17,12 +17,11 @@ public class CustomerManageDao {
 	}
 
 
-	public ArrayList<CustomerManageDto> selectCustomerOrder(int number) { // 4번인경우(기본. 날짜별 정렬 list받아오기)
+	public ArrayList<CustomerManageDto> customerOrder(int number) { // 4번인경우(기본. 날짜별 정렬 list받아오기)
 		ArrayList<CustomerManageDto> list = new ArrayList<>();
 		Singleton s = Singleton.getInstance();
 
-		// 날짜별 매출
-		// number번 실행하라! 시그널 보내
+		// 고객별 주문량 내역
 		s.getComm().SendMessage(number, new CustomerManageDto());
 		// db 결과 받아오기
 		ArrayList<Object> resultList = s.getComm().receiveMessage();

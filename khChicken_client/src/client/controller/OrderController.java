@@ -25,15 +25,14 @@ public class OrderController {
 		JOptionPane.showMessageDialog(null, "주문이 완료되었습니다");
 		Singleton.getInstance().backToMain(ordView);
 	}
-
+	
+	// 매출관리 창 -> 날짜순 정렬 리스트
 	public ArrayList<OrderedMenuDto> selectByDate(int number) {
-
 		return ordDao.selectByDate(number);
-
 	}
-
+	
+	// 매출관리 창 -> 매출순 정렬 리스트
 	public ArrayList<BestSaleMenuDto> selectBySales(int number) {
-
 		return ordDao.selectBySales(number);
 	}
 

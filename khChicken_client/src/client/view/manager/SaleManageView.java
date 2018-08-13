@@ -22,7 +22,7 @@ import dto.OrderedMenuDto;
 public class SaleManageView extends JFrame implements ActionListener {
 	private JTable jTable;
 	private JScrollPane jScrPane;
-	private String columNames[] = { "번호", "주문일자", "아이디", "메뉴타입", "주문메뉴", "개당가", "수량", "음료쿠폰", "총액" };
+	private String columNames[] = { "번호", "주문일자", "아이디", "메뉴타입", "주문메뉴", "단가", "수량", "음료쿠폰", "총액" };
 	Object rowData[][];
 	DefaultTableModel model;
 //	ArrayList<Object> list = new ArrayList<Object>();
@@ -153,7 +153,7 @@ public class SaleManageView extends JFrame implements ActionListener {
 		
 		rowData = new Object[list.size()][7];
 		int bbsNum = 1;
-		String[] columNames2 = { "번호", "메뉴타입", "메뉴이름", "개당가", "총 판매 수량", "총 사용 쿠폰", "총 판매액" };
+		String[] columNames2 = { "번호", "메뉴타입", "메뉴이름", "단가", "총 판매 수량", "총 사용 쿠폰", "총 판매액" };
 
 		
 		for (int i = 0; i < list.size(); i++) {
