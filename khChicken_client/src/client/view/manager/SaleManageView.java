@@ -163,7 +163,7 @@ public class SaleManageView extends JFrame implements ActionListener {
 			rowData[i][0] = bbsNum; // 글번호
 			rowData[i][1] = dto.getMenu_type(); // 메뉴타입
 			rowData[i][2] = dto.getMenu_name(); // 메뉴이름
-			rowData[i][3] = dto.getMenu_name(); // 개당가
+			rowData[i][3] = dto.getPrice(); // 개당가
 			rowData[i][4] = dto.getTotal_sale(); // 총 판매 수량
 			rowData[i][5] = dto.getTotal_coupon(); // 총 사용 쿠폰
 			rowData[i][6] = dto.getTotal_price(); // 총 판매액
