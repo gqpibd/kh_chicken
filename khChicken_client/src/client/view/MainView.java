@@ -134,6 +134,7 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 	}
+<<<<<<< HEAD
 
 	public JPanel setFrontPanel(MenuShowDto showDto, int i) {	
 		JLabel imgLabel = new JLabel(); //
@@ -225,6 +226,100 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 		Object o = e.getSource();
 		if (o == btn_Login) { // 로그인
 			memCtrl.loginView(this);
+=======
+	
+
+	public JPanel setFrontPanel(MenuShowDto showDto, int i) {	
+		JLabel imgLabel = new JLabel(); //
+		imgLabel.setSize(249, 200); //
+
+		// 하나하나의 패널사이즈
+		JPanel frontpanel = new JPanel();
+		frontpanel.setLayout(new MigLayout("", "20", "40"));
+		frontpanel.setSize(400, 300);
+		 
+		// 이미지넣기
+		// server에서 가져온 이미지 넣는 곳
+		String img = menCtrl.get(i).getMenu_name().replaceAll(" ", "_") + ".jpg";
+		// 패널당 메뉴이름을 저장시켜줌
+		System.out.println("img = " + img);
+		setImage(MenuDao.FOLDER_PATH + img, imgLabel);
+		imgLabel.setName(menCtrl.get(i).getMenu_name()); // 라벨 자체에 메뉴 이름을 저장해준다.
+		imgLabel.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {// 누르면
+				String menu_name = ((JLabel) e.getSource()).getName(); // 클릭된 라벨의 이름을 받아온다	
+				System.out.println("menu_name = " + menu_name);
+				s.getRevCtrl().reviewView(s.getMainView(), menu_name);
+			}
+		});	
+
+		frontpanel.add(imgLabel, "center, wrap");
+
+		// 이름
+		menuLabel = new JLabel(menCtrl.get(i).getMenu_name());
+		menuLabel.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 20));
+		frontpanel.add(menuLabel, "center, wrap");
+
+		// 가격
+		priceLabel = new JLabel(menCtrl.get(i).getPrice() + " 원");
+		priceLabel.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
+		frontpanel.add(priceLabel, "center, wrap");
+
+		// 체크박스
+		chk = new JCheckBox(menCtrl.get(i).getMenu_name() + " 선택");
+		chk.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
+		chk.addItemListener(this);
+		frontpanel.add(chk, "center, wrap");
+
+		// 별점
+		JLabel scoreLabel = new JLabel("별점 : " + menCtrl.get(i).getavgScore() + "");
+		scoreLabel.setFont(new Font("다음_Regular", Font.PLAIN, 14));
+		frontpanel.add(scoreLabel, "center, wrap");
+
+		return frontpanel;
+	}
+
+	@Override
+	public void itemStateChanged(ItemEvent e) { // 미완성
+
+		JCheckBox chk = (JCheckBox) e.getSource();
+
+		// 체크된 이름을 저장
+		checkedMenu.add(menCtrl.get(i).getMenu_name());
+
+	}
+
+	public void setImage(String path, JLabel imgLabel) {
+		try {
+			// System.out.println("path : " + path);
+			BufferedImage m_numberImage = ImageIO.read(new File(path));
+			ImageIcon icon = new ImageIcon(m_numberImage);
+
+			// ImageIcon에서 Image를 추출
+			Image originImg = icon.getImage();
+
+			// 추출된 Image의 크기를 조절하여 새로운 Image객체 생성
+			Image changedImg = originImg.getScaledInstance(imgLabel.getWidth(), imgLabel.getHeight(),
+					Image.SCALE_SMOOTH);
+
+			// 새로운 Image로 ImageIcon객체를 생성
+			ImageIcon resizedIcon = new ImageIcon(changedImg);
+
+			imgLabel.setIcon(resizedIcon);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+
+		Object o = e.getSource();
+		if (o == btn_Login) { // 로그인
+			memCtrl.loginView(this,0);
+>>>>>>> branch 'yun_2' of https://github.com/gqpibd/kh_semi
 		} else if (o == btn_Register) { // 회원가입
 			if(btn_Register.getText().equals("회원가입")) {
 			memCtrl.AccountView(this);

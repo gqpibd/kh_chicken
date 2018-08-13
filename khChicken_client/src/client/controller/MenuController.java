@@ -48,6 +48,14 @@ public class MenuController {
 	public void update(MenuShowDto menu, int newPrice, String description) {
 		menDao.update(menu, newPrice, description);
 	}
+<<<<<<< HEAD
+=======
+	
+	public void Sco_Update(MenuShowDto dto ) {
+		menDao.Sco_Update(dto);
+	}
+	
+>>>>>>> branch 'yun_2' of https://github.com/gqpibd/kh_semi
 
 	public void menuManageView(JFrame currentView) {
 		currentView.setVisible(false);

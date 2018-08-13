@@ -27,6 +27,10 @@ public class OrderController {
 		Singleton.getInstance().backToMain(ordView);
 	}
 
+<<<<<<< HEAD
+=======
+	
+>>>>>>> branch 'yun_2' of https://github.com/gqpibd/kh_semi
 	public ArrayList<OrderedMenuDto> selectByDate(int number) {
 
 		return ordDao.selectByDate(number);
@@ -73,7 +77,11 @@ public class OrderController {
 	public void InFormationview(JFrame currentView) {
 		currentView.setVisible(false);
 		if(Window_inform == null) {
+<<<<<<< HEAD
 			Window_inform = new Window_information();
+=======
+			//Window_inform = new Window_information();
+>>>>>>> branch 'yun_2' of https://github.com/gqpibd/kh_semi
 		} else {
 			Window_inform.setVisible(true);
 		}

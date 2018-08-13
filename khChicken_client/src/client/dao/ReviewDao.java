@@ -41,15 +41,25 @@ public class ReviewDao {
 		return rList;
 	}
 
+<<<<<<< HEAD
 	public void update(ReviewDto dto) { // 작성한 리뷰를 등록한다. 기존 구매 내역에 추가됨.
 		Communicator comm = Singleton.getInstance().getComm();
 		comm.SendMessage(Communicator.UPDATE, dto);
+=======
+	public boolean update(ReviewDto dto) { // 작성한 리뷰를 등록한다. 기존 구매 내역에 추가됨.
+		Communicator comm = Singleton.getInstance().getComm();
+		return comm.SendMessage(Communicator.UPDATE, dto);
+>>>>>>> branch 'yun_2' of https://github.com/gqpibd/kh_semi
 	}
 
 	public void delete() {
 
 	}
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> branch 'yun_2' of https://github.com/gqpibd/kh_semi
 	public List<ReviewDto> getList() {
 		return rList;
 	}
