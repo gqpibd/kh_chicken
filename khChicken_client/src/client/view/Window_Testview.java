@@ -189,7 +189,6 @@ public class Window_Testview extends JFrame implements ActionListener {
 		Object obj = e.getSource();
 		Singleton single = Singleton.getInstance();
 		if (JBut_Review_While == obj) {
-			if(dto == null) {
 				
 			}
 			single.getRevCtrl().reviewWhilView(null, Str_MenuName);
