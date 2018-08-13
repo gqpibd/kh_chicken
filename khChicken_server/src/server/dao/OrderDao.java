@@ -38,6 +38,7 @@ public class OrderDao {
 			break;
 		case 4: // selectByDate (날짜순) - 백승지
 			ArrayList<OrderedMenuDto> orderList = selectByDate();
+			// 담은 리스트를 소켓에 실어 보내자!
 			SocketWriter.Write(sock, orderList);
 			break;
 		case 5: // selectBySalse (매출순) - 백승지
@@ -140,7 +141,6 @@ public class OrderDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			// 담은 리스트를 소켓에 실어 보내자!
 			DBClose.close(psmt, conn, rs);
 		}
 		return list;
