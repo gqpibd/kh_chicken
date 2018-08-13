@@ -1,6 +1,6 @@
 package client.view;
 
-import java.awt.Checkbox;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
@@ -14,25 +14,19 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
-
 import javax.imageio.ImageIO;
-import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
-
 import client.controller.MemberController;
 import client.controller.MenuController;
 import client.controller.OrderController;
-import client.dao.MemberDao;
 import client.dao.MenuDao;
 import client.singleton.Singleton;
 import dto.MemberDto;
@@ -100,11 +94,13 @@ public class MainView extends JFrame implements ItemListener,ActionListener {
 		// 메뉴들을 넣을 큰 패널 설정
 		JPanel panel_bigmenu = new JPanel();
 		panel_bigmenu.setBounds(10, 100, 570, 600);
+		panel_bigmenu.setBackground(new Color(255, 255, 255));
 		panel_bigmenu.setLayout(new MigLayout("wrap", "", ""));
 
 		// 메뉴하나의 작은패널
 		JPanel panel_menu = new JPanel();
 		panel_menu.setSize(400, 300);
+		panel_menu.setBackground(new Color(255, 255, 255));
 		panel_menu.setLayout(new MigLayout());
 
 		// 메뉴 출력
@@ -130,8 +126,9 @@ public class MainView extends JFrame implements ItemListener,ActionListener {
 		getContentPane().add(btn_Order);
 		getContentPane().add(btn_Manage);
 		getContentPane().add(panel_bigmenu);
-
+		getContentPane().setBackground(new Color(255, 255, 255));
 		setBounds(400, 0, 600, 800);
+		
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -145,6 +142,7 @@ public class MainView extends JFrame implements ItemListener,ActionListener {
 		JPanel frontpanel = new JPanel();
 		frontpanel.setLayout(new MigLayout("", "20", "40"));
 		frontpanel.setSize(400, 300);
+		frontpanel.setBackground(new Color(255, 255, 255));
 		 
 		// 이미지넣기
 		// server에서 가져온 이미지 넣는 곳
