@@ -36,6 +36,7 @@ public class MenuController {
 		return menDao.getMenuByName(name);
 
 	}
+	
 
 	public int getSize() {
 		return menDao.getSize();
