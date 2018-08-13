@@ -201,7 +201,7 @@ public class AddMenuView extends JFrame implements ActionListener {
 		} else if (e.getSource() == submitBtn) { // 새 메뉴를 추가한다
 			String type = getSelectedRadioBtn(btnGroup).getText();
 			MenuShowDto dto = new MenuShowDto(nameField.getText(), Integer.parseInt(priceField.getText()), type,
-					description.getText(), 0);
+					description.getText(), 10);
 			System.out.println(dto.toString());
 			s.getMenuCtrl().insert(dto, path);
 			s.getMenuCtrl().menuManageView(this);

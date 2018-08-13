@@ -28,6 +28,7 @@ import client.singleton.Singleton;
 import dto.MemberDto;
 import dto.MenuDto;
 import dto.OrderedMenuDto;
+import java.awt.Rectangle;
 
 public class OrderView extends JFrame implements ActionListener, ItemListener {
 
@@ -50,44 +51,45 @@ public class OrderView extends JFrame implements ActionListener, ItemListener {
 
 	public OrderView() {
 		super("주문 내역");
-		setLayout(null);
+		
+		getContentPane().setBounds(100, 100, 371, 306);
+		getContentPane().setLayout(null);
 
 		Singleton s = Singleton.getInstance();
 
 		JLabel lblNewLabel = new JLabel("<주문 정보>");
 		lblNewLabel.setFont(new Font("굴림", Font.BOLD, 18));
 		lblNewLabel.setBounds(14, 12, 129, 38);
-		add(lblNewLabel);
+		getContentPane().add(lblNewLabel);
 
 		JLabel label_4 = new JLabel("<주문 내역>");
 		label_4.setFont(new Font("굴림", Font.BOLD, 18));
 		label_4.setBounds(14, 150, 129, 38);
-		add(label_4);
+		getContentPane().add(label_4);
 
 		// 쿠폰------
 		JLabel label_6 = new JLabel("<음료 쿠폰>");
 		label_6.setFont(new Font("굴림", Font.BOLD, 18));
 		label_6.setBounds(14, 378, 129, 38);
-		add(label_6);
+		getContentPane().add(label_6);
 
 		// 사용 가능한 쿠폰의 수를 보여줄 라벨
-
 		JLabel lblNewLabel_3 = new JLabel("0" + "장");
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_3.setBounds(14, 428, 62, 18);
-		add(lblNewLabel_3);
+		getContentPane().add(lblNewLabel_3);
 
 		// 눌렀을 때 memberDto의 Coupon - 1
 		// 위의 변수 - 1 : 라벨에 바로 적용
 		JButton btnNewButton_1 = new JButton("사용");
 		btnNewButton_1.setBounds(80, 424, 63, 27);
-		add(btnNewButton_1);
+		getContentPane().add(btnNewButton_1);
 
 		// memberDto에서 쿠폰 수를 바로 받아와서 라벨에 띄우기
 		// SELECT 로 COUNT(리뷰) / 3 + 1 을 보여줄껀데.
 		JLabel lblNewLabel_4 = new JLabel("사용 가능한 쿠폰 : " + "0" + "장");
 		lblNewLabel_4.setBounds(14, 454, 192, 49);
-		add(lblNewLabel_4);
+		getContentPane().add(lblNewLabel_4);
 
 		// 주문자와 배달지에 대한 테이블
 		setDeliveryTable();
@@ -99,14 +101,14 @@ public class OrderView extends JFrame implements ActionListener, ItemListener {
 		lblNewLabel_5.setFont(new Font("굴림", Font.BOLD, 18));
 		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_5.setBounds(347, 408, 158, 49);
-		add(lblNewLabel_5);
+		getContentPane().add(lblNewLabel_5);
 
 		// 결제금액을 보여줄 라벨
 		JLabel label_7 = new JLabel("15000원"); // 결제금액 == 치킨값 * 수량 넣기.
 		label_7.setHorizontalAlignment(SwingConstants.CENTER);
 		label_7.setFont(new Font("굴림", Font.BOLD, 18));
 		label_7.setBounds(347, 460, 158, 49);
-		add(label_7);
+		getContentPane().add(label_7);
 
 		// Order DB와 member DB에 INSERT 하는 버튼
 		JButton paymentBtn = new JButton("결제");
@@ -139,9 +141,9 @@ public class OrderView extends JFrame implements ActionListener, ItemListener {
 			}
 		});
 		paymentBtn.setBounds(510, 414, 105, 88);
-		add(paymentBtn);
+		getContentPane().add(paymentBtn);
 
-		setBounds(100, 100, 680, 600);
+		
 		setVisible(true);
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -157,7 +159,7 @@ public class OrderView extends JFrame implements ActionListener, ItemListener {
 		// 주문자 정보를 받아올 2차원 배열 ( ID , ADR, PHONE )
 		MemberDto dto = s.getMemCtrl().getCurrentUser();
 		OrderData = new Object[1][4]; // 테이블의 2차원배열
-		if (dto != null) {		
+		if (dto != null) {
 			OrderData[0][0] = dto.getId(); // 아이디 ,
 			OrderData[0][1] = dto.getAddress(); // 주소
 			OrderData[0][2] = dto.getPhone();
@@ -190,7 +192,7 @@ public class OrderView extends JFrame implements ActionListener, ItemListener {
 
 		JScrollPane scrollPaneOrder = new JScrollPane();
 		scrollPaneOrder.setBounds(14, 83, 634, 66);
-		add(scrollPaneOrder);
+		getContentPane().add(scrollPaneOrder);
 		scrollPaneOrder.setViewportView(orderTable);
 	}
 
@@ -243,7 +245,7 @@ public class OrderView extends JFrame implements ActionListener, ItemListener {
 
 		JScrollPane scrollPaneMenu = new JScrollPane();
 		scrollPaneMenu.setBounds(14, 200, 532, 166);
-		add(scrollPaneMenu);
+		getContentPane().add(scrollPaneMenu);
 		scrollPaneMenu.setViewportView(menuTable);
 		pack();
 	}

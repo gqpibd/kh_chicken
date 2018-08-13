@@ -52,7 +52,6 @@ public class MenuDto implements Serializable {
 	@Override
 	public String toString() {
 		return "type=" + type + ", menu_name=" + menu_name + ", price=" + price;
-	}
-	
+	}	
 	
 }
