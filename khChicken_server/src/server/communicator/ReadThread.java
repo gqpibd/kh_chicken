@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.net.Socket;
 
 import dto.BestSaleMenuDto;
+import dto.CustomerManageDto;
 import dto.MemberDto;
 import dto.MenuShowDto;
 import dto.OrderedMenuDto;
@@ -41,7 +42,9 @@ public class ReadThread extends Thread {
 					s.getOrderCtrl().execute(number, (OrderedMenuDto) obj, sock);
 				} else if (obj instanceof ReviewDto) { 		// 리뷰보기
 					s.getRevCtrl().execute(number, (ReviewDto) obj, sock);
-				} 
+				} else if (obj instanceof CustomerManageDto) {	// 고객주문관리
+					s.getCusCtrl().execute(number, (CustomerManageDto)obj, sock);
+				}
 				sleep(100);
 			}
 		} catch (EOFException e) {

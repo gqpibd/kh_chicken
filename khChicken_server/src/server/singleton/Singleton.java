@@ -1,5 +1,6 @@
 package server.singleton;
 
+import server.dao.CustomerManageDao;
 import server.dao.MemberDao;
 import server.dao.MenuDao;
 import server.dao.OrderDao;
@@ -18,6 +19,7 @@ public class Singleton {
 	private MenuDao ctrlMenu = new MenuDao();
 	private OrderDao ctrlOrder = new OrderDao();
 	private ReviewDao ctrlReview = new ReviewDao();
+	private CustomerManageDao ctrlCustom = new CustomerManageDao(); 
 
 	private Singleton() {
 	}
@@ -40,6 +42,10 @@ public class Singleton {
 	
 	public ReviewDao getRevCtrl() {
 		return ctrlReview;
+	}
+	
+	public CustomerManageDao getCusCtrl() {
+		return ctrlCustom;
 	}
 	
 }

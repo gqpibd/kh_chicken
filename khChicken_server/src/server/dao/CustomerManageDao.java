@@ -30,7 +30,7 @@ public class CustomerManageDao {
 			break;
 		case Singleton.UPDATE: // update
 			break;*/
-		case 4: // selectByDate (날짜순) - 백승지
+		case 1: // selectByDate (날짜순) - 백승지
 			ArrayList<CustomerManageDto> orderList = selectCustomerOrder();
 			// 담은 리스트를 소켓에 실어 보내자!
 			SocketWriter.Write(sock, orderList);
@@ -44,7 +44,7 @@ public class CustomerManageDao {
 	
 	
 	
-	public ArrayList<CustomerManageDto> selectCustomerOrder() {
+	private ArrayList<CustomerManageDto> selectCustomerOrder() {
 
 		String sql = " SELECT A.ID, A.NAME, A.ADR, A.PHONE, B.주문건수 "
 				+ " FROM MEMBER A, "
