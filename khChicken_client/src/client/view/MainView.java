@@ -22,6 +22,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -38,7 +39,7 @@ import dto.MenuShowDto;
 import dto.OrderedMenuDto;
 import net.miginfocom.swing.MigLayout;
 
-public class MainView extends JFrame implements ItemListener, ActionListener {
+public class MainView extends JFrame implements ItemListener,ActionListener {
 	// private final String FOLDER_PATH = "\\\\192.168.30.35\\share\\images\\";
 
 	Singleton s = Singleton.getInstance();
@@ -155,8 +156,13 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 			@Override
 			public void mouseClicked(MouseEvent e) {// 누르면
 				String menu_name = ((JLabel) e.getSource()).getName(); // 클릭된 라벨의 이름을 받아온다	
+			
 				System.out.println(menu_name);
-				s.getRevCtrl().reviewView(s.getMainView(), menu_name);
+				System.out.println(menCtrl.get(i).getType());	//확인용
+				
+				if (menCtrl.get(i).getType().equals("음료")) {
+					JOptionPane.showMessageDialog(null, "리뷰가 없습니다.");
+				}else { s.getRevCtrl().reviewView(s.getMainView(), menu_name); }				
 			}
 		});
 
@@ -175,12 +181,17 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 		// 체크박스
 		chk = new JCheckBox(menCtrl.get(i).getMenu_name() + " 선택");
 		chk.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
+		chk.setName(menCtrl.get(i).getMenu_name());//체크박스에 이름을 저장
 		chk.addItemListener(this);
 		frontpanel.add(chk, "center, wrap");
 
 		// 별점
 		JLabel scoreLabel = new JLabel("별점 : " + menCtrl.get(i).getavgScore() + "");
 		scoreLabel.setFont(new Font("다음_Regular", Font.PLAIN, 14));
+			//음료별점안보이기
+			if(menCtrl.get(i).getType().equals("음료")) {
+				scoreLabel.setVisible(false);
+			}
 		frontpanel.add(scoreLabel, "center, wrap");
 
 		return frontpanel;
@@ -188,13 +199,12 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 
 	@Override
 	public void itemStateChanged(ItemEvent e) { // 미완성
-
-		JCheckBox chk = (JCheckBox) e.getSource();
-
-		// 체크된 이름을 저장
+		String menu_name = ((JCheckBox)e.getSource()).getName(); // 클릭된 라벨의 이름을 받아온다	
+		System.out.println(menu_name);
 		
-		checkedMenu.add(menCtrl.get(i).getMenu_name());
+		checkedMenu.add(menu_name);
 		
+
 	}
 
 	public void setImage(String path, JLabel imgLabel) {
@@ -228,6 +238,7 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 		} else if (o == btn_Register) { // 회원가입
 			memCtrl.AccountView(this);
 		} else if (o == btn_Order) { // 주문하기
+			
 			// orderMenuDto에 선택한 메뉴 이름, 타입, 가격 넣어서 넘겨주기 
 			OrderController ordCtrl = Singleton.getInstance().getOrderCtrl();
 			ordCtrl.getList().add(new OrderedMenuDto((MenuDto) menCtrl.get(0)));
@@ -235,11 +246,7 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 			ordCtrl.getList().add(new OrderedMenuDto((MenuDto) menCtrl.get(2)));
 			ordCtrl.OrderView(this);
 			
-			//확인용
-			for (int i = 0; i < checkedMenu.size(); i++) {
-				System.out.println(checkedMenu.get(i));
-				
-			}
+			System.out.println(checkedMenu);
 			
 		} else if (o == btn_Manage) {
 			memCtrl.manageView(this); // 관리자창
