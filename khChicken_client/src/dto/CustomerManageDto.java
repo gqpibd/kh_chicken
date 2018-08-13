@@ -12,6 +12,9 @@ public class CustomerManageDto implements Serializable{
 	private String phone;
 	private int OrderCount;
 	
+	public CustomerManageDto() {
+	}
+	
 	public CustomerManageDto(String id, String name, String adr, String phone, int orderCount) {
 		this.id = id;
 		this.name = name;
