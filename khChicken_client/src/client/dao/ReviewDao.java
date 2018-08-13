@@ -1,96 +1,57 @@
 package client.dao;
 
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.Socket;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import client.dto.ReviewDto;
+ 
+import client.communicator.Communicator;
+import client.singleton.Singleton;
+import dto.ReviewDto;
 
 public class ReviewDao {
-	
+
 	List<ReviewDto> rList = new ArrayList<ReviewDto>();
 	Socket sock;
-	
+
 	public ReviewDao() {
 	}
-	
+
 	public void SockDao(Socket sock) {
 		this.sock = sock;
-		
+
 	}
-	
+
 	public void insert(ReviewDto dto) {
-		try {
-			
-			
-			ObjectOutputStream oos = new ObjectOutputStream(sock.getOutputStream());
-			oos.writeInt(0);
-			oos.flush();
-			
-			
-			System.out.println("ss");
-			oos = new ObjectOutputStream(sock.getOutputStream());
-			oos.writeObject(dto);
-			oos.flush();
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	
-		
-		
-		
+
 	}
-	
-	public List<ReviewDto> select() {
-		
-		List<ReviewDto> list = new ArrayList<>();
+
+	public List<ReviewDto> select(String menuName) { // 특정 메뉴에 대한 리뷰 정보를 불러온다
 		ReviewDto dto = new ReviewDto();
-		ObjectOutputStream oos;
-		try {
-			oos= new ObjectOutputStream(sock.getOutputStream());
-			oos.writeInt(1);
-			oos.flush();
-	
-			
-			oos= new ObjectOutputStream(sock.getOutputStream());
-			oos.writeObject(dto);
-			oos.flush();
-			
-			ObjectInputStream ois;
-			ois = new ObjectInputStream(sock.getInputStream());
-			list =(List<ReviewDto>)ois.readObject();
-		
-		
-		
-		
-		} catch (ClassNotFoundException e) {
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		dto.setMenuName(menuName); 
+
+		Communicator comm = Singleton.getInstance().getComm();
+		comm.SendMessage(Communicator.SELECT, dto);
+		rList.clear(); // 일단 내용일 있을지도 모르니 비워준다.
+		ArrayList<Object> resultList = comm.receiveMessage();
+		System.out.println(resultList);
+		for (int i = 0; i < resultList.size(); i++) {
+			// 받은 dto 형식에 맞게 변환해 저장
+			rList.add((ReviewDto) resultList.get(i));
 		}
-		
-		
-		return list;
-		
-		
-		
+		return rList;
 	}
-	
-	public void update() {
-		
+
+	public void update(ReviewDto dto) { // 작성한 리뷰를 등록한다. 기존 구매 내역에 추가됨.
+		Communicator comm = Singleton.getInstance().getComm();
+		comm.SendMessage(Communicator.UPDATE, dto);
 	}
-	
+
 	public void delete() {
-		
+
+	}
+
+	public List<ReviewDto> getList() {
+		return rList;
 	}
 
 }

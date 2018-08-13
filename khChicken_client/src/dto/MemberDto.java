@@ -1,9 +1,9 @@
-package client.dto;
+package dto;
 
 import java.io.Serializable;
 
 public class MemberDto implements Serializable{
-	
+
 	
 	/*
 	CREATE TABLE MEMBER(
@@ -17,8 +17,7 @@ public class MemberDto implements Serializable{
 		);*/
 	
 	
-	
-	
+
 	private static final long serialVersionUID = -2270144856528113975L;
 	
 	public static final int MANAGER = 1;
@@ -33,7 +32,7 @@ public class MemberDto implements Serializable{
 	private String phone;
 	
 	public MemberDto() {
-	}
+	} 
 
 	public MemberDto(String id, String pw, String name, int coupon, int auth, String address, String phone) {
 		super();
