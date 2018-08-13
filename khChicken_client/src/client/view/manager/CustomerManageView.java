@@ -3,11 +3,14 @@ package client.view.manager;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
@@ -18,7 +21,7 @@ import client.singleton.Singleton;
 import dto.CustomerManageDto;
 import dto.OrderedMenuDto;
 
-public class CustomerManageView extends JFrame implements ActionListener{
+public class CustomerManageView extends JFrame implements ActionListener, MouseListener{
 	
 	private JTable jTable;
 	private JScrollPane jScrPane;
@@ -89,8 +92,6 @@ public class CustomerManageView extends JFrame implements ActionListener{
 	}
 
 
-
-
 	public void setTableByCustomerOrder() {
 		Singleton s = Singleton.getInstance();
 
@@ -121,6 +122,7 @@ public class CustomerManageView extends JFrame implements ActionListener{
 
 		// 테이블 생성
 		jTable.setModel(model);
+		jTable.addMouseListener(this);
 
 		// 컬럼의 넓이를 설정
 		jTable.getColumnModel().getColumn(0).setMaxWidth(50); 	// 글번호 폭
@@ -135,6 +137,61 @@ public class CustomerManageView extends JFrame implements ActionListener{
 
 		}
 	}
+
+
+
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		int rowNum = jTable.getSelectedRow();
+		// 마우스 클릭한 열의 id를 구함
+		String selectedId = jTable.getValueAt(rowNum, 1) + "";
+		
+		// 선택된 고객 정보를 열람할 수 있는 관리자view 만들기.
+		
+		
+		
+	}
+
+
+
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
+	
 	
 
 }
