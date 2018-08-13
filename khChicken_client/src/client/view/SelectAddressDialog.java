@@ -17,6 +17,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import client.communicator.Communicator;
+import client.controller.StatisticsController;
 import client.singleton.Singleton;
 
 public class SelectAddressDialog extends JDialog implements ActionListener {
@@ -115,13 +116,14 @@ public class SelectAddressDialog extends JDialog implements ActionListener {
 		if (e.getSource() == searchBtn || e.getSource() == loadNameField) {
 			String load = loadNameField.getText();
 			Communicator comm = Singleton.getInstance().getComm();
-			comm.SendMessage(Communicator.SELECT, load);
-			ArrayList<Object> results = (ArrayList<Object>) comm.receiveObject();
+			comm.SendMessage(StatisticsController.ADDRESS, load);
+			ArrayList<String> results = (ArrayList<String>) comm.receiveObject();
 			String resArr[] = new String[results.size()];
 			for (int i = 0; i < resArr.length; i++) {
 				resArr[i] = results.get(i).toString();
 				
 			}
+			
 			list.setListData(resArr);
 		}else if (e.getSource() == confirmBtn) {
 			if(detailAddField.getText().length() == 0 || selectedAddField.getText().length() ==0) {

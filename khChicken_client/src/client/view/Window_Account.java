@@ -56,7 +56,7 @@ public class Window_Account extends JFrame implements ActionListener {
 
 		JtextF_address = new JTextField(10);
 		JtextF_address.setEditable(false);
-		JtextF_address.setBounds(113, 177, 158, 21);
+		JtextF_address.setBounds(113, 177, 236, 21);
 
 		JtextF_phone = new JTextField(10);
 		JtextF_phone.setBounds(113, 241, 134, 21);
@@ -120,7 +120,7 @@ public class Window_Account extends JFrame implements ActionListener {
 		getContentPane().add(JLabel_phone);
 
 		button = new JButton("검색");
-		button.setBounds(283, 176, 66, 23);
+		button.setBounds(283, 209, 66, 23);
 		button.addActionListener(this);
 		getContentPane().add(button);
 
@@ -169,14 +169,14 @@ public class Window_Account extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null, "핸드폰 번호를 입력해주세요");
 			} else if (!pw.equals(new String(JtextF_pwd_Check.getPassword()))) {
 				JOptionPane.showMessageDialog(null, "비밀번호가 일치하지 않습니다. 다시 확인해 주세요");
-			} else if (!Pattern.matches("^01(?:0|1|[6-9]) - (?:\\d{3}|\\d{4}) - \\d{4}$", phone)) {
+			} else if (!Pattern.matches("^01(?:0|1|[6-9])-(?:\\d{3}|\\d{4})-\\d{4}$", phone)) {
 				JOptionPane.showMessageDialog(null, "전화번호 형식이 맞지 않습니다.\n 01X-XXXX-XXXX 형태로 입력해 주세요");
-			} else {
-				JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다.");
-				JOptionPane.showMessageDialog(null, "로그인 해주세요.");
+			} else {				
 				MemberDto dto = new MemberDto(id, pw, name, 0, MemberDto.MEMBER, address + " " + address2, phone);
 				single.getMemCtrl().insert(dto);
 				single.backToMain(this);
+				JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다.");
+				JOptionPane.showMessageDialog(null, "로그인 해주세요.");
 			}
 		} else if (obj == Jbut_Back) {
 			Singleton.getInstance().backToMain(this);

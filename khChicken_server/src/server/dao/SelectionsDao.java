@@ -6,19 +6,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import dto.BestSaleMenuDto;
 import dto.OrderedMenuDto;
 import server.communicator.SocketWriter;
 import server.db.DBClose;
 import server.db.DBConnection;
-import server.singleton.Singleton;
 
-public class StatisticsDao {
+public class SelectionsDao {
 	public static final int DATE = 0;
 	public static final int SALES = 1;
 	public static final int SCORE = 2;
 	public static final int CUSTOMER = 3;
+	public static final int ADDRESS = 4;
 
 	public void execute(int number, Object dto, Socket sock) {
 
@@ -39,6 +40,9 @@ public class StatisticsDao {
 			ArrayList<String> MemberList = selectCustomerOrder();
 			SocketWriter.Write(sock, MemberList);
 			break;
+		case ADDRESS: // 주소 검색 - 이도현
+			List<String> list = selectAddress(dto.toString());
+			SocketWriter.Write(sock, list);
 
 		}
 	}
@@ -174,4 +178,36 @@ public class StatisticsDao {
 		}
 		return list;
 	}
+
+	public ArrayList<String> selectAddress(Object obj) {
+		String sql = "SELECT DISTINCT SIDO, SIGUNGU, LOAD, EUBMEONDONG" + " FROM LOADNAME_ADD " + " WHERE LOAD = ? ";
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		ArrayList<String> list = new ArrayList<>();
+		try {
+
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, obj.toString());
+			rs = psmt.executeQuery();
+
+			while (rs.next()) {
+				if (rs.getString(4) == null) {
+					list.add(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3));
+				} else {
+					list.add(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " (" + rs.getString(4)
+							+ ")");
+				}
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		return list;
+	}
+
 }

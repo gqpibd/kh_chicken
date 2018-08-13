@@ -15,6 +15,7 @@ public class StatisticsController {
 	public static final int SALES = 1;
 	public static final int SCORE = 2;
 	public static final int CUSTOMER = 3;
+	public static final int ADDRESS = 4; // 주소검색
 
 	private StatisticsDao manDao = new StatisticsDao();
 	private CustomerManageView cusManView; // 회원관리창
