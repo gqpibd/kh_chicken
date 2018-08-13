@@ -26,6 +26,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
 import client.singleton.Singleton;
+import client.view.MainView;
 import dto.MenuShowDto;
 
 public class AddMenuView extends JFrame implements ActionListener {
@@ -204,6 +205,7 @@ public class AddMenuView extends JFrame implements ActionListener {
 			System.out.println(dto.toString());
 			s.getMenuCtrl().insert(dto, path);
 			s.getMenuCtrl().menuManageView(this);
+			s.resetMainView(); // 추가된 메뉴가 메인에서 보이도록 해준다.
 		} else if (e.getSource() == cancelBtn) {
 			s.getMenuCtrl().menuManageView(this);
 		}

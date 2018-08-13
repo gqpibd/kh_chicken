@@ -65,4 +65,9 @@ public class Singleton {
 		mv.setVisible(true); // 메인 화면을 보이게 한다.
 	}
 
+	public void resetMainView() {
+		mv = new MainView();
+		mv.login();
+	}
+
 }

@@ -32,6 +32,7 @@ import client.controller.MemberController;
 import client.controller.MenuController;
 import client.dao.MenuDao;
 import client.singleton.Singleton;
+import client.view.MainView;
 import dto.MenuDto;
 import dto.MenuShowDto;
 
@@ -242,7 +243,7 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 
 	}
 
-	public Object[][] setDataForTable() {
+	public Object[][] setDataForTable() { // 테이블에 넣을 데이터
 		Singleton s = Singleton.getInstance();
 		Object rowData[][];
 		rowData = new Object[s.getMenuCtrl().getMenDao().getSize()][4];
@@ -254,7 +255,7 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 		return rowData;
 	}
 
-	public Object[] addDataToRowArr(MenuShowDto menu) {
+	public Object[] addDataToRowArr(MenuShowDto menu) { // 새로운 로우를 추가할 때
 		Object rowData[] = new Object[4];
 		rowData[TYPE_COL] = menu.getType();
 		rowData[NAME_COL] = menu.getMenu_name();
@@ -290,7 +291,7 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 		return folderPath;
 	}
 
-	public void setImage(String path) {
+	public void setImage(String path) { // 이미지를 넣어줌
 		try {
 			BufferedImage m_numberImage = ImageIO.read(new File(path));
 			ImageIcon icon = new ImageIcon(m_numberImage);
@@ -314,8 +315,7 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Singleton s = Singleton.getInstance();
-		if (e.getSource() == applyBtn) { // 적용 버튼 클릭
-			System.out.println("변경됨");
+		if (e.getSource() == applyBtn) { // 적용 버튼 클릭			
 			MenuShowDto menu = (MenuShowDto) s.getMenuCtrl().getMenDao().getMenuByName(nameField.getText());
 			int row = menuTable.getSelectedRow();
 			int newPrice = Integer.parseInt(newPriceField.getText());
@@ -328,6 +328,8 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 			if (NewImgPath.length() > 0 && !NewImgPath.equals(currentImgPath)) { // 이미지 경로가 달라졌으면 소켓을 통해 새로운 이미지를 보낸다.
 				s.getMenuCtrl().getMenDao().updateImage(menu, NewImgPath);
 			}
+			s.resetMainView();
+			System.out.println("변경됨");
 		} else if (e.getSource() == delBtn) { // 삭제 버튼 클릭
 			MenuShowDto menu = s.getMenuCtrl().getMenDao().getMenuByName(nameField.getText());
 			int row = menuTable.getSelectedRow();
@@ -336,6 +338,7 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 				model.removeRow(row); // JTable에서 삭제
 				s.getMenuCtrl().getMenDao().delete(menu);
 				initFields(); // 필드의 내용을 다 초기로 돌린다.
+				s.resetMainView();
 			}
 		} else if (e.getSource() == backBtn) { // 뒤로가기 버튼 클릭
 			MenuController menCtrl = Singleton.getInstance().getMenuCtrl();

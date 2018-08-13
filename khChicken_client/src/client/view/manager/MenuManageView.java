@@ -14,9 +14,9 @@ import client.controller.MenuController;
 import client.singleton.Singleton;
 
 public class MenuManageView extends JFrame implements ActionListener{
-	JButton updMenuBtn;
-	JButton addMenuBtn;
-	JButton backBtn;
+	JButton updMenuBtn; // 메뉴 수정 버튼
+	JButton addMenuBtn; // 메뉴 추가 버튼
+	JButton backBtn; // 뒤로가기 버튼
 	public MenuManageView() {
 		setTitle("메뉴 관리");
 
@@ -60,11 +60,11 @@ public class MenuManageView extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		MenuController menCtrl = Singleton.getInstance().getMenuCtrl();
-		if(e.getSource() == updMenuBtn) {
+		if(e.getSource() == updMenuBtn) { // 메뉴 수정 버튼
 			menCtrl.updateMenuView();
-		} else if(e.getSource() == addMenuBtn) {
+		} else if(e.getSource() == addMenuBtn) { // 메튜 추가 버튼
 			menCtrl.addMenuView();
-		} else if (e.getSource() == backBtn) {
+		} else if (e.getSource() == backBtn) { // 뒤로가기 버튼
 			Singleton.getInstance().getMemCtrl().manageView(this);
 			
 		}

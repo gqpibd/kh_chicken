@@ -38,7 +38,7 @@ import dto.OrderedMenuDto;
 import net.miginfocom.swing.MigLayout;
 
 public class MainView extends JFrame implements ItemListener, ActionListener {
-	// private final String FOLDER_PATH = "\\\\192.168.30.35\\share\\images\\";
+
 
 	Singleton s = Singleton.getInstance();
 	MenuController menCtrl = Singleton.getInstance().getMenuCtrl();
@@ -129,7 +129,7 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 		getContentPane().add(panel_bigmenu);
 
 		setBounds(400, 0, 600, 800);
-		setVisible(true);
+		setVisible(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 	}
@@ -190,7 +190,7 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 	public void itemStateChanged(ItemEvent e) { // 미완성
 
 		JCheckBox chk = (JCheckBox) e.getSource();
-
+		
 		// 체크된 이름을 저장
 		checkedMenu.add(menCtrl.get(i).getMenu_name());
 
@@ -237,6 +237,7 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 			ordCtrl.getList().add(new OrderedMenuDto((MenuDto) menCtrl.get(1)));
 			ordCtrl.getList().add(new OrderedMenuDto((MenuDto) menCtrl.get(2)));
 			ordCtrl.OrderView(this);
+			System.out.println(chk.getSelectedObjects());
 		} else if (o == btn_Manage) {
 			memCtrl.manageView(this); // 관리자창
 		}
@@ -247,6 +248,7 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 		System.out.println(s.getMemCtrl().getAuth());
 		if (s.getMemCtrl().getAuth() == MemberDto.MANAGER) {
 			btn_Manage.setVisible(true);
+			btn_Register.setVisible(false);
 		}
 	}
 
@@ -254,5 +256,6 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 		memCtrl.logout();
 		btn_Login.setText("로그인");
 		btn_Manage.setVisible(false);
+		btn_Register.setVisible(true);
 	}
 }
