@@ -250,6 +250,7 @@ public class Window_Review extends JFrame implements ActionListener {
 		} else if (obj == JBut_Back) {
 			single.backToMain(this);
 		}
+		
 
 		// 밑에 기능 무시해두됨
 		/*

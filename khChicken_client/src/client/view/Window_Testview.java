@@ -45,7 +45,7 @@ public class Window_Testview extends JFrame implements ActionListener {
 	JPanel panel_menu;
 
 	
-	JButton JBut_Review_While;
+	JButton JBut_While;
 	
 	public Window_Testview(String _Str_MenuName) {
 	setLayout(null);
@@ -91,13 +91,16 @@ public class Window_Testview extends JFrame implements ActionListener {
 		panel_menu.add(getEachReviewPanel(list.get(i)), "wrap");
 	}
 	add(panel_bigmenu);
-	JBut_Review_While = new JButton("리뷰쓰기");
-	JBut_Review_While.addActionListener(this);
-	JBut_Review_While.setBounds(215, 425, 93, 32);
-	add(JBut_Review_While);
-	JButton JBut2 = new JButton("이전으로");
-	JBut2.setBounds(322, 425, 93, 32);
-	add(JBut2);
+	JBut_While = new JButton("리뷰쓰기");
+	JBut_While.addActionListener(this);
+	JBut_While.setBounds(215, 425, 93, 32);
+	add(JBut_While);
+	
+	JBut_Back = new JButton("이전으로");
+	JBut_Back.addActionListener(this);
+	JBut_Back.setBounds(322, 425, 93, 32);
+	add(JBut_Back);
+	
 	JButton JBut3 = new JButton("장바구니");
 	JBut3.setBounds(215, 468, 93, 32);
 	add(JBut3);
@@ -188,17 +191,17 @@ public class Window_Testview extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
 		Singleton single = Singleton.getInstance();
-		if (JBut_Review_While == obj) {
-				
-			}
-			single.getRevCtrl().reviewWhilView(null, Str_MenuName);
-			
-			
+		if (JBut_While == obj) {
+			single.getRevCtrl().reviewWhileView(this,Str_MenuName);	
+		}else if(JBut_Back == obj) {
+			System.out.println("dd");
+			single.backToMain(this);
 		}
 	}
-	
-	
-
-	
-
 }
+	
+
+	
+
+	
+

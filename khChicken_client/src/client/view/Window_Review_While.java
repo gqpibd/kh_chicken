@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -21,29 +22,31 @@ import javax.swing.JTextArea;
 
 import client.singleton.Singleton;
 import dto.ReviewDto;
+import sun.misc.Signal;
 
 public class Window_Review_While extends JFrame implements ActionListener {
 	
 	
-	
+	JButton JBut_back;
 	JButton JBut_Review_Input;
+	JButton JBut_Loging;
+	
+	
 	JTextArea JTextA_Review_Input;
 	JScrollPane JScroll_Review_Input;
 	
 	String menuName;
 	private int myScore = 10;
 
-	JButton JBut_back;
 	
 	JLabel JLabel_Logo;
 	
 	public Window_Review_While(String menuName) {
+	//public Window_Review_While() {
 	setLayout(null);
-	
 	this.menuName=menuName;
-
+	Singleton single = Singleton.getInstance();
 	
-
 	
 	JTextA_Review_Input = new JTextArea();
 	JScroll_Review_Input = new JScrollPane(JTextA_Review_Input);
@@ -63,7 +66,13 @@ public class Window_Review_While extends JFrame implements ActionListener {
 	
 	
 	JBut_back = new JButton("이전으로");
-	JBut_back.setBounds(327, 22, 57, 15);
+	JBut_back.addActionListener(this);
+	JBut_back.setBounds(287, 12, 97, 34);
+	add(JBut_back);
+	
+	
+	JBut_Loging = new JButton("로그인");
+	JBut_Loging.addActionListener(this);
 	add(JBut_back);
 	
 	JProgressBar myScore = new JProgressBar();
@@ -74,6 +83,23 @@ public class Window_Review_While extends JFrame implements ActionListener {
 	setVisible(true);
 	setBounds(100, 100, 414, 221);
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	
+	if(single.getMemCtrl().getCurrentUser() == null) {
+		JBut_Review_Input.setEnabled(false);
+		JTextA_Review_Input.setText("로그인을 하셔야 리뷰를 작성하실수 있습니다. \n로그인을 하실려면 클릭해주세요.");
+		JTextA_Review_Input.setEditable(false);
+		myScore.removeMouseListener(myScore.getMouseListeners()[0]);
+		JTextA_Review_Input.addMouseListener(new MouseAdapter() {
+		
+			@Override
+			public void mousePressed(MouseEvent e) {
+				super.mousePressed(e);
+				single.getMemCtrl().loginView(Window_Review_While.this,1);
+			}
+		});
+		
+	}
+	
 	}
 
 	@Override
@@ -89,8 +115,23 @@ public class Window_Review_While extends JFrame implements ActionListener {
 		dto.setScore(myScore);
 		System.out.println(dto.toString());
 		if (obj == JBut_Review_Input) {
-			single.getRevCtrl().update(dto);
-			JOptionPane.showMessageDialog(null, "작성이 완료되었습니다.");
+			
+			boolean Review_Check =single.getRevCtrl().update(dto);
+			
+			
+			if(JTextA_Review_Input.equals("")) {
+				JOptionPane.showMessageDialog(null, "리뷰를 작성해주세요,");
+			}else {
+			//single.getRevCtrl().update(dto);
+			if(Review_Check == true) {
+			
+				JOptionPane.showMessageDialog(null, "작성이 완료되었습니다.");
+			}else if(Review_Check == false) {
+				JOptionPane.showMessageDialog(null, "리뷰를 작성할 자격이없습니다.");
+			}
+			}
+		}else if(obj == JBut_back){
+			dispose();
 		}
 		
 		
@@ -133,6 +174,8 @@ public class Window_Review_While extends JFrame implements ActionListener {
 		}
 		return progressBar;
 	}
+	
+	
 	
 	
 	

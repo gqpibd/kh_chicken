@@ -37,6 +37,7 @@ public class MemberController {
 	public boolean select_login(MemberDto dto) {
 		boolean loginSuccess = memDao.select_login(dto);
 		
+		
 		if (loginSuccess) {
 			Singleton.getInstance().getMainView().Login();			
 		}
@@ -75,10 +76,10 @@ public class MemberController {
 
 	}
 
-	public void loginView(JFrame currentView) {
+	public void loginView(JFrame currentView, int number) {
 		currentView.setVisible(false);
 		if (logView == null) { // 없을 땐
-			logView = new Window_Login(); // 만들고
+			logView = new Window_Login(number); // 만들고
 		} else { // 있을 땐
 			logView.setVisible(true); // 보여만 준다.
 		}

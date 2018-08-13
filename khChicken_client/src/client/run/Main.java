@@ -8,10 +8,12 @@ public class Main {
 
 	public static void main(String[] args) {
 		Singleton s = Singleton.getInstance(); 
+		System.out.println("111");
 		s.getComm().makeConnection(); // 소켓 연결을 먼저 한다.
+		System.out.println("222");
 		s.getMainView();
 		//new Window_Account();
-		new Window_Review("후라이드 치킨");
+	
 	}
 
 }

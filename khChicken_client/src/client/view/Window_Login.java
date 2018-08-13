@@ -22,8 +22,11 @@ public class Window_Login extends JFrame implements ActionListener {
 	JButton Jbut_Account;
 	JButton Jbut_Exit;
 
-	public Window_Login() {
+	int number;
+	
+	public Window_Login(int number) {
 		super("로그인");
+		this.number = number;
 		setLayout(null);
 		JPanel Jpanl_JTextF = new JPanel();
 		Jpanl_JTextF.setBounds(99, 56, 132, 66);
@@ -90,6 +93,12 @@ public class Window_Login extends JFrame implements ActionListener {
 		} else if (obj == Jbut_Account) {
 			s.getMemCtrl().AccountView(this);
 		} else if (obj == Jbut_Exit) {
+			/*if(number == 1) {
+			s.getRevCtrl().reviewWhileView(this);
+			dispose();
+			}else if(number == 0){
+			s.backToMain(this);
+			}*/
 			s.backToMain(this);
 		}
 	}

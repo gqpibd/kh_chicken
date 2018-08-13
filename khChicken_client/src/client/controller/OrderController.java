@@ -27,6 +27,7 @@ public class OrderController {
 		Singleton.getInstance().backToMain(ordView);
 	}
 
+	
 	public ArrayList<OrderedMenuDto> selectByDate(int number) {
 
 		return ordDao.selectByDate(number);

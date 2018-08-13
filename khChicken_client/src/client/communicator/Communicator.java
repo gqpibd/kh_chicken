@@ -11,6 +11,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+
+import dto.ReviewDto;
  
 public class Communicator {
 	public static int INSERT = 0;
@@ -31,19 +33,30 @@ public class Communicator {
 		}
 	}
 
-	public void SendMessage(int number, Object o) {
+	public boolean SendMessage(int number, Object o) {
 		ObjectOutputStream oos = null;
+		boolean Review_Check =false;
 		try {
 			oos = new ObjectOutputStream(sock.getOutputStream());
-
+			
 			oos.writeInt(number);
 			oos.writeObject(o);
-
 			oos.flush();
-
-		} catch (IOException e) {
+			if(o instanceof ReviewDto) {
+				ReviewDto dto = (ReviewDto)o;
+				if(dto.getReview() != null) {
+				ObjectInputStream ois = new ObjectInputStream(sock.getInputStream());
+				Object obj =ois.readObject();
+				Review_Check = (boolean)obj;
+				System.out.println("Review_Check 1111= " + Review_Check);
+				}
+			}
+			
+			
+		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+		return Review_Check;
 	}
 
 	public void sendImage(String path) {
@@ -96,6 +109,7 @@ public class Communicator {
 			e.printStackTrace();
 		}
 
+	
 		return objList;
 	}
 

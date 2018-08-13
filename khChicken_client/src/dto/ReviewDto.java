@@ -15,6 +15,7 @@ public class ReviewDto implements Serializable{
 	public ReviewDto() {
 	}
 
+	
 	public ReviewDto(String menuName, String review, String userId, String orderDate, int score) {
 		super();
 		this.menuName = menuName;

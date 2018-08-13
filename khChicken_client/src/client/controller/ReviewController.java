@@ -12,6 +12,7 @@ import dto.ReviewDto;
 
 public class ReviewController {
 
+
 	private ReviewDao revDao = new ReviewDao();
 
 	//private Window_Review reviewView; // 리뷰창
@@ -30,8 +31,8 @@ public class ReviewController {
 		revDao.delete();
 	}
 
-	public void update(ReviewDto dto) {
-		revDao.update(dto);
+	public boolean update(ReviewDto dto) {
+		return revDao.update(dto);
 	}
 
 	public void reviewView(JFrame currentFrame, String menuName) {
@@ -41,8 +42,10 @@ public class ReviewController {
 		//reviewView = new Window_Review(menuName);
 	}
 	
-	public void reviewWhilView(JFrame currentFrame, String menuName) {
+	public void reviewWhileView(JFrame currentFrame, String menuName) {
+	//public void reviewWhileView(JFrame currentFrame) {
 		if (reviewWhileView== null ) {
+			//reviewWhileView =new Window_Review_While(menuName);
 			reviewWhileView =new Window_Review_While(menuName);
 		}else {
 			reviewWhileView.setVisible(true);

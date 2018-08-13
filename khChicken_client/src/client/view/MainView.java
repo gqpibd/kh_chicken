@@ -224,7 +224,7 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 
 		Object o = e.getSource();
 		if (o == btn_Login) { // 로그인
-			memCtrl.loginView(this);
+			memCtrl.loginView(this,0);
 		} else if (o == btn_Register) { // 회원가입
 			if(btn_Register.getText().equals("회원가입")) {
 			memCtrl.AccountView(this);
