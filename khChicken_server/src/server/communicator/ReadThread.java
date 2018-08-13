@@ -50,41 +50,7 @@ public class ReadThread extends Thread {
 				} else if (obj instanceof ReviewDto) { // 리뷰보기
 					s.getRevCtrl().execute(number, (ReviewDto) obj, sock);
 				} else if (obj instanceof String ) {
-					s.getStaCtrl().execute(number, (String) obj, sock);
-				}
-				else if (obj instanceof String) {
-
-					String sql = "SELECT DISTINCT SIDO, SIGUNGU, LOAD, EUBMEONDONG" + " FROM LOADNAME_ADD "
-							+ " WHERE LOAD = ? ";
-
-					Connection conn = null;
-					PreparedStatement psmt = null;
-					ResultSet rs = null;
-					List<String> list = new ArrayList<>();
-					try {
-
-						conn = DBConnection.getConnection();
-						psmt = conn.prepareStatement(sql);
-						psmt.setString(1, obj.toString());
-						rs = psmt.executeQuery();
-
-						while (rs.next()) {
-							if (rs.getString(4) == null) {
-								list.add(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3));
-							} else {
-								list.add(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " ("
-										+ rs.getString(4) + ")");
-							}
-						}
-
-					} catch (SQLException e) {
-						e.printStackTrace();
-					} finally {
-						DBClose.close(psmt, conn, rs);
-					}
-
-					SocketWriter.Write(sock, list);
-
+					s.getSelCtrl().execute(number, (String) obj, sock);
 				}
 				sleep(100);
 			}
