@@ -20,16 +20,6 @@ public class CustomerManageDao {
 	public void execute(int number, CustomerManageDto dto, Socket sock) {
 
 		switch (number) {
-		/*case Singleton.INSERT: // 주문 내역 추가 - 우진영
-			insert(dto);
-			System.out.println("주문 내역에 추가하였습니다");
-			break;
-		case Singleton.SELECT: // select
-			break;
-		case Singleton.DELETE: // delete
-			break;
-		case Singleton.UPDATE: // update
-			break;*/
 		case 1: // selectByDate (날짜순) - 백승지
 			ArrayList<CustomerManageDto> orderList = selectCustomerOrder();
 			// 담은 리스트를 소켓에 실어 보내자!
