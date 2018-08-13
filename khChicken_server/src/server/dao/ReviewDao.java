@@ -30,7 +30,7 @@ public class ReviewDao {
 		case Singleton.DELETE:
 			break;
 		case Singleton.UPDATE: // 기존 주문한 내역에 리뷰 추가하기 - 윤상필
-			update(dto);
+			update(dto,sock);
 			break;
 		}
 	}
@@ -74,9 +74,10 @@ public class ReviewDao {
 
 	}
 
-	public void update(ReviewDto dto) { // 기존 주문한 내역에 리뷰 추가하기
+	public void update(ReviewDto dto , Socket sock) { // 기존 주문한 내역에 리뷰 추가하기
 		System.out.println(dto.toString());
-		int Int_return;
+		int Int_return = 0;
+		boolean Review_Check = false;
 		/*UPDATE ORDER_DETAIL
 		SET REVIEW = '들어가줘 제발', SCORE = 2
 		WHERE ID = '2' AND MENU_NAME = '후라이드 치킨' 
@@ -85,7 +86,10 @@ public class ReviewDao {
 		*/
 		String sql = " UPDATE ORDER_DETAIL " + 
 					 " SET REVIEW = ?, SCORE = ? " +
-				     " WHERE ID = ? AND MENU_NAME = ? AND REVIEW is null AND (TO_DATE(sysdate, 'yyyy/mm/dd') - TO_DATE(ORDER_DATE, 'yyyy/mm/dd')) <= '2'";
+				     " WHERE ID = ? AND MENU_NAME = ? AND REVIEW is null AND (TO_DATE(sysdate, 'yyyy/mm/dd') - TO_DATE(ORDER_DATE, 'yyyy/mm/dd')) <= '2'"; 
+				     
+		
+	
 		System.out.println(sql);
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -96,7 +100,9 @@ public class ReviewDao {
 			psmt.setInt(2, dto.getScore());
 			psmt.setString(3, dto.getUserId());
 			psmt.setString(4, dto.getMenuName());
-		    psmt.executeQuery();
+		    //psmt.executeQuery();
+		    Int_return = psmt.executeUpdate();
+		    System.out.println("Int_return = " + Int_return);
 			
 		} catch (SQLException e) {
 			
@@ -104,6 +110,14 @@ public class ReviewDao {
 		} finally {
 			DBClose.close(psmt, conn, null);
 		}
+		
+	
+		if(Int_return == 1) {
+			Review_Check = true;
+		}else if(Int_return == 0){
+			Review_Check = false;
+		}
+		SocketWriter.Write(sock, Review_Check);
 	}
 
 	public void delete() {
