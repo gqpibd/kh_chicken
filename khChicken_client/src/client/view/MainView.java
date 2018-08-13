@@ -134,6 +134,7 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 	}
+	
 
 	public JPanel setFrontPanel(MenuShowDto showDto, int i) {	
 		JLabel imgLabel = new JLabel(); //

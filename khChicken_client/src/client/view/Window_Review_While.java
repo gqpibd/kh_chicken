@@ -119,12 +119,13 @@ public class Window_Review_While extends JFrame implements ActionListener {
 			boolean Review_Check =single.getRevCtrl().update(dto);
 			
 			
+			
 			if(JTextA_Review_Input.equals("")) {
 				JOptionPane.showMessageDialog(null, "리뷰를 작성해주세요,");
 			}else {
 			//single.getRevCtrl().update(dto);
 			if(Review_Check == true) {
-			
+				
 				JOptionPane.showMessageDialog(null, "작성이 완료되었습니다.");
 			}else if(Review_Check == false) {
 				JOptionPane.showMessageDialog(null, "리뷰를 작성할 자격이없습니다.");

@@ -40,12 +40,14 @@ public class Window_Testview extends JFrame implements ActionListener {
 	
 	JButton JBut_ReviewRead;
 	JButton JBut_Back;
+	JButton JBut_While;
+	
 	JPanel container;
 	JScrollPane scrPane;
 	JPanel panel_menu;
 
 	
-	JButton JBut_While;
+	
 	
 	public Window_Testview(String _Str_MenuName) {
 	setLayout(null);
@@ -196,7 +198,8 @@ public class Window_Testview extends JFrame implements ActionListener {
 		}else if(JBut_Back == obj) {
 			System.out.println("dd");
 			single.backToMain(this);
-		}
+		}else if(JBUt_)
+		
 	}
 }
 	
