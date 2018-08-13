@@ -44,17 +44,15 @@ public class OrderDao {
 		System.out.println("message : "+couponEA);
 		return couponEA;
 	}
-	
-	public void update() {
-
-	}
-
-	public void delete() {
-
-	}
 
 	public List<OrderedMenuDto> getList() {
 		return orderList;
+	}
+
+
+	public void clearList() {
+		orderList.clear();
+		
 	}
 
 }

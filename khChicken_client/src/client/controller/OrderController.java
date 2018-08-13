@@ -23,17 +23,11 @@ public class OrderController {
 		ordDao.insert(confirmedList);
 		JOptionPane.showMessageDialog(null, "주문이 완료되었습니다");
 		Singleton.getInstance().backToMain(ordView);
-	}	
-
-	public void delete() {
-		ordDao.delete();
 	}
 
-	public void update() {
-		ordDao.update();
+	public void clearList() {
+		ordDao.clearList();
 	}
-
-
 	public List<OrderedMenuDto> getList() {
 		return ordDao.getList();
 	}
@@ -41,15 +35,11 @@ public class OrderController {
 	public void OrderView(JFrame currentView) {
 		currentView.setVisible(false);
 		// 주문 창을 보여준다.
-		if (ordView == null) { // 없을 땐
-			ordView = new OrderView(); // 만들고
-		} else { // 있을 땐
-			ordView.setVisible(true); // 보여만 준다.
-		}
+		ordView = new OrderView(); // 보여만 준다.
+
 	}
 
 	public String getCoupons() {
-		// TODO Auto-generated method stub
 		return ordDao.getCoupon();
 	}
 
