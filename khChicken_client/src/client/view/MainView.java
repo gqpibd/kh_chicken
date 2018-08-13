@@ -3,6 +3,7 @@ package client.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,6 +25,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+
+import com.sun.javafx.tk.Toolkit;
+
 import client.controller.MemberController;
 import client.controller.MenuController;
 import client.controller.OrderController;
@@ -56,12 +60,13 @@ public class MainView extends JFrame implements ItemListener,ActionListener {
 
 	JButton btn_good;
 	JLabel label_goodCount;
+	Image img = null;
 
 	public MainView() {
 		super("KH CHICKEN");
 		getContentPane().setLayout(null);
 
-		// 로고2, 버튼 4, 패널 1
+
 
 		// 버튼글씨
 		String loginStr = "로그인";		
@@ -120,7 +125,9 @@ public class MainView extends JFrame implements ItemListener,ActionListener {
 		panel_bigmenu.add(scroll);
 		scroll.getVerticalScrollBar().setUnitIncrement(15);
 
+		JLabel background = new JLabel(new ImageIcon("mainView.jpg"));
 		// 바탕에 저장
+		getContentPane().add(background);
 		getContentPane().add(btn_Login);
 		getContentPane().add(btn_Register);
 		getContentPane().add(btn_Order);
@@ -129,10 +136,30 @@ public class MainView extends JFrame implements ItemListener,ActionListener {
 		getContentPane().setBackground(new Color(255, 255, 255));
 		setBounds(400, 0, 600, 800);
 		
+		
+		
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 	}
+/*	
+	//배경삽입
+	@Override
+	public void paint(Graphics g) {
+		// TODO Auto-generated method stub
+		super.paint(g);
+		
+		if (img == null) {
+			return;
+		}
+		
+		int imgWidth = img.getWidth(this);
+		int imgHeight = img.getHeight(this);
+		//이미지를 프레임 중앙에 출력
+		g.drawImage(img, (getWidth()-imgWidth)/2, (getHeight()-imgHeight)/2, this);
+	}*/
+	
+	
 
 	public JPanel setFrontPanel(MenuShowDto showDto, int i) {	
 		JLabel imgLabel = new JLabel(); //
@@ -182,6 +209,7 @@ public class MainView extends JFrame implements ItemListener,ActionListener {
 		chk = new JCheckBox(menCtrl.get(i).getMenu_name() + " 선택");
 		chk.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		chk.setName(menCtrl.get(i).getMenu_name());	//체크박스에 이름을 저장
+		chk.setBackground(new Color(255, 255, 255));
 		chk.addItemListener(this);
 		frontpanel.add(chk, "center, wrap");
 
