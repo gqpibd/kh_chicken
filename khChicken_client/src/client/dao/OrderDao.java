@@ -26,7 +26,7 @@ public class OrderDao {
 		orderList.clear(); // 주문이 끝났으니 리스트를 비워준다.
 	}
 
-	public ArrayList<OrderedMenuDto> selectByDate(int number) { // 4번인경우
+	public ArrayList<OrderedMenuDto> selectByDate(int number) { // 4번인경우(기본. 날짜별 정렬 list받아오기)
 		ArrayList<OrderedMenuDto> list = new ArrayList<>();
 		Singleton s = Singleton.getInstance();
 
@@ -46,7 +46,7 @@ public class OrderDao {
 		return list;
 	}
 
-	public ArrayList<BestSaleMenuDto> selectBySales(int number) { // 5번인경우
+	public ArrayList<BestSaleMenuDto> selectBySales(int number) { // 5번인경우(매출별 정렬 list받아오기)
 		ArrayList<BestSaleMenuDto> list = new ArrayList<>();
 		Singleton s = Singleton.getInstance();
 

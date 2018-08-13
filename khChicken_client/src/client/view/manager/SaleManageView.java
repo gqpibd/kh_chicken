@@ -62,7 +62,6 @@ public class SaleManageView extends JFrame implements ActionListener {
 		add(backBtn);
 
 		// 정렬기준 바꾸기
-//		String[] selects = new String[] { "날짜순", "별점순" };
 		String[] selects = new String[] { "날짜순", "매출순" };
 		choiceList = new JComboBox<>(selects);
 		choiceList.setBounds(20, 380, 80, 20);
@@ -83,7 +82,6 @@ public class SaleManageView extends JFrame implements ActionListener {
 
 			if (selectedItem.equals("날짜순")) {
 				setTableByDate();
-			//} else if (selectedItem.equals("별점순")) {
 			} else if (selectedItem.equals("매출순")) {
 				setTableBySales();
 			}
@@ -105,8 +103,9 @@ public class SaleManageView extends JFrame implements ActionListener {
 		for (int i = 0; i < list.size(); i++) {
 			OrderedMenuDto dto1 = list.get(i);
 			int bev_price = 0;
-
-			if (dto1.getType().equals("drink") && dto1.getCoupon() != 0) {
+			
+			// 음료주문의 경우, 쿠폰을 썼을때 가격*쿠폰수량만큼 할인가를 적용.
+			if (dto1.getType().equals("음료") && dto1.getCoupon() != 0) {
 				bev_price = dto1.getPrice() * dto1.getCoupon();
 			}
 			// Date order_date, String id, String menu_type, String menu_name, int count,
@@ -118,7 +117,7 @@ public class SaleManageView extends JFrame implements ActionListener {
 			rowData[i][4] = dto1.getMenu_name(); // 주문메뉴
 			rowData[i][5] = dto1.getCount(); // 수량
 			rowData[i][6] = dto1.getCoupon(); // 음료쿠폰
-			rowData[i][7] = (dto1.getTotalPrice() * dto1.getCount()) - bev_price;
+			rowData[i][7] = (dto1.getTotalPrice() * dto1.getCount()) - bev_price;	// 총액
 		
 			bbsNum++;
 		}
