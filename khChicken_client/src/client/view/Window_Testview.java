@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,7 +29,7 @@ import client.singleton.Singleton;
 import dto.ReviewDto;
 import net.miginfocom.swing.MigLayout;
 
-public class Window_Testview extends JFrame {
+public class Window_Testview extends JFrame implements ActionListener {
 	
 	
 	ImageIcon ImageIcon_Menu;
@@ -42,10 +44,8 @@ public class Window_Testview extends JFrame {
 	JScrollPane scrPane;
 	JPanel panel_menu;
 
-	JTextArea JTextA_Review;
-	JScrollPane JScroll_Review;
-	JButton JBut_reviewInput;
 	
+	JButton JBut_Review_While;
 	
 	public Window_Testview(String _Str_MenuName) {
 	setLayout(null);
@@ -91,10 +91,11 @@ public class Window_Testview extends JFrame {
 		panel_menu.add(getEachReviewPanel(list.get(i)), "wrap");
 	}
 	add(panel_bigmenu);
-	JButton JBut1 = new JButton("이전으로");
-	JBut1.setBounds(215, 425, 93, 32);
-	add(JBut1);
-	JButton JBut2 = new JButton("리뷰쓰기");
+	JBut_Review_While = new JButton("리뷰쓰기");
+	JBut_Review_While.addActionListener(this);
+	JBut_Review_While.setBounds(215, 425, 93, 32);
+	add(JBut_Review_While);
+	JButton JBut2 = new JButton("이전으로");
 	JBut2.setBounds(322, 425, 93, 32);
 	add(JBut2);
 	JButton JBut3 = new JButton("장바구니");
@@ -179,6 +180,20 @@ public class Window_Testview extends JFrame {
 		panel.add(progressBar);
 		return panel;
 	}
+
+
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object obj = e.getSource();
+		if (JBut_Review_While == obj) {
+			
+			
+		}
+	}
+	
+	
 
 	
 
