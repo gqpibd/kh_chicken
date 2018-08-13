@@ -12,14 +12,16 @@ public class BestSaleMenuDto implements Serializable {
 	private int total_sale;
 	private int total_coupon;
 	private int total_price;
+	private double score;
 
-	public BestSaleMenuDto(String menu_type, String menu_name, int price, int total_sale, int total_coupon, int total_price) {
+	public BestSaleMenuDto(String menu_type, String menu_name, int price, int total_sale, int total_coupon, int total_price, double score) {
 		this.menu_type = menu_type;
 		this.menu_name = menu_name;
 		this.price = price;
 		this.total_sale = total_sale;
 		this.total_coupon = total_coupon;
 		this.total_price = total_price;
+		this.score = score;
 	}
 
 	public String getMenu_type() {
@@ -68,6 +70,14 @@ public class BestSaleMenuDto implements Serializable {
 
 	public void setTotal_price(int total_price) {
 		this.total_price = total_price;
+	}
+
+	public double getScore() {
+		return score;
+	}
+
+	public void setScore(double score) {
+		this.score = score;
 	}
 
 	@Override

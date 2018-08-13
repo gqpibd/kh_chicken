@@ -92,14 +92,14 @@ SELECT * FROM ORDER_DETAIL;
 
 
 
--- 날짜별
+-- 날짜순
 SELECT DISTINCT A.ORDER_DATE, A.ID, B.MENU_TYPE,  A.MENU_NAME, B.PRICE, A.COUNTS, A.BEV_COUPON, B.PRICE
 FROM ORDER_DETAIL A, MENU B
 WHERE A.MENU_NAME = B.MENU_NAME
 ORDER BY A.ORDER_DATE DESC;
 
 
--- 매출별
+-- 매출순
 SELECT b.menu_type, A.menu_name, B.price, A.판매량, A.사용쿠폰, (B.PRICE*A.판매량) 총판매액
 FROM (SELECT 정렬.menu_name , 정렬.판매량 , 정렬.쿠폰 사용쿠폰
 FROM(SELECT menu_name , SUM(counts) 판매량, SUM(BEV_COUPON) 쿠폰
@@ -107,6 +107,16 @@ FROM ORDER_DETAIL
 GROUP BY menu_name) 정렬) A, MENU B
 WHERE A.menu_name = B.MENU_NAME
 ORDER BY (B.PRICE*A.판매량) DESC;
+
+-- 별점순
+SELECT b.menu_type, A.menu_name, B.price, A.판매량, A.사용쿠폰, (B.PRICE*A.판매량) 총판매액, A.별점
+FROM (SELECT 정렬.menu_name , 정렬.판매량 , 정렬.쿠폰 사용쿠폰, 정렬.별점
+FROM(SELECT menu_name , SUM(counts) 판매량, SUM(BEV_COUPON) 쿠폰, ROUND(AVG(SCORE), 2) 별점
+FROM ORDER_DETAIL
+GROUP BY menu_name
+HAVING AVG(SCORE) IS NOT NULL
+ORDER BY AVG(SCORE) DESC) 정렬) A, MENU B
+WHERE A.menu_name = B.MENU_NAME;
 
 -- 고객관리
 SELECT A.ID, A.NAME, A.ADR, A.PHONE, B.주문건수

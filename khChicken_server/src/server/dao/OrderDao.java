@@ -46,7 +46,10 @@ public class OrderDao {
 			ArrayList<BestSaleMenuDto> bestSaleList = selectBySalse();
 			SocketWriter.Write(sock, bestSaleList);
 			break;
-
+		case 6: // selectByScore (별점순) - 백승지
+			ArrayList<BestSaleMenuDto> bestScoreList = selectByScore();
+			SocketWriter.Write(sock, bestScoreList);
+			break;
 		}
 	}
 
@@ -76,7 +79,8 @@ public class OrderDao {
 		}
 
 	}
-
+	
+	// 매출순 - 백승지
 	public ArrayList<BestSaleMenuDto> selectBySalse() {
 
 		String sql = " SELECT b.menu_type, A.menu_name, B.price, A.판매량, A.사용쿠폰, (B.PRICE*A.판매량) 총판매액 "
@@ -98,7 +102,7 @@ public class OrderDao {
 			while (rs.next()) {
 				// b.menu_type, A.menu_name, A.판매량, A.사용쿠폰, (B.PRICE*A.판매량) 총판매액
 				BestSaleMenuDto omd = new BestSaleMenuDto(rs.getString("MENU_TYPE"), rs.getString("MENU_NAME"), 
-						rs.getInt("PRICE"), rs.getInt("판매량"), rs.getInt("사용쿠폰"), rs.getInt("총판매액"));
+						rs.getInt("PRICE"), rs.getInt("판매량"), rs.getInt("사용쿠폰"), rs.getInt("총판매액"), 0);
 				list.add(omd);
 			}
 		} catch (SQLException e) {
@@ -108,7 +112,8 @@ public class OrderDao {
 		}
 		return list;
 	}
-
+	
+	// 날짜순 - 백승지
 	public ArrayList<OrderedMenuDto> selectByDate() {
 
 		String sql = " SELECT DISTINCT A.ORDER_DATE, A.ID, B.MENU_TYPE,  A.MENU_NAME, A.COUNTS, A.BEV_COUPON, B.PRICE "
@@ -147,43 +152,34 @@ public class OrderDao {
 		return list;
 	}
 	
-	
-	
-	public ArrayList<CustomerManageDto> customerManage() {
+	// 별점순 - 백승지
+	public ArrayList<BestSaleMenuDto> selectByScore() {
 
-		String sql = " SELECT A.ID, A.NAME, A.ADR, A.PHONE, B.주문건수 "
-				+ " FROM MEMBER A, "
-				+ " (SELECT A.ID, COUNT(*) 주문건수 "
-				+ " FROM ORDER_DETAIL A, MENU B "
-				+ " WHERE A.MENU_NAME = B.MENU_NAME "
-				+ " AND B.MENU_TYPE = '메인' "
-				+ " GROUP BY ID "
-				+ " ORDER BY COUNT(*) DESC) B "
-				+ " WHERE A.ID = B.ID ";
+		String sql = " SELECT b.menu_type, A.menu_name, B.price, A.판매량, A.사용쿠폰, (B.PRICE*A.판매량) 총판매액, A.별점 "
+				+ " FROM (SELECT 정렬.menu_name , 정렬.판매량 , 정렬.쿠폰 사용쿠폰, 정렬.별점 "
+				+ " FROM(SELECT menu_name , SUM(counts) 판매량, SUM(BEV_COUPON) 쿠폰, ROUND(AVG(SCORE), 2) 별점 "
+				+ " FROM ORDER_DETAIL "
+				+ " GROUP BY menu_name "
+				+ " HAVING AVG(SCORE) IS NOT NULL "
+				+ " ORDER BY AVG(SCORE) DESC) 정렬) A, MENU B "
+				+ " WHERE A.menu_name = B.MENU_NAME ";
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 
-		ArrayList<CustomerManageDto> list = new ArrayList<>();
+		ArrayList<BestSaleMenuDto> list = new ArrayList<>();
 
 		try {
 			conn = DBConnection.getConnection();
 			psmt = conn.prepareStatement(sql);
 			rs = psmt.executeQuery();
-
 			while (rs.next()) {
-				// A.ID, A.NAME, A.ADR, A.PHONE, B.주문건수
-				CustomerManageDto omd = new CustomerManageDto(
-						rs.getString("ID"), 
-						rs.getString("NAME"),
-						rs.getString("ADR"),
-						rs.getString("PHONE"),
-						rs.getInt("주문건수")
-						);
+				// b.menu_type, A.menu_name, A.판매량, A.사용쿠폰, (B.PRICE*A.판매량) 총판매액
+				BestSaleMenuDto omd = new BestSaleMenuDto(rs.getString("MENU_TYPE"), rs.getString("MENU_NAME"), 
+						rs.getInt("PRICE"), rs.getInt("판매량"), rs.getInt("사용쿠폰"), rs.getInt("총판매액"), rs.getDouble("별점"));
 				list.add(omd);
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
