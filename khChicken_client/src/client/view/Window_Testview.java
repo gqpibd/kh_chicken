@@ -49,10 +49,10 @@ public class Window_Testview extends JFrame implements ActionListener {
 	
 	public Window_Testview(String _Str_MenuName) {
 	setLayout(null);
-	this.Str_MenuName = "images\\"+_Str_MenuName.replaceAll(" ", "_") + ".jpg";
+	this.Str_MenuName = _Str_MenuName;
 	
 	Toolkit Tool_Menu = Toolkit.getDefaultToolkit();
-	Image_Menu =  Tool_Menu.getImage(Str_MenuName);
+	Image_Menu =  Tool_Menu.getImage("images\\"+Str_MenuName.replaceAll(" ", "_") + ".jpg");
 	Image_Menu = Image_Menu.getScaledInstance(207, 184, Image.SCALE_SMOOTH);
 	ImageIcon_Menu = new ImageIcon(Image_Menu);
 	
@@ -187,7 +187,9 @@ public class Window_Testview extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
+		Singleton single = Singleton.getInstance();
 		if (JBut_Review_While == obj) {
+			single.getRevCtrl().reviewWhilView(this, Str_MenuName);
 			
 			
 		}

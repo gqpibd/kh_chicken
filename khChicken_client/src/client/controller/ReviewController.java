@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 
 import client.dao.ReviewDao;
 import client.view.Window_Review;
+import client.view.Window_Review_While;
 import client.view.Window_Testview;
 import dto.ReviewDto;
 
@@ -15,7 +16,7 @@ public class ReviewController {
 
 	//private Window_Review reviewView; // 리뷰창
 	private Window_Testview reviewView;
-	private Window_ReviewWhile reviewWhilView;
+	private Window_Review_While reviewWhileView;
 
 	public void insert(ReviewDto dto) {
 		revDao.insert(dto);
@@ -38,6 +39,15 @@ public class ReviewController {
 		revDao.select(menuName); // 리뷰를 불러와 리뷰 다오에 있는 리스트를 셋팅해준다.
 		reviewView = new Window_Testview(menuName);
 		//reviewView = new Window_Review(menuName);
+	}
+	
+	public void reviewWhilView(JFrame currentFrame, String menuName) {
+		currentFrame.setVisible(false);
+		if (reviewWhileView== null ) {
+			reviewWhileView =new Window_Review_While(menuName);
+		}else {
+			reviewWhileView.setVisible(true);
+		}
 	}
 
 	public List<ReviewDto> getList() {

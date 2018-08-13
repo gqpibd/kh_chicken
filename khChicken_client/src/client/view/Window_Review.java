@@ -245,7 +245,7 @@ public class Window_Review extends JFrame implements ActionListener {
 		if (obj == JBut_reviewInput) {
 			single.getRevCtrl().update(dto);
 			JOptionPane.showMessageDialog(null, "작성이 완료되었습니다.");
-			panel_menu.add(getEachReviewPanel(dto));
+			//panel_menu.add(getEachReviewPanel(dto));
 
 		} else if (obj == JBut_Back) {
 			single.backToMain(this);
