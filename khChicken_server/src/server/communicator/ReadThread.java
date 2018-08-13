@@ -49,7 +49,10 @@ public class ReadThread extends Thread {
 					s.getOrderCtrl().execute(number, (OrderedMenuDto) obj, sock);
 				} else if (obj instanceof ReviewDto) { // 리뷰보기
 					s.getRevCtrl().execute(number, (ReviewDto) obj, sock);
-				} else if (obj instanceof String) {
+				} else if (obj instanceof String ) {
+					s.getStaCtrl().execute(number, (String) obj, sock);
+				}
+				else if (obj instanceof String) {
 
 					String sql = "SELECT DISTINCT SIDO, SIGUNGU, LOAD, EUBMEONDONG" + " FROM LOADNAME_ADD "
 							+ " WHERE LOAD = ? ";
