@@ -11,6 +11,9 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+
+import client.singleton.Singleton;
+import dto.OrderedMenuDto;
  
 public class Communicator {
 	public static int INSERT = 0;
@@ -31,6 +34,8 @@ public class Communicator {
 		}
 	}
 
+	
+	
 	public void SendMessage(int number, Object o) {
 		ObjectOutputStream oos = null;
 		try {

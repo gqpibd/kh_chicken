@@ -34,6 +34,8 @@ public class OrderView extends JFrame implements ActionListener, ItemListener {
 	JButton btnArrPlus[] = new JButton[6];
 	JButton btnArr[] = new JButton[6];
 
+	JLabel couponLabel;
+	
 	private final Object[] colNames = { "선택", "메뉴", "가격", "수량", " ", " " };
 	Object[][] datas;
 
@@ -79,15 +81,18 @@ public class OrderView extends JFrame implements ActionListener, ItemListener {
 
 		// 눌렀을 때 memberDto의 Coupon - 1
 		// 위의 변수 - 1 : 라벨에 바로 적용
-		JButton btnNewButton_1 = new JButton("사용");
-		btnNewButton_1.setBounds(80, 424, 63, 27);
-		add(btnNewButton_1);
+		JButton couponUseBtn = new JButton("사용");
+		couponUseBtn.setBounds(80, 424, 63, 27);
+		add(couponUseBtn);
 
 		// memberDto에서 쿠폰 수를 바로 받아와서 라벨에 띄우기
 		// SELECT 로 COUNT(리뷰) / 3 + 1 을 보여줄껀데.
-		JLabel lblNewLabel_4 = new JLabel("사용 가능한 쿠폰 : " + "0" + "장");
-		lblNewLabel_4.setBounds(14, 454, 192, 49);
-		add(lblNewLabel_4);
+		String coupons = s.getOrderCtrl().getCoupons();
+		couponLabel = new JLabel("사용 가능한 쿠폰 : " + "0" + "장");
+		System.out.println(coupons);
+		couponLabel.setText("사용 가능한 쿠폰 : " + coupons + "장");		
+		couponLabel.setBounds(14, 454, 192, 49);
+		add(couponLabel);
 
 		// 주문자와 배달지에 대한 테이블
 		setDeliveryTable();

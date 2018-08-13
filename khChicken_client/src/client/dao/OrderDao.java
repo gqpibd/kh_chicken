@@ -1,5 +1,7 @@
 package client.dao;
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,8 @@ public class OrderDao {
 	public OrderDao() {
 	}
 
+	
+	
 	public void insert(ArrayList<OrderedMenuDto> confirmedList) {
 
 		Singleton s = Singleton.getInstance();
@@ -63,6 +67,21 @@ public class OrderDao {
 
 	}
 
+	public String useCoupon() { //사용할수 있는 쿠폰 (writer 번호, 자신의 id)
+		ObjectOutputStream oos = null;
+		Singleton s = Singleton.getInstance();		
+		
+		// id 보내기
+		String id = s.getMemCtrl().getLoginId();
+		OrderedMenuDto oDto = new OrderedMenuDto(null, id, null, null, 0, 0, 0);
+		s.getComm().SendMessage(Communicator.SELECT, oDto);
+
+		//다시 받아오기
+		String couponEA = (String)s.getComm().receiveObject();
+		System.out.println("message : "+couponEA);
+		return couponEA;
+	}
+	
 	public void update() {
 
 	}

@@ -20,6 +20,8 @@ public class OrderController {
 	private SaleManageView salManView; // 매출관리창
 	private OrderView ordView;
 
+	
+	
 	public void insert(ArrayList<OrderedMenuDto> confirmedList) { // 주문 내역을 전송한다.
 		ordDao.insert(confirmedList);
 		JOptionPane.showMessageDialog(null, "주문이 완료되었습니다");
@@ -67,6 +69,11 @@ public class OrderController {
 		} else { // 있을 땐
 			ordView.setVisible(true); // 보여만 준다.
 		}
+	}
+
+	public String getCoupons() {
+		// TODO Auto-generated method stub
+		return ordDao.useCoupon();
 	}
 
 }
