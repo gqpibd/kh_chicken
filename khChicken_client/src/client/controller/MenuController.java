@@ -48,6 +48,11 @@ public class MenuController {
 	public void update(MenuShowDto menu, int newPrice, String description) {
 		menDao.update(menu, newPrice, description);
 	}
+	
+	public void Sco_Update(MenuShowDto dto ) {
+		menDao.Sco_Update(dto);
+	}
+	
 
 	public void menuManageView(JFrame currentView) {
 		currentView.setVisible(false);

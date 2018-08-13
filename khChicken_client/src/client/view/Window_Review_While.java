@@ -21,6 +21,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import client.singleton.Singleton;
+import dto.MenuShowDto;
 import dto.ReviewDto;
 import sun.misc.Signal;
 
@@ -125,7 +126,10 @@ public class Window_Review_While extends JFrame implements ActionListener {
 			}else {
 			//single.getRevCtrl().update(dto);
 			if(Review_Check == true) {
-				
+				MenuShowDto _dto = new MenuShowDto();
+				_dto.setavgScore(dto.getScore());
+				_dto.setMenu_name(dto.getMenuName());
+				single.getMenuCtrl().update(dto, newPrice, description);
 				JOptionPane.showMessageDialog(null, "작성이 완료되었습니다.");
 			}else if(Review_Check == false) {
 				JOptionPane.showMessageDialog(null, "리뷰를 작성할 자격이없습니다.");

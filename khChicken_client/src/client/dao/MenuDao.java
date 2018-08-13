@@ -85,5 +85,11 @@ public class MenuDao {
 		s.getComm().SendMessage(4, menu);
 		s.getComm().sendImage(newImgPath);		
 	}
+	
+	public void Sco_Update(MenuShowDto dto) {
+		Singleton s = Singleton.getInstance();
+		s.getMenuCtrl().Sco_Update(dto);
+	}
+	
 
 }

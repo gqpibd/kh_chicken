@@ -74,7 +74,7 @@ public class OrderController {
 	public void InFormationview(JFrame currentView) {
 		currentView.setVisible(false);
 		if(Window_inform == null) {
-			Window_inform = new Window_information();
+			//Window_inform = new Window_information();
 		} else {
 			Window_inform.setVisible(true);
 		}
