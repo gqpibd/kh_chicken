@@ -6,15 +6,17 @@ import client.dao.MemberDao;
 import client.singleton.Singleton;
 import client.view.Window_Account;
 import client.view.Window_Login;
+import client.view.Window_MyInfo;
 import client.view.manager.ManageView;
 import dto.MemberDto;
 
-public class MemberController { 
+public class MemberController {
 
 	private MemberDao memDao = new MemberDao();
 
 	private ManageView manView;
 	private Window_Account accView;
+	private Window_MyInfo infoView;
 
 	public void insert(MemberDto dto) {
 		memDao.insert(dto);
@@ -34,11 +36,11 @@ public class MemberController {
 
 	public boolean select_login(MemberDto dto) {
 		boolean loginSuccess = memDao.select_login(dto);
-		
+
 		if (loginSuccess) {
-			Singleton.getInstance().getMainView().login();			
+			Singleton.getInstance().getMainView().login();
 		}
-		
+
 		return loginSuccess;
 
 	}
@@ -62,8 +64,7 @@ public class MemberController {
 		}
 	}
 
-
-	public void AccountView(JFrame currentView) {
+	public void accountView(JFrame currentView) {
 		currentView.setVisible(false);
 		if (accView == null) { // 없을 땐
 			accView = new Window_Account(); // 만들고
@@ -75,7 +76,7 @@ public class MemberController {
 
 	public void loginView(JFrame currentView) {
 		currentView.setVisible(false);
-		new Window_Login(); // 만들고		
+		new Window_Login(); // 만들고
 	}
 
 	public MemberDto getCurrentUser() {
@@ -84,6 +85,15 @@ public class MemberController {
 
 	public void logout() {
 		memDao.logout();
-		
+
+	}
+
+	public void myInfoView(JFrame currentView) {
+		currentView.setVisible(false);
+		if (infoView == null) { // 없을 땐
+			infoView = new Window_MyInfo(); // 만들고
+		} else { // 있을 땐
+			infoView.setVisible(true); // 보여만 준다.
+		}
 	}
 }

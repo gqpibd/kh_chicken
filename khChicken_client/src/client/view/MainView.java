@@ -49,7 +49,7 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 
 	// 버튼들
 	JButton btn_Login;
-	JButton btn_Register;
+	JLabel btn_Register;
 	JButton btn_Order;
 	JButton btn_Manage;
 
@@ -65,23 +65,27 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 		setResizable(false);
 
 		// 버튼설정
-		btn_Login = new JButton(new ImageIcon(PATH + "loginBtn.jpg")); // 로그아웃 / 인 으로 변환됨
+		ImageIcon loginIcon = new ImageIcon(PATH + "loginBtn.jpg");
+		btn_Login = new JButton(loginIcon); // 로그아웃 / 인 으로 변환됨
 		btn_Login.setName("로그인");
-		btn_Login.setBounds(370, 50, 97, 40);
+		btn_Login.setBounds(470, 45, loginIcon.getIconWidth(), loginIcon.getIconHeight());
 		btn_Login.setFont(new Font("다음_Regular", Font.PLAIN, 14));
 		btn_Login.addActionListener(this);
-		btn_Register = new JButton(new ImageIcon(PATH + "signBtn.jpg"));
-		btn_Register.setBounds(470, 50, 97, 40);
+		ImageIcon registerIcon = new ImageIcon(PATH + "signBtn.jpg");
+		btn_Register = new JLabel(registerIcon);
+		btn_Register.setName("회원가입");
+		btn_Register.setBounds(350, 45, registerIcon.getIconWidth(), registerIcon.getIconHeight());
 		btn_Register.setFont(new Font("다음_Regular", Font.PLAIN, 14));
-		btn_Register.addActionListener(this);
+	//	btn_Register.addActionListener(this);
 
+	
 		btn_Order = new JButton(new ImageIcon(PATH + "orderBtn.jpg"));
-		btn_Order.setBounds(475, 715, 100, 45);
+		btn_Order.setBounds(475, 715, btn_Order.getIcon().getIconWidth(), btn_Order.getIcon().getIconHeight());
 		btn_Order.setFont(new Font("다음_Regular", Font.PLAIN, 15));
 		btn_Order.addActionListener(this);
 
 		btn_Manage = new JButton(new ImageIcon(PATH + "manageBtn.jpg"));
-		btn_Manage.setBounds(370, 715, 100, 45);
+		btn_Manage.setBounds(370, 715, btn_Manage.getIcon().getIconWidth(), btn_Manage.getIcon().getIconHeight());
 		btn_Manage.setVisible(false);
 		btn_Manage.setFont(new Font("다음_Regular", Font.PLAIN, 15));
 		btn_Manage.addActionListener(this);
@@ -249,7 +253,11 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 				logout();
 			}
 		} else if (o == btn_Register) { // 회원가입
-			memCtrl.AccountView(this);
+			if (btn_Register.getName().equals("회원가입")) {
+				memCtrl.accountView(this);				
+			} else {
+				memCtrl.myInfoView(this);
+			}			
 		} else if (o == btn_Order) { // 주문하기
 			// orderMenuDto에 선택한 메뉴 이름, 타입, 가격 넣어서 넘겨주기
 			OrderController ordCtrl = Singleton.getInstance().getOrderCtrl();
@@ -274,7 +282,9 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 		if (s.getMemCtrl().getAuth() == MemberDto.MANAGER) {
 			btn_Login.setIcon(new ImageIcon(PATH + "logoutBtn.jpg"));
 			btn_Manage.setVisible(true);
-			btn_Register.setVisible(false);
+			btn_Register.setName("내정보");
+			ImageIcon icon = new ImageIcon(PATH + "myPageBtn.jpg");
+			btn_Register.setIcon(icon);
 		}
 	}
 
@@ -283,7 +293,10 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 		btn_Login.setIcon(new ImageIcon(PATH + "loginBtn.jpg"));
 		btn_Login.repaint();
 		btn_Login.setName("로그인");
+		btn_Register.setName("회원가입");
+		ImageIcon icon = new ImageIcon(PATH + "myPageBtn.jpg");
+		btn_Register.setIcon(icon);
+		
 		btn_Manage.setVisible(false);
-		btn_Register.setVisible(true);
 	}
 }

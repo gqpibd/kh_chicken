@@ -90,7 +90,7 @@ public class Window_Login extends JFrame implements ActionListener {
 				}
 			}
 		} else if (obj == Jbut_Account) {
-			s.getMemCtrl().AccountView(this);
+			s.getMemCtrl().accountView(this);
 		} else if (obj == Jbut_Exit) {
 			s.backToMain(this);
 		}

@@ -9,8 +9,7 @@ import javax.swing.JOptionPane;
 import client.dao.OrderDao;
 import client.singleton.Singleton;
 import client.view.OrderView;
-import client.view.manager.SaleManageView;
-import dto.BestSaleMenuDto;
+import client.view.Window_MyInfo;
 import dto.OrderedMenuDto;
 
 public class OrderController {
@@ -18,6 +17,7 @@ public class OrderController {
 	private OrderDao ordDao = new OrderDao();
 
 	private OrderView ordView;
+	private Window_MyInfo Window_inform;
 
 	public void insert(ArrayList<OrderedMenuDto> confirmedList) { // 주문 내역을 전송한다.
 		ordDao.insert(confirmedList);
@@ -27,9 +27,6 @@ public class OrderController {
 
 	public void clearList() {
 		ordDao.clearList();
-	}
-	public List<OrderedMenuDto> getList() {
-		return ordDao.getList();
 	}
 
 	public void OrderView(JFrame currentView) {
@@ -41,6 +38,18 @@ public class OrderController {
 
 	public String getCoupons() {
 		return ordDao.getCoupon();
+	}	
+
+	public List<OrderedMenuDto> getList() {
+		return ordDao.getList();
 	}
 
+	public void InFormationview(JFrame currentView) {
+		currentView.setVisible(false);
+		if (Window_inform == null) {
+			Window_inform = new Window_MyInfo();
+		} else {
+			Window_inform.setVisible(true);
+		}
+	}
 }

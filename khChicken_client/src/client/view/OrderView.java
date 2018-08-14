@@ -1,11 +1,10 @@
 package client.view;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,6 +21,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+import javax.swing.event.CellEditorListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -29,11 +30,6 @@ import javax.swing.table.TableCellRenderer;
 import client.singleton.Singleton;
 import dto.MemberDto;
 import dto.OrderedMenuDto;
-import javax.swing.border.LineBorder;
-import javax.swing.event.CellEditorListener;
-
-import java.awt.Checkbox;
-import java.awt.Color;
 
 public class OrderView extends JFrame implements ActionListener {
 	private int beverageCounts = 0;

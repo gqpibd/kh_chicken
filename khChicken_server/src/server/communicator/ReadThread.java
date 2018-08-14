@@ -5,20 +5,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
-import dto.BestSaleMenuDto;
 import dto.MemberDto;
 import dto.MenuShowDto;
 import dto.OrderedMenuDto;
 import dto.ReviewDto;
-import server.db.DBClose;
-import server.db.DBConnection;
 import server.singleton.Singleton;
 
 public class ReadThread extends Thread {

@@ -5,10 +5,10 @@ import java.util.List;
 
 import client.communicator.Communicator;
 import client.singleton.Singleton;
-import dto.MenuShowDto; 
+import dto.MenuShowDto;
 
 public class MenuDao {
-	//public static final String FOLDER_PATH = "\\\\127.0.0.1\\images\\";
+	// public static final String FOLDER_PATH = "\\\\127.0.0.1\\images\\";
 	public static final String FOLDER_PATH = "\\\\192.168.30.35\\share\\images\\";
 	private List<MenuShowDto> menList = new ArrayList<MenuShowDto>();
 
@@ -30,7 +30,7 @@ public class MenuDao {
 		menList.clear();
 
 		s.getComm().SendMessage(Communicator.SELECT, dto);
-		menList = (ArrayList<MenuShowDto>)s.getComm().receiveObject();
+		menList = (ArrayList<MenuShowDto>) s.getComm().receiveObject();
 
 	}
 
@@ -69,9 +69,9 @@ public class MenuDao {
 
 	public void update(MenuShowDto menu, int newPrice, String description) {
 		// 리스트에서 업데이트
-		menu.setPrice(newPrice); 
+		menu.setPrice(newPrice);
 		menu.setDescription(description);
-		
+
 		// socket으로 전달
 		Singleton s = Singleton.getInstance();
 		s.getComm().SendMessage(Communicator.UPDATE, menu);
@@ -80,7 +80,16 @@ public class MenuDao {
 	public void updateImage(MenuShowDto menu, String newImgPath) {
 		Singleton s = Singleton.getInstance();
 		s.getComm().SendMessage(4, menu);
-		s.getComm().sendImage(newImgPath);		
+		s.getComm().sendImage(newImgPath);
 	}
 
+	public void sco_Update(MenuShowDto dto) {
+
+		Singleton s = Singleton.getInstance();
+		s.getComm().SendMessage(5, dto);
+	}
+
+	public List<MenuShowDto> get_List() {
+		return menList;
+	}
 }
