@@ -32,9 +32,7 @@ public class Communicator {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	
+	}	
 	
 	public void SendMessage(int number, Object o) {
 		ObjectOutputStream oos = null;
@@ -85,23 +83,5 @@ public class Communicator {
 
 		return obj;
 	}
-
-//	public ArrayList<Object> receiveMessage() {
-//		ObjectInputStream ois = null;
-//		ArrayList<Object> objList = new ArrayList<>();
-//		try {
-//			System.out.println("reading");
-//			ois = new ObjectInputStream(sock.getInputStream());
-//			objList = (ArrayList<Object>) ois.readObject();
-//		} catch (EOFException e) {
-//			System.out.println("파일을 다 읽었습니다.");
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		} catch (ClassNotFoundException e) {
-//			e.printStackTrace();
-//		}
-//
-//		return objList;
-//	}
 
 }

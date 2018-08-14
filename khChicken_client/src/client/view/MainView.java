@@ -39,6 +39,7 @@ import dto.OrderedMenuDto;
 import net.miginfocom.swing.MigLayout;
 
 public class MainView extends JFrame implements ItemListener, ActionListener {
+	private static final String PATH = "images/mainView/";
 
 	Singleton s = Singleton.getInstance();
 	MenuController menCtrl = Singleton.getInstance().getMenuCtrl();
@@ -54,33 +55,33 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 
 	JButton btn_good;
 	JLabel label_goodCount;
+	Image img = null;
 
 	public MainView() {
 		super("KH CHICKEN");
 		getContentPane().setLayout(null);
-
-		// 로고2, 버튼 4, 패널 1
-
-		// 버튼글씨
-		String loginStr = "로그인";
+		
+		setContentPane(new JLabel(new ImageIcon(PATH + "mainView.jpg")));		
+		setResizable(false);
 
 		// 버튼설정
-		btn_Login = new JButton(loginStr); // 로그아웃 / 인 으로 변환됨
-		btn_Login.setBounds(370, 50, 97, 30);
+		btn_Login = new JButton(new ImageIcon(PATH + "loginBtn.jpg")); // 로그아웃 / 인 으로 변환됨
+		btn_Login.setName("로그인");
+		btn_Login.setBounds(370, 50, 97, 40);
 		btn_Login.setFont(new Font("다음_Regular", Font.PLAIN, 14));
 		btn_Login.addActionListener(this);
-		btn_Register = new JButton("회원가입");
-		btn_Register.setBounds(479, 50, 97, 30);
+		btn_Register = new JButton(new ImageIcon(PATH + "signBtn.jpg"));
+		btn_Register.setBounds(470, 50, 97, 40);
 		btn_Register.setFont(new Font("다음_Regular", Font.PLAIN, 14));
 		btn_Register.addActionListener(this);
 
-		btn_Order = new JButton("주문하기");
-		btn_Order.setBounds(475, 700, 97, 55);
+		btn_Order = new JButton(new ImageIcon(PATH + "orderBtn.jpg"));
+		btn_Order.setBounds(475, 715, 100, 45);
 		btn_Order.setFont(new Font("다음_Regular", Font.PLAIN, 15));
 		btn_Order.addActionListener(this);
 
-		btn_Manage = new JButton("관리");
-		btn_Manage.setBounds(370, 700, 90, 54);
+		btn_Manage = new JButton(new ImageIcon(PATH + "manageBtn.jpg"));
+		btn_Manage.setBounds(370, 715, 100, 45);
 		btn_Manage.setVisible(false);
 		btn_Manage.setFont(new Font("다음_Regular", Font.PLAIN, 15));
 		btn_Manage.addActionListener(this);
@@ -91,7 +92,7 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 
 		// 메뉴들을 넣을 큰 패널 설정
 		JPanel panel_bigmenu = new JPanel();
-		panel_bigmenu.setBounds(10, 100, 570, 600);
+		panel_bigmenu.setBounds(0, 100, 580, 600);
 		panel_bigmenu.setBackground(new Color(255, 255, 255));
 		panel_bigmenu.setLayout(new MigLayout("wrap", "", ""));
 
@@ -118,7 +119,10 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 		panel_bigmenu.add(scroll);
 		scroll.getVerticalScrollBar().setUnitIncrement(15);
 
+		
+		
 		// 바탕에 저장
+	
 		getContentPane().add(btn_Login);
 		getContentPane().add(btn_Register);
 		getContentPane().add(btn_Order);
@@ -143,8 +147,8 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 		JPanel frontpanel = new JPanel();
 		frontpanel.setLayout(new MigLayout("", "20", "40"));
 		frontpanel.setSize(400, 300);
-		frontpanel.setBackground(new Color(255, 255, 255));
 
+		frontpanel.setBackground(new Color(255, 255, 255));
 		// 이미지넣기
 		// server에서 가져온 이미지 넣는 곳
 		String img = menCtrl.get(i).getMenu_name().replaceAll(" ", "_") + ".jpg";
@@ -204,7 +208,7 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 		JCheckBox chb = (JCheckBox) e.getSource();
 
 		if (chb.isSelected() && !checkedMenu.contains(chb.getName())) {
-			checkedMenu.add(chb.getName());			
+			checkedMenu.add(chb.getName());
 		} else {
 			checkedMenu.remove(chb.getName());
 		}
@@ -238,7 +242,8 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 
 		Object o = e.getSource();
 		if (o == btn_Login) { // 로그인
-			if (((JButton) o).getText().equals("로그인")) {
+			if (btn_Login.getName().equals("로그인")) {
+				login();
 				memCtrl.loginView(this);
 			} else {
 				logout();
@@ -248,7 +253,7 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 		} else if (o == btn_Order) { // 주문하기
 			// orderMenuDto에 선택한 메뉴 이름, 타입, 가격 넣어서 넘겨주기
 			OrderController ordCtrl = Singleton.getInstance().getOrderCtrl();
-			if(checkedMenu.size()==0) {
+			if (checkedMenu.size() == 0) {
 				JOptionPane.showMessageDialog(null, "선택한 메뉴가 없습니다");
 				return;
 			}
@@ -264,9 +269,10 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 	}
 
 	public void login() { // 로그인 상태에서의 뷰
-		btn_Login.setText("로그아웃");
+		btn_Login.setName("로그아웃");
 		System.out.println(s.getMemCtrl().getAuth());
 		if (s.getMemCtrl().getAuth() == MemberDto.MANAGER) {
+			btn_Login.setIcon(new ImageIcon(PATH + "logoutBtn.jpg"));
 			btn_Manage.setVisible(true);
 			btn_Register.setVisible(false);
 		}
@@ -274,7 +280,9 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 
 	public void logout() { // 로그아웃 상태에서의 뷰
 		memCtrl.logout();
-		btn_Login.setText("로그인");
+		btn_Login.setIcon(new ImageIcon(PATH + "loginBtn.jpg"));
+		btn_Login.repaint();
+		btn_Login.setName("로그인");
 		btn_Manage.setVisible(false);
 		btn_Register.setVisible(true);
 	}
