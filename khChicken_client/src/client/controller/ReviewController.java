@@ -2,6 +2,7 @@ package client.controller;
 
 import java.util.List;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import client.dao.ReviewDao;
@@ -32,13 +33,14 @@ public class ReviewController {
 		return revDao.update(dto);
 	}
 
-	public void reviewView(JFrame currentFrame, String menuName) {
+	public boolean reviewView(JFrame currentFrame, String menuName) {
 		currentFrame.setVisible(false);
 		revDao.select(menuName); // 리뷰를 불러와 리뷰 다오에 있는 리스트를 셋팅해준다.
-		reviewView = new Window_Review(menuName);
+		reviewView = new Window_Review(currentFrame, menuName);
+		return reviewView.getSelection();
 	}
 
-	public void Write_view(JFrame currentFrame, String menuName) {
+	public void Write_view(JDialog currentFrame, String menuName) {
 
 		if (write_view == null) {
 			write_view = new Window_Review_Write(menuName);

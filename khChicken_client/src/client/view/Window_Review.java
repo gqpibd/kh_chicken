@@ -14,6 +14,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -28,13 +29,14 @@ import client.singleton.Singleton;
 import dto.ReviewDto;
 import net.miginfocom.swing.MigLayout;
 
-public class Window_Review extends JFrame implements ActionListener {
+public class Window_Review extends JDialog implements ActionListener {
 
 	ImageIcon ImageIcon_Menu;
 	Image Image_Menu;
 	String menuName;
 
 	JLabel JLabel_Menu;
+	JButton JBut3;
 
 	JButton JBut_ReviewRead;
 	JButton JBut_Back;
@@ -43,16 +45,21 @@ public class Window_Review extends JFrame implements ActionListener {
 	JPanel container;
 	JScrollPane scrPane;
 	JPanel panel_menu;
+	boolean select = false;
 
-	public Window_Review(String menuName) {
+	public Window_Review(JFrame parent, String menuName) {
+		super(parent, true);
 		setLayout(null);
 		this.menuName = menuName;
 		MenuController mCtrl = Singleton.getInstance().getMenuCtrl();
 
-		Toolkit Tool_Menu = Toolkit.getDefaultToolkit();
-		Image_Menu = Tool_Menu.getImage("images\\" + menuName.replaceAll(" ", "_") + ".jpg");
-		Image_Menu = Image_Menu.getScaledInstance(207, 184, Image.SCALE_SMOOTH);
-		ImageIcon_Menu = new ImageIcon(Image_Menu);
+
+		setBounds(100, 100, 566, 557);
+		
+		//Toolkit Tool_Menu = Toolkit.getDefaultToolkit();
+		//Image_Menu = Tool_Menu.getImage("images\\" + menuName.replaceAll(" ", "_") + ".jpg");
+		//Image_Menu = Image_Menu.getScaledInstance(207, 184, Image.SCALE_SMOOTH);
+		//ImageIcon_Menu = new ImageIcon(Image_Menu);
 
 		// JLabel_Menu = new JLabel(_ImageIcon_Menu);
 		JLabel_Menu = new JLabel(ImageIcon_Menu);
@@ -61,7 +68,7 @@ public class Window_Review extends JFrame implements ActionListener {
 
 		JTextArea menuStory = new JTextArea();
 		menuStory.setText(mCtrl.getMenuDto(menuName).getDescription());
-		menuStory.setLineWrap(true); 
+		menuStory.setLineWrap(true);
 		menuStory.setEditable(false);
 		menuStory.setFocusable(false);
 		menuStory.setBounds(235, 12, 299, 184);
@@ -83,7 +90,6 @@ public class Window_Review extends JFrame implements ActionListener {
 		scroll.getVerticalScrollBar().setUnitIncrement(15); // 스크롤 할 때 움직이는 양
 		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-		
 		scroll.setPreferredSize(new Dimension(800, 204));
 		panel_bigmenu.add(scroll);
 		list = Singleton.getInstance().getRevCtrl().getList();
@@ -103,13 +109,11 @@ public class Window_Review extends JFrame implements ActionListener {
 		JBut_Back.setBounds(322, 425, 93, 32);
 		add(JBut_Back);
 
-		JButton JBut3 = new JButton("장바구니");
+		JBut3 = new JButton("장바구니");
 		JBut3.setBounds(215, 468, 93, 32);
+		JBut3.addActionListener(this);
 		add(JBut3);
-		JButton JBut4 = new JButton("사운드듣기");
-		JBut4.setBounds(428, 425, 106, 75);
-		add(JBut4);
-
+		
 		JLabel JLabel_Logo = new JLabel();
 		JLabel_Logo.setBackground(Color.WHITE);
 		JLabel_Logo.setOpaque(true);
@@ -117,8 +121,7 @@ public class Window_Review extends JFrame implements ActionListener {
 		add(JLabel_Logo);
 
 		setVisible(true);
-		setBounds(100, 100, 566, 557);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	public JPanel getEachReviewPanel(ReviewDto dto) { // 각 리뷰 패널 생성
@@ -126,11 +129,10 @@ public class Window_Review extends JFrame implements ActionListener {
 		JTextArea JTextA_Review; // 리뷰
 		JPanel JPanel_Review; // 리뷰 패널
 
-		
-//		JScrollPane scroll = new JScrollPane(JPanel_Review);
-//		scroll.getVerticalScrollBar().setUnitIncrement(15); // 스크롤 할 때 움직이는 양
-//		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-//		
+		// JScrollPane scroll = new JScrollPane(JPanel_Review);
+		// scroll.getVerticalScrollBar().setUnitIncrement(15); // 스크롤 할 때 움직이는 양
+		// scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		//
 		// 메뉴 출력
 
 		JPanel_Review = new JPanel(new MigLayout());
@@ -199,8 +201,16 @@ public class Window_Review extends JFrame implements ActionListener {
 		if (JBut_While == obj) {
 			single.getRevCtrl().Write_view(this, menuName);
 		} else if (JBut_Back == obj) {
-			System.out.println("dd");
-			single.backToMain(this);
+			dispose();
+			single.getMainView().setVisible(true);
+		} else if (obj == JBut3) {
+			select = true;
+			dispose();
+			single.getMainView().setVisible(true);			
 		}
+	}
+	
+	public boolean getSelection() {
+		return select;
 	}
 }
