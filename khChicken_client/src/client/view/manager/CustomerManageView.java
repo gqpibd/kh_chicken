@@ -126,10 +126,10 @@ public class CustomerManageView extends JFrame implements ActionListener, MouseL
 
 		// 컬럼의 넓이를 설정
 		jTable.getColumnModel().getColumn(0).setMaxWidth(50); 	// 글번호 폭
-		jTable.getColumnModel().getColumn(1).setMaxWidth(300);	// 아이디 폭
+		jTable.getColumnModel().getColumn(1).setMaxWidth(100);	// 아이디 폭
 		jTable.getColumnModel().getColumn(2).setMaxWidth(100);	// 이름 폭
-		jTable.getColumnModel().getColumn(3).setMaxWidth(100);	// 주소 폭
-		jTable.getColumnModel().getColumn(4).setMaxWidth(500);	// 전화번호 폭
+		jTable.getColumnModel().getColumn(3).setMaxWidth(500);	// 주소 폭
+		jTable.getColumnModel().getColumn(4).setMaxWidth(300);	// 전화번호 폭
 		jTable.getColumnModel().getColumn(5).setMaxWidth(100);	// 주문건수 폭
 
 		for (int i = 0; i < model.getColumnCount(); i++) { // 칼럼 내용 가운데 정렬
