@@ -1,5 +1,6 @@
 package client.dao;
 
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +32,18 @@ public class MemberDao {
 		return exsitingId;
 	}
 
+	public MemberDto orderInfo() {		//주문자 정보 검색
+		ObjectOutputStream oos = null;
+		Singleton s = Singleton.getInstance();		
+		
+		String id = s.getMemCtrl().getLoginId();
+		MemberDto mDto = new MemberDto(id, null, null, 0, 0, null, null);
+		s.getComm().SendMessage(5, mDto);
+		
+		MemberDto memDto = (MemberDto)s.getComm().receiveObject();
+		
+		return memDto;
+	}
 	public void update() {
 
 	}

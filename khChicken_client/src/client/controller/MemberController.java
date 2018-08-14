@@ -87,4 +87,10 @@ public class MemberController {
 	public MemberDto getCurrentUser() {
 		return memDao.getCurrentUser();
 	}
+
+	public MemberDto getOrderInfo() {
+		return memDao.orderInfo();
+	}
+
+
 }

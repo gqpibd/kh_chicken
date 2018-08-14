@@ -173,7 +173,7 @@ public class OrderView extends JFrame implements ActionListener, ItemListener {
 		SimpleDateFormat date = new SimpleDateFormat("YY/MM/dd hh:mm:ss");
 
 		// 주문자 정보를 받아올 2차원 배열 ( ID , ADR, PHONE )
-		MemberDto dto = s.getMemCtrl().getCurrentUser();
+		MemberDto dto = s.getMemCtrl().getOrderInfo();
 		OrderData = new Object[1][4]; // 테이블의 2차원배열
 		if (dto != null) {		
 			OrderData[0][0] = dto.getId(); // 아이디 ,

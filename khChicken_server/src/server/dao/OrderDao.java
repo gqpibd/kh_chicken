@@ -169,21 +169,17 @@ public class OrderDao {
 			conn = DBConnection.getConnection();
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1,oDto.getId()); 
-			rs = psmt.executeQuery();
-
-		
+			rs = psmt.executeQuery();		
 			
 			if(rs.next()) {
 				//sql문에서 얻어낸 값 저장.(쿠폰수)
 				couponEA = rs.getString(1);	//()안의 숫자는 select의 칼럼 순서						
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			DBClose.close(psmt, conn, rs);
 		}
-			
 		return couponEA;
 	}
 	

@@ -5,6 +5,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import dto.MemberDto;
 import server.communicator.SocketWriter;
@@ -30,6 +33,10 @@ public class MemberDao {
 			break;
 		case 4: // 로그인 - 윤상필
 			select_login(dto, sock);
+			break;
+		case 5 :
+			//주문자 정보 검색
+			selectOrder(sock, dto);
 			break;
 		}
 	}
@@ -151,5 +158,56 @@ public class MemberDao {
 
 		SocketWriter.Write(sock, loginSuccess);
 		
+	}
+	
+	public void selectOrder(Socket sock, MemberDto dto) { //주문 정보 (ID , 주소 , 전화번호 )
+			
+		String sql = "SELECT NAME, ID, USEDCOUPON, ADR, PHONE, " + 
+				"(SELECT to_char(sysdate, 'yy/mm/dd hh24:mi:ss') " + 
+				"	from dual) AS NOW_TIME " + 
+				" from MEMBER " + 
+				" where ID = ?";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;		
+		
+		MemberDto mDto = new MemberDto();
+		
+		ArrayList<MemberDto> list = new ArrayList<>();
+		
+		try {
+			conn = DBConnection.getConnection();					
+			psmt = conn.prepareStatement(sql);			
+			psmt.setString(1, dto.getId());
+			rs = psmt.executeQuery();
+			
+			while (rs.next()) {	// 값이 들어갔는지 확인.
+				mDto = new MemberDto( 
+						rs.getString(1),
+						rs.getString(2),
+						rs.getInt(3),
+						rs.getString(4),
+						rs.getString(5),
+						rs.getString(6)
+						);
+			}
+			
+//			while (rs.next()) {	// 값이 들어갔는지 확인.
+//				System.out.println(rs.getString(1)+
+//											rs.getString(2)+
+//											rs.getInt(3)+
+//											rs.getString(4)+
+//											rs.getString(5)+
+//											rs.getString(6));	
+//			}
+//			
+		//	System.out.println(count + "개의 데이터 갱신!");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		SocketWriter.Write(sock, mDto);
 	}
 }
