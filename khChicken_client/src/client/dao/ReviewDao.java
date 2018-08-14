@@ -49,6 +49,7 @@ public class ReviewDao {
 		comm.SendMessage(Communicator.UPDATE, dto);
 		Object obj = comm.receiveObject();
 		 boolean Review_Check = (boolean)obj;
+		 System.out.println("Review_Check = " + Review_Check);
 		return Review_Check;
 		
 	}

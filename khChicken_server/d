@@ -5,10 +5,18 @@
  WHERE ID = '5' AND MENU_NAME = '후라이드 치킨' AND REVIEW is null AND (TO_DATE(sysdate, 'yyyy/mm/dd') - TO_DATE(ORDER_DATE, 'yyyy/mm/dd')) <= '2'
  
  
+ UPDATE MENU
+ SET DESCRIPTION = '모짜렐라 치즈가 듬뿍 들어가 쫄깃쫄깃 스틱
+한입 무는 순간 치즈스틱안에 있는 치즈가 입안가득 차
+상상만해도 미소를 짓게해주는 치즈스틱~'
+ WHERE MENU_NAME = '치즈스틱'
  
  SELECT *
  FROM ORDER_DETAIL
- WHERE MENU_NAME = '반반 치킨'
+ WHERE ID = '하하'
+ 
+ SELECT *
+ F
  
  CREATE TABLE MENU(
     MENU_NAME VARCHAR2(30) PRIMARY KEY,
