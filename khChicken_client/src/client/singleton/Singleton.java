@@ -14,9 +14,9 @@ public class Singleton {
 
 	private static Singleton single = new Singleton(); 
 
-	private Communicator comm = new Communicator();
+	private Communicator comm = new Communicator(); // 소켓통신
 
-	private MemberController memCtrl = new MemberController();
+	private MemberController memCtrl = new MemberController(); // 멤버 컨트롤러
 	private MenuController menCtrl = new MenuController();
 	private OrderController ordCtrl = new OrderController();
 	private ReviewController revCtrl = new ReviewController();
