@@ -44,9 +44,13 @@ public class ReviewDao {
 		return rList;
 	}
 
-	public void update(ReviewDto dto) { // 작성한 리뷰를 등록한다. 기존 구매 내역에 추가됨.
+	public boolean update(ReviewDto dto) { // 작성한 리뷰를 등록한다. 기존 구매 내역에 추가됨.
 		Communicator comm = Singleton.getInstance().getComm();
 		comm.SendMessage(Communicator.UPDATE, dto);
+		Object obj = comm.receiveObject();
+		 boolean Review_Check = (boolean)obj;
+		return Review_Check;
+		
 	}
 
 	public void delete() {

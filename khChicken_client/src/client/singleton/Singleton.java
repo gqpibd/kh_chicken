@@ -9,6 +9,7 @@ import client.controller.OrderController;
 import client.controller.ReviewController;
 import client.view.MainView;
 import client.view.manager.ManageView;
+import dto.MenuShowDto;
 
 public class Singleton {
 
@@ -64,5 +65,6 @@ public class Singleton {
 		currentView.setVisible(false);
 		mv.setVisible(true); // 메인 화면을 보이게 한다.
 	}
+	
 
 }

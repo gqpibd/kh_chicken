@@ -11,11 +11,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
-<<<<<<< HEAD
-=======
-
-import dto.ReviewDto;
->>>>>>> branch 'yun_2' of https://github.com/gqpibd/kh_semi
  
 public class Communicator {
 	public static int INSERT = 0;
@@ -36,7 +31,6 @@ public class Communicator {
 		}
 	}
 
-<<<<<<< HEAD
 	public void SendMessage(int number, Object o) {
 		ObjectOutputStream oos = null;
 		try {
@@ -102,85 +96,6 @@ public class Communicator {
 			e.printStackTrace();
 		}
 
-=======
-	public boolean SendMessage(int number, Object o) {
-		ObjectOutputStream oos = null;
-		boolean Review_Check =false;
-		try {
-			oos = new ObjectOutputStream(sock.getOutputStream());
-			
-			oos.writeInt(number);
-			oos.writeObject(o);
-			oos.flush();
-			if(o instanceof ReviewDto) {
-				ReviewDto dto = (ReviewDto)o;
-				if(dto.getReview() != null) {
-				ObjectInputStream ois = new ObjectInputStream(sock.getInputStream());
-				Object obj =ois.readObject();
-				Review_Check = (boolean)obj;
-				System.out.println("Review_Check 1111= " + Review_Check);
-				}
-			}
-			
-			
-		} catch (IOException | ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		return Review_Check;
-	}
-
-	public void sendImage(String path) {
-		ObjectOutputStream oos = null;
-		try {
-			oos = new ObjectOutputStream(sock.getOutputStream());
-
-			BufferedImage im = ImageIO.read(new File(path));
-			System.out.println(im.toString());
-			ImageIO.write(im, "jpg", oos);
-			oos.flush();
-			oos.close();
-			makeConnection();
-			System.out.println("이미지 보냄");
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public Object receiveObject() {
-		ObjectInputStream ois = null;
-		Object obj = null;
-		try {
-			ois = new ObjectInputStream(sock.getInputStream());
-			obj = ois.readObject();
-		} catch (EOFException e) {
-			System.out.println("파일을 다 읽었습니다.");
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-
-		return obj;
-	}
-
-	public ArrayList<Object> receiveMessage() {
-		ObjectInputStream ois = null;
-		ArrayList<Object> objList = new ArrayList<>();
-		try {
-			System.out.println("reading");
-			ois = new ObjectInputStream(sock.getInputStream());
-			objList = (ArrayList<Object>) ois.readObject();
-		} catch (EOFException e) {
-			System.out.println("파일을 다 읽었습니다.");
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-
-	
->>>>>>> branch 'yun_2' of https://github.com/gqpibd/kh_semi
 		return objList;
 	}
 

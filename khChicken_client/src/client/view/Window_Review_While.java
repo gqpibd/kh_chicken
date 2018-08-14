@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -95,7 +96,7 @@ public class Window_Review_While extends JFrame implements ActionListener {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				super.mousePressed(e);
-				single.getMemCtrl().loginView(Window_Review_While.this,1);
+				single.getMemCtrl().loginView(Window_Review_While.this);
 			}
 		});
 		
@@ -114,22 +115,43 @@ public class Window_Review_While extends JFrame implements ActionListener {
 		dto.setMenuName(menuName);
 		dto.setReview(JTextA_Review_Input.getText());
 		dto.setScore(myScore);
-		System.out.println(dto.toString());
 		if (obj == JBut_Review_Input) {
 			
+			
+			
 			boolean Review_Check =single.getRevCtrl().update(dto);
-			
-			
-			
 			if(JTextA_Review_Input.equals("")) {
 				JOptionPane.showMessageDialog(null, "리뷰를 작성해주세요,");
 			}else {
 			//single.getRevCtrl().update(dto);
 			if(Review_Check == true) {
 				MenuShowDto _dto = new MenuShowDto();
-				_dto.setavgScore(dto.getScore());
+				
+				
+				// 현재 DB에있는 별점 총계산
+				double Sum_Score = 0;
+				List<MenuShowDto> mlist = single.getMenuCtrl().get_List();
+				for (int i = 0; i < mlist.size(); i++) {
+					if(mlist.get(i).getMenu_name().equals(menuName)) {
+					Sum_Score = Sum_Score + mlist.get(i).getavgScore();
+					}
+				}
+				Sum_Score = Sum_Score + dto.getScore(); // 총별점 + 방금내가 넣어준 별점
+				
+				// 리뷰를 쓴사람들 의수  
+				List<ReviewDto> rlist = single.getRevCtrl().getList();
+				int sum_user = 0;
+				for (int i = 0; i < rlist.size(); i++) {
+					if(rlist.get(i).getMenuName().equals(menuName)) { // 내가 쓴 리뷰의 총 리뷰쓴사람들의 수를 뽑아옴.
+						sum_user++;
+					}
+				}
+				
+				Sum_Score = Sum_Score/sum_user; // 총 별점 / 리뷰를 쓴사람의 수
+				
+				_dto.setavgScore(Sum_Score);
 				_dto.setMenu_name(dto.getMenuName());
-				single.getMenuCtrl().update(dto, newPrice, description);
+				single.getMenuCtrl().Sco_Update(_dto);
 				JOptionPane.showMessageDialog(null, "작성이 완료되었습니다.");
 			}else if(Review_Check == false) {
 				JOptionPane.showMessageDialog(null, "리뷰를 작성할 자격이없습니다.");

@@ -10,10 +10,6 @@ public class MenuDto implements Serializable {
 	private String menu_name;
 	private int price;
 
-<<<<<<< HEAD
-=======
-	
->>>>>>> branch 'yun_2' of https://github.com/gqpibd/kh_semi
 	public MenuDto() {
 	}
 

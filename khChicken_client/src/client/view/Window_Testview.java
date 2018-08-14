@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,7 +29,7 @@ import client.singleton.Singleton;
 import dto.ReviewDto;
 import net.miginfocom.swing.MigLayout;
 
-public class Window_Testview extends JFrame {
+public class Window_Testview extends JFrame implements ActionListener {
 	
 	
 	ImageIcon ImageIcon_Menu;
@@ -38,21 +40,21 @@ public class Window_Testview extends JFrame {
 	
 	JButton JBut_ReviewRead;
 	JButton JBut_Back;
+	JButton JBut_While;
+	
 	JPanel container;
 	JScrollPane scrPane;
 	JPanel panel_menu;
 
-	JTextArea JTextA_Review;
-	JScrollPane JScroll_Review;
-	JButton JBut_reviewInput;
+	
 	
 	
 	public Window_Testview(String _Str_MenuName) {
 	setLayout(null);
-	this.Str_MenuName = "images\\"+_Str_MenuName.replaceAll(" ", "_") + ".jpg";
+	this.Str_MenuName = _Str_MenuName;
 	
 	Toolkit Tool_Menu = Toolkit.getDefaultToolkit();
-	Image_Menu =  Tool_Menu.getImage(Str_MenuName);
+	Image_Menu =  Tool_Menu.getImage("images\\"+Str_MenuName.replaceAll(" ", "_") + ".jpg");
 	Image_Menu = Image_Menu.getScaledInstance(207, 184, Image.SCALE_SMOOTH);
 	ImageIcon_Menu = new ImageIcon(Image_Menu);
 	
@@ -91,12 +93,16 @@ public class Window_Testview extends JFrame {
 		panel_menu.add(getEachReviewPanel(list.get(i)), "wrap");
 	}
 	add(panel_bigmenu);
-	JButton JBut1 = new JButton("이전으로");
-	JBut1.setBounds(215, 425, 93, 32);
-	add(JBut1);
-	JButton JBut2 = new JButton("리뷰쓰기");
-	JBut2.setBounds(322, 425, 93, 32);
-	add(JBut2);
+	JBut_While = new JButton("리뷰쓰기");
+	JBut_While.addActionListener(this);
+	JBut_While.setBounds(215, 425, 93, 32);
+	add(JBut_While);
+	
+	JBut_Back = new JButton("이전으로");
+	JBut_Back.addActionListener(this);
+	JBut_Back.setBounds(322, 425, 93, 32);
+	add(JBut_Back);
+	
 	JButton JBut3 = new JButton("장바구니");
 	JBut3.setBounds(215, 468, 93, 32);
 	add(JBut3);
@@ -145,11 +151,13 @@ public class Window_Testview extends JFrame {
 		return JPanel_Review;
 
 	}
-	public JPanel getStarBarPan(JPanel panel, int value) {
+	public JPanel getStarBarPan(JPanel panel, double value) {
 		panel.setLayout(null);
+		
+		int _value = (int)value;
 		JProgressBar progressBar = new JProgressBar();
 		progressBar.setForeground(Color.YELLOW);
-		progressBar.setValue(value);
+		progressBar.setValue(_value);
 		progressBar.setMaximum(10);
 		 int scalefactor = 2;
 		 int width = 62 * scalefactor;
@@ -180,6 +188,24 @@ public class Window_Testview extends JFrame {
 		return panel;
 	}
 
+
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object obj = e.getSource();
+		Singleton single = Singleton.getInstance();
+		if (JBut_While == obj) {
+			single.getRevCtrl().While_view(this, Str_MenuName);
+		}else if(JBut_Back == obj) {
+			System.out.println("dd");
+			single.backToMain(this);
+		}
+	}
+}
 	
 
-}
+	
+
+	
+

@@ -1,5 +1,7 @@
 package client.controller;
 
+import java.util.List;
+
 import javax.swing.JFrame;
 
 import client.dao.MenuDao;
@@ -77,6 +79,17 @@ public class MenuController {
 		} else { // 있을 땐
 			updManView.setVisible(true); // 보여만 준다.
 		}
+	}
+/*	public void updateImage(MenuShowDto dto) {
+		menDao.Sco_Update(dto);
+	}*/
+	
+	public void Sco_Update(MenuShowDto dto) {
+		menDao.Sco_Update(dto);
+	}
+	
+	public List<MenuShowDto> get_List(){
+		return menDao.get_List();
 	}
 
 }

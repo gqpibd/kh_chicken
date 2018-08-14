@@ -5,7 +5,7 @@ import java.util.List;
 import javax.swing.JFrame;
 
 import client.dao.ReviewDao;
-import client.view.Window_Review;
+import client.view.Window_Review_While;
 import client.view.Window_Testview;
 import dto.ReviewDto;
 
@@ -13,8 +13,8 @@ public class ReviewController {
 
 	private ReviewDao revDao = new ReviewDao();
 
-	private Window_Review reviewView; // 리뷰창
-	private Window_Testview _reviewView;
+	private Window_Testview reviewView;
+	private Window_Review_While While_View;
 
 	public void insert(ReviewDto dto) {
 		revDao.insert(dto);
@@ -28,15 +28,14 @@ public class ReviewController {
 		revDao.delete();
 	}
 
-	public void update(ReviewDto dto) {
-		revDao.update(dto);
+	public boolean update(ReviewDto dto) {
+		return revDao.update(dto);
 	}
 
 	public void reviewView(JFrame currentFrame, String menuName) {
 		currentFrame.setVisible(false);
 		revDao.select(menuName); // 리뷰를 불러와 리뷰 다오에 있는 리스트를 셋팅해준다.
-		_reviewView = new Window_Testview(menuName);
-		reviewView = new Window_Review(menuName);
+		reviewView = new Window_Testview(menuName);
 	}
 
 	public List<ReviewDto> getList() {
@@ -46,5 +45,17 @@ public class ReviewController {
 	public List<ReviewDto> my_getList(ReviewDto dto) {
 		return revDao.my_getList(dto);
 	}
+	
+	public void While_view(JFrame currentFrame, String menuName) {
+		
+		if(While_View == null) {
+			While_View = new Window_Review_While(menuName);
+		}else {
+			While_View.setVisible(true);
+		}
+		//revDao.select(menuName); // 리뷰를 불러와 리뷰 다오에 있는 리스트를 셋팅해준다.
+			
+	}
+	
 
 }
