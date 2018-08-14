@@ -147,7 +147,6 @@ public class CustomerManageView extends JFrame implements ActionListener, MouseL
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		
-		
 		int rowNum = jTable.getSelectedRow();
 		// 마우스 클릭한 열의 id를 구함
 		String selectedId = jTable.getValueAt(rowNum, 1) + "";
@@ -182,13 +181,13 @@ public class CustomerManageView extends JFrame implements ActionListener, MouseL
 
 		// 테이블 생성
 		jTable.setModel(model);
-
+		jTable.removeMouseListener(this);
 		// 컬럼의 넓이를 설정
-		jTable.getColumnModel().getColumn(0).setMaxWidth(50); 	// 아이디 폭
-		jTable.getColumnModel().getColumn(1).setMaxWidth(200);	// 메뉴이름 폭
-		jTable.getColumnModel().getColumn(2).setMaxWidth(200);	// 주문한 날짜 폭
-		jTable.getColumnModel().getColumn(3).setMaxWidth(800);	// 내가쓴리뷰 폭
-		jTable.getColumnModel().getColumn(4).setMaxWidth(50);	// 내가준별점 폭
+		jTable.getColumnModel().getColumn(0).setPreferredWidth(50);	// 아이디 폭
+		jTable.getColumnModel().getColumn(1).setPreferredWidth(200);// 메뉴이름 폭
+		jTable.getColumnModel().getColumn(2).setPreferredWidth(350);// 주문한 날짜 폭
+		jTable.getColumnModel().getColumn(3).setPreferredWidth(800);// 내가쓴리뷰 폭
+		jTable.getColumnModel().getColumn(4).setPreferredWidth(50);	// 내가준별점 폭
 
 		for (int i = 0; i < model.getColumnCount(); i++) { // 칼럼 내용 가운데 정렬
 			jTable.getColumnModel().getColumn(i).setCellRenderer(celAlignCenter);
