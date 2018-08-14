@@ -9,6 +9,8 @@ import client.singleton.Singleton;
 import dto.ReviewDto;
 
 public class ReviewDao {
+	private final int WRITABLE_REVIEW = 4;
+	private final int SELECT_BY_ID = 5;
 
 	List<ReviewDto> rList = new ArrayList<ReviewDto>();
 	Socket sock;
@@ -36,11 +38,17 @@ public class ReviewDao {
 		return rList;
 	}
 
-	public boolean update(ReviewDto dto) { // 작성한 리뷰를 등록한다. 기존 구매 내역에 추가됨.
+	public List<ReviewDto> selectByUserId(ReviewDto dto) {		
+		Communicator comm = Singleton.getInstance().getComm();
+		comm.SendMessage(SELECT_BY_ID, dto);
+		rList.clear(); // 일단 내용일 있을지도 모르니 비워준다.
+		rList = (ArrayList<ReviewDto>) comm.receiveObject();
+		return rList;
+	}
+
+	public void update(ReviewDto dto) { // 작성한 리뷰를 등록한다. 기존 구매 내역에 추가됨.
 		Communicator comm = Singleton.getInstance().getComm();
 		comm.SendMessage(Communicator.UPDATE, dto);
-		boolean Review_Check = (boolean) comm.receiveObject();
-		return Review_Check;
 	}
 
 	public void delete() {
@@ -48,17 +56,17 @@ public class ReviewDao {
 	}
 
 	public List<ReviewDto> getList() {
+		System.out.println(rList.size());
 		return rList;
 	}
 
-	public List<ReviewDto> my_getList(ReviewDto dto) {// 내정보의 리스트
-
+	public ReviewDto WritableReview(ReviewDto rDto) {
 		Communicator comm = Singleton.getInstance().getComm();
-		comm.SendMessage(4, dto);
-
-		rList = (List<ReviewDto>) comm.receiveObject();
-
-		return rList;
-
+		comm.SendMessage(WRITABLE_REVIEW, rDto);
+		rDto = (ReviewDto) comm.receiveObject();
+		
+		return rDto;
 	}
+
+
 }

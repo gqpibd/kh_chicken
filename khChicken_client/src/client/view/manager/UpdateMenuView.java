@@ -13,7 +13,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -23,18 +22,14 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-import client.controller.MemberController;
 import client.controller.MenuController;
 import client.dao.MenuDao;
 import client.singleton.Singleton;
-import client.view.MainView;
-import dto.MenuDto;
 import dto.MenuShowDto;
+import utils.images.ImageUtils;
 
 public class UpdateMenuView extends JFrame implements ActionListener {
 	private final int TYPE_COL = 0;
@@ -192,7 +187,7 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 		typeField.setText(topDto.getType());
 		descriptionArea.setText(topDto.getDescription());
 
-		setImage(MenuDao.FOLDER_PATH + topDto.getMenu_name().replaceAll(" ", "_") + ".jpg");
+		ImageUtils.setResizedImage(imgLabel, MenuDao.FOLDER_PATH + topDto.getMenu_name().replaceAll(" ", "_") + ".jpg");
 		menuTable.setRowSelectionInterval(0, 0); // 맨 위 칼럼이 선택된 상태로 표시함
 	}
 
@@ -228,7 +223,7 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 				imgFileField.setText(model.getValueAt(row, IMG_COL).toString());
 
 				descriptionArea.setText(dto.getDescription());
-				setImage(MenuDao.FOLDER_PATH + model.getValueAt(row, IMG_COL).toString());
+				ImageUtils.setResizedImage(imgLabel,MenuDao.FOLDER_PATH + model.getValueAt(row, IMG_COL).toString());
 			}
 		});
 
@@ -264,54 +259,6 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 		return rowData;
 	}
 
-	public String jFileChooserUtil() { // 이미지 파일 선택창
-
-		String folderPath = "";
-
-		JFileChooser chooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory()); // 디렉토리 설정
-		chooser.setCurrentDirectory(new File("d:/images")); // 현재 사용 디렉토리를 지정
-		chooser.setAcceptAllFileFilterUsed(true); // Fileter 모든 파일 적용
-		chooser.setDialogTitle("파일 위치 검색"); // 창의 제목
-		chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES); // 파일 선택 모드
-
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("jpg", "jpg"); // filter 확장자 추가
-		chooser.setFileFilter(filter); // 파일 필터를 추가
-
-		int returnVal = chooser.showOpenDialog(null); // 열기용 창 오픈
-
-		if (returnVal == JFileChooser.APPROVE_OPTION) { // 열기를 클릭
-			folderPath = chooser.getSelectedFile().toString();
-		} else if (returnVal == JFileChooser.CANCEL_OPTION) { // 취소를 클릭
-			folderPath = "";
-		}
-		ImageIcon icon = new ImageIcon(folderPath);
-		JLabel imgLabel = new JLabel(icon);
-		getContentPane().add(imgLabel);
-
-		return folderPath;
-	}
-
-	public void setImage(String path) { // 이미지를 넣어줌
-		try {
-			BufferedImage m_numberImage = ImageIO.read(new File(path));
-			ImageIcon icon = new ImageIcon(m_numberImage);
-
-			// ImageIcon에서 Image를 추출
-			Image originImg = icon.getImage();
-
-			// 추출된 Image의 크기를 조절하여 새로운 Image객체 생성
-			Image changedImg = originImg.getScaledInstance(imgLabel.getWidth(), imgLabel.getHeight(),
-					Image.SCALE_SMOOTH);
-
-			// 새로운 Image로 ImageIcon객체를 생성
-			ImageIcon resizedIcon = new ImageIcon(changedImg);
-
-			imgLabel.setIcon(resizedIcon);
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Singleton s = Singleton.getInstance();
@@ -322,7 +269,9 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 			String description = descriptionArea.getText();
 
 			model.setValueAt(newPrice, row, PRICE_COL);
-			s.getMenuCtrl().update(menu, newPrice, description);
+			menu.setPrice(newPrice);
+			menu.setDescription(description);
+			s.getMenuCtrl().update(menu);
 
 			String currentImgPath = MenuDao.FOLDER_PATH + model.getValueAt(row, IMG_COL).toString();
 			if (NewImgPath.length() > 0 && !NewImgPath.equals(currentImgPath)) { // 이미지 경로가 달라졌으면 소켓을 통해 새로운 이미지를 보낸다.
@@ -344,11 +293,12 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 			MenuController menCtrl = Singleton.getInstance().getMenuCtrl();
 			menCtrl.menuManageView(this);
 		} else if (e.getSource() == searchBtn) { // 검색 버튼 클릭 ( 이미지 검색 )
-			NewImgPath = jFileChooserUtil();
+			NewImgPath = ImageUtils.jFileChooserUtil();
+			
 			if (NewImgPath.length() != 0) {
 				imgFileField.setText(NewImgPath.substring(NewImgPath.lastIndexOf("\\") + 1)); // 전체 경로에서 파일 이름과 확장자명만
 																								// 가져온다.
-				setImage(NewImgPath);
+				ImageUtils.setResizedImage(imgLabel,NewImgPath);
 			}
 		}
 	}

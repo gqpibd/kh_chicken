@@ -8,8 +8,8 @@ import client.singleton.Singleton;
 import dto.MenuShowDto;
 
 public class MenuDao {
-	// public static final String FOLDER_PATH = "\\\\127.0.0.1\\images\\";
-	public static final String FOLDER_PATH = "\\\\192.168.30.35\\share\\images\\";
+	public static final String FOLDER_PATH = "\\\\127.0.0.1\\images\\";
+	//public static final String FOLDER_PATH = "\\\\192.168.30.35\\share\\images\\";
 	private List<MenuShowDto> menList = new ArrayList<MenuShowDto>();
 
 	public MenuDao() {
@@ -67,11 +67,7 @@ public class MenuDao {
 
 	}
 
-	public void update(MenuShowDto menu, int newPrice, String description) {
-		// 리스트에서 업데이트
-		menu.setPrice(newPrice);
-		menu.setDescription(description);
-
+	public void update(MenuShowDto menu) {
 		// socket으로 전달
 		Singleton s = Singleton.getInstance();
 		s.getComm().SendMessage(Communicator.UPDATE, menu);

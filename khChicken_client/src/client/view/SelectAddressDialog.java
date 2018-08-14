@@ -27,10 +27,10 @@ public class SelectAddressDialog extends JDialog implements ActionListener {
 	private JButton confirmBtn;
 	private JTextField selectedAddField;
 	private JTextField detailAddField;
-	
-	
-	public SelectAddressDialog(JFrame parent, boolean modal) {
-		super(parent,modal);
+
+	public SelectAddressDialog(JFrame parent) {
+		super(parent, true);
+		
 		setBounds(300, 200, 392, 413);
 		getContentPane().setLayout(null);
 
@@ -99,17 +99,14 @@ public class SelectAddressDialog extends JDialog implements ActionListener {
 		detailAddField.setBounds(111, 123, 215, 21);
 		getContentPane().add(detailAddField);
 		detailAddField.setColumns(10);
-		
+
 		setVisible(true);
 
-		
 	}
-	
+
 	public String getAddress() {
 		return selectedAddField.getText();
 	}
-	
-	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -121,16 +118,16 @@ public class SelectAddressDialog extends JDialog implements ActionListener {
 			String resArr[] = new String[results.size()];
 			for (int i = 0; i < resArr.length; i++) {
 				resArr[i] = results.get(i).toString();
-				
+
 			}
-			
+
 			list.setListData(resArr);
-		}else if (e.getSource() == confirmBtn) {
-			if(detailAddField.getText().length() == 0 || selectedAddField.getText().length() ==0) {
+		} else if (e.getSource() == confirmBtn) {
+			if (detailAddField.getText().length() == 0 || selectedAddField.getText().length() == 0) {
 				JOptionPane.showMessageDialog(null, "주소를 모두 입력해 주세요");
-			}else {
+			} else {
 				dispose();
-			}			
+			}
 		}
 	}
 

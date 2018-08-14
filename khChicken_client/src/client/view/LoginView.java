@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 import client.singleton.Singleton;
 import dto.MemberDto;
 
-public class Window_Login extends JFrame implements ActionListener {
+public class LoginView extends JFrame implements ActionListener {
 	JTextField JTextF_ID;
 	JPasswordField JTextF_PW;
 
@@ -22,7 +22,7 @@ public class Window_Login extends JFrame implements ActionListener {
 	JButton Jbut_Account;
 	JButton Jbut_Exit;
 
-	public Window_Login() {
+	public LoginView() {
 		super("로그인");
 		setLayout(null);
 		JPanel Jpanl_JTextF = new JPanel();

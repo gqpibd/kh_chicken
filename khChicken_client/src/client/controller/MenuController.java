@@ -47,8 +47,8 @@ public class MenuController {
 		return menDao.get(i);
 	}
 
-	public void update(MenuShowDto menu, int newPrice, String description) {
-		menDao.update(menu, newPrice, description);
+	public void update(MenuShowDto menu) {
+		menDao.update(menu);
 	}
 
 	public void menuManageView(JFrame currentView) {
@@ -81,9 +81,9 @@ public class MenuController {
 		}
 	}
 
-	public void sco_Update(MenuShowDto dto) {
-		menDao.sco_Update(dto);
-	}
+//	public void sco_Update(MenuShowDto dto) {
+//		menDao.sco_Update(dto);
+//	}
 
 	public List<MenuShowDto> get_List() {
 		return menDao.get_List();

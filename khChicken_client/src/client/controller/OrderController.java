@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 import client.dao.OrderDao;
 import client.singleton.Singleton;
 import client.view.OrderView;
-import client.view.Window_MyInfo;
+import client.view.MyInfoView;
 import dto.OrderedMenuDto;
 
 public class OrderController {
@@ -17,7 +17,7 @@ public class OrderController {
 	private OrderDao ordDao = new OrderDao();
 
 	private OrderView ordView;
-	private Window_MyInfo Window_inform;
+	private MyInfoView Window_inform;
 
 	public void insert(ArrayList<OrderedMenuDto> confirmedList) { // 주문 내역을 전송한다.
 		ordDao.insert(confirmedList);
@@ -47,7 +47,7 @@ public class OrderController {
 	public void InFormationview(JFrame currentView) {
 		currentView.setVisible(false);
 		if (Window_inform == null) {
-			Window_inform = new Window_MyInfo();
+			Window_inform = new MyInfoView();
 		} else {
 			Window_inform.setVisible(true);
 		}

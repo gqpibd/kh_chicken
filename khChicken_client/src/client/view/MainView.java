@@ -34,6 +34,7 @@ import dto.MenuDto;
 import dto.MenuShowDto;
 import dto.OrderedMenuDto;
 import net.miginfocom.swing.MigLayout;
+import utils.images.ImageUtils;
 
 public class MainView extends JFrame implements ItemListener {
 	private static final String PATH = "images/mainView/";
@@ -151,13 +152,13 @@ public class MainView extends JFrame implements ItemListener {
 		frontpanel.setLayout(new MigLayout("", "20", "40"));
 		frontpanel.setSize(400, 300);
 
-		frontpanel.setBackground(new Color(255, 255, 255));
+		frontpanel.setBackground(Color.WHITE);
 		// 이미지넣기
 		// server에서 가져온 이미지 넣는 곳
 		String img = menCtrl.get(i).getMenu_name().replaceAll(" ", "_") + ".jpg";
 		// 패널당 메뉴이름을 저장시켜줌
 
-		setImage(MenuDao.FOLDER_PATH + img, imgLabel);
+		ImageUtils.setResizedImage(imgLabel, MenuDao.FOLDER_PATH + img);
 		imgLabel.setName(menCtrl.get(i).getMenu_name()); // 라벨 자체에 메뉴 이름을 저장해준다.
 
 		frontpanel.add(imgLabel, "center, wrap");
@@ -195,7 +196,7 @@ public class MainView extends JFrame implements ItemListener {
 		return frontpanel;
 	}
 
-	private class labelListener extends MouseAdapter {
+	private class labelListener extends MouseAdapter { // 이미지 클릭했을 때 작동하는 리스너
 
 		JCheckBox box;
 
@@ -206,9 +207,6 @@ public class MainView extends JFrame implements ItemListener {
 		@Override
 		public void mouseClicked(MouseEvent e) {// 누르면
 			String menu_name = ((JLabel) e.getSource()).getName(); // 클릭된 라벨의 이름을 받아온다
-
-			System.out.println(menu_name);
-			System.out.println(menCtrl.get(i).getType()); // 확인용
 
 			if (!menCtrl.get(i).getType().equals("음료")) {
 
@@ -228,28 +226,6 @@ public class MainView extends JFrame implements ItemListener {
 			checkedMenu.remove(chb.getName());
 		}
 
-	}
-
-	public void setImage(String path, JLabel imgLabel) {
-		try {
-			// System.out.println("path : " + path);
-			BufferedImage m_numberImage = ImageIO.read(new File(path));
-			ImageIcon icon = new ImageIcon(m_numberImage);
-
-			// ImageIcon에서 Image를 추출
-			Image originImg = icon.getImage();
-
-			// 추출된 Image의 크기를 조절하여 새로운 Image객체 생성
-			Image changedImg = originImg.getScaledInstance(imgLabel.getWidth(), imgLabel.getHeight(),
-					Image.SCALE_SMOOTH);
-
-			// 새로운 Image로 ImageIcon객체를 생성
-			ImageIcon resizedIcon = new ImageIcon(changedImg);
-
-			imgLabel.setIcon(resizedIcon);
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
 	}
 
 	private class LabelClickListener extends MouseAdapter {
@@ -302,11 +278,11 @@ public class MainView extends JFrame implements ItemListener {
 		btn_Login.setName("로그아웃");
 		System.out.println(s.getMemCtrl().getAuth());
 		if (s.getMemCtrl().getAuth() == MemberDto.MANAGER) {
-			btn_Login.setIcon(new ImageIcon(PATH + "logoutBtn.jpg"));
 			btn_Manage.setVisible(true);
-			btn_Register.setName("내정보");
-			btn_Register.setIcon(new ImageIcon(PATH + "myPageBtn.jpg"));
 		}
+		btn_Login.setIcon(new ImageIcon(PATH + "logoutBtn.jpg"));
+		btn_Register.setName("내정보");
+		btn_Register.setIcon(new ImageIcon(PATH + "myPageBtn.jpg"));
 	}
 
 	public void logout() { // 로그아웃 상태에서의 뷰

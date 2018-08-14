@@ -6,16 +6,17 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import client.dao.ReviewDao;
-import client.view.Window_Review;
-import client.view.Window_Review_Write;
+import client.view.ReviewDialog;
+import client.view.ReviewWriteDialog;
+import dto.MemberDto;
 import dto.ReviewDto;
 
 public class ReviewController {
 
 	private ReviewDao revDao = new ReviewDao();
 
-	private Window_Review reviewView; // 리뷰창
-	private Window_Review_Write write_view;
+	private ReviewDialog reviewView; // 리뷰창
+	private ReviewWriteDialog write_view;
 
 	public void insert(ReviewDto dto) {
 		revDao.insert(dto);
@@ -25,29 +26,37 @@ public class ReviewController {
 		return revDao.getList();
 	}
 
-	public List<ReviewDto> my_getList(ReviewDto dto) {
-		return revDao.my_getList(dto);
+	public void update(ReviewDto dto) {
+		revDao.update(dto);
 	}
 
-	public boolean update(ReviewDto dto) {
-		return revDao.update(dto);
+	public ReviewDto WritableReview(ReviewDto rDto) { // 내가 작성할 수 있는 리뷰가 있나
+		return revDao.WritableReview(rDto);
 	}
-
+	
 	public boolean reviewView(JFrame currentFrame, String menuName) {
 		currentFrame.setVisible(false);
 		revDao.select(menuName); // 리뷰를 불러와 리뷰 다오에 있는 리스트를 셋팅해준다.
-		reviewView = new Window_Review(currentFrame, menuName);
+		reviewView = new ReviewDialog(currentFrame, menuName);
 		return reviewView.getSelection();
 	}
 
-	public void Write_view(JDialog currentFrame, String menuName) {
-
-		if (write_view == null) {
-			write_view = new Window_Review_Write(menuName);
-		} else {
-			write_view.setVisible(true);
-		}
+	public void Write_review(JDialog currentFrame, ReviewDto rDto) {
+		write_view = new ReviewWriteDialog(rDto);		
 		// revDao.select(menuName); // 리뷰를 불러와 리뷰 다오에 있는 리스트를 셋팅해준다.
-
 	}
+	
+	public double getNewScore() { 
+		return write_view.getNewScore();
+	}
+	
+	public ReviewDto getNewReview() {
+		return write_view.getNewReview();
+	}
+
+	public List<ReviewDto> selectByUserId(ReviewDto rdto) {
+		return revDao.selectByUserId(rdto);
+	}
+
+
 }

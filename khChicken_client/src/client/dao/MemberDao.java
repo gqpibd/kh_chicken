@@ -74,4 +74,11 @@ public class MemberDao {
 	public void logout() {
 		CurrentUser = null;
 	}
+
+	public void Inform_Update(MemberDto dto) {
+
+		Communicator comm = Singleton.getInstance().getComm();
+		comm.SendMessage(5, dto);
+
+	}
 }

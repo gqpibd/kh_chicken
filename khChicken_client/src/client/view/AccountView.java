@@ -6,38 +6,43 @@ import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import dto.MemberDto;
-import client.singleton.Singleton;
-import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-public class Window_Account extends JFrame implements ActionListener {
+import client.singleton.Singleton;
+import dto.MemberDto;
 
-	JTextField JtextF_Id;
-	JPasswordField JtextF_pwd;
-	JPasswordField JtextF_pwd_Check;
-	JTextField JtextF_name;
-	JTextField JtextF_address;
-	JTextField JtextF_phone;
+public class AccountView extends JFrame implements ActionListener {
 
-	JButton Jbut_Check;
-	JButton Jbut_Join;
-	JButton Jbut_Back;
-	JButton button;
+	private JTextField JtextF_Id; // 아이디
+	private JPasswordField JtextF_pwd; // 비밀번호
+	private JPasswordField JtextF_pwd_Check; // 비밀번호 확인
+	private JTextField JtextF_name; // 이름
+	private JTextField JtextF_address; // 주소
+	private JTextField JtextF_address2; // 상세 주소
+	private JTextField JtextF_phone; // 전화번호
 
-	String Str_ID_Check = "";
-	private JLabel JLabel_id;
-	private JLabel JLabel_pw;
-	private JLabel JLabel_pw2;
-	private JLabel nameLabel;
-	private JLabel JLabel_add;
-	private JLabel JLabel_phone;
-	private JTextField JtextF_address2;
+	private JButton Jbut_Check; // 중복확인
+	private JButton Jbut_Join; // 가입 
+	private JButton Jbut_Back; // 뒤로가기
+	private JButton JBut_Search; // 검색(주소)
 
-	public Window_Account() {
+	private String Str_ID_Check = "";
+
+	public AccountView() {
+		setInitView();
+	}
+
+	public void setInitView() {
+		JLabel JLabel_id;
+		JLabel JLabel_pw;
+		JLabel JLabel_pw2;
+		JLabel nameLabel;
+		JLabel JLabel_add;
+		JLabel JLabel_phone;
 
 		setTitle("회원가입창");
 		getContentPane().setLayout(null);
@@ -119,10 +124,10 @@ public class Window_Account extends JFrame implements ActionListener {
 		JLabel_phone.setBounds(12, 244, 89, 15);
 		getContentPane().add(JLabel_phone);
 
-		button = new JButton("검색");
-		button.setBounds(283, 209, 66, 23);
-		button.addActionListener(this);
-		getContentPane().add(button);
+		JBut_Search = new JButton("검색");
+		JBut_Search.setBounds(283, 209, 66, 23);
+		JBut_Search.addActionListener(this);
+		getContentPane().add(JBut_Search);
 
 		setBounds(100, 100, 381, 360);
 		setVisible(true);
@@ -134,17 +139,16 @@ public class Window_Account extends JFrame implements ActionListener {
 		Singleton single = Singleton.getInstance();
 
 		// 보기쉽게 텍스트에있는거 전부다 스트린으로 옮김
-		String id = JtextF_Id.getText();
-		String pw = new String(JtextF_pwd.getPassword());
-		String name = JtextF_name.getText();
-		String address = JtextF_address.getText();
-		String address2 = JtextF_address2.getText();
-		String phone = JtextF_phone.getText();
-		System.out.println(id + "뷰");
+		String id = JtextF_Id.getText().trim();
+		String pw = new String(JtextF_pwd.getPassword()).trim();
+		String name = JtextF_name.getText().trim();
+		String address = JtextF_address.getText().trim();
+		String address2 = JtextF_address2.getText().trim();
+		String phone = JtextF_phone.getText().trim();
 
-		if (obj == Jbut_Join) {
-			if (id.equals("")) {
-				JOptionPane.showMessageDialog(null, "아이디를 입려해주세요.");
+		if (obj == Jbut_Join) { // 아이디 중복 확인
+			if (id.equals("")) { // 아이디를 입력하지 않은 경우
+				JOptionPane.showMessageDialog(null, "아이디를 입력해주세요.");
 			} else {
 				MemberDto dto = new MemberDto();
 				dto.setId(id);
@@ -156,8 +160,8 @@ public class Window_Account extends JFrame implements ActionListener {
 					JOptionPane.showMessageDialog(null, "이미 있는 아이디입니다.");
 				}
 			}
-			// 밑에껀 무시 아직 준비중
-		} else if (obj == Jbut_Check) {
+
+		} else if (obj == Jbut_Check) { // 회원가입
 
 			if (!Str_ID_Check.equals(id) && Str_ID_Check.equals("")) {
 				JOptionPane.showMessageDialog(null, "중복확인을 눌러주세요.");
@@ -171,17 +175,16 @@ public class Window_Account extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null, "비밀번호가 일치하지 않습니다. 다시 확인해 주세요");
 			} else if (!Pattern.matches("^01(?:0|1|[6-9])-(?:\\d{3}|\\d{4})-\\d{4}$", phone)) {
 				JOptionPane.showMessageDialog(null, "전화번호 형식이 맞지 않습니다.\n 01X-XXXX-XXXX 형태로 입력해 주세요");
-			} else {				
+			} else {
 				MemberDto dto = new MemberDto(id, pw, name, 0, MemberDto.MEMBER, address + " " + address2, phone);
 				single.getMemCtrl().insert(dto);
 				single.backToMain(this);
 				JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다.");
-				JOptionPane.showMessageDialog(null, "로그인 해주세요.");
 			}
-		} else if (obj == Jbut_Back) {
+		} else if (obj == Jbut_Back) { // 뒤로가기
 			Singleton.getInstance().backToMain(this);
-		} else if (obj == button) {
-			SelectAddressDialog add = new SelectAddressDialog(this, true);
+		} else if (obj == JBut_Search) { // 주소 검색
+			SelectAddressDialog add = new SelectAddressDialog(this);
 			JtextF_address.setText(add.getAddress());
 			JtextF_address2.setText(add.getDetailAddress());
 		}

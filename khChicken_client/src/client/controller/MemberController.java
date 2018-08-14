@@ -1,12 +1,15 @@
 package client.controller;
 
+import java.awt.Frame;
+
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import client.dao.MemberDao;
 import client.singleton.Singleton;
-import client.view.Window_Account;
-import client.view.Window_Login;
-import client.view.Window_MyInfo;
+import client.view.AccountView;
+import client.view.LoginView;
+import client.view.MyInfoView;
 import client.view.manager.ManageView;
 import dto.MemberDto;
 
@@ -15,8 +18,7 @@ public class MemberController {
 	private MemberDao memDao = new MemberDao();
 
 	private ManageView manView;
-	private Window_Account accView;
-	private Window_MyInfo infoView;
+	private AccountView accView;
 
 	public void insert(MemberDto dto) {
 		memDao.insert(dto);
@@ -67,7 +69,7 @@ public class MemberController {
 	public void accountView(JFrame currentView) {
 		currentView.setVisible(false);
 		if (accView == null) { // 없을 땐
-			accView = new Window_Account(); // 만들고
+			accView = new AccountView(); // 만들고
 		} else { // 있을 땐
 			accView.setVisible(true); // 보여만 준다.
 		}
@@ -76,7 +78,12 @@ public class MemberController {
 
 	public void loginView(JFrame currentView) {
 		currentView.setVisible(false);
-		new Window_Login(); // 만들고
+		new LoginView(); // 만들고
+	}
+
+	public void loginView(JDialog tempDialog) {
+		tempDialog.setVisible(false);
+		new LoginView(); // 만들고
 	}
 
 	public MemberDto getCurrentUser() {
@@ -90,10 +97,12 @@ public class MemberController {
 
 	public void myInfoView(JFrame currentView) {
 		currentView.setVisible(false);
-		if (infoView == null) { // 없을 땐
-			infoView = new Window_MyInfo(); // 만들고
-		} else { // 있을 땐
-			infoView.setVisible(true); // 보여만 준다.
-		}
+		new MyInfoView(); // 만들고
+		
 	}
+
+	public void Inform_Update(MemberDto dto) {
+		memDao.Inform_Update(dto);
+	}
+
 }
