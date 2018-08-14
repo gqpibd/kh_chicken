@@ -104,7 +104,7 @@ public class ReviewDao {
 			conn = DBConnection.getConnection();
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, dto.getReview());
-			psmt.setInt(2, dto.getScore());
+			psmt.setDouble(2, dto.getScore());
 			psmt.setString(3, dto.getUserId());
 			psmt.setString(4, dto.getMenuName());
 		    //psmt.executeQuery();

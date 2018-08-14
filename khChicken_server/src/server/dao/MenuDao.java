@@ -184,10 +184,10 @@ public class MenuDao {
 			     " WHERE ID = ? AND MENU_NAME = ? AND REVIEW is null AND (TO_DATE(sysdate, 'yyyy/mm/dd') - TO_DATE(ORDER_DATE, 'yyyy/mm/dd')) <= '2'"; 
 			     */
 		String sql = " UPDATE MENU "
-				+ " SET AVG_RATE = AVG_RATE + ? "
-				+ "WHERE MENU_NAME = ? ";
-		System.out.println("dto = " + dto);
-		System.out.print("sql = " + sql);
+				+ " SET AVG_RATE = ? "
+				+ " WHERE MENU_NAME = ? ";
+		
+		System.out.println(dto.getMenu_name());
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		try {

@@ -8,14 +8,14 @@ public class ReviewDto implements Serializable{
 	
 	private String menuName;
 	private String review;
-	private String userId;
+	private String userId; 
 	private String orderDate;
-	private int score;
+	private double score;
 	
 	public ReviewDto() {
 	}
 
-	public ReviewDto(String menuName, String review, String userId, String orderDate, int score) {
+	public ReviewDto(String menuName, String review, String userId, String orderDate, double score) {
 		super();
 		this.menuName = menuName;
 		this.review = review;
@@ -56,7 +56,7 @@ public class ReviewDto implements Serializable{
 		this.orderDate = orderDate;
 	}
 
-	public int getScore() {
+	public double getScore() {
 		return score;
 	}
 
