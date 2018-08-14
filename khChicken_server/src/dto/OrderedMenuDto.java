@@ -9,7 +9,7 @@ public class OrderedMenuDto extends MenuDto implements Serializable {
 
 	private Date order_date;
 	private String id;
-	private int coupon;
+	private int coupon;	//쿠폰 사용 여부 0 == 안씀 / 1 == 씀
 	private int count;
 	private int totalPrice;
 
