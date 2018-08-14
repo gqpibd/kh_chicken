@@ -132,7 +132,7 @@ public class MenuDao {
 		String sql = "SELECT MENU_NAME, PRICE, MENU_TYPE, DESCRIPTION, AVG_RATE FROM MENU";
 		System.out.println(sql);
 		Connection conn = null;
-		PreparedStatement psmt;
+		PreparedStatement psmt = null;
 		ResultSet rs = null;
 
 		try {
@@ -147,7 +147,6 @@ public class MenuDao {
 				dto.setType(rs.getString(3));
 				dto.setDescription(rs.getString(4));
 				dto.setavgScore(rs.getDouble(5));
-				// System.out.println(dto);
 				list.add(dto);
 			}
 
@@ -179,10 +178,7 @@ public class MenuDao {
 	}
 	
 	public void Sco_Update(MenuShowDto dto) {
-	/*	String sql = " UPDATE ORDER_DETAIL " + 
-				 " SET REVIEW = ?, SCORE = ? " +
-			     " WHERE ID = ? AND MENU_NAME = ? AND REVIEW is null AND (TO_DATE(sysdate, 'yyyy/mm/dd') - TO_DATE(ORDER_DATE, 'yyyy/mm/dd')) <= '2'"; 
-			     */
+
 		String sql = " UPDATE MENU "
 				+ " SET AVG_RATE = ? "
 				+ " WHERE MENU_NAME = ? ";

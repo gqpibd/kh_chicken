@@ -36,7 +36,7 @@ public class ReviewDao {
 		case Singleton.UPDATE: // 기존 주문한 내역에 리뷰 추가하기 - 윤상필
 			update(dto,sock);
 			break;
-		case  4 : //내가 지금까지 시킨 치킨 정보 뺴오기
+		case  4 : // select Interface(내정보) -윤상필
 			select_Interface(dto,sock);
 		break;
 		}
@@ -58,8 +58,6 @@ public class ReviewDao {
 			rs = psmt.executeQuery();
 
 			while (rs.next()) {
-				System.out.println(dto.getMenuName());
-				// ID, MENU_NAME, ORDER_DATE, REVIEW, SCORE
 				ReviewDto resultDto = new dto.ReviewDto();
 				resultDto.setUserId(rs.getString(1));
 				resultDto.setMenuName(rs.getString(2));
@@ -68,7 +66,6 @@ public class ReviewDao {
 				resultDto.setScore(rs.getInt(5));
 
 				list.add(resultDto);
-				// System.out.println(dto.toString());
 			}
 
 		} catch (SQLException e) {
@@ -85,19 +82,13 @@ public class ReviewDao {
 		System.out.println(dto.toString());
 		int Int_return = 0;
 		boolean Review_Check = false;
-		/*UPDATE ORDER_DETAIL
-		SET REVIEW = '들어가줘 제발', SCORE = 2
-		WHERE ID = '2' AND MENU_NAME = '후라이드 치킨' 
-		AND REVIEW is null AND (TO_DATE(sysdate, 'yyyy/mm/dd') - TO_DATE(ORDER_DATE, 'yyyy/mm/dd')) <= '2'
-		ORDER BY ORDER_DATE DESC
-		*/
+
 		String sql = " UPDATE ORDER_DETAIL " + 
 					 " SET REVIEW = ?, SCORE = ? " +
-				     " WHERE ID = ? AND MENU_NAME = ? AND REVIEW is null AND (TO_DATE(sysdate, 'yyyy/mm/dd') - TO_DATE(ORDER_DATE, 'yyyy/mm/dd')) <= '2'"; 
+				     " WHERE ID = ? AND MENU_NAME = ? AND REVIEW is null AND ((TO_DATE(sysdate, 'yyyy/mm/dd') - TO_DATE(ORDER_DATE, 'yyyy/mm/dd'))) <= '2'"; 
 				     
 		
-	
-		System.out.println(sql);
+		System.out.println("dto = " + dto);
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		try {
@@ -123,7 +114,7 @@ public class ReviewDao {
 		_dto.setavgScore(dto.getScore());
 		single.getMenuCtrl().Sco_Update(_dto);
 		
-		if(Int_return == 1) {
+		if(Int_return == 2) {
 			Review_Check = true;
 		}else if(Int_return == 0){
 			Review_Check = false;
@@ -141,7 +132,6 @@ public class ReviewDao {
 				+ " FROM ORDER_DETAIL"
 				+ " WHERE ID = ? ";
 		
-		System.out.println(sql);
 		ReviewDto rdto = null;
 		
 		List<ReviewDto> list = new ArrayList<>();
@@ -160,7 +150,6 @@ public class ReviewDao {
 		    						 rs.getString(4), rs.getInt(5));
 		    	list.add(rdto);
 		    }
-		    System.out.println(list);
 		    
 		} catch (SQLException e) {
 			

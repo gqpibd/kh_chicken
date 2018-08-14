@@ -31,15 +31,16 @@ public class MemberDao {
 		case 4: // 로그인 - 윤상필
 			select_login(dto, sock);
 			break;
-		case 5: // 내정보의대한 내정보 값뽑아오기
-			
+		case 5: //내정보 수정
+			Inform_Update(dto);
+			break;
 		}
 	}
 
 	public MemberDao() {
 
 	}
-
+	
 	public void insert(MemberDto dto) {
 		String name = dto.getName();
 		String id = dto.getId();
@@ -154,6 +155,34 @@ public class MemberDao {
 
 		SocketWriter.Write(sock, loginSuccess);
 	}
+	
+	public void Inform_Update(MemberDto dto) {
+		
+		String sql = " UPDATE MEMBER "
+				+ " SET NAME  = ?, adr = ?, phone = ? "
+				+ "WHERE ID =  ? ";
+			
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, dto.getName());
+			psmt.setString(2, dto.getAddress());
+			psmt.setString(3, dto.getPhone());
+			psmt.setString(4, dto.getId());
+			psmt.executeQuery();
+			System.out.println(sql);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, null);
+			}
+
+	}
+		
 }
 	
 

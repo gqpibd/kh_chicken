@@ -45,9 +45,6 @@ public class OrderDao {
 			ArrayList<BestSaleMenuDto> bestSaleList = selectBySalse();
 			SocketWriter.Write(sock, bestSaleList);
 			break;
-		case 6 :  // select Interface(내정보) -윤상필
-			
-			break;
 
 		}
 	}
