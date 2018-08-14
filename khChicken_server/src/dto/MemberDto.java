@@ -27,9 +27,9 @@ public class MemberDto implements Serializable {
 	private int auth;
 	private String address;
 	private String phone;
+	private String time;
 
-	public MemberDto() {
-	}
+	public MemberDto() {	}
 
 	public MemberDto(String id, String pw, String name, int coupon, int auth, String address, String phone) {
 		super();
@@ -40,6 +40,17 @@ public class MemberDto implements Serializable {
 		this.auth = auth;
 		this.address = address;
 		this.phone = phone;
+		this.time = time;
+	}
+	
+	public MemberDto(String id, String name, int coupon, String address, String phone, String time) {
+		this.setId(id);
+		this.name = name;
+		this.name = name;
+		this.coupon = coupon;
+		this.address = address;
+		this.phone = phone;
+		
 	}
 
 	public String getId() {
