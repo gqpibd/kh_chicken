@@ -65,8 +65,6 @@ public class ReviewDao {
 			rList.add((ReviewDto)obj_rList.get(i));
 		}
 		
-		
-		
 		return rList;
 		
 	}
