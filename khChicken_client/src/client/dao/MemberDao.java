@@ -3,22 +3,58 @@ package client.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+<<<<<<< HEAD
 import javax.swing.JOptionPane;
 
 import client.communicator.Communicator;
 import client.singleton.Singleton;
 import dto.MemberDto;
+=======
+import dto.MemberDto;
+
+
+>>>>>>> branch 'jinyoung' of https://github.com/gqpibd/kh_semi.git
 
 public class MemberDao {
 
 	List<MemberDto> mList = new ArrayList<MemberDto>();
+<<<<<<< HEAD
 	MemberDto CurrentUser = null;
 
+=======
+	MemberDto mDto = new MemberDto();
+	
+>>>>>>> branch 'jinyoung' of https://github.com/gqpibd/kh_semi.git
 	public MemberDao() {
+<<<<<<< HEAD
 	}
 
 	public void insert(MemberDto dto) { // 회원가입
 		Singleton.getInstance().getComm().SendMessage(Communicator.INSERT, dto);
+=======
+		
+	}
+	
+	public List<MemberDto> insert() {
+		mDto = new MemberDto(" TEST", null, "공놀이", 1, 1, "강남 역세권", "010-2222-2222");
+		mList.add(mDto);
+		
+		return mList;
+	}
+	
+	public String select() {
+		String getId = mDto.getId();
+		
+		return getId;
+	}
+	
+	public void update() {
+		
+	}
+	
+	public void delete() {
+		
+>>>>>>> branch 'jinyoung' of https://github.com/gqpibd/kh_semi.git
 	}
 
 	public boolean select(MemberDto dto) { // 아이디 중복 확인

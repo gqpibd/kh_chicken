@@ -14,6 +14,7 @@ import dto.BestSaleMenuDto;
 import dto.OrderedMenuDto;
 
 public class OrderController {
+<<<<<<< HEAD
 
 	private OrderDao ordDao = new OrderDao();
 
@@ -23,6 +24,13 @@ public class OrderController {
 		ordDao.insert(confirmedList);
 		JOptionPane.showMessageDialog(null, "주문이 완료되었습니다");
 		Singleton.getInstance().backToMain(ordView);
+=======
+	
+	public OrderDao ordDao = new OrderDao();
+	
+	public void insert() {
+		ordDao.insert();
+>>>>>>> branch 'jinyoung' of https://github.com/gqpibd/kh_semi.git
 	}
 
 	public void clearList() {

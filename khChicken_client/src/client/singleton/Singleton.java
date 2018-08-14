@@ -11,6 +11,7 @@ import client.controller.StatisticsController;
 import client.view.MainView;
 
 public class Singleton {
+<<<<<<< HEAD
 
 	private static Singleton single = new Singleton(); 
 
@@ -23,6 +24,17 @@ public class Singleton {
 	private StatisticsController staCtrl = new StatisticsController();
 	private MainView mv;
 
+=======
+	
+	private static Singleton single = new Singleton();
+	
+	public MemberController memCtrl = new MemberController();
+	public MenuController menCtrl = new MenuController();
+	public OrderController ordCtrl = new OrderController();
+	public ReviewController revCtrl = new ReviewController();
+	public Communicator comm = new Communicator();
+	
+>>>>>>> branch 'jinyoung' of https://github.com/gqpibd/kh_semi.git
 	private Singleton() {
 	}
 

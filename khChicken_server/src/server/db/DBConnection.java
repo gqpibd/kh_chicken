@@ -1,4 +1,5 @@
 package server.db;
+<<<<<<< HEAD
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,6 +9,15 @@ import java.sql.SQLException;
 
 public class DBConnection {
 	public static void initConnection() {
+=======
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class DBConnection {
+	
+	public static void initConnect() {
+>>>>>>> branch 'jinyoung' of https://github.com/gqpibd/kh_semi.git
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			System.out.println("Driver Loading Success!!");			

@@ -3,10 +3,17 @@ package client.dao;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+<<<<<<< HEAD
  
 import client.communicator.Communicator;
 import client.singleton.Singleton;
 import dto.ReviewDto;
+=======
+
+import dto.ReviewDto;
+
+
+>>>>>>> branch 'jinyoung' of https://github.com/gqpibd/kh_semi.git
 
 public class ReviewDao {
 
