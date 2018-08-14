@@ -8,7 +8,7 @@ import client.singleton.Singleton;
 import dto.MenuShowDto; 
 
 public class MenuDao {
-	public static final String FOLDER_PATH = "\\\\127.0.0.1\\images\\";
+	public static final String FOLDER_PATH = "images\\";
 	//public static final String FOLDER_PATH = "\\\\192.168.30.35\\share\\images\\";
 	private List<MenuShowDto> menList = new ArrayList<MenuShowDto>();
 

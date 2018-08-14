@@ -252,7 +252,7 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 				JOptionPane.showMessageDialog(null, "선택한 메뉴가 없습니다");
 				return;
 			}
-			for (int i = 0; i < checkedMenu.size(); i++) {
+			for (int i = 0; i < checkedMenu.size(); i++) { // 
 				ordCtrl.getList().add(new OrderedMenuDto((MenuDto) menCtrl.getMenuDto(checkedMenu.get(i))));
 			}
 
