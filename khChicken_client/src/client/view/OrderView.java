@@ -1,11 +1,10 @@
 package client.view;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,6 +21,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+import javax.swing.event.CellEditorListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -29,11 +30,6 @@ import javax.swing.table.TableCellRenderer;
 import client.singleton.Singleton;
 import dto.MemberDto;
 import dto.OrderedMenuDto;
-import javax.swing.border.LineBorder;
-import javax.swing.event.CellEditorListener;
-
-import java.awt.Checkbox;
-import java.awt.Color;
 
 public class OrderView extends JFrame implements ActionListener {
 	private int beverageCounts = 0;
@@ -333,7 +329,15 @@ public class OrderView extends JFrame implements ActionListener {
 
 		addSearchBtn = new JButton("검색");
 		addSearchBtn.setBounds(530, 97, 72, 23);
-		addSearchBtn.addActionListener(this);
+		addSearchBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				SelectAddressDialog a = new SelectAddressDialog(this, true);
+				addressField.setText(a.getAddress() + " " +a.getDetailAddress());
+			}
+		});
 		getContentPane().add(addSearchBtn);
 
 	}
@@ -537,7 +541,8 @@ public class OrderView extends JFrame implements ActionListener {
 						System.out.println("주문");
 						OrderedMenuDto dto = oList.get(i);
 						dto.setId(Singleton.getInstance().getMemCtrl().getLoginId());
-						dto.setCount(Integer.parseInt(dtm.getValueAt(i, 3).toString()));
+						dto.setCount(Integer.parseInt(dtm.getValueAt(i, 4).toString()));
+						System.out.println(dto);
 						confirmedList.add(dto);
 					}
 				}
