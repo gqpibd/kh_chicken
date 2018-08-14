@@ -181,9 +181,9 @@ public class Window_Account extends JFrame implements ActionListener {
 		} else if (obj == Jbut_Back) {
 			Singleton.getInstance().backToMain(this);
 		} else if (obj == button) {
-			SelectAddressDialog a = new SelectAddressDialog(this, true);
-			JtextF_address.setText(a.getAddress());
-			JtextF_address2.setText(a.getDetailAddress());
+			SelectAddressDialog add = new SelectAddressDialog(this, true);
+			JtextF_address.setText(add.getAddress());
+			JtextF_address2.setText(add.getDetailAddress());
 		}
 	}
 }
