@@ -14,8 +14,8 @@ public class CustomerManageController {
 	private CustomerManageDao cusDao = new CustomerManageDao();
 	private CustomerManageView cusManView;
 	
-	public ArrayList<CustomerManageDto> customerOrder(int number) {
-		return cusDao.customerOrder(number);
+	public ArrayList<CustomerManageDto> customerOrder() {
+		return cusDao.customerOrder();
 	}
 	
 	public void CustomerManageView(JFrame currentView) {

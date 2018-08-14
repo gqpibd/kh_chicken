@@ -39,5 +39,9 @@ public class ReviewController {
 	public List<ReviewDto> getList() {
 		return revDao.getList();
 	}
+	
+	public List<ReviewDto> my_getList(ReviewDto dto) {
+		return revDao.my_getList(dto);
+	}
 
 }

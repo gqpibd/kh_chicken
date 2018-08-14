@@ -53,5 +53,22 @@ public class ReviewDao {
 	public List<ReviewDto> getList() {
 		return rList;
 	}
+	
+	public List<ReviewDto> my_getList(ReviewDto dto) {//내정보의(내 총 주문내역) 리스트
+		rList.clear();
+		Communicator comm = Singleton.getInstance().getComm();
+		comm.SendMessage(4, dto);
+		
+		ArrayList<Object> obj_rList =comm.receiveMessage();
+		
+		for (int i = 0; i < obj_rList.size(); i++) {
+			rList.add((ReviewDto)obj_rList.get(i));
+		}
+		
+		
+		
+		return rList;
+		
+	}
 
 }

@@ -43,7 +43,7 @@ public class SaleManageView extends JFrame implements ActionListener {
 			}
 		};
 		jTable = new JTable();
-		celAlignCenter = new DefaultTableCellRenderer(); 
+		celAlignCenter = new DefaultTableCellRenderer();
 		celAlignCenter.setHorizontalAlignment(SwingConstants.CENTER);
 
 		setTableByDate();
