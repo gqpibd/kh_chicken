@@ -87,4 +87,8 @@ public class MemberController {
 	public MemberDto getCurrentUser() {
 		return memDao.getCurrentUser();
 	}
+	
+	public void Inform_Update(MemberDto dto) {
+		memDao.Inform_Update(dto);
+	}
 }

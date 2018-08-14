@@ -53,7 +53,7 @@ from Menu
 WHERE AVG_RATE is not null
 
 SELECT *
-FROM MENU
+FROM MEMBER
 
 UPDATE MENU  
 SET AVG_RATE = (SELECT  SUM(AVG_RATE + 5) / COUNT(AVG_RATE)
@@ -103,7 +103,8 @@ INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '�썑�씪�씠�뱶 移섑궓'
 INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '�빐�돩 釉뚮씪�슫', 1, 0, sysdate, '鍮꾩뙂', 7);
 INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '肄쒕씪', 1, 0, sysdate, null , null);
    
-SELECT * FROM ORDER_DETAIL;
+SELECT * FROM ORDER_DETAIL
+WHERE ID = '상상이'
 
 
 

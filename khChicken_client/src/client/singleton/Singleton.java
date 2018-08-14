@@ -22,6 +22,8 @@ public class Singleton {
 	private OrderController ordCtrl = new OrderController();
 	private ReviewController revCtrl = new ReviewController();
 	private MainView mv;
+	
+	
 
 	private Singleton() {
 	}

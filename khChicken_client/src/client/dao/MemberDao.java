@@ -32,6 +32,9 @@ public class MemberDao {
 	}
 
 	public void update() {
+		
+		
+		
 
 	}
 
@@ -69,4 +72,14 @@ public class MemberDao {
 	public MemberDto getCurrentUser() {
 		return CurrentUser;
 	}
+	
+	
+	public void Inform_Update(MemberDto dto) {
+	
+	Communicator comm = Singleton.getInstance().getComm();
+	comm.SendMessage(5, dto);
+	
+	}
+	
+	
 }

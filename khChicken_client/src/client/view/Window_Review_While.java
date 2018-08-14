@@ -88,9 +88,12 @@ public class Window_Review_While extends JFrame implements ActionListener {
 	
 	if(single.getMemCtrl().getCurrentUser() == null) {
 		JBut_Review_Input.setEnabled(false);
-		JTextA_Review_Input.setText("로그인을 하셔야 리뷰를 작성하실수 있습니다. \n로그인을 하실려면 클릭해주세요.");
+		JTextA_Review_Input.setText("로그인을 하셔야 리뷰를 작성하실수 있습니다. "); //\n로그인을 하실려면 클릭해주세요.
 		JTextA_Review_Input.setEditable(false);
 		myScore.removeMouseListener(myScore.getMouseListeners()[0]);
+		
+	}
+		/*
 		JTextA_Review_Input.addMouseListener(new MouseAdapter() {
 		
 			@Override
@@ -101,7 +104,7 @@ public class Window_Review_While extends JFrame implements ActionListener {
 		});
 		
 	}
-	
+	*/
 	}
 
 	@Override
@@ -118,10 +121,11 @@ public class Window_Review_While extends JFrame implements ActionListener {
 		if (obj == JBut_Review_Input) {
 			
 			
-			
 			boolean Review_Check =single.getRevCtrl().update(dto);
 			if(JTextA_Review_Input.equals("")) {
 				JOptionPane.showMessageDialog(null, "리뷰를 작성해주세요,");
+			}else if(JTextA_Review_Input.getCaretPosition() < 10) {
+				JOptionPane.showMessageDialog(null, "10자 이내로 입력해주세요.");
 			}else {
 			//single.getRevCtrl().update(dto);
 			if(Review_Check == true) {

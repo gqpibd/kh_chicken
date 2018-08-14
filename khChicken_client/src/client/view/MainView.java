@@ -230,7 +230,7 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 			memCtrl.AccountView(this);
 			}else if (btn_Register.getText().equals("내정보")) {
 				OrderCtrl.InFormationview(this);
-				;
+				
 			}
 		} else if (o == btn_Order) { // 주문하기
 			// orderMenuDto에 선택한 메뉴 이름, 타입, 가격 넣어서 넘겨주기 
@@ -247,7 +247,6 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 	public void Login() { // 로그인 상태에서의 뷰
 		btn_Login.setText("로그아웃");
 		btn_Register.setText("내정보");
-		System.out.println(s.getMemCtrl().getAuth());
 		if (s.getMemCtrl().getAuth() == MemberDto.MANAGER) {
 			btn_Manage.setVisible(true);
 		}
