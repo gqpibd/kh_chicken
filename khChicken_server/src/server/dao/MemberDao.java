@@ -31,6 +31,9 @@ public class MemberDao {
 		case 4: // 로그인 - 윤상필
 			select_login(dto, sock);
 			break;
+		case 5: // 내정보 수정
+			Inform_Update(dto);
+			break;
 		}
 	}
 
@@ -118,8 +121,8 @@ public class MemberDao {
 		MemberDto loginUser = null;
 		String id = dto.getId();
 		String pw = dto.getPw();
-		String sql = "SELECT NAME, USEDCOUPON, AUTH, ADR, PHONE " + " FROM MEMBER " + " WHERE ID = '" + id + "' AND PW = '"
-				+ pw + "' ";
+		String sql = "SELECT NAME, USEDCOUPON, AUTH, ADR, PHONE " + " FROM MEMBER " + " WHERE ID = '" + id
+				+ "' AND PW = '" + pw + "' ";
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -150,5 +153,30 @@ public class MemberDao {
 			DBClose.close(psmt, conn, rs);
 		}
 		SocketWriter.Write(sock, loginUser);
+	}
+
+	public void Inform_Update(MemberDto dto) {
+
+		String sql = " UPDATE MEMBER " + " SET NAME  = ?, adr = ?, phone = ? " + "WHERE ID =  ? ";
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, dto.getName());
+			psmt.setString(2, dto.getAddress());
+			psmt.setString(3, dto.getPhone());
+			psmt.setString(4, dto.getId());
+			psmt.executeQuery();
+			System.out.println(sql);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, null);
+		}
+
 	}
 }

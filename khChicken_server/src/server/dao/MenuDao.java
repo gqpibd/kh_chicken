@@ -58,9 +58,9 @@ public class MenuDao {
 			receiveAndSaveImage(dto.getMenu_name(), sock);
 			System.out.println(dto.getMenu_name() + "의 이미지를 수정하였습니다.");
 			break;
-		case 5: // 별점 업데이트 - 윤상필
-			Sco_Update(dto);
-			break;
+		// case 5: // 별점 업데이트 - 윤상필
+		// Sco_Update(dto);
+		// break;
 		}
 	}
 
@@ -87,18 +87,22 @@ public class MenuDao {
 	}
 
 	public void update(MenuShowDto dto) {
-		String sql = "UPDATE MENU SET PRICE = ?, DESCRIPTION = ? WHERE MENU_NAME = ?";
+		String sql = "UPDATE MENU SET PRICE = ?, DESCRIPTION = ?, AVG_RATE = ? WHERE MENU_NAME = ?";
 		Connection conn = DBConnection.getConnection();
 		PreparedStatement psmt = null;
 
 		try {
-
+			System.out.println(dto);
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, dto.getPrice());
 			psmt.setString(2, dto.getDescription());
-			psmt.setString(3, dto.getMenu_name());
+			psmt.setDouble(3, dto.getavgScore());
+			psmt.setString(4, dto.getMenu_name());
 
-			psmt.executeQuery();
+			int count = psmt.executeUpdate();
+			if (count > 0) {
+				System.out.println("정상적으로 업테이트 되었습니다.");
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -174,29 +178,31 @@ public class MenuDao {
 		}
 	}
 
-	public void Sco_Update(MenuShowDto dto) {
-		/*
-		 * String sql = " UPDATE ORDER_DETAIL " + " SET REVIEW = ?, SCORE = ? " +
-		 * " WHERE ID = ? AND MENU_NAME = ? AND REVIEW is null AND (TO_DATE(sysdate, 'yyyy/mm/dd') - TO_DATE(ORDER_DATE, 'yyyy/mm/dd')) <= '2'"
-		 * ;
-		 */
-		String sql = " UPDATE MENU " + " SET AVG_RATE = ? " + " WHERE MENU_NAME = ? ";
-
-		System.out.println(dto.getMenu_name());
-		Connection conn = null;
-		PreparedStatement psmt = null;
-		try {
-			conn = DBConnection.getConnection();
-			psmt = conn.prepareStatement(sql);
-			psmt.setDouble(1, dto.getavgScore());
-			psmt.setString(2, dto.getMenu_name());
-			psmt.executeQuery();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DBClose.close(psmt, conn, null);
-
-		}
-	}
+	// public void Sco_Update(MenuShowDto dto) {
+	// /*
+	// * String sql = " UPDATE ORDER_DETAIL " + " SET REVIEW = ?, SCORE = ? " +
+	// * " WHERE ID = ? AND MENU_NAME = ? AND REVIEW is null AND (TO_DATE(sysdate,
+	// 'yyyy/mm/dd') - TO_DATE(ORDER_DATE, 'yyyy/mm/dd')) <= '2'"
+	// * ;
+	// */
+	// String sql = " UPDATE MENU " + " SET AVG_RATE = ? " + " WHERE MENU_NAME = ?
+	// ";
+	//
+	// System.out.println(dto.getMenu_name());
+	// Connection conn = null;
+	// PreparedStatement psmt = null;
+	// try {
+	// conn = DBConnection.getConnection();
+	// psmt = conn.prepareStatement(sql);
+	// psmt.setDouble(1, dto.getavgScore());
+	// psmt.setString(2, dto.getMenu_name());
+	// psmt.executeQuery();
+	//
+	// } catch (SQLException e) {
+	// e.printStackTrace();
+	// } finally {
+	// DBClose.close(psmt, conn, null);
+	//
+	// }
+	// }
 }

@@ -83,6 +83,15 @@ INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '후라이드 치킨', 1, 0, sysdate
 INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '후라이드 치킨', 1, 0, sysdate, '맛있음', 9);
 INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '해쉬 브라운', 1, 0, sysdate, '비쌈', 7);
 INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '콜라', 1, 0, sysdate, null , null);
+ ID VARCHAR2(10),
+    MENU_NAME VARCHAR2(30),
+    COUNTS NUMBER(10) NOT NULL,
+    BEV_COUPON NUMBER(3),
+    ORDER_DATE DATE NOT NULL,
+    REVIEW VARCHAR2(1000),
+    SCORE NUMBER(5),
+
+
    
 SELECT * FROM ORDER_DETAIL;
 
@@ -127,7 +136,12 @@ ORDER BY COUNT(*) DESC) B
 WHERE A.ID = B.ID;
 
 
+UPDATE ORDER_DETAIL SET REVIEW = null, SCORE = null 
+WHERE ID = 'dohyeon' AND MENU_NAME = '반반 치킨' AND ORDER_DATE = TO_DATE('2018-08-15 02:01:05','YYYY-MM-DD HH:MI:SS');
 
+SELECT * FROM ORDER_DETAIL;
+select to_date('2018-08-15 02:01:05', 'yyyy-mm-dd hh:mi:ss') from dual;
+SELECT TO_CHAR(ORDER_DATE,'YYYY-MM-DD HH:MI:SS') FROM ORDER_DETAIL
 
 
 
