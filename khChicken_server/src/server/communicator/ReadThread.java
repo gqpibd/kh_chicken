@@ -43,7 +43,7 @@ public class ReadThread extends Thread {
 				} else if (obj instanceof ReviewDto) { 		// 리뷰보기
 					s.getRevCtrl().execute(number, (ReviewDto) obj, sock);
 				} else if (obj instanceof CustomerManageDto) {	// 고객주문관리
-					s.getCusCtrl().execute(number, (CustomerManageDto)obj, sock);
+					s.getCusCtrl().execute((CustomerManageDto)obj, sock);
 				}
 				sleep(100);
 			}

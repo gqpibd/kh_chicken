@@ -32,6 +32,9 @@ public class ReviewDao {
 		case Singleton.UPDATE: // 기존 주문한 내역에 리뷰 추가하기 - 윤상필
 			update(dto);
 			break;
+		case  4 : //내가 지금까지 시킨 치킨 정보 뺴오기
+			select_Interface(dto,sock);
+		break;
 		}
 	}
 
@@ -103,6 +106,43 @@ public class ReviewDao {
 
 	public void delete() {
 
+	}
+	
+	public void select_Interface(ReviewDto dto, Socket sock) {
+		String id = dto.getUserId();
+		String sql = "SELECT MENU_NAME, REVIEW,  ID, ORDER_DATE, SCORE "
+				+ " FROM ORDER_DETAIL"
+				+ " WHERE ID = ? ";
+		
+		System.out.println(sql);
+		ReviewDto rdto = null;
+		
+		List<ReviewDto> list = new ArrayList<>();
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, id);
+		    rs = psmt.executeQuery();
+			
+		    while(rs.next()) {
+		    	rdto = new ReviewDto(rs.getString(1), rs.getString(2), rs.getString(3), 
+		    						 rs.getString(4), rs.getInt(5));
+		    	list.add(rdto);
+		    }
+		    System.out.println(list);
+		    
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+		SocketWriter.Write(sock, list);
 	}
 
 }

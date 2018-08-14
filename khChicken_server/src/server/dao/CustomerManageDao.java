@@ -17,16 +17,12 @@ public class CustomerManageDao {
 	public CustomerManageDao() {
 	}
 
-	public void execute(int number, CustomerManageDto dto, Socket sock) {
+	public void execute(CustomerManageDto dto, Socket sock) {
 
-		switch (number) {
-		case 1: // selectByDate (날짜순) - 백승지
+			// 고객관리 view 초기화면 list(주문량순으로 고객리스트 정렬) - 백승지
 			ArrayList<CustomerManageDto> orderList = selectCustomerOrder();
 			// 담은 리스트를 소켓에 실어 보내자!
 			SocketWriter.Write(sock, orderList);
-			break;
-
-		}
 	}
 
 	public void insert() {
@@ -41,7 +37,6 @@ public class CustomerManageDao {
 				+ " (SELECT A.ID, COUNT(*) 주문건수 "
 				+ " FROM ORDER_DETAIL A, MENU B "
 				+ " WHERE A.MENU_NAME = B.MENU_NAME "
-				+ " AND B.MENU_TYPE = '메인' "
 				+ " GROUP BY ID "
 				+ " ORDER BY COUNT(*) DESC) B "
 				+ " WHERE A.ID = B.ID ";
