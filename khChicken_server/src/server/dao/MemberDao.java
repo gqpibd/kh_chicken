@@ -31,6 +31,8 @@ public class MemberDao {
 		case 4: // 로그인 - 윤상필
 			select_login(dto, sock);
 			break;
+		case 5: // 내정보의대한 내정보 값뽑아오기
+			
 		}
 	}
 
@@ -148,15 +150,10 @@ public class MemberDao {
 			e.printStackTrace();
 		} finally {
 			DBClose.close(psmt, conn, rs);
-		}
-		if(loginSuccess) {
-			System.out.println("로그인에 성공했습니다");
-		}else {
-
-			System.out.println("아이디 또는 패스워드가 틀렸습니다");
-		}
+			}
 
 		SocketWriter.Write(sock, loginSuccess);
-		
 	}
 }
+	
+

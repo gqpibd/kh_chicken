@@ -23,6 +23,9 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+import com.sun.org.apache.bcel.internal.classfile.PMGClass;
+
+import dto.MenuDto;
 import dto.MenuShowDto;
 import server.communicator.SocketWriter;
 import server.db.DBClose;
@@ -57,6 +60,9 @@ public class MenuDao {
 		case 4: // 이미지 수정 - 이도현
 			receiveAndSaveImage(dto.getMenu_name(), sock);
 			System.out.println(dto.getMenu_name() + "의 이미지를 수정하였습니다.");			
+			break;
+		case 5: // 별점 업데이트 - 윤상필
+			Sco_Update(dto);
 			break;
 		}
 	}
@@ -171,4 +177,36 @@ public class MenuDao {
 			e.printStackTrace();
 		}
 	}
+	
+	public void Sco_Update(MenuShowDto dto) {
+	/*	String sql = " UPDATE ORDER_DETAIL " + 
+				 " SET REVIEW = ?, SCORE = ? " +
+			     " WHERE ID = ? AND MENU_NAME = ? AND REVIEW is null AND (TO_DATE(sysdate, 'yyyy/mm/dd') - TO_DATE(ORDER_DATE, 'yyyy/mm/dd')) <= '2'"; 
+			     */
+		String sql = " UPDATE MENU "
+				+ " SET AVG_RATE = AVG_RATE + ? "
+				+ "WHERE MENU_NAME = ? ";
+		System.out.println("dto = " + dto);
+		System.out.print("sql = " + sql);
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setDouble(1, dto.getavgScore());
+			psmt.setString(2, dto.getMenu_name());
+			psmt.executeQuery();
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, null);
+			
+		}
+		
+		
+		
+	}
+	
+	
 }

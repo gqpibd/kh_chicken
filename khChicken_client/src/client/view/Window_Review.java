@@ -245,19 +245,11 @@ public class Window_Review extends JFrame implements ActionListener {
 		if (obj == JBut_reviewInput) {
 			single.getRevCtrl().update(dto);
 			JOptionPane.showMessageDialog(null, "작성이 완료되었습니다.");
-<<<<<<< HEAD
 			panel_menu.add(getEachReviewPanel(dto));
-=======
-			//panel_menu.add(getEachReviewPanel(dto));
->>>>>>> branch 'yun_2' of https://github.com/gqpibd/kh_semi
 
 		} else if (obj == JBut_Back) {
 			single.backToMain(this);
 		}
-<<<<<<< HEAD
-=======
-		
->>>>>>> branch 'yun_2' of https://github.com/gqpibd/kh_semi
 
 		// 밑에 기능 무시해두됨
 		/*

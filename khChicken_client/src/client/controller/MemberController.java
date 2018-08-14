@@ -1,10 +1,6 @@
 package client.controller;
 
 import javax.swing.JFrame;
-<<<<<<< HEAD
-=======
-
->>>>>>> branch 'yun_2' of https://github.com/gqpibd/kh_semi
 
 import client.dao.MemberDao;
 import client.singleton.Singleton;
@@ -40,10 +36,6 @@ public class MemberController {
 	public boolean select_login(MemberDto dto) {
 		boolean loginSuccess = memDao.select_login(dto);
 		
-<<<<<<< HEAD
-=======
-		
->>>>>>> branch 'yun_2' of https://github.com/gqpibd/kh_semi
 		if (loginSuccess) {
 			Singleton.getInstance().getMainView().Login();			
 		}
@@ -82,17 +74,10 @@ public class MemberController {
 
 	}
 
-<<<<<<< HEAD
 	public void loginView(JFrame currentView) {
 		currentView.setVisible(false);
 		if (logView == null) { // 없을 땐
 			logView = new Window_Login(); // 만들고
-=======
-	public void loginView(JFrame currentView, int number) {
-		currentView.setVisible(false);
-		if (logView == null) { // 없을 땐
-			logView = new Window_Login(number); // 만들고
->>>>>>> branch 'yun_2' of https://github.com/gqpibd/kh_semi
 		} else { // 있을 땐
 			logView.setVisible(true); // 보여만 준다.
 		}

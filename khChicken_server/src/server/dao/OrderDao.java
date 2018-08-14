@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
 
@@ -43,6 +44,9 @@ public class OrderDao {
 		case 5: // selectBySalse (매출순) - 백승지
 			ArrayList<BestSaleMenuDto> bestSaleList = selectBySalse();
 			SocketWriter.Write(sock, bestSaleList);
+			break;
+		case 6 :  // select Interface(내정보) -윤상필
+			
 			break;
 
 		}
@@ -151,5 +155,8 @@ public class OrderDao {
 	public void delete() {
 
 	}
+	
+	
+	
 
 }

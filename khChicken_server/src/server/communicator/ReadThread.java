@@ -32,6 +32,8 @@ public class ReadThread extends Thread {
 
 				int number = ois.readInt();		
 				Object obj = ois.readObject();
+				System.out.println("dddddddd" + obj);
+				System.out.println(number);
 				
 				if (obj instanceof MemberDto) { 			// 로그인, 회원가입
 					s.getMemCtrl().execute(number, (MemberDto) obj, sock);					

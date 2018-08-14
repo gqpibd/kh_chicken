@@ -39,8 +39,6 @@ public class MenuDao {
 
 	public void update() {
 
-<<<<<<< HEAD
-=======
 	}
 
 	public void delete() {
@@ -86,60 +84,6 @@ public class MenuDao {
 		Singleton s = Singleton.getInstance();
 		s.getComm().SendMessage(4, menu);
 		s.getComm().sendImage(newImgPath);		
->>>>>>> branch 'yun_2' of https://github.com/gqpibd/kh_semi
 	}
-<<<<<<< HEAD
-
-	public void delete() {
-
-	}
-
-	public int getSize() {
-		return menList.size();
-	}
-
-	public MenuShowDto get(int i) {
-		return menList.get(i);
-	}
-
-	public MenuShowDto getMenuByName(String name) {
-		for (MenuShowDto dto : menList) {
-			if (dto.getMenu_name().equals(name)) {
-				return dto;
-			}
-		}
-		return null;
-	}
-
-	public void delete(MenuShowDto menu) {
-		menList.remove(menu);
-
-		Singleton s = Singleton.getInstance();
-		s.getComm().SendMessage(Communicator.DELETE, menu);
-
-	}
-
-	public void update(MenuShowDto menu, int newPrice, String description) {
-		// 리스트에서 업데이트
-		menu.setPrice(newPrice); 
-		menu.setDescription(description);
-		
-		// socket으로 전달
-		Singleton s = Singleton.getInstance();
-		s.getComm().SendMessage(Communicator.UPDATE, menu);
-	}
-
-	public void updateImage(MenuShowDto menu, String newImgPath) {
-		Singleton s = Singleton.getInstance();
-		s.getComm().SendMessage(4, menu);
-		s.getComm().sendImage(newImgPath);		
-=======
-	
-	public void Sco_Update(MenuShowDto dto) {
-		Singleton s = Singleton.getInstance();
-		s.getMenuCtrl().Sco_Update(dto);
->>>>>>> branch 'yun_2' of https://github.com/gqpibd/kh_semi
-	}
-	
 
 }

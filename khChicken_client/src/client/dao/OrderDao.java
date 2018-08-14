@@ -40,7 +40,6 @@ public class OrderDao {
 			// 받은 dto 형식에 맞게 변환해 저장
 			list.add((OrderedMenuDto) resultList.get(i));
 			// 받은 값 확인용
-			System.out.println(resultList.get(i));
 		}
 
 		return list;
@@ -57,7 +56,6 @@ public class OrderDao {
 			// 받은 dto 형식에 맞게 변환해 저장
 			list.add((BestSaleMenuDto) resultList.get(i));
 			// 받은 값 확인용
-			System.out.println(resultList.get(i));
 		}
 		return list;
 

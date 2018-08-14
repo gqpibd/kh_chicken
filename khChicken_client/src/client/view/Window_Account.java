@@ -168,16 +168,9 @@ public class Window_Account extends JFrame implements ActionListener {
 				MemberDto dto = new MemberDto(id, pw, name, 0, 0, address, phone);
 				single.getMemCtrl().insert(dto);
 				dispose();
-<<<<<<< HEAD
 				single.getMemCtrl().loginView(this);
 			}
 
-=======
-				single.getMemCtrl().loginView(this,3);
-			}
-
-		
->>>>>>> branch 'yun_2' of https://github.com/gqpibd/kh_semi
 		} else if (obj == Jbut_Back) {
 			Singleton.getInstance().backToMain(this);
 		}

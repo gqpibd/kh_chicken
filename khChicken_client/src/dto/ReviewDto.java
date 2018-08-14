@@ -15,10 +15,6 @@ public class ReviewDto implements Serializable{
 	public ReviewDto() {
 	}
 
-<<<<<<< HEAD
-=======
-	
->>>>>>> branch 'yun_2' of https://github.com/gqpibd/kh_semi
 	public ReviewDto(String menuName, String review, String userId, String orderDate, int score) {
 		super();
 		this.menuName = menuName;
