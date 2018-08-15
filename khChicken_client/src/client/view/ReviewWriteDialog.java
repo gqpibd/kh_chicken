@@ -88,7 +88,7 @@ public class ReviewWriteDialog extends JDialog {
 			rDto.setReview(JTextA_Review_Input.getText());
 			rDto.setScore(myScore);
 
-			if (obj == JBut_Review_Input) { // 작성하기 클리
+			if (obj == JBut_Review_Input) { // 작성하기 클릭
 				if (JTextA_Review_Input.getText().equals("")) {
 					JOptionPane.showMessageDialog(null, "리뷰를 작성해주세요,");
 				} else {
@@ -98,8 +98,6 @@ public class ReviewWriteDialog extends JDialog {
 
 					// 현재 DB에있는 별점 총계산
 					double Sum_Score = 0;
-					System.out.println("리스트 사이즈:" + list.size());
-					// List<MenuShowDto> mlist = s.getMenuCtrl().get_List();
 					for (int i = 0; i < list.size(); i++) {
 						Sum_Score = Sum_Score + list.get(i).getScore();
 					}
@@ -110,12 +108,11 @@ public class ReviewWriteDialog extends JDialog {
 
 					MenuShowDto menuDto = s.getMenuCtrl().getMenuDto(rDto.getMenuName());
 					menuDto.setavgScore(newScore);
-					System.out.println(menuDto);
-					s.getMenuCtrl().update(menuDto);//
+					s.getMenuCtrl().update(menuDto);
 
 					dispose();
-					
-					JOptionPane.showMessageDialog(null, "작성이 완료되었습니다.");			
+
+					JOptionPane.showMessageDialog(null, "작성이 완료되었습니다.");
 
 				}
 			} else if (obj == JBut_back) { // 이전으로 클릭
@@ -164,7 +161,7 @@ public class ReviewWriteDialog extends JDialog {
 	public double getNewScore() {
 		return newScore;
 	}
-	
+
 	public ReviewDto getNewReview() {
 		return rDto;
 	}

@@ -28,7 +28,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import client.controller.MenuController;
-import client.dao.MenuDao;
+import client.service.MenuDao;
 import client.singleton.Singleton;
 import dto.MenuShowDto;
 import dto.ReviewDto;
@@ -41,7 +41,7 @@ public class ReviewDialog extends JDialog implements ActionListener {
 	private JButton JBut_SelectMenu; // 장바구니 담기
 	private JButton JBut_Back; // 뒤로가기
 	private JButton JBut_Write; // 리뷰 작성
-	
+
 	// 새로 리뷰가 추가되면 업데이트 해야하는 것들
 	private JProgressBar avgStarBar; // 별점(그림)
 	private JLabel scoreLabel; // 별점(숫자)
@@ -85,11 +85,10 @@ public class ReviewDialog extends JDialog implements ActionListener {
 		panel_menu = new JPanel(); // 리뷰 하나하나 들어갈 패널 (스크롤)
 		panel_menu.setLayout(new MigLayout());
 		panel_menu.setBackground(Color.white);
-		
+
 		JScrollPane scroll = new JScrollPane(panel_menu);
 		scroll.getVerticalScrollBar().setUnitIncrement(15); // 스크롤 할 때 움직이는 양
 		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-	
 
 		scroll.setPreferredSize(new Dimension(800, 204));
 		panel_bigmenu.add(scroll);
@@ -143,7 +142,6 @@ public class ReviewDialog extends JDialog implements ActionListener {
 		scoreLabel.setFont(new Font("나눔고딕", Font.BOLD, 18));
 		panel.add(scoreLabel);
 
-		
 		JPanel avgScoPanel = getStarBarPan(menu.getavgScore());
 		avgStarBar = (JProgressBar) avgScoPanel.getComponent(0);
 		panel.add(avgScoPanel);
@@ -224,20 +222,21 @@ public class ReviewDialog extends JDialog implements ActionListener {
 			ReviewDto rDto = new ReviewDto();
 			rDto.setMenuName(menu.getMenu_name());
 			rDto.setUserId(single.getMemCtrl().getLoginId());
-			rDto = single.getRevCtrl().WritableReview(rDto); // 작성 가능한 리뷰가 있으면 받는다. 이걸 업데이트 할거임		
+			rDto = single.getRevCtrl().WritableReview(rDto); // 작성 가능한 리뷰가 있으면 받는다. 이걸 업데이트 할거임
+			System.out.println(rDto);
 			if (rDto == null) {
 				JOptionPane.showMessageDialog(null, "작성 가능한 리뷰가 없습니다");
 				return;
 			} else { // 리뷰 작성창을 띄워준다
 				single.getRevCtrl().Write_review(this, rDto);
 				double newScore = single.getRevCtrl().getNewScore();
-				
-				if(newScore != -1) { // 방금 작성한 리뷰 결과가 있으면
-					avgStarBar.setValue((int) menu.getavgScore() );
+
+				if (newScore != -1) { // 방금 작성한 리뷰 결과가 있으면
+					avgStarBar.setValue((int) menu.getavgScore());
 					double avgScore = menu.getavgScore();
-					scoreLabel.setText("고객 만족도 : " + Math.round(avgScore*10)/10.0 + "   ");
-					panel_menu.add(getEachReviewPanel(single.getRevCtrl().getNewReview()));
-					
+					scoreLabel.setText("고객 만족도 : " + Math.round(avgScore * 10) / 10.0 + "   ");
+					panel_menu.add(getEachReviewPanel(single.getRevCtrl().getNewReview()), "wrap");
+
 				}
 			}
 		} else if (JBut_Back == obj) {

@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
-import client.dao.MenuDao;
+import client.service.MenuDao;
 import client.view.manager.AddMenuView;
 import client.view.manager.MenuManageView;
 import client.view.manager.UpdateMenuView;

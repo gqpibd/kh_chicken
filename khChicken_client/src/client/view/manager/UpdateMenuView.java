@@ -26,7 +26,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import client.controller.MenuController;
-import client.dao.MenuDao;
+import client.service.MenuDao;
 import client.singleton.Singleton;
 import dto.MenuShowDto;
 import utils.images.ImageUtils;

@@ -5,7 +5,7 @@ import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
-import client.dao.ReviewDao;
+import client.service.ReviewDao;
 import client.view.ReviewDialog;
 import client.view.ReviewWriteDialog;
 import dto.MemberDto;

@@ -1,4 +1,4 @@
-package client.dao;
+package client.service;
 
 import java.net.Socket;
 import java.util.ArrayList;
@@ -49,6 +49,7 @@ public class ReviewDao {
 	public void update(ReviewDto dto) { // 작성한 리뷰를 등록한다. 기존 구매 내역에 추가됨.
 		Communicator comm = Singleton.getInstance().getComm();
 		comm.SendMessage(Communicator.UPDATE, dto);
+		
 	}
 
 	public void delete() {

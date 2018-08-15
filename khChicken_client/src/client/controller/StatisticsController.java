@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
-import client.dao.StatisticsDao;
+import client.service.StatisticsDao;
 import client.view.manager.CustomerManageView;
 import client.view.manager.SaleManageView;
 import dto.BestSaleMenuDto;

@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import client.controller.StatisticsController;
-import client.dao.StatisticsDao;
+import client.service.StatisticsDao;
 import client.singleton.Singleton;
 import dto.BestSaleMenuDto;
 import dto.OrderedMenuDto;

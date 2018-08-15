@@ -27,7 +27,7 @@ import javax.swing.ScrollPaneConstants;
 import client.controller.MemberController;
 import client.controller.MenuController;
 import client.controller.OrderController;
-import client.dao.MenuDao;
+import client.service.MenuDao;
 import client.singleton.Singleton;
 import dto.MemberDto;
 import dto.MenuDto;
@@ -260,8 +260,18 @@ public class MainView extends JFrame implements ItemListener {
 					JOptionPane.showMessageDialog(null, "선택한 메뉴가 없습니다");
 					return;
 				}
+				int mainCount = 0;
 				for (int i = 0; i < checkedMenu.size(); i++) {
-					ordCtrl.getList().add(new OrderedMenuDto((MenuDto) menCtrl.getMenuDto(checkedMenu.get(i))));
+					MenuDto dto = (MenuDto) menCtrl.getMenuDto(checkedMenu.get(i));
+					ordCtrl.getList().add(new OrderedMenuDto(dto));
+					if(dto.getType().equals("메인")) {
+						mainCount++;
+					}					
+				}
+				if(mainCount == 0) {
+					JOptionPane.showMessageDialog(null, "메인 메뉴를 선택해 주세요");
+					ordCtrl.getList().clear();
+					return;
 				}
 
 				ordCtrl.OrderView(mv);
@@ -279,6 +289,8 @@ public class MainView extends JFrame implements ItemListener {
 		System.out.println(s.getMemCtrl().getAuth());
 		if (s.getMemCtrl().getAuth() == MemberDto.MANAGER) {
 			btn_Manage.setVisible(true);
+			btn_Register.setVisible(false);
+			btn_Order.setVisible(false);
 		}
 		btn_Login.setIcon(new ImageIcon(PATH + "logoutBtn.jpg"));
 		btn_Register.setName("내정보");
@@ -292,5 +304,8 @@ public class MainView extends JFrame implements ItemListener {
 		btn_Login.setName("로그인");
 		btn_Register.setName("회원가입");
 		btn_Register.setIcon(new ImageIcon(PATH + "signBtn.jpg"));
+		btn_Register.setVisible(true);
+		btn_Order.setVisible(true);
+		
 	}
 }

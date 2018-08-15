@@ -6,7 +6,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import client.dao.OrderDao;
+import client.service.OrderDao;
 import client.singleton.Singleton;
 import client.view.OrderView;
 import client.view.MyInfoView;

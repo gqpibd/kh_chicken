@@ -1,4 +1,4 @@
-package client.dao;
+package client.service;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
