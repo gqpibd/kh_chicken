@@ -32,9 +32,11 @@ import dto.MemberDto;
 import dto.OrderedMenuDto;
 
 public class OrderView extends JFrame implements ActionListener {
+	private List<OrderedMenuDto> oList;
 	private int beverageCounts = 0;
 	int myCoupons = 0;
-	int orderPrice; // 주문금액
+	int orderPrice, count = 0;
+	boolean flag = true;
 	private JLabel availableCoupons;
 	private JLabel couponLabel;
 	private JLabel salePayment;
@@ -45,7 +47,6 @@ public class OrderView extends JFrame implements ActionListener {
 	private JButton paymentBtn;
 	private JButton cancelBtn;
 	private DefaultTableModel dtm; // 상세 주문내역을 보관하고 있는 모델
-	private List<OrderedMenuDto> oList;
 	private JTable menuTable;
 
 	private JTextField nameField;
@@ -158,9 +159,10 @@ public class OrderView extends JFrame implements ActionListener {
 		panel.add(lblNewLabel_5);
 		lblNewLabel_5.setFont(new Font("굴림", Font.BOLD, 15));
 		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
-
+		
 		// 결제금액을 보여줄 라벨
-		paidPayment = new JLabel("0 원"); // 결제금액 == 치킨값 * 수량 넣기.
+		orderPrice = OrderCalc(oList);
+		paidPayment = new JLabel(orderPrice + "원"); // 결제금액 == 치킨값 * 수량 넣기.
 		paidPayment.setBounds(230, 41, 74, 21);
 		panel.add(paidPayment);
 		paidPayment.setHorizontalAlignment(SwingConstants.CENTER);
@@ -184,7 +186,6 @@ public class OrderView extends JFrame implements ActionListener {
 		salePayment.setBounds(122, 41, 74, 21);
 		panel.add(salePayment);
 		
-		orderPrice = OrderCalc(oList);
 		orderPayment = new JLabel(orderPrice + "원");
 		orderPayment.setHorizontalAlignment(SwingConstants.CENTER);
 		orderPayment.setFont(new Font("굴림", Font.BOLD, 15));
@@ -334,8 +335,8 @@ public class OrderView extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				SelectAddressDialog a = new SelectAddressDialog(this, true);
-				addressField.setText(a.getAddress() + " " +a.getDetailAddress());
+//				SelectAddressDialog a = new SelectAddressDialog(this, true);
+//				addressField.setText(a.getAddress() + " " +a.getDetailAddress());
 			}
 		});
 		getContentPane().add(addSearchBtn);
@@ -386,8 +387,31 @@ public class OrderView extends JFrame implements ActionListener {
 			public Component getTableCellRendererComponent // 셀렌더러
 			(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 				JCheckBox box = new JCheckBox();
+//				count++;
+//				box.setSelected((count<menuTable.getRowCount())?false:((Boolean) value).booleanValue());
+					// 삼항으로 초기 생성때만 false로 하고 그다음부턴 선택하는데로 하려고 했으나 실패
+				
+				
 				box.setSelected(((Boolean) value).booleanValue()); // 체크박스가 선택 되었는가?
+
+//				count++;
+//				if(count<=oList.size())
+//					box.setSelected(false);  // 그나마 비슷하게는 됨. 다만 처음 클릭했을때 클릭 인식 안되고
+														// 2번째 클릭때부터 정상 작동
+				
+//				count++;
+//				if(count<=oList.size() && flag)
+//					box.setSelected(false);
+//				else {
+//					flag = false;
+//					box.setSelected(((Boolean) value).booleanValue()); // 체크박스가 선택 되었는가?
+//				}
+				// 플레그도 사용해서 처음 생성했을때와 true일때를 중복으로 체크해서
+				// 좀더 정확하게 동작할 수 있도록 하려했으나 실패
+				
+				
 				box.setHorizontalAlignment(JLabel.CENTER);
+				
 
 				return box;
 			}
@@ -430,7 +454,6 @@ public class OrderView extends JFrame implements ActionListener {
 						beverageCounts += num;
 					}
 
-					System.out.println("bevrageCounts : " + beverageCounts + " row : " + row);
 					setUsableCouponCount();
 				}
 
