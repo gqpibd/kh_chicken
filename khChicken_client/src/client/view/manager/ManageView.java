@@ -32,36 +32,36 @@ public class ManageView extends JFrame implements ActionListener {
 	public ManageView() { 
 		super("매니저 창");
 		setLayout(null);
-		setContentPane(new JLabel(new ImageIcon(PATH + "manageView.jpg")));
+		setContentPane(new JLabel(new ImageIcon(PATH + "manageView2.jpg")));
 		setResizable(false);
 		
 		
 
 		btn_menu = new JButton(new ImageIcon(PATH + "menuManageBtn.png"));
-		btn_menu.setBounds(170, 60, 98, 50);
+		btn_menu.setBounds(200, 100, 98, 50);
 		btn_menu.addActionListener(this);
 		btn_menu.setBackground(Color.pink);
 		add(btn_menu);
 
 		btn_sale = new JButton(new ImageIcon(PATH + "saleManageBtn.png"));
-		btn_sale.setBounds(170, 120, 98, 50);
+		btn_sale.setBounds(200, 160, 98, 50);
 		btn_sale.addActionListener(this);
 		btn_sale.setBackground(Color.pink);
 		add(btn_sale);
 		
 		btn_customer = new JButton(new ImageIcon(PATH + "customerBtn.png"));
-		btn_customer.setBounds(170, 180, 98, 50);
+		btn_customer.setBounds(200, 220, 98, 50);
 		btn_customer.addActionListener(this);
 		btn_customer.setBackground(Color.pink);
 		add(btn_customer);
 
 		btn_back = new JButton(new ImageIcon(PATH + "returnBtn.png"));
-		btn_back.setBounds(170, 240, 98, 50);
+		btn_back.setBounds(200, 280, 98, 50);
 		btn_back.addActionListener(this);
 		btn_back.setBackground(Color.white);
 		add(btn_back);
 
-		setBounds(100, 100, 300, 350);
+		setBounds(100, 100, 350, 400);
 		getContentPane().setBackground(Color.black);
 		setVisible(true);
 

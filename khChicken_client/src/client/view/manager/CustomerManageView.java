@@ -70,11 +70,11 @@ public class CustomerManageView extends JFrame implements ActionListener {
 		String str = e.getActionCommand();
 		Singleton s = Singleton.getInstance();
 
-		if (str.equals("메인으로")) {
+		if (str.equals("돌아가기")) {
 			s.getMemCtrl().manageView(this);
 		} else if (str.equals("뒤로")) {
 			setTableByCustomerOrder();
-			backBtn.setText("메인으로");
+			backBtn.setText("돌아가기");
 		}
 
 	}

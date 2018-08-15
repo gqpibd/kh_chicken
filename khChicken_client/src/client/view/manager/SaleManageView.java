@@ -1,10 +1,12 @@
 package client.view.manager;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -36,11 +38,15 @@ public class SaleManageView extends JFrame implements ActionListener {
 	JButton backBtn; // 돌아가기 버튼
 	// 정렬 기준
 	private JComboBox<String> choiceList;
+	private static final String PATH = "images/manageView/";
 
 	public SaleManageView() {
 		super("판매 내역");
 		setLayout(null);
-
+		
+		setContentPane(new JLabel(new ImageIcon(PATH + "saleView.jpg")));
+		setResizable(false);
+		
 		model = new DefaultTableModel() {
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -54,22 +60,23 @@ public class SaleManageView extends JFrame implements ActionListener {
 		setTableByDate();
 
 		jScrPane = new JScrollPane(jTable);
-		jScrPane.setBounds(10, 50, 600, 300);
+		jScrPane.setBounds(10, 80, 600, 300);
 		add(jScrPane);
 
-		JLabel label = new JLabel("판매 내역");
-		label.setBounds(10, 10, 120, 15);
-		add(label);
 
-		backBtn = new JButton("돌아가기");
-		backBtn.setBounds(500, 370, 90, 40);
+		backBtn = new JButton(new ImageIcon(PATH + "customerReturnBtn.jpg"));
+		backBtn.setBounds(520, 400, 90, 40);
 		backBtn.addActionListener(this);
 		add(backBtn);
 
+		JLabel label = new JLabel("정렬 기준 :");
+		label.setFont(new Font("다음_Regular", Font.PLAIN, 14));
+		label.setBounds(450, 50, 80, 20);
+		add(label);
 		// 정렬기준 바꾸기
 		String[] selects = new String[] { "날짜순", "매출순", "별점순" };
 		choiceList = new JComboBox<>(selects);
-		choiceList.setBounds(20, 380, 80, 20);
+		choiceList.setBounds(520, 50, 80, 20);
 		choiceList.addActionListener(this);
 		add(choiceList);
 
