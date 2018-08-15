@@ -106,7 +106,7 @@ public class MemberDao {
 	}
 
 	public void update(MemberDto dto) {
-		String sql = " UPDATE MEMBER " + " SET NAME  = ?,SET PW = ?, " + " USEDCOUPON = ?,  adr = ?, phone = ? "
+		String sql = " UPDATE MEMBER " + " SET NAME  = ?, PW = ?, USEDCOUPON = ?, adr = ?, phone = ? "
 				+ "WHERE ID =  ? ";
 
 		Connection conn = null;

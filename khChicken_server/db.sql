@@ -36,6 +36,7 @@ insert into member (name,id,pw,auth,adr,phone)
 values ('상필', 'sangpil', 'sp', 3, '강원도 화천군 사내면', '010-4974-1515');
 
 select * from member;
+update MEMBER SET USEDCOUPON = 1 WHERE ID = 'dohyeon';
 
 ALTER TABLE MEMBER MODIFY (
 	ADR VARCHAR2(100)
@@ -193,4 +194,7 @@ INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '감자튀김', 1, 0, TO_DATE('20180
 
 select * from order_detail;
 
-
+UPDATE ORDER_DETAIL  SET REVIEW = 'asdf', SCORE = 6
+WHERE ID = 'seungji' AND MENU_NAME = '후라이드 치킨' AND ORDER_DATE = TO_DATE('2018-08-15 05:42:25','YYYY-MM-DD HH:MI:SS')
+SELECT ID, MENU_NAME, TO_CHAR(ORDER_DATE, 'YYYY-MM-DD HH24:MI:SS'), REVIEW, SCORE 
+FROM ORDER_DETAIL WHERE MENU_NAME = '후라이드 치킨', ID = 'seungji', AND REVIEW NULL

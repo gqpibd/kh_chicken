@@ -31,7 +31,7 @@ public class ReadThread extends Thread {
 
 				int number = ois.readInt();
 				Object obj = ois.readObject();
-
+				
 				if (obj instanceof MemberDto) { // 로그인, 회원가입
 					s.getMemCtrl().execute(number, (MemberDto) obj, sock);
 				} else if (obj instanceof MenuShowDto) { // 메뉴 보여주기, 추가 삭제

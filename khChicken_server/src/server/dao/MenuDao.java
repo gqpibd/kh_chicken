@@ -92,7 +92,6 @@ public class MenuDao {
 		PreparedStatement psmt = null;
 
 		try {
-			System.out.println(dto);
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, dto.getPrice());
 			psmt.setString(2, dto.getDescription());
@@ -101,7 +100,7 @@ public class MenuDao {
 
 			int count = psmt.executeUpdate();
 			if (count > 0) {
-				System.out.println("정상적으로 업테이트 되었습니다.");
+				System.out.println("정상적으로 업데이트 되었습니다.");
 			}
 
 		} catch (SQLException e) {
@@ -177,32 +176,4 @@ public class MenuDao {
 			e.printStackTrace();
 		}
 	}
-
-	// public void Sco_Update(MenuShowDto dto) {
-	// /*
-	// * String sql = " UPDATE ORDER_DETAIL " + " SET REVIEW = ?, SCORE = ? " +
-	// * " WHERE ID = ? AND MENU_NAME = ? AND REVIEW is null AND (TO_DATE(sysdate,
-	// 'yyyy/mm/dd') - TO_DATE(ORDER_DATE, 'yyyy/mm/dd')) <= '2'"
-	// * ;
-	// */
-	// String sql = " UPDATE MENU " + " SET AVG_RATE = ? " + " WHERE MENU_NAME = ?
-	// ";
-	//
-	// System.out.println(dto.getMenu_name());
-	// Connection conn = null;
-	// PreparedStatement psmt = null;
-	// try {
-	// conn = DBConnection.getConnection();
-	// psmt = conn.prepareStatement(sql);
-	// psmt.setDouble(1, dto.getavgScore());
-	// psmt.setString(2, dto.getMenu_name());
-	// psmt.executeQuery();
-	//
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// } finally {
-	// DBClose.close(psmt, conn, null);
-	//
-	// }
-	// }
 }

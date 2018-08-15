@@ -43,7 +43,7 @@ public class ReviewDao {
 	}
 
 	private void select_WritableReview(ReviewDto dto, Socket sock) {
-		String sql = " SELECT TO_CHAR(ORDER_DATE,'YYYY-MM-DD HH:MI:SS') FROM ORDER_DETAIL "
+		String sql = " SELECT TO_CHAR(ORDER_DATE,'YYYY-MM-DD HH24:MI:SS') FROM ORDER_DETAIL "
 				+ " WHERE ID = ? AND MENU_NAME = ? AND REVIEW is null AND (SYSDATE - ORDER_DATE) <= 2";
 
 		Connection conn = null;
@@ -77,7 +77,7 @@ public class ReviewDao {
 	}
 
 	public void select(ReviewDto dto, Socket sock) {
-		String sql = "SELECT ID, MENU_NAME, ORDER_DATE, REVIEW, SCORE " + " FROM ORDER_DETAIL "
+		String sql = "SELECT ID, MENU_NAME, TO_CHAR(ORDER_DATE, 'YYYY-MM-DD HH24:MI:SS'), REVIEW, SCORE " + " FROM ORDER_DETAIL "
 				+ " WHERE MENU_NAME = ? AND REVIEW IS NOT NULL";
 
 		Connection conn = null;
@@ -92,7 +92,6 @@ public class ReviewDao {
 			rs = psmt.executeQuery();
 
 			while (rs.next()) {
-				System.out.println(dto.getMenuName());
 				// ID, MENU_NAME, ORDER_DATE, REVIEW, SCORE
 				ReviewDto resultDto = new dto.ReviewDto();
 				resultDto.setUserId(rs.getString(1));
@@ -117,8 +116,8 @@ public class ReviewDao {
 
 	public void update(ReviewDto dto) { // 기존 주문한 내역에 리뷰 추가하기
 		String sql = " UPDATE ORDER_DETAIL " + " SET REVIEW = ?, SCORE = ? "
-				+ " WHERE ID = ? AND MENU_NAME = ? AND ORDER_DATE = TO_DATE(?,'YYYY-MM-DD HH:MI:SS') ";
-
+				+ " WHERE ID = ? AND MENU_NAME = ? AND ORDER_DATE = TO_DATE(?,'YYYY-MM-DD HH24:MI:SS') ";
+		System.out.println(" new review: "+dto);
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		// ResultSet rs = null;
