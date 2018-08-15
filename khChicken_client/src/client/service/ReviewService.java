@@ -8,19 +8,14 @@ import client.communicator.Communicator;
 import client.singleton.Singleton;
 import dto.ReviewDto;
 
-public class ReviewDao {
+public class ReviewService implements ReviewServiceInter{
 	private final int WRITABLE_REVIEW = 4;
 	private final int SELECT_BY_ID = 5;
 
 	List<ReviewDto> rList = new ArrayList<ReviewDto>();
 	Socket sock;
 
-	public ReviewDao() {
-	}
-
-	public void SockDao(Socket sock) {
-		this.sock = sock;
-
+	public ReviewService() {
 	}
 
 	public void insert(ReviewDto dto) {

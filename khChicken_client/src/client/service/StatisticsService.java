@@ -7,9 +7,9 @@ import client.singleton.Singleton;
 import dto.BestSaleMenuDto;
 import dto.OrderedMenuDto;
 
-public class StatisticsDao {
+public class StatisticsService implements StatisticsServiceInter {
 
-	public StatisticsDao() {
+	public StatisticsService() {
 	}
 
 	public ArrayList<?> select(int number) {

@@ -5,7 +5,7 @@ import java.awt.Frame;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
-import client.service.MemberDao;
+import client.service.MemberService;
 import client.singleton.Singleton;
 import client.view.AccountView;
 import client.view.LoginView;
@@ -15,7 +15,7 @@ import dto.MemberDto;
 
 public class MemberController {
 
-	private MemberDao memDao = new MemberDao();
+	private MemberService memDao = new MemberService();
 
 	private ManageView manView;
 	private AccountView accView;

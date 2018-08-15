@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
-import client.service.MenuDao;
+import client.service.MenuService;
 import client.view.manager.AddMenuView;
 import client.view.manager.MenuManageView;
 import client.view.manager.UpdateMenuView;
@@ -12,13 +12,13 @@ import dto.MenuShowDto;
 
 public class MenuController {
 
-	private MenuDao menDao = new MenuDao();
+	private MenuService menDao = new MenuService();
 
 	private MenuManageView menManView;
 	private UpdateMenuView updManView;
 	private AddMenuView addManView;
 
-	public MenuDao getMenDao() {
+	public MenuService getMenDao() {
 		return menDao;
 	}
 

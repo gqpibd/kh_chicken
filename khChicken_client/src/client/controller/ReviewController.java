@@ -5,7 +5,7 @@ import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
-import client.service.ReviewDao;
+import client.service.ReviewService;
 import client.view.ReviewDialog;
 import client.view.ReviewWriteDialog;
 import dto.MemberDto;
@@ -13,7 +13,7 @@ import dto.ReviewDto;
 
 public class ReviewController {
 
-	private ReviewDao revDao = new ReviewDao();
+	private ReviewService revDao = new ReviewService();
 
 	private ReviewDialog reviewView; // 리뷰창
 	private ReviewWriteDialog write_view;

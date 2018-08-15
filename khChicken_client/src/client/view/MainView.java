@@ -27,7 +27,7 @@ import javax.swing.ScrollPaneConstants;
 import client.controller.MemberController;
 import client.controller.MenuController;
 import client.controller.OrderController;
-import client.service.MenuDao;
+import client.service.MenuService;
 import client.singleton.Singleton;
 import dto.MemberDto;
 import dto.MenuDto;
@@ -158,7 +158,7 @@ public class MainView extends JFrame implements ItemListener {
 		String img = menCtrl.get(i).getMenu_name().replaceAll(" ", "_") + ".jpg";
 		// 패널당 메뉴이름을 저장시켜줌
 
-		ImageUtils.setResizedImage(imgLabel, MenuDao.FOLDER_PATH + img);
+		ImageUtils.setResizedImage(imgLabel, MenuService.FOLDER_PATH + img);
 		imgLabel.setName(menCtrl.get(i).getMenu_name()); // 라벨 자체에 메뉴 이름을 저장해준다.
 
 		frontpanel.add(imgLabel, "center, wrap");

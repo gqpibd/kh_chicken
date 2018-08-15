@@ -6,7 +6,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import client.service.OrderDao;
+import client.service.OrderService;
 import client.singleton.Singleton;
 import client.view.OrderView;
 import client.view.MyInfoView;
@@ -14,7 +14,7 @@ import dto.OrderedMenuDto;
 
 public class OrderController {
 
-	private OrderDao ordDao = new OrderDao();
+	private OrderService ordDao = new OrderService();
 
 	private OrderView ordView;
 	private MyInfoView Window_inform;

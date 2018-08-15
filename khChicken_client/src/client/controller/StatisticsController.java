@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
-import client.service.StatisticsDao;
+import client.service.StatisticsService;
 import client.view.manager.CustomerManageView;
 import client.view.manager.SaleManageView;
 import dto.BestSaleMenuDto;
@@ -17,7 +17,7 @@ public class StatisticsController {
 	public static final int CUSTOMER = 3;
 	public static final int ADDRESS = 4; // 주소검색
 
-	private StatisticsDao manDao = new StatisticsDao();
+	private StatisticsService manDao = new StatisticsService();
 	private CustomerManageView cusManView; // 회원관리창
 	private SaleManageView salManView; // 매출관리창
 	

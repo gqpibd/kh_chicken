@@ -26,7 +26,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import client.controller.MenuController;
-import client.service.MenuDao;
+import client.service.MenuService;
 import client.singleton.Singleton;
 import dto.MenuShowDto;
 import utils.images.ImageUtils;
@@ -187,7 +187,7 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 		typeField.setText(topDto.getType());
 		descriptionArea.setText(topDto.getDescription());
 
-		ImageUtils.setResizedImage(imgLabel, MenuDao.FOLDER_PATH + topDto.getMenu_name().replaceAll(" ", "_") + ".jpg");
+		ImageUtils.setResizedImage(imgLabel, MenuService.FOLDER_PATH + topDto.getMenu_name().replaceAll(" ", "_") + ".jpg");
 		menuTable.setRowSelectionInterval(0, 0); // 맨 위 칼럼이 선택된 상태로 표시함
 	}
 
@@ -223,7 +223,7 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 				imgFileField.setText(model.getValueAt(row, IMG_COL).toString());
 
 				descriptionArea.setText(dto.getDescription());
-				ImageUtils.setResizedImage(imgLabel,MenuDao.FOLDER_PATH + model.getValueAt(row, IMG_COL).toString());
+				ImageUtils.setResizedImage(imgLabel,MenuService.FOLDER_PATH + model.getValueAt(row, IMG_COL).toString());
 			}
 		});
 
@@ -273,7 +273,7 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 			menu.setDescription(description);
 			s.getMenuCtrl().update(menu);
 
-			String currentImgPath = MenuDao.FOLDER_PATH + model.getValueAt(row, IMG_COL).toString();
+			String currentImgPath = MenuService.FOLDER_PATH + model.getValueAt(row, IMG_COL).toString();
 			if (NewImgPath.length() > 0 && !NewImgPath.equals(currentImgPath)) { // 이미지 경로가 달라졌으면 소켓을 통해 새로운 이미지를 보낸다.
 				s.getMenuCtrl().getMenDao().updateImage(menu, NewImgPath);
 			}

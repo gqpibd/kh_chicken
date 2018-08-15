@@ -9,12 +9,12 @@ import client.communicator.Communicator;
 import client.singleton.Singleton;
 import dto.MemberDto;
 
-public class MemberDao {
+public class MemberService implements MemberServiceInter {
 
 	List<MemberDto> mList = new ArrayList<MemberDto>();
 	MemberDto CurrentUser = null;
 
-	public MemberDao() {
+	public MemberService() {
 	}
 
 	public void insert(MemberDto dto) { // 회원가입

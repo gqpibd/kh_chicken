@@ -28,7 +28,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import client.controller.MenuController;
-import client.service.MenuDao;
+import client.service.MenuService;
 import client.singleton.Singleton;
 import dto.MenuShowDto;
 import dto.ReviewDto;
@@ -59,7 +59,7 @@ public class ReviewDialog extends JDialog implements ActionListener {
 		this.menu = mCtrl.getMenuDto(menuName);
 
 		// 메뉴 사진
-		String imgPath = MenuDao.FOLDER_PATH + menuName.replaceAll(" ", "_") + ".jpg";
+		String imgPath = MenuService.FOLDER_PATH + menuName.replaceAll(" ", "_") + ".jpg";
 		JLabel JLabel_Menu = new JLabel();
 		JLabel_Menu.setBounds(14, 12, 207, 184);
 		ImageUtils.setResizedImage(JLabel_Menu, imgPath);
