@@ -61,7 +61,7 @@ public class MainView extends JFrame implements ItemListener {
 
 		setContentPane(new JLabel(new ImageIcon(PATH + "mainView.jpg")));
 		setResizable(false);
-
+		//크기변경불가
 		LabelClickListener lcl = new LabelClickListener(this);
 
 		// 버튼설정
@@ -80,13 +80,13 @@ public class MainView extends JFrame implements ItemListener {
 		btn_Register.addMouseListener(lcl);
 
 		btn_Order = new JLabel(new ImageIcon(PATH + "orderBtn.jpg"));
-		btn_Order.setBounds(475, 715, btn_Order.getIcon().getIconWidth(), btn_Order.getIcon().getIconHeight());
+		btn_Order.setBounds(475, 660, btn_Order.getIcon().getIconWidth(), btn_Order.getIcon().getIconHeight());
 		btn_Order.setFont(new Font("다음_Regular", Font.PLAIN, 15));
 		// btn_Order.addActionListener(this);
 		btn_Order.addMouseListener(lcl);
 
 		btn_Manage = new JLabel(new ImageIcon(PATH + "manageBtn.jpg"));
-		btn_Manage.setBounds(370, 715, btn_Manage.getIcon().getIconWidth(), btn_Manage.getIcon().getIconHeight());
+		btn_Manage.setBounds(370, 660, btn_Manage.getIcon().getIconWidth(), btn_Manage.getIcon().getIconHeight());
 		btn_Manage.setVisible(false);
 		btn_Manage.setFont(new Font("다음_Regular", Font.PLAIN, 15));
 		// btn_Manage.addActionListener(this);
@@ -98,7 +98,7 @@ public class MainView extends JFrame implements ItemListener {
 
 		// 메뉴들을 넣을 큰 패널 설정
 		JPanel panel_bigmenu = new JPanel();
-		panel_bigmenu.setBounds(0, 100, 580, 600);
+		panel_bigmenu.setBounds(0, 100, 580, 500);
 		panel_bigmenu.setBackground(new Color(255, 255, 255));
 		panel_bigmenu.setLayout(new MigLayout("wrap", "", ""));
 

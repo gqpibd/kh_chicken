@@ -10,8 +10,10 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import dto.OrderedMenuDto;
@@ -25,36 +27,41 @@ public class ManageView extends JFrame implements ActionListener {
 	private JButton btn_sale;
 	private JButton btn_customer;
 	private JButton btn_back;
+	private static final String PATH = "images/manageView/";
 
 	public ManageView() { 
 		super("매니저 창");
 		setLayout(null);
+		setContentPane(new JLabel(new ImageIcon(PATH + "manageView.jpg")));
+		setResizable(false);
+		
+		
 
-		btn_menu = new JButton("1. 메뉴 관리");
-		btn_menu.setBounds(60, 30, 150, 50);
+		btn_menu = new JButton(new ImageIcon(PATH + "menuManageBtn.png"));
+		btn_menu.setBounds(170, 60, 98, 50);
 		btn_menu.addActionListener(this);
 		btn_menu.setBackground(Color.pink);
 		add(btn_menu);
 
-		btn_sale = new JButton("2. 판매 관리");
-		btn_sale.setBounds(60, 100, 150, 50);
+		btn_sale = new JButton(new ImageIcon(PATH + "saleManageBtn.png"));
+		btn_sale.setBounds(170, 120, 98, 50);
 		btn_sale.addActionListener(this);
 		btn_sale.setBackground(Color.pink);
 		add(btn_sale);
 		
-		btn_customer = new JButton("3. 고객 관리");
-		btn_customer.setBounds(60, 170, 150, 50);
+		btn_customer = new JButton(new ImageIcon(PATH + "customerBtn.png"));
+		btn_customer.setBounds(170, 180, 98, 50);
 		btn_customer.addActionListener(this);
 		btn_customer.setBackground(Color.pink);
 		add(btn_customer);
 
-		btn_back = new JButton("뒤로");
-		btn_back.setBounds(60, 240, 150, 50);
+		btn_back = new JButton(new ImageIcon(PATH + "returnBtn.png"));
+		btn_back.setBounds(170, 240, 98, 50);
 		btn_back.addActionListener(this);
 		btn_back.setBackground(Color.white);
 		add(btn_back);
 
-		setBounds(100, 100, 300, 400);
+		setBounds(100, 100, 300, 350);
 		getContentPane().setBackground(Color.black);
 		setVisible(true);
 
