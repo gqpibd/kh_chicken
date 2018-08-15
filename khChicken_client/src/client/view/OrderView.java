@@ -33,9 +33,14 @@ import dto.OrderedMenuDto;
 
 public class OrderView extends JFrame implements ActionListener {
 	private int beverageCounts = 0;
-	int myCoupons = 0;
+	private int myCoupons = 0;
+	private int orderPrice, count = 0;
+	boolean flag = true;
 	private JLabel availableCoupons;
 	private JLabel couponLabel;
+	private JLabel salePayment;
+	private JLabel paidPayment;
+	private JLabel orderPayment;
 
 	private JButton addSearchBtn;
 	private JButton paymentBtn;
@@ -52,12 +57,14 @@ public class OrderView extends JFrame implements ActionListener {
 	private JTextField timeField;
 	private JTextField couponField;
 
+	MemberDto dto = Singleton.getInstance().getMemCtrl().getCurrentUser();
+
 	public OrderView() {
 		getContentPane().setLocation(0, 212);
 		setTitle("주문 내역");
 		getContentPane().setLayout(null);
 
-		setBounds(100, 100, 646, 583);
+		setBounds(100, 100, 646, 600);
 
 		JLabel lblNewLabel = new JLabel("<주문자 정보>");
 		lblNewLabel.setFont(new Font("굴림", Font.BOLD, 18));
@@ -94,6 +101,16 @@ public class OrderView extends JFrame implements ActionListener {
 		JButton couponUseBtn = new JButton("사용");
 		couponUseBtn.setBounds(101, 502, 63, 27);
 		getContentPane().add(couponUseBtn);
+		couponUseBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				salePayment.setText(String.valueOf(couponUse()));
+				paidPayment.setText(String.valueOf(( // 계산에 대한 결과값을 String으로 변환
+				OrderCalc(oList) - couponUse() // 계산(주문값 - 할인값)
+				)));
+			}
+			// 사용 버튼을 누르면, ordered_detail 의 BEV_COUPON을 1로 변경.
+			// setCouponCount();
+		});
 
 		// memberDto에서 쿠폰 수를 바로 받아와서 라벨에 띄우기
 		// SELECT 로 COUNT(리뷰) / 3 + 1 을 보여줄껀데.
@@ -142,11 +159,12 @@ public class OrderView extends JFrame implements ActionListener {
 		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
 
 		// 결제금액을 보여줄 라벨
-		JLabel label_7 = new JLabel("15000원"); // 결제금액 == 치킨값 * 수량 넣기.
-		label_7.setBounds(230, 41, 74, 21);
-		panel.add(label_7);
-		label_7.setHorizontalAlignment(SwingConstants.CENTER);
-		label_7.setFont(new Font("굴림", Font.BOLD, 15));
+		orderPrice = OrderCalc(oList);
+		paidPayment = new JLabel(orderPrice + "원"); // 결제금액 == 치킨값 * 수량 넣기.
+		paidPayment.setBounds(230, 41, 74, 21);
+		panel.add(paidPayment);
+		paidPayment.setHorizontalAlignment(SwingConstants.CENTER);
+		paidPayment.setFont(new Font("굴림", Font.BOLD, 15));
 
 		JLabel label = new JLabel("주문 금액");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -160,17 +178,17 @@ public class OrderView extends JFrame implements ActionListener {
 		label_1.setBounds(120, 10, 83, 21);
 		panel.add(label_1);
 
-		JLabel label_2 = new JLabel("15000원");
-		label_2.setHorizontalAlignment(SwingConstants.CENTER);
-		label_2.setFont(new Font("굴림", Font.BOLD, 15));
-		label_2.setBounds(122, 41, 74, 21);
-		panel.add(label_2);
+		salePayment = new JLabel(" 0 원 ");
+		salePayment.setHorizontalAlignment(SwingConstants.CENTER);
+		salePayment.setFont(new Font("굴림", Font.BOLD, 15));
+		salePayment.setBounds(122, 41, 74, 21);
+		panel.add(salePayment);
 
-		JLabel label_3 = new JLabel("15000원");
-		label_3.setHorizontalAlignment(SwingConstants.CENTER);
-		label_3.setFont(new Font("굴림", Font.BOLD, 15));
-		label_3.setBounds(12, 41, 74, 21);
-		panel.add(label_3);
+		orderPayment = new JLabel(orderPrice + "원");
+		orderPayment.setHorizontalAlignment(SwingConstants.CENTER);
+		orderPayment.setFont(new Font("굴림", Font.BOLD, 15));
+		orderPayment.setBounds(12, 41, 74, 21);
+		panel.add(orderPayment);
 
 		JLabel lblNewLabel_1 = new JLabel("-");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -182,6 +200,8 @@ public class OrderView extends JFrame implements ActionListener {
 		label_5.setBounds(202, 44, 26, 15);
 		panel.add(label_5);
 
+		// 쿠폰 입력 값
+		// 여기서 적은 쿠폰 값을 받아와서 . . . ㅇㅇ
 		couponField = new JTextField();
 		couponField.setBounds(14, 505, 57, 21);
 		getContentPane().add(couponField);
@@ -192,8 +212,19 @@ public class OrderView extends JFrame implements ActionListener {
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 	}
 
-	private void setUsableCouponCount() {
+	public void setCouponCount() {
+		if(dto == null) { // 회원 아니면 취소
+			return;
+		}else if (Integer.parseInt(couponField.getText()) > 0) {
+			dto.setCoupon(dto.getCoupon() + Integer.parseInt(couponField.getText()));
+			Singleton.getInstance().getMemCtrl().update(dto);
+		}
+
+	}
+
+	private void setUsableCouponCount() { /////////////////////////// 적용가능 쿠폰
 		int num = 0;
+		// 내쿠폰 사용가능한 쿠폰
 		if (myCoupons > beverageCounts) {
 			num = beverageCounts;
 		} else {
@@ -201,6 +232,26 @@ public class OrderView extends JFrame implements ActionListener {
 		}
 		availableCoupons.setText("적용 가능 쿠폰 : " + num + " 장");
 
+	}
+
+	public int couponUse() { // 쿠폰 사용 했을 때 음료 값 만큼 빼줘야되.
+		// 음료 값 = 3000 원.
+		// 빼줘야할 금액 = 3000 * 쿠폰 수
+		// int로 return 해주고. 할인 금액을 저장해주자.
+		int salePay = 0;
+
+		if (beverageCounts > 0) {
+			try {
+				if (beverageCounts >= Integer.parseInt(couponField.getText())) {
+					if (Integer.parseInt(couponField.getText()) > 0) {
+						salePay = 3000 * Integer.parseInt(couponField.getText());
+					}
+				}
+			} catch (NumberFormatException e) {
+				return salePay;
+			}
+		}
+		return salePay;
 	}
 
 	private void setDeliveryInfo() {
@@ -237,7 +288,6 @@ public class OrderView extends JFrame implements ActionListener {
 
 		// ---------------------------내용 설정---------------------------------- //
 		Singleton s = Singleton.getInstance();
-		MemberDto dto = s.getMemCtrl().getCurrentUser();
 
 		if (dto == null) {
 			dto = new MemberDto();
@@ -327,12 +377,15 @@ public class OrderView extends JFrame implements ActionListener {
 			public Component getTableCellRendererComponent // 셀렌더러
 			(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 				JCheckBox box = new JCheckBox();
+
 				box.setSelected(((Boolean) value).booleanValue()); // 체크박스가 선택 되었는가?
+
 				box.setHorizontalAlignment(JLabel.CENTER);
 
 				return box;
 			}
 		};
+
 		menuTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		menuTable.getColumnModel().getColumn(0).setPreferredWidth(30); // 선택(체크박스)
 		menuTable.getColumnModel().getColumn(1).setPreferredWidth(60); // 타입
@@ -358,20 +411,21 @@ public class OrderView extends JFrame implements ActionListener {
 				super.addCellEditorListener(l);
 
 				int num = 0;
-				if (dtm.getValueAt(row, 1).toString().equals("음료")) {
 
-					if (box.isSelected()) { // 선택이 취소 됐을 때
-						num = Integer.parseInt(dtm.getValueAt(row, 4).toString()); // 수량	
-						dtm.setValueAt(0, row, 4);					
+				if (box.isSelected()) { // 선택이 취소 됐을 때
+					num = Integer.parseInt(dtm.getValueAt(row, 4).toString()); // 수량
+					dtm.setValueAt(0, row, 4);
+					if (dtm.getValueAt(row, 1).toString().equals("음료")) {
 						beverageCounts -= num;
-					} else { // 선택 됐을 때						
-						dtm.setValueAt(1, row, 4);
-						num = Integer.parseInt(dtm.getValueAt(row, 4).toString()); // 수량
-						beverageCounts += num;
+						setUsableCouponCount();
 					}
-
-					System.out.println("bevrageCounts : " + beverageCounts + " row : " + row);
-					setUsableCouponCount();
+				} else { // 선택 됐을 때
+					dtm.setValueAt(1, row, 4);
+					num = Integer.parseInt(dtm.getValueAt(row, 4).toString()); // 수량
+					if (dtm.getValueAt(row, 1).toString().equals("음료")) {
+						beverageCounts += num;
+						setUsableCouponCount();
+					}
 				}
 
 			}
@@ -424,26 +478,30 @@ public class OrderView extends JFrame implements ActionListener {
 		protected JButton button;
 		int row = 0;
 
-		public ButtonEditor(String sign) {
+		public ButtonEditor(String sign) { // + - 버튼 클릭했을 때
 			super(new JCheckBox());
 			button = new JButton(sign);
 			button.setOpaque(true);
 			button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					int num = (int) menuTable.getModel().getValueAt(row, 4);
-					if((Boolean)dtm.getValueAt(row, 0) == false) {
+					if ((Boolean) dtm.getValueAt(row, 0) == false) {
 						return;
 					}
 					if (sign.equals("+")) {
 						dtm.setValueAt(num + 1, row, 4);
-						if(dtm.getValueAt(row, 1).toString().equals("음료")) {
+						oList.get(row).setCount(num + 1);
+						refreshPrice();
+						if (dtm.getValueAt(row, 1).toString().equals("음료")) {
 							beverageCounts++;
 						}
 					} else {
 						if (num <= 1)
 							return;
 						dtm.setValueAt(num - 1, row, 4);
-						if(dtm.getValueAt(row, 1).toString().equals("음료")) {
+						oList.get(row).setCount(num - 1);
+						refreshPrice();
+						if (dtm.getValueAt(row, 1).toString().equals("음료")) {
 							beverageCounts--;
 						}
 					}
@@ -469,7 +527,7 @@ public class OrderView extends JFrame implements ActionListener {
 			// 관리자 DB에 INSERT시켜주고, 확인창을 띄워주자.
 			int yesNoBtn = JOptionPane.showConfirmDialog(null, "이대로 주문하시겠습니까?", "최종 주문 확인", JOptionPane.YES_NO_OPTION,
 					JOptionPane.PLAIN_MESSAGE);
-			if (yesNoBtn == JOptionPane.YES_OPTION) {
+			if (yesNoBtn == JOptionPane.YES_OPTION) { // 예 눌렀을 시,
 				oList = s.getOrderCtrl().getList();
 				ArrayList<OrderedMenuDto> confirmedList = new ArrayList<>();
 				for (int i = 0; i < dtm.getRowCount(); i++) {
@@ -477,19 +535,44 @@ public class OrderView extends JFrame implements ActionListener {
 						System.out.println("주문");
 						OrderedMenuDto dto = oList.get(i);
 						dto.setId(Singleton.getInstance().getMemCtrl().getLoginId());
-						dto.setCount(Integer.parseInt(dtm.getValueAt(i, 3).toString()));
+						dto.setCount(Integer.parseInt(dtm.getValueAt(i, 4).toString()));
+						System.out.println(dto);
 						confirmedList.add(dto);
 					}
 				}
+				
 				if (confirmedList.size() > 0) {
 					s.getOrderCtrl().insert(confirmedList);
+					setCouponCount(); // 사용한 쿠폰에 대해 업데이트 해준다
 				} else {
 					JOptionPane.showMessageDialog(null, "주문 내역이 없습니다");
 				}
 			}
-		} else if (e.getSource() == cancelBtn) {
+		} else if (e.getSource() == cancelBtn) { // 취소 버튼
 			s.getOrderCtrl().clearList();
 			s.backToMain(this);
+		} else if (e.getSource() == addSearchBtn) { // 주소 검색
+			SelectAddressDialog a = new SelectAddressDialog(this);
+			addressField.setText(a.getAddress() + " " + a.getDetailAddress());
 		}
+	}
+
+	public int OrderCalc(List<OrderedMenuDto> oList) {
+		int totalPrice = 0;
+		for (int i = 0; i < oList.size(); i++) {
+			OrderedMenuDto mdto = oList.get(i);
+			totalPrice += mdto.getPrice() * mdto.getCount();
+		}
+
+		return totalPrice;
+	}
+
+	public int refreshPrice() {
+		int orderPrice = OrderCalc(oList);
+		orderPayment.setText(orderPrice + "원");
+		salePayment.setText(String.valueOf(couponUse()));
+		paidPayment.setText(String.valueOf(orderPrice - couponUse()));
+
+		return 0;
 	}
 }

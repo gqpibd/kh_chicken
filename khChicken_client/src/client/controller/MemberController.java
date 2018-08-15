@@ -32,8 +32,8 @@ public class MemberController {
 		memDao.delete();
 	}
 
-	public void update() {
-		memDao.update();
+	public void update(MemberDto dto) {
+		memDao.update(dto);
 	}
 
 	public boolean select_login(MemberDto dto) {
@@ -99,10 +99,6 @@ public class MemberController {
 		currentView.setVisible(false);
 		new MyInfoView(); // 만들고
 		
-	}
-
-	public void Inform_Update(MemberDto dto) {
-		memDao.Inform_Update(dto);
 	}
 
 }

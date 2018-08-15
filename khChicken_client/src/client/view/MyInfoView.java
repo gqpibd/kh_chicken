@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -65,7 +66,7 @@ public class MyInfoView extends JFrame implements ActionListener {
 		Object obj = e.getSource();
 		Singleton singleton = Singleton.getInstance();
 
-		MemberDto dto = new MemberDto();
+		MemberDto dto = memCtrl.getCurrentUser();
 		if (obj == JBut_back) {
 			singleton.backToMain(this);
 
@@ -78,16 +79,18 @@ public class MyInfoView extends JFrame implements ActionListener {
 			JBut_search.setEnabled(true);
 			JBut_Change.setName("수정 완료");
 		} else if (obj == JBut_Change && JBut_Change.getName().equals("수정 완료")) {
-			dto.setId(JField_ID.getText());
 			if (!new String(JField_Pw.getPassword()).equals(new String(JField_Pw2.getPassword()))) {
 				JOptionPane.showMessageDialog(null, "비밀번호가 일치하지 않습니다");
 				return;
-			}
+			}			
+			if (!Pattern.matches("^01(?:0|1|[6-9])-(?:\\d{3}|\\d{4})-\\d{4}$", JField_Phone.getText())) {
+				JOptionPane.showMessageDialog(null, "전화번호 형식이 맞지 않습니다.\n 01X-XXXX-XXXX 형태로 입력해 주세요");
+				return;
+			} 
 			dto.setPw(new String(JField_Pw.getPassword()));
-			dto.setName(JField_Name.getText());
 			dto.setPhone(JField_Phone.getText());
 			dto.setAddress(JField_Address.getText() + " " + JField_Address2.getText());
-			singleton.getMemCtrl().Inform_Update(dto);
+			singleton.getMemCtrl().update(dto);
 			JBut_search.setEnabled(false);
 			JField_Name.setEditable(false);
 			JField_Pw.setEditable(false);

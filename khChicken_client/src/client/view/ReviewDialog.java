@@ -220,7 +220,7 @@ public class ReviewDialog extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
 		Singleton single = Singleton.getInstance();
-		if (JBut_Write == obj) {
+		if (JBut_Write == obj) { // 리뷰 쓰기 버튼을 눌렀을 때
 			ReviewDto rDto = new ReviewDto();
 			rDto.setMenuName(menu.getMenu_name());
 			rDto.setUserId(single.getMemCtrl().getLoginId());
@@ -232,9 +232,10 @@ public class ReviewDialog extends JDialog implements ActionListener {
 				single.getRevCtrl().Write_review(this, rDto);
 				double newScore = single.getRevCtrl().getNewScore();
 				
-				if(newScore != -1) {
+				if(newScore != -1) { // 방금 작성한 리뷰 결과가 있으면
 					avgStarBar.setValue((int) menu.getavgScore() );
-					scoreLabel.setText("고객 만족도 : " + menu.getavgScore() + "   ");
+					double avgScore = menu.getavgScore();
+					scoreLabel.setText("고객 만족도 : " + Math.round(avgScore*10)/10.0 + "   ");
 					panel_menu.add(getEachReviewPanel(single.getRevCtrl().getNewReview()));
 					
 				}

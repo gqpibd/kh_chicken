@@ -31,8 +31,9 @@ public class MemberDao {
 		return exsitingId;
 	}
 
-	public void update() {
-
+	public void update(MemberDto dto) {
+		Communicator comm = Singleton.getInstance().getComm();
+		comm.SendMessage(Communicator.UPDATE, dto);
 	}
 
 	public void delete() {
@@ -75,10 +76,4 @@ public class MemberDao {
 		CurrentUser = null;
 	}
 
-	public void Inform_Update(MemberDto dto) {
-
-		Communicator comm = Singleton.getInstance().getComm();
-		comm.SendMessage(5, dto);
-
-	}
 }
