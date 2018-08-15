@@ -27,12 +27,10 @@ public class MemberDao {
 		case Singleton.DELETE:
 			break;
 		case Singleton.UPDATE:
+			update(dto);
 			break;
 		case 4: // 로그인 - 윤상필
 			select_login(dto, sock);
-			break;
-		case 5: // 내정보 수정
-			Inform_Update(dto);
 			break;
 		}
 	}
@@ -107,8 +105,32 @@ public class MemberDao {
 		SocketWriter.Write(sock, isExistingId);
 	}
 
-	public void update() {
-		String sql = "";
+	public void update(MemberDto dto) {
+		String sql = " UPDATE MEMBER " + " SET NAME  = ?,SET PW = ?, " + " USEDCOUPON = ?,  adr = ?, phone = ? "
+				+ "WHERE ID =  ? ";
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, dto.getName());
+			psmt.setString(2, dto.getPw());
+			psmt.setInt(3, dto.getCoupon());
+			psmt.setString(4, dto.getAddress());
+			psmt.setString(5, dto.getPhone());
+			psmt.setString(6, dto.getId());
+			int count = psmt.executeUpdate();
+			if(count >0 ) {
+				System.out.println(dto);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, null);
+		}
 
 	}
 
@@ -155,28 +177,4 @@ public class MemberDao {
 		SocketWriter.Write(sock, loginUser);
 	}
 
-	public void Inform_Update(MemberDto dto) {
-
-		String sql = " UPDATE MEMBER " + " SET NAME  = ?, adr = ?, phone = ? " + "WHERE ID =  ? ";
-
-		Connection conn = null;
-		PreparedStatement psmt = null;
-
-		try {
-			conn = DBConnection.getConnection();
-			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, dto.getName());
-			psmt.setString(2, dto.getAddress());
-			psmt.setString(3, dto.getPhone());
-			psmt.setString(4, dto.getId());
-			psmt.executeQuery();
-			System.out.println(sql);
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DBClose.close(psmt, conn, null);
-		}
-
-	}
 }
