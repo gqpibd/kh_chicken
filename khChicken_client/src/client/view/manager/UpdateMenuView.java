@@ -1,5 +1,6 @@
 package client.view.manager;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -53,50 +54,63 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 
 	private JTextArea descriptionArea;
 	private String NewImgPath = "";
-
+	
+	private static final String PATH = "images/manageView/";
+	
 	public UpdateMenuView() {
 		setTitle("메뉴 수정, 삭제");
-
+		
+		setContentPane(new JLabel(new ImageIcon(PATH + "updateView.jpg")));
+		setResizable(false);
+		
 		getContentPane().setLayout(null);
-
+		getContentPane().setBackground(Color.WHITE);
+		setResizable(false);
 		setTable();
 
 		nameField = new JTextField();
+		nameField.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		nameField.setEditable(false);
 		nameField.setBounds(240, 178, 155, 21);
 		getContentPane().add(nameField);
 		nameField.setColumns(10);
 
 		JLabel menuNamelabel = new JLabel("메뉴 이름");
+		menuNamelabel.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		menuNamelabel.setBounds(171, 181, 57, 15);
 		getContentPane().add(menuNamelabel);
 
 		JLabel priceLabel = new JLabel("가격");
+		priceLabel.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		priceLabel.setBounds(12, 211, 57, 15);
 		getContentPane().add(priceLabel);
 
 		priceField = new JTextField();
+		priceField.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		priceField.setEditable(false);
 		priceField.setBounds(59, 207, 90, 21);
 		getContentPane().add(priceField);
 		priceField.setColumns(10);
 
 		imgFileField = new JTextField();
+		imgFileField.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		imgFileField.setEditable(false);
 		imgFileField.setColumns(10);
 		imgFileField.setBounds(59, 238, 139, 21);
 		getContentPane().add(imgFileField);
 
-		searchBtn = new JButton("검색");
+		searchBtn = new JButton(new ImageIcon(PATH + "updateSearchBtn.jpg"));
 		searchBtn.addActionListener(this);
 		searchBtn.setBounds(210, 238, 65, 21);
 		getContentPane().add(searchBtn);
 
 		JLabel wonLabel = new JLabel("원");
+		wonLabel.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		wonLabel.setBounds(312, 211, 35, 15);
 		getContentPane().add(wonLabel);
 
 		JScrollPane scrollPane = new JScrollPane(menuTable);
+		menuTable.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		// scrollPane.setBounds((frameWidth-menuTable.getPreferredSize().width)/2, 28,
@@ -107,11 +121,11 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 				menuTable.getPreferredSize().width + 17, 122);
 		getContentPane().add(scrollPane);
 
-		JLabel titleLabel = new JLabel("메뉴 수정, 삭제");
+/*		JLabel titleLabel = new JLabel("메뉴 수정&삭제");
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setFont(new Font("돋움체", Font.BOLD, 20));
 		titleLabel.setBounds(0, 10, frameWidth, 30);
-		getContentPane().add(titleLabel);
+		getContentPane().add(titleLabel);*/
 
 		newPriceField = new JTextField();
 		newPriceField.setColumns(10);
@@ -119,10 +133,12 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 		getContentPane().add(newPriceField);
 
 		JLabel lblNewLabel = new JLabel("==>");
+		lblNewLabel.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		lblNewLabel.setBounds(171, 211, 27, 15);
 		getContentPane().add(lblNewLabel);
 
 		JLabel ilabel = new JLabel("이미지");
+		ilabel.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		ilabel.setBounds(12, 241, 83, 15);
 		getContentPane().add(ilabel);
 
@@ -131,10 +147,12 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 		getContentPane().add(imgLabel);
 
 		JLabel typeLabel = new JLabel("타입");
+		typeLabel.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		typeLabel.setBounds(12, 178, 57, 15);
 		getContentPane().add(typeLabel);
 
 		typeField = new JTextField();
+		typeField.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		typeField.setText((String) null);
 		typeField.setEditable(false);
 		typeField.setColumns(10);
@@ -142,27 +160,29 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 		getContentPane().add(typeField);
 
 		descriptionArea = new JTextArea();
+		descriptionArea.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		descriptionArea.setLineWrap(true);
 		JScrollPane descPane = new JScrollPane(descriptionArea);
 		descPane.setBounds(290, 271, 149, 141);
 		getContentPane().add(descPane);
 
 		JLabel descriptionLabel = new JLabel("제품 설명");
+		descriptionLabel.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		descriptionLabel.setBounds(322, 241, 57, 15);
 		getContentPane().add(descriptionLabel);
 
-		applyBtn = new JButton("적용");
+		applyBtn = new JButton(new ImageIcon(PATH + "updateMenuBtn.jpg"));
 		// applyBtn.setBounds(16, 422, 90, 34);
 		applyBtn.setBounds((int) ((frameWidth / 3.0 - 90) / 2.0), 422, 90, 34);
 		applyBtn.addActionListener(this);
 		getContentPane().add(applyBtn);
 
-		delBtn = new JButton("메뉴 삭제");
+		delBtn = new JButton(new ImageIcon(PATH + "delMenuBtn.jpg"));
 		delBtn.setBounds((int) ((frameWidth / 3.0 - 90) / 2 + frameWidth / 3.0), 422, 90, 34);
 		delBtn.addActionListener(this);
 		getContentPane().add(delBtn);
 
-		backBtn = new JButton("뒤로가기");
+		backBtn = new JButton(new ImageIcon(PATH + "updateReturnBtn.jpg"));
 		// backBtn.setBounds(320, 422, 90, 34);
 		backBtn.setBounds((int) ((frameWidth / 3.0 - 90) / 2 + frameWidth / 3.0 * 2), 422, 90, 34);
 		backBtn.addActionListener(this);
@@ -170,7 +190,7 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 
 		initFields();
 
-		setBounds(300, 150, frameWidth, 505);
+		setBounds(300, 150, 482, 505);
 		setVisible(true);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 	}

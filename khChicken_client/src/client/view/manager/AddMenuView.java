@@ -55,11 +55,13 @@ public class AddMenuView extends JFrame implements ActionListener {
 		getContentPane().setLayout(null);
 
 		priceField = new JTextField();
+		priceField.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		priceField.setBounds(328, 100, 86, 21);
 		getContentPane().add(priceField);
 		priceField.setColumns(10);
 
 		filePathField = new JTextField();
+		filePathField.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		filePathField.setBounds(85, 132, 102, 21);
 		getContentPane().add(filePathField);
 		filePathField.setColumns(10);
@@ -114,6 +116,7 @@ public class AddMenuView extends JFrame implements ActionListener {
 		getContentPane().add(searchBtn);
 
 		nameField = new JTextField();
+		nameField.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		nameField.setBounds(85, 100, 103, 21);
 		getContentPane().add(nameField);
 		nameField.setColumns(10);
