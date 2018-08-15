@@ -5,6 +5,8 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,6 +33,7 @@ import javax.swing.table.TableCellRenderer;
 import client.singleton.Singleton;
 import dto.MemberDto;
 import dto.OrderedMenuDto;
+import utils.images.ImageUtils;
 
 public class OrderView extends JFrame implements ActionListener {
 	private int beverageCounts = 0;
@@ -54,26 +57,27 @@ public class OrderView extends JFrame implements ActionListener {
 	private JTextField couponField;
 	private JButton couponPlus;
 	private JButton couponMinus;
-	 
+
 	private static final String PATH = "images/orderView/";
+
 	public OrderView() {
 		getContentPane().setLocation(0, 212);
 		setTitle("주문 내역");
-		setContentPane(new JLabel(new ImageIcon(PATH + "orderView2.jpg")));
+		setContentPane(new JLabel(new ImageIcon(PATH + "orderView.jpg")));
 		setResizable(false);
 		getContentPane().setLayout(null);
 
 		setBounds(100, 100, 646, 583);
 
-/*		JLabel lblNewLabel = new JLabel("<주문자 정보>");
-		lblNewLabel.setFont(new Font("나눔고딕", Font.PLAIN, 22));
-		lblNewLabel.setBounds(26, 20, 151, 25);
-		getContentPane().add(lblNewLabel);
-
-		JLabel label_4 = new JLabel("<주문 내역>");
-		label_4.setFont(new Font("나눔고딕", Font.PLAIN, 22));
-		label_4.setBounds(26, 208, 120, 25);
-		getContentPane().add(label_4);*/
+		/*
+		 * JLabel lblNewLabel = new JLabel("<주문자 정보>"); lblNewLabel.setFont(new
+		 * Font("나눔고딕", Font.PLAIN, 22)); lblNewLabel.setBounds(26, 20, 151, 25);
+		 * getContentPane().add(lblNewLabel);
+		 * 
+		 * JLabel label_4 = new JLabel("<주문 내역>"); label_4.setFont(new Font("나눔고딕",
+		 * Font.PLAIN, 22)); label_4.setBounds(26, 208, 120, 25);
+		 * getContentPane().add(label_4);
+		 */
 
 		// 주문자와 배달지정보
 		setDeliveryInfo();
@@ -82,25 +86,25 @@ public class OrderView extends JFrame implements ActionListener {
 		setOrderTable();
 
 		// 쿠폰------
-/*		JLabel label_6 = new JLabel("<음료 쿠폰>");
-		label_6.setFont(new Font("나눔고딕", Font.PLAIN, 22));
-		label_6.setBounds(421, 20, 151, 25);
-		getContentPane().add(label_6);*/
-		
+		/*
+		 * JLabel label_6 = new JLabel("<음료 쿠폰>"); label_6.setFont(new Font("나눔고딕",
+		 * Font.PLAIN, 22)); label_6.setBounds(421, 20, 151, 25);
+		 * getContentPane().add(label_6);
+		 */
+
 		couponField = new JTextField();
 		couponField.setBounds(400, 122, 51, 20);
 		getContentPane().add(couponField);
 		couponField.setColumns(10);
-		
+
 		couponPlus = new JButton(new ImageIcon(PATH + "plusBtn.jpg"));
 		couponPlus.setBounds(455, 122, 30, 20);
 		getContentPane().add(couponPlus);
-		
+
 		couponMinus = new JButton(new ImageIcon(PATH + "minusBtn.jpg"));
-		couponMinus.setBounds(480, 122, 30, 20);
+		couponMinus.setBounds(483, 122, 30, 20);
 		getContentPane().add(couponMinus);
-		
-		
+
 		// 눌렀을 때 memberDto의 Coupon - 1
 		// 위의 변수 - 1 : 라벨에 바로 적용
 
@@ -119,23 +123,23 @@ public class OrderView extends JFrame implements ActionListener {
 
 		couponLabel = new JLabel();
 		couponLabel.setFont(new Font("나눔바른고딕", Font.PLAIN, 15));
-		//couponLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		// couponLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		couponLabel.setText("보유 쿠폰 : " + myCoupons + " 장");
-		couponLabel.setBounds(400, 65, 137, 25);//26, 68
+		couponLabel.setBounds(400, 65, 137, 25);// 26, 68
 		getContentPane().add(couponLabel);
 
 		availableCoupons = new JLabel();
-		//availableCoupons.setHorizontalAlignment(SwingConstants.RIGHT);
+		// availableCoupons.setHorizontalAlignment(SwingConstants.RIGHT);
 		availableCoupons.setFont(new Font("나눔바른고딕", Font.PLAIN, 15));
 		availableCoupons.setBounds(400, 87, 137, 25);
 		getContentPane().add(availableCoupons);
-		
+
 		setUsableCouponCount();
-		
+
 		JLabel lblNewLabel_1 = new JLabel(new ImageIcon(PATH + "charactor.gif"));
 		lblNewLabel_1.setBounds(332, 380, 282, 106);
 		getContentPane().add(lblNewLabel_1);
-		
+
 		// Order DB와 member DB에 INSERT 하는 버튼
 		paymentBtn = new JButton(new ImageIcon(PATH + "payBtn.jpg"));
 		paymentBtn.setFont(new Font("나눔고딕", Font.PLAIN, 22));
@@ -148,45 +152,44 @@ public class OrderView extends JFrame implements ActionListener {
 		cancelBtn.setFont(new Font("나눔고딕", Font.PLAIN, 22));
 		cancelBtn.setBounds(411, 495, 95, 35);
 		getContentPane().add(cancelBtn);
-		
+
 		JLabel lblNewLabel_5 = new JLabel("주문 금액");
 		lblNewLabel_5.setFont(new Font("나눔바른고딕", Font.PLAIN, 15));
 		lblNewLabel_5.setBounds(26, 460, 82, 15);
 		getContentPane().add(lblNewLabel_5);
-		//lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
-		
-		JLabel label_3 = new JLabel("15000원");	//기존결제금액
-		//label_3.setHorizontalAlignment(SwingConstants.CENTER);
+		// lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
+
+		JLabel label_3 = new JLabel("15000원"); // 기존결제금액
+		// label_3.setHorizontalAlignment(SwingConstants.CENTER);
 		label_3.setFont(new Font("나눔바른고딕", Font.PLAIN, 15));
 		label_3.setBounds(135, 460, 69, 15);
 		getContentPane().add(label_3);
 
 		JLabel label_1 = new JLabel("할인 금액");
-		//label_1.setHorizontalAlignment(SwingConstants.CENTER);
+		// label_1.setHorizontalAlignment(SwingConstants.CENTER);
 		label_1.setForeground(Color.RED);
 		label_1.setFont(new Font("나눔바른고딕", Font.PLAIN, 15));
 		label_1.setBounds(26, 480, 57, 15);
 		getContentPane().add(label_1);
 
-		JLabel label_2 = new JLabel("2000원");//할인금액
-		//label_2.setHorizontalAlignment(SwingConstants.CENTER);
+		JLabel label_2 = new JLabel("2000원");// 할인금액
+		// label_2.setHorizontalAlignment(SwingConstants.CENTER);
 		label_2.setForeground(Color.RED);
-		label_1.setFont(new Font("나눔바른고딕", Font.PLAIN, 15));
+		label_2.setFont(new Font("나눔바른고딕", Font.PLAIN, 15));
 		label_2.setBounds(135, 480, 76, 15);
 		getContentPane().add(label_2);
 
 		JLabel paytitle_label = new JLabel("총 결제금액");
 		paytitle_label.setBounds(26, 510, 95, 25);
-		label_1.setFont(new Font("나눔바른고딕", Font.PLAIN, 15));
+		paytitle_label.setFont(new Font("나눔바른고딕", Font.PLAIN, 20));
 		getContentPane().add(paytitle_label);
-	
+
 		// 결제금액을 보여줄 라벨
 		JLabel label_7 = new JLabel("13000원");
 		label_7.setBounds(135, 510, 89, 20);
-		label_1.setFont(new Font("나눔바른고딕", Font.PLAIN, 15));
+		label_7.setFont(new Font("나눔바른고딕", Font.PLAIN, 20));
 		getContentPane().add(label_7);
-		//label_7.setHorizontalAlignment(SwingConstants.CENTER);
-
+		// label_7.setHorizontalAlignment(SwingConstants.CENTER);
 
 		setVisible(true);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -206,23 +209,22 @@ public class OrderView extends JFrame implements ActionListener {
 	private void setDeliveryInfo() {
 
 		JLabel nameLabel = new JLabel("이름");
-		nameLabel.setFont(new Font("08서울남산체 L", Font.PLAIN, 15));
+		nameLabel.setFont(new Font("나눔바른고딕", Font.PLAIN, 15));
 		nameLabel.setBounds(26, 68, 39, 15);
-		//nameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		// nameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		getContentPane().add(nameLabel);
 
 		JLabel addressLabel = new JLabel("주소");
 		addressLabel.setFont(new Font("나눔바른고딕", Font.PLAIN, 15));
 		addressLabel.setBounds(26, 126, 51, 15);
-		//addressLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		// addressLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		getContentPane().add(addressLabel);
 
 		JLabel phoneLabel = new JLabel("연락처");
 		phoneLabel.setFont(new Font("나눔바른고딕", Font.PLAIN, 15));
 		phoneLabel.setBounds(26, 97, 57, 15);
-		//phoneLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		// phoneLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		getContentPane().add(phoneLabel);
-
 
 		JLabel timeLabel = new JLabel("주문시간");
 		timeLabel.setFont(new Font("08서울남산체 B", Font.PLAIN, 15));
@@ -266,7 +268,7 @@ public class OrderView extends JFrame implements ActionListener {
 
 		timeField = new JTextField(date.format(today));
 		timeField.setEditable(false);
-		timeField.setBounds(88, 150, 214, 21);		
+		timeField.setBounds(88, 150, 214, 21);
 		getContentPane().add(timeField);
 		timeField.setColumns(10);
 
@@ -331,7 +333,7 @@ public class OrderView extends JFrame implements ActionListener {
 		menuTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		menuTable.getColumnModel().getColumn(0).setPreferredWidth(30); // 선택(체크박스)
 		menuTable.getColumnModel().getColumn(1).setPreferredWidth(60); // 타입
-		menuTable.getColumnModel().getColumn(2).setPreferredWidth(180); // 메뉴
+		menuTable.getColumnModel().getColumn(2).setPreferredWidth(230); // 메뉴
 		menuTable.getColumnModel().getColumn(3).setPreferredWidth(100); // 가격
 		menuTable.getColumnModel().getColumn(4).setPreferredWidth(50); // 수량
 		menuTable.getColumnModel().getColumn(5).setPreferredWidth(50); // + (버튼)
@@ -356,10 +358,10 @@ public class OrderView extends JFrame implements ActionListener {
 				if (dtm.getValueAt(row, 1).toString().equals("음료")) {
 
 					if (box.isSelected()) { // 선택이 취소 됐을 때
-						num = Integer.parseInt(dtm.getValueAt(row, 4).toString()); // 수량	
-						dtm.setValueAt(0, row, 4);					
+						num = Integer.parseInt(dtm.getValueAt(row, 4).toString()); // 수량
+						dtm.setValueAt(0, row, 4);
 						beverageCounts -= num;
-					} else { // 선택 됐을 때						
+					} else { // 선택 됐을 때
 						dtm.setValueAt(1, row, 4);
 						num = Integer.parseInt(dtm.getValueAt(row, 4).toString()); // 수량
 						beverageCounts += num;
@@ -394,7 +396,7 @@ public class OrderView extends JFrame implements ActionListener {
 		}
 
 		JScrollPane scrollPaneMenu = new JScrollPane(menuTable);
-		scrollPaneMenu.setBounds(26, 250, 588, 120);
+		scrollPaneMenu.setBounds(35, 250, menuTable.getPreferredSize().width+2, 120);
 		scrollPaneMenu.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		getContentPane().add(scrollPaneMenu);
 		// scrollPaneMenu.setViewportView(menuTable);
@@ -402,11 +404,49 @@ public class OrderView extends JFrame implements ActionListener {
 	}
 
 	// button
-	class TableCell extends JButton implements TableCellRenderer {
+	// class TableCell extends JButton implements TableCellRenderer {
+	//
+	// public TableCell(String sign) {
+	// JLabel tablePlMa=new JLabel();
+	// tablePlMa.setSize(150,50);
+	//
+	// setOpaque(true);
+	// setText(sign);
+	//
+	// if (sign.equals("+")) {
+	// ImageUtils.setResizedImage(tablePlMa, PATH + "plusBtn.jpg");
+	// add(tablePlMa);
+	//
+	// }else if (sign.equals("-")) {
+	// ImageUtils.setResizedImage(tablePlMa, PATH + "minusBtn.jpg");
+	// add(tablePlMa);
+	// }
+	//
+	// }
+	//
+	// public Component getTableCellRendererComponent(JTable table, Object value,
+	// boolean isSelected, boolean hasFocus,
+	// int row, int column) {
+	// return this;
+	// }
+	// }
+
+	class TableCell extends JLabel implements TableCellRenderer {
 
 		public TableCell(String sign) {
-			setOpaque(true);
-			setText(sign);
+			// JLabel tablePlMa=new JLabel();
+			// tablePlMa.setSize(150,50);
+			setSize(50, 20);
+			// setOpaque(true);
+
+			if (sign.equals("+")) {
+				ImageUtils.setResizedImage(this, PATH + "plusBtn.jpg");
+
+			} else if (sign.equals("-")) {
+				ImageUtils.setResizedImage(this, PATH + "minusBtn.jpg");
+				// add(tablePlMa);
+			}
+
 		}
 
 		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
@@ -416,29 +456,40 @@ public class OrderView extends JFrame implements ActionListener {
 	}
 
 	public class ButtonEditor extends DefaultCellEditor {
-		protected JButton button;
+		protected JLabel button;
 		int row = 0;
 
 		public ButtonEditor(String sign) {
 			super(new JCheckBox());
-			button = new JButton(sign);
+			button = new JLabel();
+			button.setSize(50, 20);
 			button.setOpaque(true);
-			button.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
+			if (sign.equals("+")) {
+				ImageUtils.setResizedImage(button, PATH + "plusBtn.jpg");
+			} else {
+				ImageUtils.setResizedImage(button, PATH + "minusBtn.jpg");
+
+			}
+			button.addMouseListener(new MouseAdapter() {
+
+				@Override
+				public void mouseClicked(MouseEvent e) {
+
 					int num = (int) menuTable.getModel().getValueAt(row, 4);
-					if((Boolean)dtm.getValueAt(row, 0) == false) {
+					if ((Boolean) dtm.getValueAt(row, 0) == false) {
 						return;
 					}
 					if (sign.equals("+")) {
 						dtm.setValueAt(num + 1, row, 4);
-						if(dtm.getValueAt(row, 1).toString().equals("음료")) {
+						if (dtm.getValueAt(row, 1).toString().equals("음료")) {
 							beverageCounts++;
 						}
+
 					} else {
 						if (num <= 1)
 							return;
 						dtm.setValueAt(num - 1, row, 4);
-						if(dtm.getValueAt(row, 1).toString().equals("음료")) {
+						if (dtm.getValueAt(row, 1).toString().equals("음료")) {
 							beverageCounts--;
 						}
 					}
