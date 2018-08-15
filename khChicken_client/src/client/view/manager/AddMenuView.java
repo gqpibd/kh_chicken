@@ -1,5 +1,6 @@
 package client.view.manager;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -41,9 +42,15 @@ public class AddMenuView extends JFrame implements ActionListener {
 	private JButton cancelBtn;
 	private ButtonGroup btnGroup;
 	private String path = "";
+	
+	private static final String PATH = "images/manageView/";
 
 	public AddMenuView() {
 		setTitle("메뉴 추가");
+		
+		setContentPane(new JLabel(new ImageIcon(PATH + "addMenuView.jpg")));
+		setResizable(false);
+		
 		setBounds(300, 150, 482, 439);
 		getContentPane().setLayout(null);
 
@@ -59,6 +66,7 @@ public class AddMenuView extends JFrame implements ActionListener {
 		filePathField.setEditable(false);
 
 		JLabel imgFileLabel = new JLabel("이미지");
+		imgFileLabel.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		imgFileLabel.setBounds(12, 135, 83, 15);
 		getContentPane().add(imgFileLabel);
 
@@ -69,6 +77,8 @@ public class AddMenuView extends JFrame implements ActionListener {
 		btnGroup = new ButtonGroup();
 
 		JRadioButton mainRadBtn = new JRadioButton("메인");
+		mainRadBtn.setBackground(Color.WHITE);
+		mainRadBtn.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		mainRadBtn.setHorizontalAlignment(SwingConstants.CENTER);
 		mainRadBtn.setBounds(54, 59, 83, 23);
 		mainRadBtn.setSelected(true);
@@ -76,24 +86,29 @@ public class AddMenuView extends JFrame implements ActionListener {
 		getContentPane().add(mainRadBtn);
 
 		JRadioButton sideRadBtn = new JRadioButton("사이드");
+		sideRadBtn.setBackground(Color.WHITE);
+		sideRadBtn.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		sideRadBtn.setHorizontalAlignment(SwingConstants.CENTER);
 		sideRadBtn.setBounds(191, 59, 83, 23);
 		btnGroup.add(sideRadBtn);
 		getContentPane().add(sideRadBtn);
 
 		JRadioButton beverageRadBtn = new JRadioButton("음료");
+		beverageRadBtn.setBackground(Color.WHITE);
+		beverageRadBtn.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		beverageRadBtn.setHorizontalAlignment(SwingConstants.CENTER);
 		beverageRadBtn.setBounds(328, 59, 83, 23);
 		btnGroup.add(beverageRadBtn);
 		getContentPane().add(beverageRadBtn);
 
-		JLabel titleLabel = new JLabel("메뉴 추가");
+		/*JLabel titleLabel = new JLabel("메뉴 추가");
+		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setFont(new Font("돋움체", Font.BOLD, 20));
 		titleLabel.setBounds(0, 10, 466, 30);
 		getContentPane().add(titleLabel);
-
-		searchBtn = new JButton("검색");
+*/
+		searchBtn = new JButton(new ImageIcon(PATH + "MenuSearchBtn.jpg"));
 		searchBtn.addActionListener(this);
 		searchBtn.setBounds(199, 131, 75, 23);
 		getContentPane().add(searchBtn);
@@ -103,29 +118,33 @@ public class AddMenuView extends JFrame implements ActionListener {
 		getContentPane().add(nameField);
 		nameField.setColumns(10);
 
-		JLabel label = new JLabel("메뉴 이름");
+		JLabel label = new JLabel("메뉴이름");
+		label.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		label.setBounds(14, 103, 57, 15);
 		getContentPane().add(label);
 
 		JLabel priceLabel = new JLabel("가격");
+		priceLabel.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		priceLabel.setBounds(288, 103, 46, 15);
 		getContentPane().add(priceLabel);
 
-		cancelBtn = new JButton("취소");
+		cancelBtn = new JButton(new ImageIcon(PATH + "addCancelBtn.jpg"));
 		cancelBtn.setBounds(278, 354, 83, 34);
 		getContentPane().add(cancelBtn);
 		cancelBtn.addActionListener(this);
-
-		submitBtn = new JButton("완료");
+		
+		submitBtn = new JButton(new ImageIcon(PATH + "completeBtn.jpg"));
 		submitBtn.setBounds(136, 354, 83, 34);
 		getContentPane().add(submitBtn);
 		submitBtn.addActionListener(this);
 
 		JLabel wonLabel = new JLabel("원");
+		wonLabel.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		wonLabel.setBounds(428, 103, 38, 15);
 		getContentPane().add(wonLabel);
 
 		JLabel label_1 = new JLabel("제품 설명");
+		label_1.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		label_1.setBounds(290, 131, 57, 15);
 		getContentPane().add(label_1);
 

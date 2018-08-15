@@ -35,24 +35,19 @@ public class ManageView extends JFrame implements ActionListener {
 		setContentPane(new JLabel(new ImageIcon(PATH + "manageView2.jpg")));
 		setResizable(false);
 		
-		
-
 		btn_menu = new JButton(new ImageIcon(PATH + "menuManageBtn.png"));
 		btn_menu.setBounds(200, 100, 98, 50);
 		btn_menu.addActionListener(this);
-		btn_menu.setBackground(Color.pink);
 		add(btn_menu);
 
 		btn_sale = new JButton(new ImageIcon(PATH + "saleManageBtn.png"));
 		btn_sale.setBounds(200, 160, 98, 50);
 		btn_sale.addActionListener(this);
-		btn_sale.setBackground(Color.pink);
 		add(btn_sale);
 		
 		btn_customer = new JButton(new ImageIcon(PATH + "customerBtn.png"));
 		btn_customer.setBounds(200, 220, 98, 50);
 		btn_customer.addActionListener(this);
-		btn_customer.setBackground(Color.pink);
 		add(btn_customer);
 
 		btn_back = new JButton(new ImageIcon(PATH + "returnBtn.png"));
