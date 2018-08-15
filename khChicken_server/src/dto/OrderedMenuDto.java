@@ -3,6 +3,22 @@ package dto;
 import java.io.Serializable;
 import java.sql.Date;
 
+/*	
+ 	CREATE TABLE ORDER_DETAIL(
+	    ID VARCHAR2(10),
+	    MENU_NAME VARCHAR2(30),
+	    COUNTS NUMBER(10) NOT NULL,
+	    BEV_COUPON NUMBER(3),
+	    ORDER_DATE DATE NOT NULL,
+	    REVIEW VARCHAR2(1000),
+	    SCORE NUMBER(5),
+	    CONSTRAINT FK_ID FOREIGN KEY(ID)
+	    REFERENCES MEMBER(ID),
+	    CONSTRAINT FK_MENU FOREIGN KEY(MENU_NAME)
+	    REFERENCES MENU(MENU_NAME)
+	);	
+*/
+
 public class OrderedMenuDto extends MenuDto implements Serializable {
 
 	private static final long serialVersionUID = 8611197365865197331L;
