@@ -48,16 +48,19 @@ public class ReviewDialog extends JDialog implements ActionListener {
 	private JPanel panel_menu; // 리뷰패널
 
 	private boolean select = false; // 장바구니에 담았는지 여부
-
+	private static final String PATH = "images/reviewView/";
+	
 	public ReviewDialog(JFrame parent, String menuName) {
 		super(parent, true);
+		setTitle("리뷰");
 		getContentPane().setLayout(null);
+		getContentPane().setBackground(Color.white);
 		setBounds(100, 100, 566, 557);
 		Singleton s = Singleton.getInstance();
 
 		MenuController mCtrl = s.getMenuCtrl();
 		this.menu = mCtrl.getMenuDto(menuName);
-
+		
 		// 메뉴 사진
 		String imgPath = MenuDao.FOLDER_PATH + menuName.replaceAll(" ", "_") + ".jpg";
 		JLabel JLabel_Menu = new JLabel();
@@ -67,11 +70,12 @@ public class ReviewDialog extends JDialog implements ActionListener {
 
 		// 메뉴 설명
 		JTextArea menuStory = new JTextArea();
+		menuStory.setFont(new Font("08서울남산체 L", Font.PLAIN, 18));
 		menuStory.setText(menu.getDescription());
 		menuStory.setLineWrap(true);
 		menuStory.setEditable(false);
 		menuStory.setFocusable(false);
-		menuStory.setBounds(235, 54, 299, 142);
+		menuStory.setBounds(235, 65, 299, 142);
 		menuStory.setBackground(Color.white);
 		menuStory.setOpaque(true);
 		getContentPane().add(menuStory);
@@ -101,7 +105,7 @@ public class ReviewDialog extends JDialog implements ActionListener {
 		}
 		getContentPane().add(panel_bigmenu);
 
-		JBut_Write = new JButton("리뷰쓰기");
+		JBut_Write = new JButton(new ImageIcon(PATH + "reviewWriteBtn.jpg"));
 		if (s.getMemCtrl().getCurrentUser() == null) { // 로그인 상태가 아니면 리뷰쓰기 버튼이 안보이게 한다.
 			JBut_Write.setVisible(false);
 		} else {
@@ -111,13 +115,13 @@ public class ReviewDialog extends JDialog implements ActionListener {
 		JBut_Write.setBounds(216, 468, 93, 32);
 		getContentPane().add(JBut_Write);
 
-		JBut_Back = new JButton("이전으로");
-		JBut_Back.addActionListener(this);
+		JBut_Back = new JButton(new ImageIcon(PATH + "returnBtn.jpg"));
+		JBut_Back.addActionListener(this);//돌아가기
 		JBut_Back.setBounds(323, 468, 93, 32);
 		getContentPane().add(JBut_Back);
 
-		JBut_SelectMenu = new JButton("장바구니");
-		JBut_SelectMenu.setBounds(428, 466, 93, 32);
+		JBut_SelectMenu = new JButton(new ImageIcon(PATH + "cartBtn.jpg"));
+		JBut_SelectMenu.setBounds(428, 468, 93, 32);//장바구니
 		JBut_SelectMenu.addActionListener(this);
 		getContentPane().add(JBut_SelectMenu);
 
@@ -128,7 +132,7 @@ public class ReviewDialog extends JDialog implements ActionListener {
 		getContentPane().add(JLabel_Logo);
 
 		JLabel menuNameLabel = new JLabel(menuName);
-		menuNameLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
+		menuNameLabel.setFont(new Font("a옛날목욕탕L", Font.PLAIN, 30));
 		menuNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		menuNameLabel.setBounds(233, 12, 301, 32);
 		getContentPane().add(menuNameLabel);
@@ -140,7 +144,7 @@ public class ReviewDialog extends JDialog implements ActionListener {
 		panel.setLayout(new GridLayout(1, 2));
 		scoreLabel = new JLabel("고객 만족도 : " + menu.getavgScore() + "   ");
 		scoreLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		scoreLabel.setFont(new Font("나눔고딕", Font.BOLD, 18));
+		scoreLabel.setFont(new Font("a옛날목욕탕L", Font.PLAIN, 18));
 		panel.add(scoreLabel);
 
 		
@@ -163,8 +167,10 @@ public class ReviewDialog extends JDialog implements ActionListener {
 		JTextA_Review.setBorder(new LineBorder(new Color(0, 0, 0)));
 		JTextA_Review.setEditable(false);
 		JTextA_Review.setLineWrap(true);
-
-		JPanel_Review.add(new JLabel("작성자 : "), "cell 0 0 1 1");
+		
+		JLabel JLabel_writer = new JLabel("작성자 : ");
+		JLabel_writer.setFont(new Font("나눔바른고딕", Font.PLAIN, 15));
+		JPanel_Review.add(JLabel_writer, "cell 0 0 1 1");
 		JPanel_Review.add(JLabel_ReviewName, "cell 1 0 1 1");
 
 		// JProgressBar star = new JProgressBar();
