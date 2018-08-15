@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -39,9 +40,12 @@ public class MyInfoView extends JFrame implements ActionListener {
 	private JTextField JField_Address2;
 
 	private MemberController memCtrl = Singleton.getInstance().getMemCtrl();
+	private static final String PATH = "images/myInfoView/";
 
 	public MyInfoView() {
-
+		
+		setContentPane(new JLabel(new ImageIcon(PATH + "mainView.jpg")));
+		setResizable(false);
 		getContentPane().setLayout(null);
 
 		JLabel JLabel_breakdown;

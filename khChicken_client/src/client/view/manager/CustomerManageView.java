@@ -59,7 +59,7 @@ public class CustomerManageView extends JFrame implements ActionListener {
 		
 		backBtn = new JButton(new ImageIcon(PATH + "cusBackMenuBtn.jpg"));
 		backBtn.setName("backToMenu");	//돌아가기 backToMenu , 뒤로 return
-		backBtn.setBounds(540, 370, 90, 40);
+		backBtn.setBounds(520, 370, 90, 40);
 		backBtn.addActionListener(this);
 		add(backBtn);
 
