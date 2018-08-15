@@ -208,14 +208,14 @@ public class MyInfoView extends JFrame implements ActionListener {
 		getContentPane().add(JLabel_Phone);
 
 		JLabel_Logo = new JLabel(new ImageIcon(PATH + "charactor.gif"));	//gif넣기
-		JLabel_Logo.setBounds(441, 320, 282, 106);
+		JLabel_Logo.setBounds(480, 345, 282, 106);
 		JLabel_Logo.setBackground(Color.black);
 		JLabel_Logo.setOpaque(true);
 		getContentPane().add(JLabel_Logo);
 
 		JBut_back = new JButton(new ImageIcon(PATH + "upReturnBtn.jpg"));
 		JBut_back.addActionListener(this);
-		JBut_back.setBounds(816, 385, 139, 46);
+		JBut_back.setBounds(816, 385, 114, 50);
 		getContentPane().add(JBut_back);
 
 		JLabel label = new JLabel("비밀번호");
@@ -291,7 +291,7 @@ public class MyInfoView extends JFrame implements ActionListener {
 
 		// add(table);
 		JScrollPane Scroll_model = new JScrollPane(table);
-		Scroll_model.setBounds(435, 49, 520, 262);
+		Scroll_model.setBounds(435, 80, 520, 262);
 		getContentPane().add(Scroll_model);
 
 	/*	JLabel lblNewLabel = new JLabel("<나의 주문 내역>");
