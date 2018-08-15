@@ -83,6 +83,7 @@ public class ReviewDialog extends JDialog implements ActionListener {
 		// 각 리뷰 정보를 담는 리스트
 		List<ReviewDto> list = new ArrayList<ReviewDto>();
 		JPanel panel_bigmenu = new JPanel();
+		panel_bigmenu.setBackground(Color.white);
 		panel_bigmenu.setBounds(14, 209, 520, 204);
 		panel_bigmenu.setLayout(new MigLayout());
 
@@ -126,9 +127,9 @@ public class ReviewDialog extends JDialog implements ActionListener {
 		getContentPane().add(JBut_SelectMenu);
 
 		JLabel JLabel_Logo = new JLabel();
-		JLabel_Logo.setBackground(Color.WHITE);
 		JLabel_Logo.setOpaque(true);
 		JLabel_Logo.setBounds(14, 425, 187, 75);
+		ImageUtils.setResizedImage(JLabel_Logo, PATH + "로고2.jpg");
 		getContentPane().add(JLabel_Logo);
 
 		JLabel menuNameLabel = new JLabel(menuName);
@@ -151,6 +152,8 @@ public class ReviewDialog extends JDialog implements ActionListener {
 		JPanel avgScoPanel = getStarBarPan(menu.getavgScore());
 		avgStarBar = (JProgressBar) avgScoPanel.getComponent(0);
 		panel.add(avgScoPanel);
+		
+
 		setVisible(true);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 	}
