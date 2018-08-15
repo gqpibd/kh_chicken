@@ -3,9 +3,16 @@ package client.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+<<<<<<< HEAD
 import client.communicator.Communicator;
 import client.singleton.Singleton;
 import dto.MenuShowDto; 
+=======
+import dto.MenuDto;
+import dto.OrderedMenuDto;
+
+
+>>>>>>> branch 'jinyoung' of https://github.com/gqpibd/kh_semi.git
 
 public class MenuDao {
 	public static final String FOLDER_PATH = "images\\";
@@ -15,11 +22,22 @@ public class MenuDao {
 	public MenuDao() {
 	}
 
+<<<<<<< HEAD
 	public void insert(MenuShowDto dto, String imgFilePath) {
 		menList.add(dto);
 		Singleton s = Singleton.getInstance();
 		s.getComm().SendMessage(Communicator.INSERT, dto);
 		s.getComm().sendImage(imgFilePath);
+=======
+	
+	public List<MenuDto> insert() {
+		MenuDto nDto = new MenuDto("후라이드 치킨", 12000);
+		memList.add(nDto);
+		/*OrderedMenuDto oDto = new OrderedMenuDto(1, 1, 20000);
+		oList.add(oDto);*/
+		
+		return memList;
+>>>>>>> branch 'jinyoung' of https://github.com/gqpibd/kh_semi.git
 	}
 
 	public void initList() { // 서버에서 다 읽어오기

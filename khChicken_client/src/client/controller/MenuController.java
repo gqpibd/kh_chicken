@@ -12,12 +12,19 @@ public class MenuController {
 
 	private MenuDao menDao = new MenuDao();
 	
+<<<<<<< HEAD
 	private MenuManageView menManView;
 	private UpdateMenuView updManView;
 	private AddMenuView addManView;
 
 	public MenuDao getMenDao() {
 		return menDao;
+=======
+	public MenuDao menDao = new MenuDao();
+	
+	public void insert() {
+		menDao.insert();
+>>>>>>> branch 'jinyoung' of https://github.com/gqpibd/kh_semi.git
 	}
 
 	public void insert(MenuShowDto dto, String imgPath) {

@@ -8,7 +8,11 @@ public class ReviewDto implements Serializable{
 	
 	private String menuName;
 	private String review;
+<<<<<<< HEAD
 	private String userId; 
+=======
+	private String userId;
+>>>>>>> branch 'jinyoung' of https://github.com/gqpibd/kh_semi.git
 	private String orderDate;
 	private int score;
 	
