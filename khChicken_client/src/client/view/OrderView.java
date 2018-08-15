@@ -61,7 +61,7 @@ public class OrderView extends JFrame implements ActionListener {
 
 		JLabel lblNewLabel = new JLabel("<주문자 정보>");
 		lblNewLabel.setFont(new Font("나눔고딕", Font.PLAIN, 22));
-		lblNewLabel.setBounds(26, 20, 130, 25);
+		lblNewLabel.setBounds(26, 20, 151, 25);
 		getContentPane().add(lblNewLabel);
 
 		JLabel label_4 = new JLabel("<주문 내역>");
@@ -78,7 +78,7 @@ public class OrderView extends JFrame implements ActionListener {
 		// 쿠폰------
 		JLabel label_6 = new JLabel("<음료 쿠폰>");
 		label_6.setFont(new Font("나눔고딕", Font.PLAIN, 22));
-		label_6.setBounds(399, 30, 151, 25);
+		label_6.setBounds(421, 20, 151, 25);
 		getContentPane().add(label_6);
 
 		// 사용 가능한 쿠폰의 수를 보여줄 라벨
@@ -88,12 +88,29 @@ public class OrderView extends JFrame implements ActionListener {
 		lblNewLabel_3.setBounds(51, 506, 41, 18);
 		getContentPane().add(lblNewLabel_3);
 
+		
+		JButton plusBtn = new JButton("+");
+		plusBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		plusBtn.setBounds(477, 121, 39, 23);
+		getContentPane().add(plusBtn);
+		
+		JButton minusBtn = new JButton("-");
+		minusBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		plusBtn.setBounds(450, 121, 39, 23);
+		getContentPane().add(minusBtn);
+		
 		// 눌렀을 때 memberDto의 Coupon - 1
 		// 위의 변수 - 1 : 라벨에 바로 적용
 
 		JButton couponUseBtn = new JButton("사용");
 		couponUseBtn.setFont(new Font("나눔바른고딕", Font.PLAIN, 15));
-		couponUseBtn.setBounds(531, 150, 64, 22);
+		couponUseBtn.setBounds(435, 150, 120, 25);
 		getContentPane().add(couponUseBtn);
 
 		// memberDto에서 쿠폰 수를 바로 받아와서 라벨에 띄우기
@@ -106,35 +123,35 @@ public class OrderView extends JFrame implements ActionListener {
 
 		couponLabel = new JLabel();
 		couponLabel.setFont(new Font("나눔바른고딕", Font.PLAIN, 15));
-		couponLabel.setBounds(399, 97, 130, 15);
+		couponLabel.setBounds(431, 63, 130, 15);
 		//couponLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		couponLabel.setText("보유 쿠폰 : " + myCoupons + " 장");
-		couponLabel.setBounds(14, 452, 130, 18);
+		couponLabel.setBounds(435, 65, 137, 25);//26, 68
 		getContentPane().add(couponLabel);
 
 		availableCoupons = new JLabel();
 		//availableCoupons.setHorizontalAlignment(SwingConstants.RIGHT);
 		availableCoupons.setFont(new Font("나눔바른고딕", Font.PLAIN, 15));
-		availableCoupons.setBounds(480, 154, 26, 15);
+		availableCoupons.setBounds(435, 87, 137, 25);
 		getContentPane().add(availableCoupons);
-
+		
 		setUsableCouponCount();
 		
 		JLabel lblNewLabel_1 = new JLabel("마스코트");
-		lblNewLabel_1.setBounds(317, 400, 282, 106);
+		lblNewLabel_1.setBounds(332, 380, 282, 106);
 		getContentPane().add(lblNewLabel_1);
 		
 		// Order DB와 member DB에 INSERT 하는 버튼
 		paymentBtn = new JButton("결제");
 		paymentBtn.setFont(new Font("나눔고딕", Font.PLAIN, 22));
-		paymentBtn.setBounds(503, 516, 105, 35);
+		paymentBtn.setBounds(513, 495, 105, 35);
 		paymentBtn.addActionListener(this);
 		getContentPane().add(paymentBtn);
 
 		cancelBtn = new JButton("취소");
 		cancelBtn.addActionListener(this);
 		cancelBtn.setFont(new Font("나눔고딕", Font.PLAIN, 22));
-		cancelBtn.setBounds(399, 516, 95, 35);
+		cancelBtn.setBounds(411, 495, 95, 35);
 		getContentPane().add(cancelBtn);
 
 
@@ -145,7 +162,7 @@ public class OrderView extends JFrame implements ActionListener {
 		
 		JLabel lblNewLabel_5 = new JLabel("결제 금액");
 		lblNewLabel_5.setFont(new Font("나눔바른고딕", Font.PLAIN, 15));
-		lblNewLabel_5.setBounds(26, 430, 82, 15);
+		lblNewLabel_5.setBounds(26, 427, 82, 15);
 		getContentPane().add(lblNewLabel_5);
 		//lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -160,7 +177,7 @@ public class OrderView extends JFrame implements ActionListener {
 		JLabel label = new JLabel("주문 금액");
 		//label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setFont(new Font("나눔고딕", Font.PLAIN, 22));
-		label.setBounds(26, 430, 82, 15);
+		label.setBounds(26, 373, 130, 35);
 		getContentPane().add(label);
 
 		JLabel label_1 = new JLabel("할인 금액");
@@ -174,7 +191,7 @@ public class OrderView extends JFrame implements ActionListener {
 		//label_2.setHorizontalAlignment(SwingConstants.CENTER);
 		label_2.setForeground(Color.RED);
 		label_2.setFont(new Font("나눔바른고딕", Font.PLAIN, 15));
-		label_2.setBounds(135, 455, 57, 15);
+		label_2.setBounds(135, 455, 76, 15);
 		getContentPane().add(label_2);
 
 		JLabel label_3 = new JLabel("15000원");	//기존결제금액
@@ -185,9 +202,10 @@ public class OrderView extends JFrame implements ActionListener {
 
 
 		couponField = new JTextField();
-		couponField.setBounds(399, 150, 95, 21);
+		couponField.setBounds(435, 122, 51, 21);
 		getContentPane().add(couponField);
 		couponField.setColumns(10);
+		
 		
 		setVisible(true);
 
@@ -239,28 +257,28 @@ public class OrderView extends JFrame implements ActionListener {
 			dto = new MemberDto();
 		}
 		nameField = new JTextField(dto.getName());
-		nameField.setBounds(88, 65, 268, 21);
+		nameField.setBounds(88, 65, 214, 21);
 		getContentPane().add(nameField);
 		nameField.setColumns(10);
 
 		phoneField1 = new JTextField(dto.getPhone().split("-")[0]);
-		phoneField1.setBounds(88, 93, 50, 21);
+		phoneField1.setBounds(238, 93, 50, 21);
 		phoneField1.setBounds(350, 60, 57, 21);
 		getContentPane().add(phoneField1);
 		phoneField1.setColumns(10);
 
 		phoneField2 = new JTextField(dto.getPhone().split("-")[1]);
 		phoneField2.setColumns(10);
-		phoneField2.setBounds(140, 60, 50, 21);
+		phoneField2.setBounds(88, 93, 50, 21);
 		getContentPane().add(phoneField2);
 
 		phoneField3 = new JTextField(dto.getPhone().split("-")[2]);
 		phoneField3.setColumns(10);
-		phoneField3.setBounds(200, 60, 50, 21);
+		phoneField3.setBounds(161, 93, 50, 21);
 		getContentPane().add(phoneField3);
 
 		addressField = new JTextField(dto.getAddress());
-		addressField.setBounds(88, 122, 268, 21);
+		addressField.setBounds(88, 122, 214, 21);
 		getContentPane().add(addressField);
 		addressField.setColumns(10);
 
@@ -269,12 +287,12 @@ public class OrderView extends JFrame implements ActionListener {
 
 		timeField = new JTextField(date.format(today));
 		timeField.setEditable(false);
-		timeField.setBounds(88, 150, 268, 21);		
+		timeField.setBounds(88, 150, 214, 21);		
 		getContentPane().add(timeField);
 		timeField.setColumns(10);
 
 		addSearchBtn = new JButton("검색");
-		addSearchBtn.setBounds(530, 97, 72, 23);
+		addSearchBtn.setBounds(306, 121, 72, 23);
 		addSearchBtn.addActionListener(this);
 		getContentPane().add(addSearchBtn);
 
