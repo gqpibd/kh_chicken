@@ -47,6 +47,7 @@ public class ReviewDao {
 	}
 
 	public void update(ReviewDto dto) { // 작성한 리뷰를 등록한다. 기존 구매 내역에 추가됨.
+		System.out.println("dto = " + dto);
 		Communicator comm = Singleton.getInstance().getComm();
 		comm.SendMessage(Communicator.UPDATE, dto);
 	}

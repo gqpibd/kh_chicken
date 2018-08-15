@@ -80,7 +80,7 @@ public class MainView extends JFrame implements ItemListener {
 		btn_Register.addMouseListener(lcl);
 
 		btn_Order = new JLabel(new ImageIcon(PATH + "orderBtn.jpg"));
-		btn_Order.setBounds(475, 660, btn_Order.getIcon().getIconWidth(), btn_Order.getIcon().getIconHeight());
+		btn_Order.setBounds(475, 720, btn_Order.getIcon().getIconWidth(), btn_Order.getIcon().getIconHeight());
 		btn_Order.setFont(new Font("다음_Regular", Font.PLAIN, 15));
 		// btn_Order.addActionListener(this);
 		btn_Order.addMouseListener(lcl);
@@ -98,7 +98,7 @@ public class MainView extends JFrame implements ItemListener {
 
 		// 메뉴들을 넣을 큰 패널 설정
 		JPanel panel_bigmenu = new JPanel();
-		panel_bigmenu.setBounds(0, 100, 580, 500);
+		panel_bigmenu.setBounds(16, 128, 570, 585);
 		panel_bigmenu.setBackground(new Color(255, 255, 255));
 		panel_bigmenu.setLayout(new MigLayout("wrap", "", ""));
 
@@ -133,7 +133,7 @@ public class MainView extends JFrame implements ItemListener {
 		getContentPane().add(btn_Manage);
 		getContentPane().add(panel_bigmenu);
 		getContentPane().setBackground(new Color(255, 255, 255));
-		setBounds(400, 0, 600, 800);
+		setBounds(400, 0, 600, 820);
 		setVisible(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 

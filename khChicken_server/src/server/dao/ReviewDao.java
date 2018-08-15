@@ -118,7 +118,9 @@ public class ReviewDao {
 	public void update(ReviewDto dto) { // 기존 주문한 내역에 리뷰 추가하기
 		String sql = " UPDATE ORDER_DETAIL " + " SET REVIEW = ?, SCORE = ? "
 				+ " WHERE ID = ? AND MENU_NAME = ? AND ORDER_DATE = TO_DATE(?,'YYYY-MM-DD HH:MI:SS') ";
-
+		
+		System.out.print(" dto  = " + dto);
+		System.out.print(" sql  = " + sql);
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		// ResultSet rs = null;
@@ -132,7 +134,7 @@ public class ReviewDao {
 			psmt.setString(5, dto.getOrderDate());
 
 			int count = psmt.executeUpdate();
-
+			System.out.println("count  = " + count);
 			if (count > 0) {
 				System.out.println(dto.getUserId() + "님의 " + dto.getMenuName() + "에 대한 리뷰가 업데이트 되었습니다.");
 			}
