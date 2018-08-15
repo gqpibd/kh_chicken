@@ -31,7 +31,7 @@ public class AccountView extends JFrame implements ActionListener {
 	private JButton JBut_Search; // 검색(주소)
 
 	private String Str_ID_Check = "";
-
+	private static final String PATH = "images/mainView/";
 	public AccountView() {
 		setInitView();
 	}
