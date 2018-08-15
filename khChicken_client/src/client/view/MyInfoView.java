@@ -44,16 +44,16 @@ public class MyInfoView extends JFrame implements ActionListener {
 
 	public MyInfoView() {
 		
-		setContentPane(new JLabel(new ImageIcon(PATH + "mainView.jpg")));
+		setContentPane(new JLabel(new ImageIcon(PATH + "myInfoView.jpg")));
 		setResizable(false);
 		getContentPane().setLayout(null);
 
-		JLabel JLabel_breakdown;
+/*		JLabel JLabel_breakdown;
 		JLabel_breakdown = new JLabel();
 		JLabel_breakdown.setBounds(12, 10, 225, 51);
 		JLabel_breakdown.setOpaque(true);
 		JLabel_breakdown.setBackground(Color.white);
-		getContentPane().add(JLabel_breakdown, "Center");
+		getContentPane().add(JLabel_breakdown, "Center");*/
 
 		setPersonalInfoPanel();
 
@@ -117,7 +117,7 @@ public class MyInfoView extends JFrame implements ActionListener {
 
 		JLabel JLabel_Logo;
 
-		JBut_Change = new JButton("정보 수정");
+		JBut_Change = new JButton(new ImageIcon(PATH + "upInfoBtn.jpg"));
 		JBut_Change.setName("정보 수정");
 		JBut_Change.addActionListener(this);
 		JBut_Change.setBounds(315, 381, 114, 50);
@@ -126,17 +126,22 @@ public class MyInfoView extends JFrame implements ActionListener {
 		MemberDto mdto = memCtrl.getCurrentUser();
 
 		JField_ID = new JTextField(mdto.getId());
+		JField_ID.setFont(new Font("나눔고딕", Font.PLAIN, 14));
 		JField_ID.setEditable(false);
 		JField_Name = new JTextField(mdto.getName());
+		JField_Name.setFont(new Font("나눔고딕", Font.PLAIN, 14));
 		JField_Name.setEditable(false);
 		JField_Coupon = new JTextField((Integer.parseInt(Singleton.getInstance().getOrderCtrl().getCoupons()) - mdto.getCoupon()) + "");
+		JField_Coupon.setFont(new Font("나눔고딕", Font.PLAIN, 14));
 		JField_Coupon.setEditable(false);
 		String address = mdto.getAddress();
 
 		
 		JField_Address = new JTextField();
+		JField_Address.setFont(new Font("나눔고딕", Font.PLAIN, 14));
 		JField_Address2 = new JTextField();
-		
+		JField_Address2.setFont(new Font("나눔고딕", Font.PLAIN, 14));
+
 		int loc = 0;
 		System.out.println(mdto.getAddress());
 		if (address.contains(")")) {
@@ -175,14 +180,19 @@ public class MyInfoView extends JFrame implements ActionListener {
 		getContentPane().add(JField_Phone);
 
 		JLabel_ID = new JLabel("아이디");
+		JLabel_ID.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		JLabel_ID.setHorizontalAlignment(SwingConstants.RIGHT);
 		JLabel_Name = new JLabel("이름");
+		JLabel_Name.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		JLabel_Name.setHorizontalAlignment(SwingConstants.RIGHT);
 		JLabel_Coupon = new JLabel("보유쿠폰");
+		JLabel_Coupon.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		JLabel_Coupon.setHorizontalAlignment(SwingConstants.RIGHT);
 		JLabel_Address = new JLabel("주소");
+		JLabel_Address.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		JLabel_Address.setHorizontalAlignment(SwingConstants.RIGHT);
-		JLabel_Phone = new JLabel("전화번호");
+		JLabel_Phone = new JLabel("연락처");
+		JLabel_Phone.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		JLabel_Phone.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		JLabel_ID.setBounds(53, 77, 45, 23);
@@ -197,18 +207,19 @@ public class MyInfoView extends JFrame implements ActionListener {
 		getContentPane().add(JLabel_Address);
 		getContentPane().add(JLabel_Phone);
 
-		JLabel_Logo = new JLabel("");
-		JLabel_Logo.setBounds(441, 320, 267, 111);
+		JLabel_Logo = new JLabel(new ImageIcon(PATH + "charactor.gif"));	//gif넣기
+		JLabel_Logo.setBounds(441, 320, 282, 106);
 		JLabel_Logo.setBackground(Color.black);
 		JLabel_Logo.setOpaque(true);
 		getContentPane().add(JLabel_Logo);
 
-		JBut_back = new JButton("뒤로가기");
+		JBut_back = new JButton(new ImageIcon(PATH + "upReturnBtn.jpg"));
 		JBut_back.addActionListener(this);
 		JBut_back.setBounds(816, 385, 139, 46);
 		getContentPane().add(JBut_back);
 
 		JLabel label = new JLabel("비밀번호");
+		label.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		label.setHorizontalAlignment(SwingConstants.RIGHT);
 		label.setBounds(35, 142, 63, 23);
 		getContentPane().add(label);
@@ -218,6 +229,7 @@ public class MyInfoView extends JFrame implements ActionListener {
 		JField_Pw.setColumns(10);
 
 		JLabel label_1 = new JLabel("비밀번호 확인");
+		label_1.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		label_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		label_1.setBounds(0, 175, 98, 23);
 		getContentPane().add(label_1);
@@ -229,7 +241,7 @@ public class MyInfoView extends JFrame implements ActionListener {
 		JField_Address2.setBounds(110, 273, 230, 23);
 		getContentPane().add(JField_Address2);
 
-		JBut_search = new JButton("검색");
+		JBut_search = new JButton(new ImageIcon(PATH + "upSearchBtn.jpg"));
 		JBut_search.setBounds(352, 273, 73, 23);
 		JBut_search.setEnabled(false);
 		getContentPane().add(JBut_search);
@@ -282,11 +294,11 @@ public class MyInfoView extends JFrame implements ActionListener {
 		Scroll_model.setBounds(435, 49, 520, 262);
 		getContentPane().add(Scroll_model);
 
-		JLabel lblNewLabel = new JLabel("<나의 주문 내역>");
+	/*	JLabel lblNewLabel = new JLabel("<나의 주문 내역>");
 		lblNewLabel.setFont(new Font("나눔고딕", Font.BOLD, 20));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(435, 10, 520, 29);
-		getContentPane().add(lblNewLabel);
+		getContentPane().add(lblNewLabel);*/
 
 		R_List.clear();
 	}
