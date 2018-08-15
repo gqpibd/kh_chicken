@@ -29,44 +29,48 @@ public class LoginView extends JFrame implements ActionListener {
 
 	public LoginView() {
 		super("로그인");
-		setLayout(null);
+		setContentPane(new JLabel(new ImageIcon(PATH + "loginView.jpg")));
+		setResizable(false);
+		getContentPane().setLayout(null);
 		setResizable(false);
 		
 		JPanel Jpanl_JTextF = new JPanel();
-		Jpanl_JTextF.setBounds(99, 56, 132, 66);
+		Jpanl_JTextF.setBackground(Color.WHITE);
+		Jpanl_JTextF.setBounds(105, 56, 132, 66);
 
 		JTextF_ID = new JTextField(10);
 		Jpanl_JTextF.add(JTextF_ID);
+		
 		JTextF_PW = new JPasswordField(10);
 		JTextF_PW.addActionListener(this);
 		Jpanl_JTextF.add(JTextF_PW);
 		
-		add(Jpanl_JTextF);
+		getContentPane().add(Jpanl_JTextF);
 
 		JLabel JLabel_ID = new JLabel("아이디");
 		JLabel_ID.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
-		JLabel_ID.setBounds(37, 56, 42, 27);
-		add(JLabel_ID);
+		JLabel_ID.setBounds(36, 56, 42, 27);
+		getContentPane().add(JLabel_ID);
 
 		JLabel JLabel_PW = new JLabel("비밀번호");
 		JLabel_PW.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
-		JLabel_PW.setBounds(37, 95, 62, 18);
-		add(JLabel_PW);
+		JLabel_PW.setBounds(36, 88, 62, 18);
+		getContentPane().add(JLabel_PW);
 
 		Jbut_Account = new JButton(new ImageIcon(PATH + "signInBtn.jpg"));
 		Jbut_Account.addActionListener(this);
-		Jbut_Account.setBounds(74, 134, 89, 27);
-		add(Jbut_Account);
+		Jbut_Account.setBounds(80, 134, 89, 27);
+		getContentPane().add(Jbut_Account);
 
 		Jbut_login = new JButton(new ImageIcon(PATH + "logInBtn.jpg"));
 		Jbut_login.addActionListener(this);
-		Jbut_login.setBounds(233, 56, 75, 66);
-		add(Jbut_login);
+		Jbut_login.setBounds(239, 56, 75, 66);
+		getContentPane().add(Jbut_login);
 
 		Jbut_Exit = new JButton(new ImageIcon(PATH + "returnLoginBtn.jpg"));
 		Jbut_Exit.addActionListener(this);
-		Jbut_Exit.setBounds(190, 134, 89, 27);
-		add(Jbut_Exit);
+		Jbut_Exit.setBounds(196, 134, 89, 27);
+		getContentPane().add(Jbut_Exit);
 		
 		setBackground(Color.WHITE);
 		setBounds(100, 100, 372, 239);
