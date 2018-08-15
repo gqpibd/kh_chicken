@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,9 +29,12 @@ public class CustomerManageView extends JFrame implements ActionListener {
 	private DefaultTableCellRenderer celAlignCenter; // 셀 가운데 정렬용
 	private JButton backBtn; // 돌아가기 버튼
 	private RowClickAdaptor rca = new RowClickAdaptor();
+	private static final String PATH = "images/manageView/";
 
 	public CustomerManageView() {
 		super("고객 관리");
+		setContentPane(new JLabel(new ImageIcon(PATH + "customerView.jpg")));
+		setResizable(false);
 		setLayout(null);
 
 		model = new DefaultTableModel() {
@@ -46,15 +50,16 @@ public class CustomerManageView extends JFrame implements ActionListener {
 		setTableByCustomerOrder();
 
 		JScrollPane jScrPane = new JScrollPane(jTable);
-		jScrPane.setBounds(10, 50, 600, 300);
+		jScrPane.setBounds(10, 80, 600, 300);
 		add(jScrPane);
 
-		JLabel label = new JLabel("판매 내역");
+/*		JLabel label = new JLabel("판매 내역");
 		label.setBounds(10, 10, 120, 15);
-		add(label);
-
-		backBtn = new JButton("돌아가기");
-		backBtn.setBounds(500, 370, 90, 40);
+		add(label);*/
+		
+		backBtn = new JButton(new ImageIcon(PATH + "cusBackMenuBtn.jpg"));
+		backBtn.setName("backToMenu");	//돌아가기 backToMenu , 뒤로 return
+		backBtn.setBounds(540, 370, 90, 40);
 		backBtn.addActionListener(this);
 		add(backBtn);
 
@@ -67,14 +72,16 @@ public class CustomerManageView extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String str = e.getActionCommand();
+		//String str = e.getActionCommand();
 		Singleton s = Singleton.getInstance();
-
-		if (str.equals("돌아가기")) {
+		
+		//돌아가기 backToMenu , 뒤로 return
+		if (backBtn.getName().equals("backToMenu")) {	//돌아가기
 			s.getMemCtrl().manageView(this);
-		} else if (str.equals("뒤로")) {
+		} else if (backBtn.getName().equals("return")) {	//뒤로
+			backBtn.setName("backToMenu");	//돌아가기
+			backBtn.setIcon(new ImageIcon(PATH + "cusBackMenuBtn.jpg"));
 			setTableByCustomerOrder();
-			backBtn.setText("돌아가기");
 		}
 
 	}
@@ -179,7 +186,8 @@ public class CustomerManageView extends JFrame implements ActionListener {
 
 			}
 
-			backBtn.setText("뒤로");
+			backBtn.setName("return");
+			backBtn.setIcon(new ImageIcon(PATH + "cusReturnBtn.jpg"));
 
 		}
 	}
