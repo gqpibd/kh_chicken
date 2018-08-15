@@ -242,7 +242,7 @@ public class MainView extends JFrame implements ItemListener {
 			Object o = e.getSource();
 			if (o == btn_Login) { // 로그인
 				if (btn_Login.getName().equals("로그인")) {
-					login();
+					
 					memCtrl.loginView(mv);
 				} else {
 					logout();

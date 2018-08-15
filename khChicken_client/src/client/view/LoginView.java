@@ -1,8 +1,11 @@
 package client.view;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,10 +24,14 @@ public class LoginView extends JFrame implements ActionListener {
 	JButton Jbut_login;
 	JButton Jbut_Account;
 	JButton Jbut_Exit;
+	private static final String PATH = "images/loginView/";
+
 
 	public LoginView() {
 		super("로그인");
 		setLayout(null);
+		setResizable(false);
+		
 		JPanel Jpanl_JTextF = new JPanel();
 		Jpanl_JTextF.setBounds(99, 56, 132, 66);
 
@@ -37,28 +44,31 @@ public class LoginView extends JFrame implements ActionListener {
 		add(Jpanl_JTextF);
 
 		JLabel JLabel_ID = new JLabel("아이디");
+		JLabel_ID.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		JLabel_ID.setBounds(37, 56, 42, 27);
 		add(JLabel_ID);
 
 		JLabel JLabel_PW = new JLabel("비밀번호");
+		JLabel_PW.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		JLabel_PW.setBounds(37, 95, 62, 18);
 		add(JLabel_PW);
 
-		Jbut_Account = new JButton("회원가입");
+		Jbut_Account = new JButton(new ImageIcon(PATH + "signInBtn.jpg"));
 		Jbut_Account.addActionListener(this);
 		Jbut_Account.setBounds(74, 134, 89, 27);
 		add(Jbut_Account);
 
-		Jbut_login = new JButton("로그인");
+		Jbut_login = new JButton(new ImageIcon(PATH + "logInBtn.jpg"));
 		Jbut_login.addActionListener(this);
 		Jbut_login.setBounds(233, 56, 75, 66);
 		add(Jbut_login);
 
-		Jbut_Exit = new JButton("취소");
+		Jbut_Exit = new JButton(new ImageIcon(PATH + "returnLoginBtn.jpg"));
 		Jbut_Exit.addActionListener(this);
 		Jbut_Exit.setBounds(190, 134, 89, 27);
 		add(Jbut_Exit);
-
+		
+		setBackground(Color.WHITE);
 		setBounds(100, 100, 372, 239);
 		setVisible(true);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);

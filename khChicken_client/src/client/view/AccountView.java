@@ -1,9 +1,12 @@
 package client.view;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.regex.Pattern;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -31,7 +34,7 @@ public class AccountView extends JFrame implements ActionListener {
 	private JButton JBut_Search; // 검색(주소)
 
 	private String Str_ID_Check = "";
-	private static final String PATH = "images/mainView/";
+	private static final String PATH = "images/accountView/";
 	public AccountView() {
 		setInitView();
 	}
@@ -46,6 +49,7 @@ public class AccountView extends JFrame implements ActionListener {
 
 		setTitle("회원가입창");
 		getContentPane().setLayout(null);
+		getContentPane().setBackground(Color.white);
 
 		JtextF_Id = new JTextField(10);
 		JtextF_Id.setBounds(113, 53, 134, 21);
@@ -66,17 +70,17 @@ public class AccountView extends JFrame implements ActionListener {
 		JtextF_phone = new JTextField(10);
 		JtextF_phone.setBounds(113, 241, 134, 21);
 
-		Jbut_Join = new JButton("중복확인");
+		Jbut_Join = new JButton(new ImageIcon(PATH + "idCheckBtn.jpg"));
 		Jbut_Join.addActionListener(this);
-		Jbut_Join.setBounds(253, 52, 96, 23);
+		Jbut_Join.setBounds(253, 52, 96, 30);
 
-		Jbut_Check = new JButton("회원가입");
+		Jbut_Check = new JButton(new ImageIcon(PATH + "signInBtn.jpg"));
 		Jbut_Check.addActionListener(this);
-		Jbut_Check.setBounds(248, 279, 101, 32);
+		Jbut_Check.setBounds(248, 279, 101, 30);
 
-		Jbut_Back = new JButton("메인으로");
+		Jbut_Back = new JButton(new ImageIcon(PATH + "mainReturnBtn.jpg"));
 		Jbut_Back.addActionListener(this);
-		Jbut_Back.setBounds(12, 10, 101, 23);
+		Jbut_Back.setBounds(12, 10, 101, 28);
 
 		getContentPane().add(JtextF_Id);
 		getContentPane().add(JtextF_pwd);
@@ -93,16 +97,19 @@ public class AccountView extends JFrame implements ActionListener {
 		getContentPane().add(Jbut_Back);
 
 		JLabel_id = new JLabel("아이디");
+		JLabel_id.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		JLabel_id.setHorizontalAlignment(SwingConstants.RIGHT);
 		JLabel_id.setBounds(12, 57, 89, 15);
 		getContentPane().add(JLabel_id);
 
 		JLabel_pw = new JLabel("비밀번호");
+		JLabel_pw.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		JLabel_pw.setHorizontalAlignment(SwingConstants.RIGHT);
 		JLabel_pw.setBounds(12, 88, 89, 15);
 		getContentPane().add(JLabel_pw);
 
 		JLabel_pw2 = new JLabel("비밀번호 확인");
+		JLabel_pw2.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		JLabel_pw2.setHorizontalAlignment(SwingConstants.RIGHT);
 		JLabel_pw2.setBounds(12, 122, 89, 15);
 		getContentPane().add(JLabel_pw2);
@@ -113,18 +120,20 @@ public class AccountView extends JFrame implements ActionListener {
 		getContentPane().add(nameLabel);
 
 		JLabel_add = new JLabel("주소");
+		JLabel_add.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		JLabel_add.setLabelFor(JLabel_add);
 		JLabel_add.setHorizontalAlignment(SwingConstants.RIGHT);
 		JLabel_add.setBounds(12, 181, 89, 15);
 		getContentPane().add(JLabel_add);
 
-		JLabel_phone = new JLabel("핸드폰번호");
+		JLabel_phone = new JLabel("연락처");
+		JLabel_phone.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		JLabel_phone.setLabelFor(JtextF_phone);
 		JLabel_phone.setHorizontalAlignment(SwingConstants.RIGHT);
 		JLabel_phone.setBounds(12, 244, 89, 15);
 		getContentPane().add(JLabel_phone);
 
-		JBut_Search = new JButton("검색");
+		JBut_Search = new JButton(new ImageIcon(PATH + "searchBtn.jpg"));
 		JBut_Search.setBounds(283, 209, 66, 23);
 		JBut_Search.addActionListener(this);
 		getContentPane().add(JBut_Search);
