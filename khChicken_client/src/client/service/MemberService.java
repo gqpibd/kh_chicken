@@ -6,10 +6,11 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import client.communicator.Communicator;
+import client.service.interfaces.MemberServiceImpl;
 import client.singleton.Singleton;
 import dto.MemberDto;
 
-public class MemberService implements MemberServiceInter {
+public class MemberService implements MemberServiceImpl {
 
 	List<MemberDto> mList = new ArrayList<MemberDto>();
 	MemberDto CurrentUser = null;
@@ -31,13 +32,9 @@ public class MemberService implements MemberServiceInter {
 		return exsitingId;
 	}
 
-	public void update(MemberDto dto) {
+	public void update(MemberDto dto) { // 회원 정보 수정
 		Communicator comm = Singleton.getInstance().getComm();
 		comm.SendMessage(Communicator.UPDATE, dto);
-	}
-
-	public void delete() {
-
 	}
 
 	public boolean select_login(MemberDto dto) { // 로그인
@@ -59,7 +56,7 @@ public class MemberService implements MemberServiceInter {
 		}
 	}
 
-	public int getAuth() {
+	public int getAuth() { // 회원 권한 확인
 		if (CurrentUser == null) {
 			return 0;
 		} else {
@@ -68,11 +65,11 @@ public class MemberService implements MemberServiceInter {
 
 	}
 
-	public MemberDto getCurrentUser() {
+	public MemberDto getCurrentUser() { // 현재 로그인한 사람
 		return CurrentUser;
 	}
 
-	public void logout() {
+	public void logout() { // 로그아웃
 		CurrentUser = null;
 	}
 

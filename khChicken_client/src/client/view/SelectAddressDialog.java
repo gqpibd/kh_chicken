@@ -1,9 +1,12 @@
 package client.view;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -19,41 +22,49 @@ import javax.swing.event.ListSelectionListener;
 import client.communicator.Communicator;
 import client.controller.StatisticsController;
 import client.singleton.Singleton;
+import utils.images.LabelEventListener;
 
 public class SelectAddressDialog extends JDialog implements ActionListener {
 	private JTextField loadNameField;
 	private JList<String> list;
-	private JButton searchBtn;
-	private JButton confirmBtn;
+	private JLabel searchBtn;
+	private JLabel confirmBtn;
 	private JTextField selectedAddField;
 	private JTextField detailAddField;
-
+	private static final String PATH = "images/accountView/";
+	
 	public SelectAddressDialog(JFrame parent) {
 		super(parent, true);
 		
+		getContentPane().setBackground(Color.WHITE);
 		setBounds(300, 200, 392, 413);
 		getContentPane().setLayout(null);
 
 		JLabel titleLabel = new JLabel("도로명 주소 검색");
+		titleLabel.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		titleLabel.setBounds(12, 10, 167, 15);
 		getContentPane().add(titleLabel);
 
 		JLabel seoulLabel = new JLabel("서울특별시");
+		seoulLabel.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		seoulLabel.setBounds(111, 38, 101, 15);
 		getContentPane().add(seoulLabel);
 
 		loadNameField = new JTextField();
+		loadNameField.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		loadNameField.setBounds(111, 63, 116, 21);
 		getContentPane().add(loadNameField);
 		loadNameField.addActionListener(this);
 		loadNameField.setColumns(10);
 
 		JLabel sidoLabel = new JLabel("시/도");
+		sidoLabel.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		sidoLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		sidoLabel.setBounds(42, 38, 57, 15);
 		getContentPane().add(sidoLabel);
 
 		JLabel loadLabel = new JLabel("도로명");
+		loadLabel.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		loadLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		loadLabel.setBounds(42, 66, 57, 15);
 		getContentPane().add(loadLabel);
@@ -68,40 +79,48 @@ public class SelectAddressDialog extends JDialog implements ActionListener {
 		});
 
 		JScrollPane scrollPane = new JScrollPane(list);
+		scrollPane.setBackground(Color.WHITE);
 		scrollPane.setBounds(12, 192, 349, 130);
 		getContentPane().add(scrollPane);
 
 		JLabel lblNewLabel_1 = new JLabel("검색 결과");
+		lblNewLabel_1.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		lblNewLabel_1.setBounds(12, 167, 57, 15);
 		getContentPane().add(lblNewLabel_1);
+		
 
-		searchBtn = new JButton("검색");
-		searchBtn.setBounds(239, 62, 87, 23);
-		searchBtn.addActionListener(this);
+		searchBtn = new JLabel(new ImageIcon(PATH + "adrSearchBtn.jpg"));
+		searchBtn.setBounds(239, 62, searchBtn.getIcon().getIconWidth(), searchBtn.getIcon().getIconHeight());
+		searchBtn.addMouseListener(new LabelEventListener(this));
 		getContentPane().add(searchBtn);
 
-		confirmBtn = new JButton("확인");
-		confirmBtn.setBounds(283, 332, 81, 32);
-		confirmBtn.addActionListener(this);
+		confirmBtn = new JLabel(new ImageIcon(PATH + "adrOkBtn.jpg"));
+		
+		confirmBtn.setBounds(283, 332, confirmBtn.getIcon().getIconWidth(), confirmBtn.getIcon().getIconHeight());
+		confirmBtn.addMouseListener(new LabelEventListener(this));
 		getContentPane().add(confirmBtn);
 
 		selectedAddField = new JTextField();
+		selectedAddField.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		selectedAddField.setEditable(false);
 		selectedAddField.setBounds(111, 94, 215, 21);
 		getContentPane().add(selectedAddField);
 		selectedAddField.setColumns(10);
 
 		JLabel detailAddLabel = new JLabel("상세 주소");
+		detailAddLabel.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		detailAddLabel.setBounds(42, 126, 57, 15);
 		getContentPane().add(detailAddLabel);
 
 		detailAddField = new JTextField();
+		detailAddField.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		detailAddField.setBounds(111, 123, 215, 21);
 		getContentPane().add(detailAddField);
 		detailAddField.setColumns(10);
 
 		setVisible(true);
 
+		setLocationRelativeTo(null);
 	}
 
 	public String getAddress() {

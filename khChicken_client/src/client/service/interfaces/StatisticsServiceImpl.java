@@ -1,7 +1,7 @@
-package client.service;
+package client.service.interfaces;
 
 import java.util.ArrayList;
 
-public interface StatisticsServiceInter {
+public interface StatisticsServiceImpl {
 	public ArrayList<?> select(int number);
 }

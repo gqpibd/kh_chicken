@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -20,17 +21,22 @@ import javax.swing.table.DefaultTableModel;
 import client.controller.StatisticsController;
 import client.singleton.Singleton;
 import dto.ReviewDto;
+import utils.images.LabelEventListener;
 
 public class CustomerManageView extends JFrame implements ActionListener {
-	private JTable jTable;
-
+	private JTable jTable; 
 	private DefaultTableModel model;
 	private DefaultTableCellRenderer celAlignCenter; // 셀 가운데 정렬용
-	private JButton backBtn; // 돌아가기 버튼
-	private RowClickAdaptor rca = new RowClickAdaptor();
+	
+	private JLabel backBtn; // 돌아가기 버튼
+	private RowClickAdaptor rca = new RowClickAdaptor(); // 테이블 클릭했을 때 이벤트 리스너
+	
+	private static final String PATH = "images/manageView/";
 
 	public CustomerManageView() {
 		super("고객 관리");
+		setContentPane(new JLabel(new ImageIcon(PATH + "customerView.jpg")));
+		setResizable(false);
 		setLayout(null);
 
 		model = new DefaultTableModel() {
@@ -43,38 +49,38 @@ public class CustomerManageView extends JFrame implements ActionListener {
 		celAlignCenter = new DefaultTableCellRenderer();
 		celAlignCenter.setHorizontalAlignment(SwingConstants.CENTER);
 
+		// 고객 정보로 테이블 구성
 		setTableByCustomerOrder();
 
 		JScrollPane jScrPane = new JScrollPane(jTable);
-		jScrPane.setBounds(10, 50, 600, 300);
+		jScrPane.setBounds(10, 80, 600, 300);
 		add(jScrPane);
-
-		JLabel label = new JLabel("판매 내역");
-		label.setBounds(10, 10, 120, 15);
-		add(label);
-
-		backBtn = new JButton("돌아가기");
-		backBtn.setBounds(500, 370, 90, 40);
-		backBtn.addActionListener(this);
+		
+		//돌아가기 backToMenu , 뒤로 return -- 상태에 따라 바뀜
+		backBtn = new JLabel(new ImageIcon(PATH + "cusBackMenuBtn.jpg"));
+		backBtn.setName("backToMenu");	
+		backBtn.setBounds(520, 390, backBtn.getIcon().getIconWidth(), backBtn.getIcon().getIconHeight());
+		backBtn.addMouseListener(new LabelEventListener(this));
 		add(backBtn);
 
 		setBounds(100, 100, 640, 480);
 		getContentPane().setBackground(Color.lightGray);
 		setVisible(true);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-
+		setLocationRelativeTo(null);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String str = e.getActionCommand();
 		Singleton s = Singleton.getInstance();
-
-		if (str.equals("메인으로")) {
+		
+		//돌아가기 backToMenu , 뒤로 return
+		if (backBtn.getName().equals("backToMenu")) {	//돌아가기
 			s.getMemCtrl().manageView(this);
-		} else if (str.equals("뒤로")) {
+		} else if (backBtn.getName().equals("return")) {	//뒤로
+			backBtn.setName("backToMenu");	//돌아가기
+			backBtn.setIcon(new ImageIcon(PATH + "cusBackMenuBtn.jpg"));
 			setTableByCustomerOrder();
-			backBtn.setText("메인으로");
 		}
 
 	}
@@ -126,7 +132,7 @@ public class CustomerManageView extends JFrame implements ActionListener {
 		}
 	}
 
-	class RowClickAdaptor extends MouseAdapter {
+	class RowClickAdaptor extends MouseAdapter { // 각 고객의 자세한 정보를 볼 수 있게 한다.
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			// 특정 회원의 주문이력을 받아오기 위한 변수
@@ -179,7 +185,8 @@ public class CustomerManageView extends JFrame implements ActionListener {
 
 			}
 
-			backBtn.setText("뒤로");
+			backBtn.setName("return");
+			backBtn.setIcon(new ImageIcon(PATH + "cusReturnBtn.jpg"));
 
 		}
 	}

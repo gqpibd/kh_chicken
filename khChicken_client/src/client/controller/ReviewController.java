@@ -6,21 +6,17 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import client.service.ReviewService;
+import client.service.interfaces.ReviewServiceImpl;
 import client.view.ReviewDialog;
 import client.view.ReviewWriteDialog;
-import dto.MemberDto;
 import dto.ReviewDto;
 
 public class ReviewController {
 
-	private ReviewService revDao = new ReviewService();
+	private ReviewServiceImpl revDao = new ReviewService();
 
 	private ReviewDialog reviewView; // 리뷰창
 	private ReviewWriteDialog write_view;
-
-	public void insert(ReviewDto dto) {
-		revDao.insert(dto);
-	}
 
 	public List<ReviewDto> getList() {
 		return revDao.getList();

@@ -1,21 +1,16 @@
-package client.service;
+package client.service.interfaces;
 
 import java.util.List;
 
 import dto.ReviewDto;
 
-public interface ReviewServiceInter {
+public interface ReviewServiceImpl {
 	
-
-	public void insert(ReviewDto dto) ;
-
 	public List<ReviewDto> select(String menuName) ;
 
 	public List<ReviewDto> selectByUserId(ReviewDto dto) ;
 
 	public void update(ReviewDto dto);
-
-	public void delete() ;
 
 	public List<ReviewDto> getList() ;
 

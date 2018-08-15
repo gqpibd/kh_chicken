@@ -5,10 +5,9 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 
 import client.service.StatisticsService;
+import client.service.interfaces.StatisticsServiceImpl;
 import client.view.manager.CustomerManageView;
 import client.view.manager.SaleManageView;
-import dto.BestSaleMenuDto;
-import dto.OrderedMenuDto;
 
 public class StatisticsController {
 	public static final int DATE = 0;
@@ -17,7 +16,8 @@ public class StatisticsController {
 	public static final int CUSTOMER = 3;
 	public static final int ADDRESS = 4; // 주소검색
 
-	private StatisticsService manDao = new StatisticsService();
+	private StatisticsServiceImpl manDao = new StatisticsService();
+	
 	private CustomerManageView cusManView; // 회원관리창
 	private SaleManageView salManView; // 매출관리창
 	

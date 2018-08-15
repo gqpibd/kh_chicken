@@ -1,15 +1,15 @@
-package client.service;
+package client.service.interfaces;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import dto.OrderedMenuDto;
 
-public interface OrderServiceInter {
+public interface OrderServiceImpl {
 
 	public void insert(ArrayList<OrderedMenuDto> confirmedList);
 
-	public String getCoupon();
+	public int getCoupon();
 
 	public List<OrderedMenuDto> getList();
 

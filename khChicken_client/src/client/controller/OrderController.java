@@ -7,14 +7,15 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import client.service.OrderService;
+import client.service.interfaces.OrderServiceImpl;
 import client.singleton.Singleton;
-import client.view.OrderView;
 import client.view.MyInfoView;
+import client.view.OrderView;
 import dto.OrderedMenuDto;
 
 public class OrderController {
 
-	private OrderService ordDao = new OrderService();
+	private OrderServiceImpl ordDao = new OrderService();
 
 	private OrderView ordView;
 	private MyInfoView Window_inform;
@@ -29,19 +30,18 @@ public class OrderController {
 		ordDao.clearList();
 	}
 
-	public void OrderView(JFrame currentView) {
-		currentView.setVisible(false);
-		// 주문 창을 보여준다.
-		ordView = new OrderView(); // 보여만 준다.
-
-	}
-
-	public String getCoupons() {
+	public int getCoupons() {
 		return ordDao.getCoupon();
 	}	
 
 	public List<OrderedMenuDto> getList() {
 		return ordDao.getList();
+	}
+	
+
+	public void OrderView(JFrame currentView) {
+		currentView.setVisible(false);	// 주문 창을 보여준다.
+		ordView = new OrderView(); 
 	}
 
 	public void InFormationview(JFrame currentView) {
