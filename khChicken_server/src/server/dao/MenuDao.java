@@ -31,7 +31,7 @@ import server.db.DBConnection;
 import server.singleton.Singleton;
 
 public class MenuDao implements MenuDaoImpl {
-	private final String PATH = "d:/share/images/";
+	private final String PATH = "//127.0.0.1/images/";
 	private final int SAVE_IMAGE = 4;
 
 	public MenuDao() {
