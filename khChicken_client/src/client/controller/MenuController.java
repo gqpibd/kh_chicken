@@ -4,7 +4,8 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
-import client.dao.MenuDao;
+import client.service.MenuService;
+import client.service.interfaces.MenuServiceImpl;
 import client.view.manager.AddMenuView;
 import client.view.manager.MenuManageView;
 import client.view.manager.UpdateMenuView;
@@ -12,31 +13,26 @@ import dto.MenuShowDto;
 
 public class MenuController {
 
-	private MenuDao menDao = new MenuDao();
+	private MenuServiceImpl menDao = new MenuService();
 
 	private MenuManageView menManView;
 	private UpdateMenuView updManView;
 	private AddMenuView addManView;
 
-	public MenuDao getMenDao() {
-		return menDao;
-	}
-
 	public void insert(MenuShowDto dto, String imgPath) {
 		menDao.insert(dto, imgPath);
+	}
+
+	public void update(MenuShowDto menu) {
+		menDao.update(menu);
 	}
 
 	public void initMenuList() {
 		menDao.initList();
 	}
 
-	public void delete() {
-		menDao.delete();
-	}
-
 	public MenuShowDto getMenuDto(String name) {
 		return menDao.getMenuByName(name);
-
 	}
 
 	public int getSize() {
@@ -47,8 +43,20 @@ public class MenuController {
 		return menDao.get(i);
 	}
 
-	public void update(MenuShowDto menu, int newPrice, String description) {
-		menDao.update(menu, newPrice, description);
+	public List<MenuShowDto> get_List() {
+		return menDao.get_List();
+	}
+
+	public MenuShowDto getMenuByName(String name) {
+		return menDao.getMenuByName(name);
+	}
+
+	public void updateImage(MenuShowDto menu, String newImgPath) {
+		menDao.updateImage(menu, newImgPath);
+	}
+
+	public void delete(MenuShowDto menu) {
+		menDao.delete(menu);
 	}
 
 	public void menuManageView(JFrame currentView) {
@@ -79,14 +87,6 @@ public class MenuController {
 		} else { // 있을 땐
 			updManView.setVisible(true); // 보여만 준다.
 		}
-	}
-
-	public void sco_Update(MenuShowDto dto) {
-		menDao.sco_Update(dto);
-	}
-
-	public List<MenuShowDto> get_List() {
-		return menDao.get_List();
 	}
 
 }

@@ -8,34 +8,36 @@ import java.sql.SQLException;
 
 import dto.MemberDto;
 import server.communicator.SocketWriter;
+import server.dao.interfaces.MemberDaoImpl;
 import server.db.DBClose;
 import server.db.DBConnection;
 import server.singleton.Singleton;
 
-public class MemberDao {
+public class MemberDao implements MemberDaoImpl {
+
+	public MemberDao() {
+
+	}
 
 	public void execute(int number, MemberDto dto, Socket sock) {
 
 		switch (number) {
-		case Singleton.INSERT: // 회원가입 - 윤상필
+		case Singleton.INSERT: // 회원가입
 			insert(dto);
 			System.out.println(dto.getId() + "를 멤버 테이블에 추가하였습니다");
-			break;
-		case Singleton.SELECT: // 아이데 중복 체크 - 윤상필
-			select(dto, sock);
 			break;
 		case Singleton.DELETE:
 			break;
 		case Singleton.UPDATE:
+			update(dto);
 			break;
-		case 4: // 로그인 - 윤상필
+		case Singleton.SELECT: // 아이데 중복 체크
+			select(dto, sock);
+			break;
+		case 4: // 로그인
 			select_login(dto, sock);
 			break;
 		}
-	}
-
-	public MemberDao() {
-
 	}
 
 	public void insert(MemberDto dto) {
@@ -73,6 +75,35 @@ public class MemberDao {
 		}
 	}
 
+	public void update(MemberDto dto) {
+		String sql = " UPDATE MEMBER " + " SET NAME  = ?, PW = ?, USEDCOUPON = ?, adr = ?, phone = ? "
+				+ "WHERE ID =  ? ";
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, dto.getName());
+			psmt.setString(2, dto.getPw());
+			psmt.setInt(3, dto.getCoupon());
+			psmt.setString(4, dto.getAddress());
+			psmt.setString(5, dto.getPhone());
+			psmt.setString(6, dto.getId());
+			int count = psmt.executeUpdate();
+			if (count > 0) {
+				System.out.println(dto.getId() + "님의 정보가 수정되었습니다");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, null);
+		}
+
+	}
+
 	public void select(MemberDto dto, Socket sock) {
 		boolean isExistingId = false;
 		// 존재하는 아이디인지 확인
@@ -104,22 +135,12 @@ public class MemberDao {
 		SocketWriter.Write(sock, isExistingId);
 	}
 
-	public void update() {
-		String sql = "";
-
-	}
-
-	public void delete() {
-		String sql = "";
-
-	}
-
 	public void select_login(MemberDto dto, Socket sock) {
 		MemberDto loginUser = null;
 		String id = dto.getId();
 		String pw = dto.getPw();
-		String sql = "SELECT NAME, USEDCOUPON, AUTH, ADR, PHONE " + " FROM MEMBER " + " WHERE ID = '" + id + "' AND PW = '"
-				+ pw + "' ";
+		String sql = "SELECT NAME, USEDCOUPON, AUTH, ADR, PHONE " + " FROM MEMBER " + " WHERE ID = '" + id
+				+ "' AND PW = '" + pw + "' ";
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -151,4 +172,5 @@ public class MemberDao {
 		}
 		SocketWriter.Write(sock, loginUser);
 	}
+
 }

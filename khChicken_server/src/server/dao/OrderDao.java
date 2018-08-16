@@ -5,17 +5,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
-import dto.BestSaleMenuDto;
-import dto.MemberDto;
 import dto.OrderedMenuDto;
 import server.communicator.SocketWriter;
+import server.dao.interfaces.OrderDaoImpl;
 import server.db.DBClose;
 import server.db.DBConnection;
 import server.singleton.Singleton;
 
-public class OrderDao {
+public class OrderDao implements OrderDaoImpl{
 
 	public OrderDao() {
 	}
@@ -27,13 +25,12 @@ public class OrderDao {
 			insert(dto);
 			System.out.println("주문 내역에 추가하였습니다");
 			break;
-		case Singleton.SELECT: // select : 2
-			String coupon = selectAvailableCoupon(dto);
-			SocketWriter.Write(sock, coupon);
-			break;
 		case Singleton.DELETE: // delete
 			break;
 		case Singleton.UPDATE: // update
+			break;
+		case Singleton.SELECT: // 내가 받은 쿠폰 수량
+			selectAvailableCoupon(dto, sock);			
 			break;
 		}
 
@@ -66,7 +63,7 @@ public class OrderDao {
 
 	}
 
-	public String selectAvailableCoupon(OrderedMenuDto oDto) { // socket , 클라에서 넘어온 id : ?에 들어갈꺼.
+	public void selectAvailableCoupon(OrderedMenuDto oDto, Socket sock) { // socket , 클라에서 넘어온 id : ?에 들어갈꺼.
 		String sql = "SELECT TRUNC(COUNT( O.REVIEW )/3) " 
 				+ "FROM MENU N, ORDER_DETAIL O "
 				+ "WHERE N.MENU_NAME = O.MENU_NAME " 
@@ -89,7 +86,7 @@ public class OrderDao {
 
 			if (rs.next()) {
 				// sql문에서 얻어낸 값 저장.(쿠폰수)
-				couponEA = rs.getString(1); // ()안의 숫자는 select의 칼럼 순서
+				couponEA = rs.getString(1); // ()안의 숫자는 select의 칼럼 순서				
 			}else {
 				couponEA = "0";
 			}
@@ -99,12 +96,8 @@ public class OrderDao {
 		} finally {
 			DBClose.close(psmt, conn, rs);
 		}
-
-		return couponEA;
+		
+		System.out.println("사용 가능한 쿠폰은 "+ couponEA + "개 입니다.");
+		SocketWriter.Write(sock, couponEA);
 	}
-
-	public void delete() {
-
-	}
-
 }

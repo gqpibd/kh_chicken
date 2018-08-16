@@ -25,42 +25,41 @@ import javax.imageio.ImageIO;
 
 import dto.MenuShowDto;
 import server.communicator.SocketWriter;
+import server.dao.interfaces.MenuDaoImpl;
 import server.db.DBClose;
 import server.db.DBConnection;
 import server.singleton.Singleton;
 
-public class MenuDao {
-	private final String PATH = "d:/share/images/";
+public class MenuDao implements MenuDaoImpl {
+	private final String PATH =  "\\\\192.168.30.35\\share\\images\\";
+	private final int SAVE_IMAGE = 4;
 
 	public MenuDao() {
 	}
 
 	public void execute(int number, MenuShowDto dto, Socket sock) {
 		switch (number) {
-		case Singleton.INSERT: // 메뉴 추가 - 이도현
+		case Singleton.INSERT: // 메뉴 추가
 			insert(dto);
 			receiveAndSaveImage(dto.getMenu_name(), sock);
 			System.out.println(dto.getMenu_name() + "를 메뉴 테이블에 추가하였습니다");
 			break;
-		case Singleton.SELECT: // 메뉴 모두 불러오기 - 김다슬
-			select(sock);
-			System.out.println("메뉴 목록을 불러왔습니다");
-			break;
-		case Singleton.DELETE: // 메뉴 삭제 - 이도현
+		case Singleton.DELETE: // 메뉴 삭제
 			delete(dto);
 			System.out.println(dto.getMenu_name() + "를 테이블에서 삭제하였습니다");
 			break;
-		case Singleton.UPDATE: // 메뉴 수정 - 이도현
+		case Singleton.UPDATE: // 메뉴 수정
 			update(dto);
 			System.out.println(dto.getMenu_name() + "의 정보를 수정하였습니다.");
 			break;
-		case 4: // 이미지 수정 - 이도현
+		case Singleton.SELECT: // 메뉴 모두 불러오기
+			select(sock);
+			System.out.println("메뉴 목록을 불러왔습니다");
+			break;
+		case SAVE_IMAGE: // 이미지 수정
 			receiveAndSaveImage(dto.getMenu_name(), sock);
 			System.out.println(dto.getMenu_name() + "의 이미지를 수정하였습니다.");
-			break;
-		case 5: // 별점 업데이트 - 윤상필
-			Sco_Update(dto);
-			break;
+			break;	
 		}
 	}
 
@@ -87,18 +86,21 @@ public class MenuDao {
 	}
 
 	public void update(MenuShowDto dto) {
-		String sql = "UPDATE MENU SET PRICE = ?, DESCRIPTION = ? WHERE MENU_NAME = ?";
+		String sql = "UPDATE MENU SET PRICE = ?, DESCRIPTION = ?, AVG_RATE = ? WHERE MENU_NAME = ?";
 		Connection conn = DBConnection.getConnection();
 		PreparedStatement psmt = null;
 
 		try {
-
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, dto.getPrice());
 			psmt.setString(2, dto.getDescription());
-			psmt.setString(3, dto.getMenu_name());
+			psmt.setDouble(3, dto.getavgScore());
+			psmt.setString(4, dto.getMenu_name());
 
-			psmt.executeQuery();
+			int count = psmt.executeUpdate();
+			if (count > 0) {
+				System.out.println("정상적으로 업데이트 되었습니다.");
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -124,7 +126,7 @@ public class MenuDao {
 		}
 	}
 
-	private void select(Socket sock) {
+	public void select(Socket sock) {
 		ArrayList<MenuShowDto> list = new ArrayList<>();
 		String sql = "SELECT MENU_NAME, PRICE, MENU_TYPE, DESCRIPTION, AVG_RATE FROM MENU ORDER BY MENU_TYPE";
 		Connection conn = null;
@@ -143,7 +145,6 @@ public class MenuDao {
 				dto.setType(rs.getString(3));
 				dto.setDescription(rs.getString(4));
 				dto.setavgScore(rs.getDouble(5));
-				// System.out.println(dto);
 				list.add(dto);
 			}
 
@@ -154,6 +155,7 @@ public class MenuDao {
 		SocketWriter.Write(sock, list);
 	}
 
+	// 이미지 파일 받아서 저장
 	public void receiveAndSaveImage(String name, Socket sock) {
 		ObjectInputStream ois;
 		try {
@@ -174,29 +176,4 @@ public class MenuDao {
 		}
 	}
 
-	public void Sco_Update(MenuShowDto dto) {
-		/*
-		 * String sql = " UPDATE ORDER_DETAIL " + " SET REVIEW = ?, SCORE = ? " +
-		 * " WHERE ID = ? AND MENU_NAME = ? AND REVIEW is null AND (TO_DATE(sysdate, 'yyyy/mm/dd') - TO_DATE(ORDER_DATE, 'yyyy/mm/dd')) <= '2'"
-		 * ;
-		 */
-		String sql = " UPDATE MENU " + " SET AVG_RATE = ? " + " WHERE MENU_NAME = ? ";
-
-		System.out.println(dto.getMenu_name());
-		Connection conn = null;
-		PreparedStatement psmt = null;
-		try {
-			conn = DBConnection.getConnection();
-			psmt = conn.prepareStatement(sql);
-			psmt.setDouble(1, dto.getavgScore());
-			psmt.setString(2, dto.getMenu_name());
-			psmt.executeQuery();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DBClose.close(psmt, conn, null);
-
-		}
-	}
 }

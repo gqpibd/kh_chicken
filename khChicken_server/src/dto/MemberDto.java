@@ -1,19 +1,19 @@
 package dto;
 
 import java.io.Serializable;
-
+/*
+	CREATE TABLE MEMBER(
+	    NAME VARCHAR2(20) NOT NULL,
+	    ID VARCHAR2(10) PRIMARY KEY,
+	    PW VARCHAR2(20) NOT NULL,
+	    USEDCOUPON NUMBER(2),
+	    AUTH NUMBER(1) NOT NULL,
+	    ADR VARCHAR2(50) NOT NULL,
+	    PHONE VARCHAR2(20) NOT NULL
+	);
+*/
 public class MemberDto implements Serializable {
-	
-//	 CREATE TABLE MEMBER( 
-//			 NAME VARCHAR2(20) NOT NULL, 
-//			 ID VARCHAR2(10) PRIMARY KEY,
-//			 PW VARCHAR2(20) NOT NULL, 
-//			 COUPON NUMBER(1), 
-//			 AUTH NUMBER(1) NOT NULL, 
-//			 ADR VARCHAR2(50) NOT NULL, 
-//			 PHONE VARCHAR2(20) NOT NULL 
-//	);
-	 
+
 
 	private static final long serialVersionUID = -2270144856528113975L;
 
@@ -29,6 +29,13 @@ public class MemberDto implements Serializable {
 	private String phone;
 
 	public MemberDto() {
+		id = "";
+		pw = "";
+		name = "";
+		coupon = 0;
+		address = "";
+		phone = " - - ";
+
 	}
 
 	public MemberDto(String id, String pw, String name, int coupon, int auth, String address, String phone) {
@@ -96,18 +103,6 @@ public class MemberDto implements Serializable {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	public static int getManager() {
-		return MANAGER;
-	}
-
-	public static int getMember() {
-		return MEMBER;
 	}
 
 	@Override
