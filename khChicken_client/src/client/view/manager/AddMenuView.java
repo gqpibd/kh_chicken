@@ -1,20 +1,15 @@
 package client.view.manager;
+/** 메뉴추가장 */
 
+import java.awt.Color;
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.Enumeration;
 
-import javax.imageio.ImageIO;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
@@ -22,52 +17,73 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.filechooser.FileSystemView;
 
 import client.singleton.Singleton;
-import client.view.MainView;
 import dto.MenuShowDto;
+import utils.images.ImageUtils;
+import utils.images.LabelEventListener;
 
 public class AddMenuView extends JFrame implements ActionListener {
-	private JTextField filePathField;
-	private JTextField nameField;
-	private JTextField priceField;
-	private JTextArea description;
-	private JLabel imgLabel;
-	private JButton searchBtn;
-	private JButton submitBtn;
-	private JButton cancelBtn;
-	private ButtonGroup btnGroup;
-	private String path = "";
+	private JTextField filePathField; // 이미지 파일 경로
+	private JTextField nameField; // 메뉴 이름
+	private JTextField priceField; // 가격
+	private JTextArea description; // 제품 설명
+	private JLabel imgLabel; // 제품 이미지
+
+	private JLabel searchBtn; // 이미지 검색 버튼
+	private JLabel applyBtn; // 적용 버튼
+	private JLabel cancelBtn; // 취소 버튼
+	private ButtonGroup btnGroup; // 라디오 버튼 그룹 ( 메뉴 타입 )
+
+	private String path = ""; // 추가할 이미지 파일 경로
+	
+	private static final String PATH = "images/manageView/"; // 이미지 파일 경로
+	
 
 	public AddMenuView() {
 		setTitle("메뉴 추가");
-		setBounds(300, 150, 482, 439);
-		getContentPane().setLayout(null);
+		
+		setContentPane(new JLabel(new ImageIcon(PATH + "addMenuView.jpg")));
+		setResizable(false);
 
+		setBounds(300, 150, 482, 439);
+		getContentPane().setLayout(null);		
+		setVisible(true);
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		
+		// 가격 필드
 		priceField = new JTextField();
+		priceField.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		priceField.setBounds(328, 100, 86, 21);
 		getContentPane().add(priceField);
 		priceField.setColumns(10);
+		
 
+		// 이미지 검색 버튼
+		searchBtn = new JLabel(new ImageIcon(PATH + "MenuSearchBtn.jpg"));
+		searchBtn.addMouseListener(new LabelEventListener(this));
+		searchBtn.setBounds(199, 131, 75, 23);
+		getContentPane().add(searchBtn);
+		
+		// 이미지 파일 경로
 		filePathField = new JTextField();
+		filePathField.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		filePathField.setBounds(85, 132, 102, 21);
 		getContentPane().add(filePathField);
 		filePathField.setColumns(10);
 		filePathField.setEditable(false);
-
-		JLabel imgFileLabel = new JLabel("이미지");
-		imgFileLabel.setBounds(12, 135, 83, 15);
-		getContentPane().add(imgFileLabel);
-
+		
+		// 제품 이미지
 		imgLabel = new JLabel();
 		imgLabel.setBounds(12, 170, 244, 167);
 		getContentPane().add(imgLabel);
 
+		// 메뉴타입
 		btnGroup = new ButtonGroup();
 
 		JRadioButton mainRadBtn = new JRadioButton("메인");
+		mainRadBtn.setBackground(Color.WHITE);
+		mainRadBtn.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		mainRadBtn.setHorizontalAlignment(SwingConstants.CENTER);
 		mainRadBtn.setBounds(54, 59, 83, 23);
 		mainRadBtn.setSelected(true);
@@ -75,130 +91,88 @@ public class AddMenuView extends JFrame implements ActionListener {
 		getContentPane().add(mainRadBtn);
 
 		JRadioButton sideRadBtn = new JRadioButton("사이드");
+		sideRadBtn.setBackground(Color.WHITE);
+		sideRadBtn.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		sideRadBtn.setHorizontalAlignment(SwingConstants.CENTER);
 		sideRadBtn.setBounds(191, 59, 83, 23);
 		btnGroup.add(sideRadBtn);
 		getContentPane().add(sideRadBtn);
 
 		JRadioButton beverageRadBtn = new JRadioButton("음료");
+		beverageRadBtn.setBackground(Color.WHITE);
+		beverageRadBtn.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		beverageRadBtn.setHorizontalAlignment(SwingConstants.CENTER);
 		beverageRadBtn.setBounds(328, 59, 83, 23);
 		btnGroup.add(beverageRadBtn);
 		getContentPane().add(beverageRadBtn);
 
-		JLabel titleLabel = new JLabel("메뉴 추가");
-		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		titleLabel.setFont(new Font("돋움체", Font.BOLD, 20));
-		titleLabel.setBounds(0, 10, 466, 30);
-		getContentPane().add(titleLabel);
-
-		searchBtn = new JButton("검색");
-		searchBtn.addActionListener(this);
-		searchBtn.setBounds(199, 131, 75, 23);
-		getContentPane().add(searchBtn);
-
+		// 메뉴 이름
 		nameField = new JTextField();
+		nameField.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		nameField.setBounds(85, 100, 103, 21);
 		getContentPane().add(nameField);
 		nameField.setColumns(10);
 
-		JLabel label = new JLabel("메뉴 이름");
+		// 메뉴 설명
+		description = new JTextArea();
+		description.setLineWrap(true);
+		
+		// 취소 버튼
+		cancelBtn = new JLabel(new ImageIcon(PATH + "addCancelBtn.jpg"));
+		cancelBtn.setBounds(278, 354,cancelBtn.getIcon().getIconWidth(), cancelBtn.getIcon().getIconHeight());
+		getContentPane().add(cancelBtn);
+		cancelBtn.addMouseListener(new LabelEventListener(this));
+
+		// 완료 버튼
+		applyBtn = new JLabel(new ImageIcon(PATH + "completeBtn.jpg"));
+		applyBtn.setBounds(136, 354,applyBtn.getIcon().getIconWidth(), applyBtn.getIcon().getIconHeight());
+		getContentPane().add(applyBtn);
+		applyBtn.addMouseListener(new LabelEventListener(this));
+		
+
+		
+		JLabel imgFileLabel = new JLabel("이미지");
+		imgFileLabel.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
+		imgFileLabel.setBounds(12, 135, 83, 15);
+		getContentPane().add(imgFileLabel);
+		
+		JLabel label = new JLabel("메뉴이름");
+		label.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		label.setBounds(14, 103, 57, 15);
 		getContentPane().add(label);
 
 		JLabel priceLabel = new JLabel("가격");
+		priceLabel.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		priceLabel.setBounds(288, 103, 46, 15);
 		getContentPane().add(priceLabel);
 
-		cancelBtn = new JButton("취소");
-		cancelBtn.setBounds(278, 354, 83, 34);
-		getContentPane().add(cancelBtn);
-		cancelBtn.addActionListener(this);
-
-		submitBtn = new JButton("완료");
-		submitBtn.setBounds(136, 354, 83, 34);
-		getContentPane().add(submitBtn);
-		submitBtn.addActionListener(this);
-
 		JLabel wonLabel = new JLabel("원");
+		wonLabel.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		wonLabel.setBounds(428, 103, 38, 15);
 		getContentPane().add(wonLabel);
 
 		JLabel label_1 = new JLabel("제품 설명");
+		label_1.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		label_1.setBounds(290, 131, 57, 15);
 		getContentPane().add(label_1);
-
-		description = new JTextArea();
-		description.setLineWrap(true);
-
+		
 		JScrollPane scrollPane = new JScrollPane(description);
 		scrollPane.setBounds(288, 164, 150, 173);
 		getContentPane().add(scrollPane);
-
-		setVisible(true);
-		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-	}
-
-	public String jFileChooserUtil() {
-
-		String folderPath = "";
-
-		JFileChooser chooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory()); // 디렉토리 설정
-		chooser.setCurrentDirectory(new File("d:/images")); // 현재 사용 디렉토리를 지정
-		chooser.setAcceptAllFileFilterUsed(true); // Fileter 모든 파일 적용
-		chooser.setDialogTitle("파일 위치 검색"); // 창의 제목
-		chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES); // 파일 선택 모드
-
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("이미지파일(.jpg)", "jpg"); // filter 확장자 추가
-		chooser.setFileFilter(filter); // 파일 필터를 추가
-
-		int returnVal = chooser.showOpenDialog(null); // 열기용 창 오픈
-
-		if (returnVal == JFileChooser.APPROVE_OPTION) { // 열기를 클릭
-			folderPath = chooser.getSelectedFile().toString();
-		} else if (returnVal == JFileChooser.CANCEL_OPTION) { // 취소를 클릭
-			folderPath = "";
-		}
-
-		ImageIcon icon = new ImageIcon(folderPath);
-		JLabel imgLabel = new JLabel(icon);
-		getContentPane().add(imgLabel);
-
-		return folderPath;
-
-	}
-
-	public void setImage(String path) {
-		try {
-			BufferedImage m_numberImage = ImageIO.read(new File(path));
-			ImageIcon icon = new ImageIcon(m_numberImage);
-
-			// ImageIcon에서 Image를 추출
-			Image originImg = icon.getImage();
-
-			// 추출된 Image의 크기를 조절하여 새로운 Image객체 생성
-			Image changedImg = originImg.getScaledInstance(imgLabel.getWidth(), imgLabel.getHeight(),
-					Image.SCALE_SMOOTH);
-
-			// 새로운 Image로 ImageIcon객체를 생성
-			ImageIcon resizedIcon = new ImageIcon(changedImg);
-
-			imgLabel.setIcon(resizedIcon);
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
+		setLocationRelativeTo(null);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
 		Singleton s = Singleton.getInstance();
 		if (e.getSource() == searchBtn) { // 이미지 검색 수행
-			path = jFileChooserUtil();
+			path = ImageUtils.jFileChooserUtil();
 			if (path.length() != 0) {
 				filePathField.setText(path.substring(path.lastIndexOf("\\") + 1)); // 전체 경로에서 파일 이름과 확장자명만 가져온다.
-				setImage(path);
+				ImageUtils.setResizedImage(imgLabel, path);
 			}
-		} else if (e.getSource() == submitBtn) { // 새 메뉴를 추가한다
+		} else if (e.getSource() == applyBtn) { // 새 메뉴를 추가한다
 			String type = getSelectedRadioBtn(btnGroup).getText();
 			MenuShowDto dto = new MenuShowDto(nameField.getText(), Integer.parseInt(priceField.getText()), type,
 					description.getText(), 10);

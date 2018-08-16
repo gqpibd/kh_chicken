@@ -1,46 +1,52 @@
 package client.view;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.regex.Pattern;
 
-import javax.swing.JButton;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import dto.MemberDto;
-import client.singleton.Singleton;
-import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-public class Window_Account extends JFrame implements ActionListener {
+import client.singleton.Singleton;
+import dto.MemberDto;
+import utils.images.LabelEventListener;
 
-	JTextField JtextF_Id;
-	JPasswordField JtextF_pwd;
-	JPasswordField JtextF_pwd_Check;
-	JTextField JtextF_name;
-	JTextField JtextF_address;
-	JTextField JtextF_phone;
+public class AccountView extends JFrame implements ActionListener {
 
-	JButton Jbut_Check;
-	JButton Jbut_Join;
-	JButton Jbut_Back;
-	JButton button;
+	private JTextField JtextF_Id; // 아이디
+	private JPasswordField JtextF_pwd; // 비밀번호
+	private JPasswordField JtextF_pwd_Check; // 비밀번호 확인
+	private JTextField JtextF_name; // 이름
+	private JTextField JtextF_address; // 주소
+	private JTextField JtextF_address2; // 상세 주소
+	private JTextField JtextF_phone; // 전화번호
 
-	String Str_ID_Check = "";
-	private JLabel JLabel_id;
-	private JLabel JLabel_pw;
-	private JLabel JLabel_pw2;
-	private JLabel nameLabel;
-	private JLabel JLabel_add;
-	private JLabel JLabel_phone;
-	private JTextField JtextF_address2;
+	private JLabel Jbut_Check; // 중복확인
+	private JLabel Jbut_Join; // 가입
+	private JLabel Jbut_Back; // 뒤로가기
+	private JLabel JBut_Search; // 검색(주소)
 
-	public Window_Account() {
+	private String Str_ID_Check = "";
+	private static final String PATH = "images/accountView/";
+
+	public AccountView() {		
+		JLabel JLabel_id;
+		JLabel JLabel_pw;
+		JLabel JLabel_pw2;
+		JLabel nameLabel;
+		JLabel JLabel_add;
+		JLabel JLabel_phone;
 
 		setTitle("회원가입창");
 		getContentPane().setLayout(null);
+		getContentPane().setBackground(Color.white);
 
 		JtextF_Id = new JTextField(10);
 		JtextF_Id.setBounds(113, 53, 134, 21);
@@ -61,17 +67,22 @@ public class Window_Account extends JFrame implements ActionListener {
 		JtextF_phone = new JTextField(10);
 		JtextF_phone.setBounds(113, 241, 134, 21);
 
-		Jbut_Join = new JButton("중복확인");
-		Jbut_Join.addActionListener(this);
-		Jbut_Join.setBounds(253, 52, 96, 23);
+		Jbut_Join = new JLabel(new ImageIcon(PATH + "signInBtn.jpg"));
+		Jbut_Join.addMouseListener(new LabelEventListener(this));
+		Jbut_Join.setBounds(248, 273, Jbut_Join.getIcon().getIconWidth(), Jbut_Join.getIcon().getIconHeight());
 
-		Jbut_Check = new JButton("회원가입");
-		Jbut_Check.addActionListener(this);
-		Jbut_Check.setBounds(248, 279, 101, 32);
+		Jbut_Check = new JLabel(new ImageIcon(PATH + "idCheckBtn.jpg"));
+		Jbut_Check.addMouseListener(new LabelEventListener(this));
+		Jbut_Check.setBounds(253, 48, Jbut_Check.getIcon().getIconWidth(), Jbut_Check.getIcon().getIconHeight());
 
-		Jbut_Back = new JButton("메인으로");
-		Jbut_Back.addActionListener(this);
-		Jbut_Back.setBounds(12, 10, 101, 23);
+		Jbut_Back = new JLabel(new ImageIcon(PATH + "mainReturnBtn.jpg"));
+		Jbut_Back.addMouseListener(new LabelEventListener(this));
+		Jbut_Back.setBounds(12, 10, Jbut_Back.getIcon().getIconWidth(), Jbut_Back.getIcon().getIconHeight());
+
+		JBut_Search = new JLabel(new ImageIcon(PATH + "searchBtn.jpg"));
+		JBut_Search.setBounds(283, 209, JBut_Search.getIcon().getIconWidth(), JBut_Search.getIcon().getIconHeight());
+		JBut_Search.addMouseListener(new LabelEventListener(this));
+		getContentPane().add(JBut_Search);
 
 		getContentPane().add(JtextF_Id);
 		getContentPane().add(JtextF_pwd);
@@ -88,16 +99,19 @@ public class Window_Account extends JFrame implements ActionListener {
 		getContentPane().add(Jbut_Back);
 
 		JLabel_id = new JLabel("아이디");
+		JLabel_id.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		JLabel_id.setHorizontalAlignment(SwingConstants.RIGHT);
 		JLabel_id.setBounds(12, 57, 89, 15);
 		getContentPane().add(JLabel_id);
 
 		JLabel_pw = new JLabel("비밀번호");
+		JLabel_pw.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		JLabel_pw.setHorizontalAlignment(SwingConstants.RIGHT);
 		JLabel_pw.setBounds(12, 88, 89, 15);
 		getContentPane().add(JLabel_pw);
 
 		JLabel_pw2 = new JLabel("비밀번호 확인");
+		JLabel_pw2.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		JLabel_pw2.setHorizontalAlignment(SwingConstants.RIGHT);
 		JLabel_pw2.setBounds(12, 122, 89, 15);
 		getContentPane().add(JLabel_pw2);
@@ -108,25 +122,24 @@ public class Window_Account extends JFrame implements ActionListener {
 		getContentPane().add(nameLabel);
 
 		JLabel_add = new JLabel("주소");
+		JLabel_add.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		JLabel_add.setLabelFor(JLabel_add);
 		JLabel_add.setHorizontalAlignment(SwingConstants.RIGHT);
 		JLabel_add.setBounds(12, 181, 89, 15);
 		getContentPane().add(JLabel_add);
 
-		JLabel_phone = new JLabel("핸드폰번호");
+		JLabel_phone = new JLabel("연락처");
+		JLabel_phone.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
 		JLabel_phone.setLabelFor(JtextF_phone);
 		JLabel_phone.setHorizontalAlignment(SwingConstants.RIGHT);
 		JLabel_phone.setBounds(12, 244, 89, 15);
 		getContentPane().add(JLabel_phone);
 
-		button = new JButton("검색");
-		button.setBounds(283, 209, 66, 23);
-		button.addActionListener(this);
-		getContentPane().add(button);
-
 		setBounds(100, 100, 381, 360);
 		setVisible(true);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+
+		setLocationRelativeTo(null);
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -134,17 +147,16 @@ public class Window_Account extends JFrame implements ActionListener {
 		Singleton single = Singleton.getInstance();
 
 		// 보기쉽게 텍스트에있는거 전부다 스트린으로 옮김
-		String id = JtextF_Id.getText();
-		String pw = new String(JtextF_pwd.getPassword());
-		String name = JtextF_name.getText();
-		String address = JtextF_address.getText();
-		String address2 = JtextF_address2.getText();
-		String phone = JtextF_phone.getText();
-		System.out.println(id + "뷰");
+		String id = JtextF_Id.getText().trim();
+		String pw = new String(JtextF_pwd.getPassword()).trim();
+		String name = JtextF_name.getText().trim();
+		String address = JtextF_address.getText().trim();
+		String address2 = JtextF_address2.getText().trim();
+		String phone = JtextF_phone.getText().trim();
 
-		if (obj == Jbut_Join) {
-			if (id.equals("")) {
-				JOptionPane.showMessageDialog(null, "아이디를 입려해주세요.");
+		if (obj == Jbut_Check) { // 아이디 중복 확인
+			if (id.equals("")) { // 아이디를 입력하지 않은 경우
+				JOptionPane.showMessageDialog(null, "아이디를 입력해주세요.");
 			} else {
 				MemberDto dto = new MemberDto();
 				dto.setId(id);
@@ -156,13 +168,13 @@ public class Window_Account extends JFrame implements ActionListener {
 					JOptionPane.showMessageDialog(null, "이미 있는 아이디입니다.");
 				}
 			}
-			// 밑에껀 무시 아직 준비중
-		} else if (obj == Jbut_Check) {
+
+		} else if (obj == Jbut_Join) { // 회원가입
 
 			if (!Str_ID_Check.equals(id) && Str_ID_Check.equals("")) {
 				JOptionPane.showMessageDialog(null, "중복확인을 눌러주세요.");
 			} else if (name.equals("")) {
-				JOptionPane.showMessageDialog(null, "닉네임을 입력해주세요");
+				JOptionPane.showMessageDialog(null, "이름을 입력해주세요");
 			} else if (address.equals("") || address2.equals("")) {
 				JOptionPane.showMessageDialog(null, "주소를 입력해주세요");
 			} else if (phone.equals("")) {
@@ -171,19 +183,18 @@ public class Window_Account extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null, "비밀번호가 일치하지 않습니다. 다시 확인해 주세요");
 			} else if (!Pattern.matches("^01(?:0|1|[6-9])-(?:\\d{3}|\\d{4})-\\d{4}$", phone)) {
 				JOptionPane.showMessageDialog(null, "전화번호 형식이 맞지 않습니다.\n 01X-XXXX-XXXX 형태로 입력해 주세요");
-			} else {				
+			} else {
 				MemberDto dto = new MemberDto(id, pw, name, 0, MemberDto.MEMBER, address + " " + address2, phone);
 				single.getMemCtrl().insert(dto);
 				single.backToMain(this);
 				JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다.");
-				JOptionPane.showMessageDialog(null, "로그인 해주세요.");
 			}
-		} else if (obj == Jbut_Back) {
+		} else if (obj == Jbut_Back) { // 뒤로가기
 			Singleton.getInstance().backToMain(this);
-		} else if (obj == button) {
-			SelectAddressDialog a = new SelectAddressDialog(this, true);
-			JtextF_address.setText(a.getAddress());
-			JtextF_address2.setText(a.getDetailAddress());
+		} else if (obj == JBut_Search) { // 주소 검색
+			SelectAddressDialog add = new SelectAddressDialog(this);
+			JtextF_address.setText(add.getAddress());
+			JtextF_address2.setText(add.getDetailAddress());
 		}
 	}
 }

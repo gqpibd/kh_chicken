@@ -11,10 +11,11 @@ import java.util.List;
 import dto.BestSaleMenuDto;
 import dto.OrderedMenuDto;
 import server.communicator.SocketWriter;
+import server.dao.interfaces.SelectionsDaoImpl;
 import server.db.DBClose;
 import server.db.DBConnection;
 
-public class SelectionsDao {
+public class SelectionsDao implements SelectionsDaoImpl { // 특수한 Select를 모아놓았다.
 	public static final int DATE = 0;
 	public static final int SALES = 1;
 	public static final int SCORE = 2;
@@ -24,63 +25,64 @@ public class SelectionsDao {
 	public void execute(int number, Object dto, Socket sock) {
 
 		switch (number) {
-		case DATE: // selectByDate (날짜순) - 백승지
-			ArrayList<OrderedMenuDto> orderList = selectByDate();
-			SocketWriter.Write(sock, orderList);
+		case DATE: // selectByDate (날짜순)
+			selectByDate(sock);
+			System.out.println("날짜순 으로 판매 데이터를 불러왔습니다");
 			break;
-		case SALES: // selectBySalse (매출순) - 백승지
-			ArrayList<BestSaleMenuDto> bestSaleList = selectBySalse();
-			SocketWriter.Write(sock, bestSaleList);
+		case SALES: // selectBySalse (매출순)
+			selectBySalse(sock);
+			System.out.println("매출순으로 판매 데이터를 불러왔습니다");
 			break;
-		case SCORE: // selectByScore (별점순) - 백승지
-			ArrayList<BestSaleMenuDto> bestScoreList = selectByScore();
-			SocketWriter.Write(sock, bestScoreList);
+		case SCORE: // selectByScore (별점순)
+			selectByScore(sock);
+			System.out.println("별점순으로 판매 데이터를 불러왔습니다");
 			break;
-		case CUSTOMER: // selectCustomerOrder (회원관리) - 백승지
-			ArrayList<String> MemberList = selectCustomerOrder();
-			SocketWriter.Write(sock, MemberList);
+		case CUSTOMER: // selectCustomerOrder (회원관리)
+			selectCustomerOrder(sock);
+			System.out.println("회원정보를 불러왔습니다");
 			break;
-		case ADDRESS: // 주소 검색 - 이도현
-			List<String> list = selectAddress(dto.toString());
-			SocketWriter.Write(sock, list);
-
+		case ADDRESS: // 주소 검색
+			selectAddress(dto.toString(), sock);
+			System.out.println("주소 정보를 불러왔습니다");
 		}
 	}
+	// 날짜순
+		public void selectByDate(Socket sock) {
 
-	private ArrayList<String> selectCustomerOrder() {
+			String sql = " SELECT DISTINCT A.ORDER_DATE, A.ID, B.MENU_TYPE,  A.MENU_NAME, A.COUNTS, A.BEV_COUPON, B.PRICE "
+					+ " FROM ORDER_DETAIL A, MENU B " + " WHERE A.MENU_NAME = B.MENU_NAME "
+					+ " ORDER BY A.ORDER_DATE DESC ";
 
-		String sql = " SELECT A.ID, A.NAME, A.ADR, A.PHONE, B.주문건수 " + " FROM MEMBER A, "
-				+ " (SELECT A.ID, COUNT(*) 주문건수 " + " FROM ORDER_DETAIL A, MENU B "
-				+ " WHERE A.MENU_NAME = B.MENU_NAME " + " AND B.MENU_TYPE = '메인' " + " GROUP BY ID "
-				+ " ORDER BY COUNT(*) DESC) B " + " WHERE A.ID = B.ID ";
+			Connection conn = null;
+			PreparedStatement psmt = null;
+			ResultSet rs = null;
 
-		Connection conn = null;
-		PreparedStatement psmt = null;
-		ResultSet rs = null;
+			ArrayList<OrderedMenuDto> list = new ArrayList<>();
 
-		ArrayList<String> list = new ArrayList<>();
+			try {
+				conn = DBConnection.getConnection();
+				psmt = conn.prepareStatement(sql);
+				rs = psmt.executeQuery();
 
-		try {
-			conn = DBConnection.getConnection();
-			psmt = conn.prepareStatement(sql);
-			rs = psmt.executeQuery();
+				while (rs.next()) {
+					OrderedMenuDto omd = new OrderedMenuDto(rs.getDate("ORDER_DATE"), rs.getString("ID"),
+							rs.getString("MENU_TYPE"), rs.getNString("MENU_NAME"), rs.getInt("COUNTS"),
+							rs.getInt("BEV_COUPON"), rs.getInt("PRICE"));
+					list.add(omd);
+				}
 
-			while (rs.next()) {
-				// A.ID, A.NAME, A.ADR, A.PHONE, B.주문건수
-				list.add(rs.getString("ID") + "__" + rs.getString("NAME") + "__" + rs.getString("ADR") + "__"
-						+ rs.getString("PHONE") + "__" + rs.getInt("주문건수"));
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				// 담은 리스트를 소켓에 실어 보내자!
+				DBClose.close(psmt, conn, rs);
 			}
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DBClose.close(psmt, conn, rs);
+			SocketWriter.Write(sock, list);
 		}
-		return list;
-	}
-
-	// 매출순 - 백승지
-	public ArrayList<BestSaleMenuDto> selectBySalse() {
+	
+	// 매출순
+	public void selectBySalse(Socket sock) {
 
 		String sql = " SELECT b.menu_type, A.menu_name, B.price, A.판매량, A.사용쿠폰, (B.PRICE*A.판매량) 총판매액 "
 				+ " FROM (SELECT 정렬.menu_name , 정렬.판매량 , 정렬.쿠폰 사용쿠폰 "
@@ -109,45 +111,12 @@ public class SelectionsDao {
 		} finally {
 			DBClose.close(psmt, conn, rs);
 		}
-		return list;
+
+		SocketWriter.Write(sock, list);
 	}
 
-	// 날짜순 - 백승지
-	public ArrayList<OrderedMenuDto> selectByDate() {
-
-		String sql = " SELECT DISTINCT A.ORDER_DATE, A.ID, B.MENU_TYPE,  A.MENU_NAME, A.COUNTS, A.BEV_COUPON, B.PRICE "
-				+ " FROM ORDER_DETAIL A, MENU B " + " WHERE A.MENU_NAME = B.MENU_NAME "
-				+ " ORDER BY A.ORDER_DATE DESC ";
-
-		Connection conn = null;
-		PreparedStatement psmt = null;
-		ResultSet rs = null;
-
-		ArrayList<OrderedMenuDto> list = new ArrayList<>();
-
-		try {
-			conn = DBConnection.getConnection();
-			psmt = conn.prepareStatement(sql);
-			rs = psmt.executeQuery();
-
-			while (rs.next()) {
-				OrderedMenuDto omd = new OrderedMenuDto(rs.getDate("ORDER_DATE"), rs.getString("ID"),
-						rs.getString("MENU_TYPE"), rs.getNString("MENU_NAME"), rs.getInt("COUNTS"),
-						rs.getInt("BEV_COUPON"), rs.getInt("PRICE"));
-				list.add(omd);
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			// 담은 리스트를 소켓에 실어 보내자!
-			DBClose.close(psmt, conn, rs);
-		}
-		return list;
-	}
-
-	// 별점순 - 백승지
-	public ArrayList<BestSaleMenuDto> selectByScore() {
+	// 별점순
+	public void selectByScore(Socket sock) {
 
 		String sql = " SELECT b.menu_type, A.menu_name, B.price, A.판매량, A.사용쿠폰, (B.PRICE*A.판매량) 총판매액, A.별점 "
 				+ " FROM (SELECT 정렬.menu_name , 정렬.판매량 , 정렬.쿠폰 사용쿠폰, 정렬.별점 "
@@ -176,11 +145,48 @@ public class SelectionsDao {
 		} finally {
 			DBClose.close(psmt, conn, rs);
 		}
-		return list;
+
+		SocketWriter.Write(sock, list);
 	}
 
-	public ArrayList<String> selectAddress(Object obj) {
-		String sql = "SELECT DISTINCT SIDO, SIGUNGU, LOAD, EUBMEONDONG" + " FROM LOADNAME_ADD " + " WHERE LOAD = ? ";
+	// 회원정보
+	public void selectCustomerOrder(Socket sock) {
+
+		String sql = " SELECT A.ID, A.NAME, A.ADR, A.PHONE, B.주문건수 " + " FROM MEMBER A, (SELECT A.ID, COUNT(*) 주문건수 "
+				+ " FROM ORDER_DETAIL A, MENU B " + " WHERE A.MENU_NAME = B.MENU_NAME AND B.MENU_TYPE = '메인' "
+				+ " GROUP BY ID " + " ORDER BY COUNT(*) DESC) B " + " WHERE A.ID = B.ID ";
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		ArrayList<String> list = new ArrayList<>();
+
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+
+			while (rs.next()) {
+				// A.ID, A.NAME, A.ADR, A.PHONE, B.주문건수
+				list.add(rs.getString("ID") + "__" + rs.getString("NAME") + "__" + rs.getString("ADR") + "__"
+						+ rs.getString("PHONE") + "__" + rs.getInt("주문건수"));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+
+		SocketWriter.Write(sock, list);
+	}
+
+	// 주소 정보
+	public void selectAddress(Object obj, Socket sock) {
+		String sql = "SELECT DISTINCT SIDO, SIGUNGU, LOAD, EUBMEONDONG" + 
+					" FROM LOADNAME_ADD " + 
+					" WHERE LOAD = ? ";
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -197,8 +203,7 @@ public class SelectionsDao {
 				if (rs.getString(4) == null) {
 					list.add(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3));
 				} else {
-					list.add(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " (" + rs.getString(4)
-							+ ")");
+					list.add(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " (" + rs.getString(4) + ")");
 				}
 			}
 
@@ -207,7 +212,9 @@ public class SelectionsDao {
 		} finally {
 			DBClose.close(psmt, conn, rs);
 		}
-		return list;
+
+		SocketWriter.Write(sock, list);
+		
 	}
 
 }

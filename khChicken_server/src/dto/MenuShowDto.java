@@ -1,7 +1,15 @@
 package dto;
 
 import java.io.Serializable;
-
+/*	
+	CREATE TABLE MENU(
+	    MENU_NAME VARCHAR2(30) PRIMARY KEY,
+	    PRICE NUMBER(5) NOT NULL,
+	    MENU_TYPE VARCHAR2(10) NOT NULL,
+	    DESCRIPTION VARCHAR2(1000) NOT NULL,
+	    AVG_RATE NUMBER(2)
+	);
+*/
 public class MenuShowDto extends MenuDto implements Serializable {
 	
 	private static final long serialVersionUID = 7675418139620414668L;

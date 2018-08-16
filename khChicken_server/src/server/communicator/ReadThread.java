@@ -5,20 +5,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
-import dto.BestSaleMenuDto;
 import dto.MemberDto;
 import dto.MenuShowDto;
 import dto.OrderedMenuDto;
 import dto.ReviewDto;
-import server.db.DBClose;
-import server.db.DBConnection;
 import server.singleton.Singleton;
 
 public class ReadThread extends Thread {
@@ -38,9 +29,10 @@ public class ReadThread extends Thread {
 			while (true) {
 				ois = new ObjectInputStream(sock.getInputStream()); // dto받기
 
-				int number = ois.readInt();
-				Object obj = ois.readObject();
-
+				int number = ois.readInt(); // 어떤 명령인지 받고
+				Object obj = ois.readObject(); // dto를 받는다
+				
+				// dto에 따라 어디서 수행할 지 결정된다.
 				if (obj instanceof MemberDto) { // 로그인, 회원가입
 					s.getMemCtrl().execute(number, (MemberDto) obj, sock);
 				} else if (obj instanceof MenuShowDto) { // 메뉴 보여주기, 추가 삭제

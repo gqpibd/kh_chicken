@@ -17,9 +17,9 @@ import dto.OrderedMenuDto;
  
 public class Communicator {
 	public static int INSERT = 0;
-	public static int SELECT = 1;
-	public static int DELETE = 2;
-	public static int UPDATE = 3;
+	public static int DELETE = 1;
+	public static int UPDATE = 2;
+	public static int SELECT = 3;
 	private Socket sock;
 
 	public void makeConnection() {
@@ -32,9 +32,7 @@ public class Communicator {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	
+	}	
 	
 	public void SendMessage(int number, Object o) {
 		ObjectOutputStream oos = null;
@@ -75,33 +73,13 @@ public class Communicator {
 		try {
 			ois = new ObjectInputStream(sock.getInputStream());
 			obj = ois.readObject();
-		} catch (EOFException e) {
-			System.out.println("파일을 다 읽었습니다.");
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("객체 입력에 오류가 발생했습니다.");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 
 		return obj;
-	}
-
-//	public ArrayList<Object> receiveMessage() {
-//		ObjectInputStream ois = null;
-//		ArrayList<Object> objList = new ArrayList<>();
-//		try {
-//			System.out.println("reading");
-//			ois = new ObjectInputStream(sock.getInputStream());
-//			objList = (ArrayList<Object>) ois.readObject();
-//		} catch (EOFException e) {
-//			System.out.println("파일을 다 읽었습니다.");
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		} catch (ClassNotFoundException e) {
-//			e.printStackTrace();
-//		}
-//
-//		return objList;
-//	}
+	}	
 
 }
