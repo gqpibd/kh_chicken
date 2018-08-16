@@ -86,7 +86,8 @@ INSERT INTO ORDER_DETAIL VALUES ('dohyeon', '콜라', 1, 0, sysdate, null , null
    
 SELECT * FROM ORDER_DETAIL;
 
-
+SELECT *
+FROM MENU
 
 
 -- 날짜순

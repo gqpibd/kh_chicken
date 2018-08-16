@@ -233,6 +233,7 @@ public class MainView extends JFrame implements ItemListener {
 	public void setImage(String path, JLabel imgLabel) {
 		try {
 			// System.out.println("path : " + path);
+			System.out.println("path = " + path);
 			BufferedImage m_numberImage = ImageIO.read(new File(path));
 			ImageIcon icon = new ImageIcon(m_numberImage);
 
