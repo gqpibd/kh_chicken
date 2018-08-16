@@ -69,7 +69,7 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 		setTable();
 
 		nameField = new JTextField();
-		nameField.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
+		nameField.setFont(new Font("나눔고딕", Font.PLAIN, 14));
 		nameField.setEditable(false);
 		nameField.setBounds(240, 178, 155, 21);
 		getContentPane().add(nameField);
@@ -86,14 +86,14 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 		getContentPane().add(priceLabel);
 
 		priceField = new JTextField();
-		priceField.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
+		priceField.setFont(new Font("나눔고딕", Font.PLAIN, 14));
 		priceField.setEditable(false);
 		priceField.setBounds(59, 207, 90, 21);
 		getContentPane().add(priceField);
 		priceField.setColumns(10);
 
 		imgFileField = new JTextField();
-		imgFileField.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
+		imgFileField.setFont(new Font("나눔고딕", Font.PLAIN, 14));
 		imgFileField.setEditable(false);
 		imgFileField.setColumns(10);
 		imgFileField.setBounds(59, 238, 139, 21);
@@ -110,7 +110,7 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 		getContentPane().add(wonLabel);
 
 		JScrollPane scrollPane = new JScrollPane(menuTable);
-		menuTable.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
+		menuTable.setFont(new Font("나눔고딕", Font.PLAIN, 14));
 
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		// scrollPane.setBounds((frameWidth-menuTable.getPreferredSize().width)/2, 28,
@@ -152,7 +152,7 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 		getContentPane().add(typeLabel);
 
 		typeField = new JTextField();
-		typeField.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
+		typeField.setFont(new Font("나눔고딕", Font.PLAIN, 14));
 		typeField.setText((String) null);
 		typeField.setEditable(false);
 		typeField.setColumns(10);
@@ -160,7 +160,7 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 		getContentPane().add(typeField);
 
 		descriptionArea = new JTextArea();
-		descriptionArea.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
+		descriptionArea.setFont(new Font("나눔고딕", Font.PLAIN, 14));
 		descriptionArea.setLineWrap(true);
 		JScrollPane descPane = new JScrollPane(descriptionArea);
 		descPane.setBounds(290, 271, 149, 141);

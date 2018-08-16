@@ -20,6 +20,7 @@ import javax.swing.JTextArea;
 import client.singleton.Singleton;
 import dto.MenuShowDto;
 import dto.ReviewDto;
+import utils.images.ImageUtils;
 
 public class ReviewWriteDialog extends JDialog {
 
@@ -31,16 +32,19 @@ public class ReviewWriteDialog extends JDialog {
 	private ReviewDto rDto;
 	private int myScore = 10;
 	double newScore = -1;
-
+	private static final String PATH = "images/reviewView/";
+	
 	public ReviewWriteDialog(ReviewDto rDto) {
-
+		setTitle("리뷰쓰기");
 		this.rDto = rDto;
 		setInitView(); // 화면 설정
 
 	}
 
 	public void setInitView() {
+		
 		setModal(true);
+		getContentPane().setBackground(Color.WHITE);
 		getContentPane().setLayout(null);
 		setBounds(100, 100, 414, 221);
 		MyClickListener mcl = new MyClickListener();
@@ -58,20 +62,16 @@ public class ReviewWriteDialog extends JDialog {
 		getActiveStarBar(myScore);
 		getContentPane().add(myScore);
 
-		// 로고
-		JLabel JLabel_Logo = new JLabel("");
-		JLabel_Logo.setOpaque(true);
-		JLabel_Logo.setBounds(12, 138, 97, 34);
-		add(JLabel_Logo);
-
-		JBut_Review_Input = new JLabel("작성하기");
+		JBut_Review_Input = new JLabel();
 		JBut_Review_Input.addMouseListener(mcl);
-		JBut_Review_Input.setBounds(287, 149, 97, 23);
+		JBut_Review_Input.setBounds(287, 142, 100, 35);
+		ImageUtils.setResizedImage(JBut_Review_Input, PATH + "writeEndBtn.jpg");
 		add(JBut_Review_Input);
-
-		JBut_back = new JLabel("이전으로");
+		
+		JBut_back = new JLabel();
 		JBut_back.addMouseListener(mcl);
-		JBut_back.setBounds(287, 12, 97, 34);
+		JBut_back.setBounds(287, 12, 100, 35);
+		ImageUtils.setResizedImage(JBut_back, PATH + "writeReturnBtn.jpg");
 		add(JBut_back);
 
 		setVisible(true);
