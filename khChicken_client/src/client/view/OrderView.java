@@ -211,7 +211,7 @@ public class OrderView extends JFrame implements ActionListener {
 		getContentPane().add(phoneLabel);
 
 		JLabel timeLabel = new JLabel("주문시간");
-		timeLabel.setFont(new Font("08서울남산체 B", Font.PLAIN, 15));
+		timeLabel.setFont(new Font("나눔바른고딕", Font.PLAIN, 15));
 		timeLabel.setBounds(26, 154, 57, 15);
 		getContentPane().add(timeLabel);
 
