@@ -1,6 +1,7 @@
 package utils.images;
 
 import java.awt.Image;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -42,6 +43,7 @@ public class ImageUtils {
 	
 	public static void setResizedImage(JLabel imgLabel, String path) { // 이미지를 넣어줌
 		try {
+			System.out.println("path = " + path);
 			BufferedImage m_numberImage = ImageIO.read(new File(path));
 			ImageIcon icon = new ImageIcon(m_numberImage);
 
