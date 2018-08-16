@@ -57,7 +57,6 @@ public class MainView extends JFrame implements ItemListener, ActionListener {
 
 	public MainView() {
 		super("KH CHICKEN");
-		menCtrl.initMenuList();
 		getContentPane().setLayout(null);
 
 		setContentPane(new JLabel(new ImageIcon(PATH + "mainView.jpg")));

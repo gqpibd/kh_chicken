@@ -1,16 +1,14 @@
 package client.view.manager;
-
-import javax.swing.JFrame;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+/** 메뉴 관리 창 메인 */
 import java.awt.Color;
 import java.awt.Font;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import client.controller.MemberController;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
 import client.controller.MenuController;
 import client.singleton.Singleton;
 import utils.images.LabelEventListener;
@@ -33,13 +31,6 @@ public class MenuManageView extends JFrame implements ActionListener{
 		getContentPane().setBackground(Color.black);
 		setDefaultCloseOperation(EXIT_ON_CLOSE); 
 		setVisible(true);
-		
-	/*	JLabel titleLabel = new JLabel("메뉴 관리");
-		titleLabel.setForeground(Color.WHITE);
-		titleLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
-		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		titleLabel.setBounds(1, 10, 258, 52);
-		getContentPane().add(titleLabel);*/
 		
 		updMenuBtn = new JLabel(new ImageIcon(PATH + "oldMenuManageBtn.jpg"));
 		updMenuBtn.setFont(new Font("맑은 고딕", Font.PLAIN, 20));

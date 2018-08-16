@@ -1,5 +1,5 @@
 package client.view.manager;
-
+/** 관리자창 메인 */
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

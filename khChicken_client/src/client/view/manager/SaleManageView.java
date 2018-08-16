@@ -1,4 +1,5 @@
 package client.view.manager;
+/** 판매내역 창 */
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -27,8 +28,7 @@ import utils.images.LabelEventListener;
 public class SaleManageView extends JFrame implements ActionListener {
 	private JTable jTable;
 	private JScrollPane jScrPane;
-	private String columNames[] = { "번호", "주문일자", "아이디", "메뉴타입", "주문메뉴", "단가", "수량", "음료쿠폰", "총액" };
-
+	
 	Object rowData[][];
 	DefaultTableModel model;
 	DefaultTableCellRenderer celAlignCenter; // 셀 가운데 정렬용
@@ -40,13 +40,13 @@ public class SaleManageView extends JFrame implements ActionListener {
 	public SaleManageView() {
 		super("판매 내역");
 		setLayout(null);
-		
+
 		setContentPane(new JLabel(new ImageIcon(PATH + "saleView.jpg")));
 		setResizable(false);
-		
+
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		setLocation((dim.width/2)-(getWidth()/2), (dim.height/2)-(getHeight()/2));
-		
+		setLocation((dim.width / 2) - (getWidth() / 2), (dim.height / 2) - (getHeight() / 2));
+
 		model = new DefaultTableModel() {
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -61,8 +61,8 @@ public class SaleManageView extends JFrame implements ActionListener {
 
 		jScrPane = new JScrollPane(jTable);
 		jScrPane.setBounds(10, 80, 600, 300);
+		jScrPane.setBackground(Color.white);
 		add(jScrPane);
-
 
 		backBtn = new JLabel(new ImageIcon(PATH + "customerReturnBtn.jpg"));
 		backBtn.setBounds(520, 390, backBtn.getIcon().getIconWidth(), backBtn.getIcon().getIconHeight());
@@ -109,6 +109,7 @@ public class SaleManageView extends JFrame implements ActionListener {
 	public void setTableByDate() {
 
 		Singleton s = Singleton.getInstance();
+		String columNames[] = { "번호", "주문일자", "아이디", "메뉴타입", "주문메뉴", "단가", "수량", "음료쿠폰", "총액" };
 
 		// controller로 영수증 목록 취득()
 		// ArrayList<OrderedMenuDto> list = s.getStaCtrl().selectByDate(4);
@@ -208,7 +209,6 @@ public class SaleManageView extends JFrame implements ActionListener {
 			jTable.getColumnModel().getColumn(i).setCellRenderer(celAlignCenter);
 
 		}
-		
 
 	}
 

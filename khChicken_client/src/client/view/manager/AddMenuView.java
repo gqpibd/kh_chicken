@@ -1,4 +1,5 @@
 package client.view.manager;
+/** 메뉴추가장 */
 
 import java.awt.Color;
 import java.awt.Font;
@@ -9,7 +10,6 @@ import java.util.Enumeration;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
@@ -23,8 +23,6 @@ import dto.MenuShowDto;
 import utils.images.ImageUtils;
 import utils.images.LabelEventListener;
 
-import javax.swing.JPanel;
-
 public class AddMenuView extends JFrame implements ActionListener {
 	private JTextField filePathField; // 이미지 파일 경로
 	private JTextField nameField; // 메뉴 이름
@@ -32,9 +30,6 @@ public class AddMenuView extends JFrame implements ActionListener {
 	private JTextArea description; // 제품 설명
 	private JLabel imgLabel; // 제품 이미지
 
-//	private JButton searchBtn; // 이미지 검색 버튼
-//	private JButton applyBtn; // 적용 버튼
-//	private JButton cancelBtn; // 취소 버튼
 	private JLabel searchBtn; // 이미지 검색 버튼
 	private JLabel applyBtn; // 적용 버튼
 	private JLabel cancelBtn; // 취소 버튼
@@ -46,10 +41,6 @@ public class AddMenuView extends JFrame implements ActionListener {
 	
 
 	public AddMenuView() {
-		setInitViews();
-	}
-
-	public void setInitViews() {
 		setTitle("메뉴 추가");
 		
 		setContentPane(new JLabel(new ImageIcon(PATH + "addMenuView.jpg")));
