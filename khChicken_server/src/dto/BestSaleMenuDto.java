@@ -16,7 +16,7 @@ public class BestSaleMenuDto extends MenuDto implements Serializable {
 	}
 	
 	public BestSaleMenuDto(String menu_type, String menu_name, int price, int total_sale, int total_coupon, int total_price, double score) {
-		super(menu_name, menu_type, price);
+		super(menu_type,menu_name, price);
 		this.total_sale = total_sale;
 		this.total_coupon = total_coupon;
 		this.total_price = total_price;

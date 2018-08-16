@@ -46,48 +46,51 @@ public class SelectionsDao implements SelectionsDaoImpl { // 특수한 Select를
 			System.out.println("주소 정보를 불러왔습니다");
 		}
 	}
+
 	// 날짜순
-		public void selectByDate(Socket sock) {
+	public void selectByDate(Socket sock) {
 
-			String sql = " SELECT DISTINCT A.ORDER_DATE, A.ID, B.MENU_TYPE,  A.MENU_NAME, A.COUNTS, A.BEV_COUPON, B.PRICE "
-					+ " FROM ORDER_DETAIL A, MENU B " + " WHERE A.MENU_NAME = B.MENU_NAME "
-					+ " ORDER BY A.ORDER_DATE DESC ";
+		String sql = " SELECT DISTINCT A.ORDER_DATE, A.ID, B.MENU_TYPE,  A.MENU_NAME, A.COUNTS, A.BEV_COUPON, B.PRICE "
+				+ " FROM ORDER_DETAIL A, MENU B " + " WHERE A.MENU_NAME = B.MENU_NAME "
+				+ " ORDER BY A.ORDER_DATE DESC ";
 
-			Connection conn = null;
-			PreparedStatement psmt = null;
-			ResultSet rs = null;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
 
-			ArrayList<OrderedMenuDto> list = new ArrayList<>();
+		ArrayList<OrderedMenuDto> list = new ArrayList<>();
 
-			try {
-				conn = DBConnection.getConnection();
-				psmt = conn.prepareStatement(sql);
-				rs = psmt.executeQuery();
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
 
-				while (rs.next()) {
-					OrderedMenuDto omd = new OrderedMenuDto(rs.getDate("ORDER_DATE"), rs.getString("ID"),
-							rs.getString("MENU_TYPE"), rs.getNString("MENU_NAME"), rs.getInt("COUNTS"),
-							rs.getInt("BEV_COUPON"), rs.getInt("PRICE"));
-					list.add(omd);
-				}
-
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				// 담은 리스트를 소켓에 실어 보내자!
-				DBClose.close(psmt, conn, rs);
+			while (rs.next()) {
+				OrderedMenuDto omd = new OrderedMenuDto(rs.getDate("ORDER_DATE"), rs.getString("ID"),
+						rs.getString("MENU_TYPE"), rs.getNString("MENU_NAME"), rs.getInt("COUNTS"),
+						rs.getInt("BEV_COUPON"), rs.getInt("PRICE"));
+				list.add(omd);
 			}
 
-			SocketWriter.Write(sock, list);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			// 담은 리스트를 소켓에 실어 보내자!
+			DBClose.close(psmt, conn, rs);
 		}
-	
+
+		SocketWriter.Write(sock, list);
+	}
+
 	// 매출순
 	public void selectBySalse(Socket sock) {
 
-		String sql = " SELECT b.menu_type, A.menu_name, B.price, A.판매량, A.사용쿠폰, (B.PRICE*A.판매량) 총판매액 "
+		String sql = " SELECT b.menu_type, A.menu_name, B.price, A.판매량, A.사용쿠폰, (B.PRICE*(A.판매량-A.사용쿠폰)) 총판매액, B.AVG_RATE "
 				+ " FROM (SELECT 정렬.menu_name , 정렬.판매량 , 정렬.쿠폰 사용쿠폰 "
-				+ " FROM(SELECT menu_name , SUM(counts) 판매량, SUM(BEV_COUPON) 쿠폰 " + " FROM ORDER_DETAIL "
-				+ " GROUP BY menu_name) 정렬) A, MENU B " + " WHERE A.menu_name = B.MENU_NAME "
+					  + " FROM(SELECT menu_name , SUM(counts) 판매량, SUM(BEV_COUPON) 쿠폰 " 
+					  + " FROM ORDER_DETAIL "
+					  + " GROUP BY menu_name) 정렬) A, MENU B " 
+			    + " WHERE A.menu_name = B.MENU_NAME "
 				+ " ORDER BY (B.PRICE*A.판매량) DESC ";
 
 		Connection conn = null;
@@ -101,9 +104,11 @@ public class SelectionsDao implements SelectionsDaoImpl { // 특수한 Select를
 			psmt = conn.prepareStatement(sql);
 			rs = psmt.executeQuery();
 			while (rs.next()) {
-				// b.menu_type, A.menu_name, A.판매량, A.사용쿠폰, (B.PRICE*A.판매량) 총판매액
-				BestSaleMenuDto omd = new BestSaleMenuDto(rs.getString("MENU_TYPE"), rs.getString("MENU_NAME"),
-						rs.getInt("PRICE"), rs.getInt("판매량"), rs.getInt("사용쿠폰"), rs.getInt("총판매액"), 0);
+				// menu_type, menu_name, price, total_sale, total_coupon, total_price, score
+//				BestSaleMenuDto omd = new BestSaleMenuDto(rs.getString("MENU_TYPE"), rs.getString("MENU_NAME"),
+//						rs.getInt("PRICE"), rs.getInt("판매량"), rs.getInt("사용쿠폰"), rs.getInt("총판매액"), 0);
+				BestSaleMenuDto omd = new BestSaleMenuDto(rs.getString(1), rs.getString(2),
+						rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7));
 				list.add(omd);
 			}
 		} catch (SQLException e) {
@@ -184,9 +189,8 @@ public class SelectionsDao implements SelectionsDaoImpl { // 특수한 Select를
 
 	// 주소 정보
 	public void selectAddress(Object obj, Socket sock) {
-		String sql = "SELECT DISTINCT SIDO, SIGUNGU, LOAD, EUBMEONDONG" + 
-					" FROM LOADNAME_ADD " + 
-					" WHERE LOAD = ? ";
+		String sql = "SELECT DISTINCT SIDO, SIGUNGU, LOAD, EUBMEONDONG" + " FROM LOADNAME_ADD " + " WHERE LOAD LIKE '%"+obj.toString()+"%' " +
+					" ORDER BY LOAD ";
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -196,14 +200,15 @@ public class SelectionsDao implements SelectionsDaoImpl { // 특수한 Select를
 
 			conn = DBConnection.getConnection();
 			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, obj.toString());
+			//psmt.setString(1, obj.toString());
 			rs = psmt.executeQuery();
 
 			while (rs.next()) {
 				if (rs.getString(4) == null) {
-					list.add(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3));
+					//list.add(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3));
 				} else {
-					list.add(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " (" + rs.getString(4) + ")");
+					list.add(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " (" + rs.getString(4)
+							+ ")");
 				}
 			}
 
@@ -214,7 +219,7 @@ public class SelectionsDao implements SelectionsDaoImpl { // 특수한 Select를
 		}
 
 		SocketWriter.Write(sock, list);
-		
+
 	}
 
 }

@@ -146,7 +146,10 @@ public class ReviewDao implements ReviewDaoImpl {
 
 	public void select_byUserId(ReviewDto dto, Socket sock) {
 		String id = dto.getUserId();
-		String sql = "SELECT MENU_NAME, REVIEW,  ID, TO_CHAR(ORDER_DATE, 'YYYY-MM-DD HH24:MI:SS'), SCORE " + " FROM ORDER_DETAIL" + " WHERE ID = ? ";
+		String sql = "SELECT MENU_NAME, REVIEW,  ID, TO_CHAR(ORDER_DATE, 'YYYY-MM-DD HH24:MI:SS'), SCORE " + 
+				" FROM ORDER_DETAIL" + 
+				" WHERE ID = ? " +
+				" ORDER BY ORDER_DATE DESC ";
 
 		System.out.println(sql);
 		ReviewDto rdto = null;
