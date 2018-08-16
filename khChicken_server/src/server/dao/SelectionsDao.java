@@ -29,7 +29,7 @@ public class SelectionsDao {
 			SocketWriter.Write(sock, orderList);
 			break;
 		case SALES: // selectBySalse (매출순) - 백승지
-			ArrayList<BestSaleMenuDto> bestSaleList = selectBySalse();
+			ArrayList<BestSaleMenuDto> bestSaleList = selectByDate();
 			SocketWriter.Write(sock, bestSaleList);
 			break;
 		case SCORE: // selectByScore (별점순) - 백승지

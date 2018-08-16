@@ -117,7 +117,7 @@ public class ReviewDao {
 
 	public void update(ReviewDto dto) { // 기존 주문한 내역에 리뷰 추가하기
 		String sql = " UPDATE ORDER_DETAIL " + " SET REVIEW = ?, SCORE = ? "
-				+ " WHERE ID = ? AND MENU_NAME = ? AND ORDER_DATE = TO_DATE(?,'YYYY-MM-DD HH:MI:SS') ";
+				+ " WHERE ID = ? AND MENU_NAME = ? AND  ((TO_DATE(sysdate, 'yyyy/mm/dd') - TO_DATE(ORDER_DATE, 'yyyy/mm/dd'))) <= 2;";
 		
 		System.out.print(" dto  = " + dto);
 		System.out.print(" sql  = " + sql);

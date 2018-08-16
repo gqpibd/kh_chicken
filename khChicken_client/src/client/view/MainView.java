@@ -86,7 +86,7 @@ public class MainView extends JFrame implements ItemListener {
 		btn_Order.addMouseListener(lcl);
 
 		btn_Manage = new JLabel(new ImageIcon(PATH + "manageBtn.jpg"));
-		btn_Manage.setBounds(370, 660, btn_Manage.getIcon().getIconWidth(), btn_Manage.getIcon().getIconHeight());
+		btn_Manage.setBounds(370, 720, btn_Manage.getIcon().getIconWidth(), btn_Manage.getIcon().getIconHeight());
 		btn_Manage.setVisible(false);
 		btn_Manage.setFont(new Font("다음_Regular", Font.PLAIN, 15));
 		// btn_Manage.addActionListener(this);
