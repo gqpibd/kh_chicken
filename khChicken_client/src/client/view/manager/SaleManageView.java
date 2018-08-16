@@ -19,6 +19,8 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import com.sun.org.apache.bcel.internal.generic.JSR;
+
 import client.controller.StatisticsController;
 import client.singleton.Singleton;
 import dto.BestSaleMenuDto;
@@ -61,7 +63,6 @@ public class SaleManageView extends JFrame implements ActionListener {
 
 		jScrPane = new JScrollPane(jTable);
 		jScrPane.setBounds(10, 80, 600, 300);
-		jScrPane.setBackground(Color.white);
 		add(jScrPane);
 
 		backBtn = new JLabel(new ImageIcon(PATH + "customerReturnBtn.jpg"));

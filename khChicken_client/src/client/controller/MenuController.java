@@ -60,33 +60,25 @@ public class MenuController {
 	}
 
 	public void menuManageView(JFrame currentView) {
-		currentView.setVisible(false);
+		currentView.dispose();
 		// 메뉴관리 창을 보여준다.
 		if (menManView == null) { // 없을 땐
 			menManView = new MenuManageView(); // 만들고
 		} else { // 있을 땐
 			menManView.setVisible(true); // 보여만 준다.
+			menManView.toFront();
 		}
 	}
 
 	public void addMenuView() {
 		menManView.setVisible(false);
-		// 메뉴관리 창을 보여준다.
-		if (addManView == null) { // 없을 땐
-			addManView = new AddMenuView(); // 만들고
-		} else { // 있을 땐
-			addManView.setVisible(true); // 보여만 준다.
-		}
+		addManView = new AddMenuView(); // 만들고		
+		addManView.toFront();
 	}
 
 	public void updateMenuView() {
 		menManView.setVisible(false);
-		// 메뉴관리 창을 보여준다.
-		if (updManView == null) { // 없을 땐
-			updManView = new UpdateMenuView(); // 만들고
-		} else { // 있을 땐
-			updManView.setVisible(true); // 보여만 준다.
-		}
+		updManView = new UpdateMenuView(); // 만들고		
 	}
 
 }

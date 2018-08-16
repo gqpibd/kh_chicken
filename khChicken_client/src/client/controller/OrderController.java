@@ -50,6 +50,7 @@ public class OrderController {
 			Window_inform = new MyInfoView();
 		} else {
 			Window_inform.setVisible(true);
+			Window_inform.toFront();
 		}
 	}
 }

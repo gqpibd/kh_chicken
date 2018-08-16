@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import client.singleton.Singleton;
 import dto.MemberDto;
 import utils.images.LabelEventListener;
+import javax.swing.SwingConstants;
 
 public class LoginView extends JFrame implements ActionListener {
 	JTextField JTextF_ID;
@@ -34,28 +35,30 @@ public class LoginView extends JFrame implements ActionListener {
 		setResizable(false);
 		getContentPane().setLayout(null);
 		setResizable(false);
-
-		JPanel Jpanl_JTextF = new JPanel();
-		Jpanl_JTextF.setBackground(Color.WHITE);
-		Jpanl_JTextF.setBounds(105, 56, 132, 66);
+//
+//		JPanel Jpanl_JTextF = new JPanel();
+//		Jpanl_JTextF.setBackground(Color.WHITE);
+//		Jpanl_JTextF.setBounds(105, 56, 132, 66);
 
 		JTextF_ID = new JTextField(10);
-		Jpanl_JTextF.add(JTextF_ID);
+		JTextF_ID.setBounds(105, 60, 125, 25);
+		getContentPane().add(JTextF_ID);
 
 		JTextF_PW = new JPasswordField(10);
 		JTextF_PW.addActionListener(this);
-		Jpanl_JTextF.add(JTextF_PW);
-
-		getContentPane().add(Jpanl_JTextF);
+		JTextF_PW.setBounds(105, 90, 125, 25);
+		getContentPane().add(JTextF_PW);	
 
 		JLabel JLabel_ID = new JLabel("아이디");
+		JLabel_ID.setHorizontalAlignment(SwingConstants.RIGHT);
 		JLabel_ID.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
-		JLabel_ID.setBounds(36, 56, 42, 27);
+		JLabel_ID.setBounds(36, 58, 62, 27);
 		getContentPane().add(JLabel_ID);
 
 		JLabel JLabel_PW = new JLabel("비밀번호");
+		JLabel_PW.setHorizontalAlignment(SwingConstants.RIGHT);
 		JLabel_PW.setFont(new Font("나눔고딕 ExtraBold", Font.PLAIN, 14));
-		JLabel_PW.setBounds(36, 88, 62, 18);
+		JLabel_PW.setBounds(36, 92, 62, 18);
 		getContentPane().add(JLabel_PW);
 
 		Jbut_Account = new JLabel(new ImageIcon(PATH + "signInBtn.jpg"));
@@ -63,9 +66,10 @@ public class LoginView extends JFrame implements ActionListener {
 		Jbut_Account.setBounds(80, 134, Jbut_Account.getIcon().getIconWidth(), Jbut_Account.getIcon().getIconHeight());
 		getContentPane().add(Jbut_Account);
 
+		// 로그인
 		Jbut_login = new JLabel(new ImageIcon(PATH + "logInBtn.jpg"));
 		Jbut_login.addMouseListener(new LabelEventListener(this));
-		Jbut_login.setBounds(239, 56, Jbut_login.getIcon().getIconWidth(), Jbut_login.getIcon().getIconHeight());
+		Jbut_login.setBounds(239, 54, Jbut_login.getIcon().getIconWidth(), Jbut_login.getIcon().getIconHeight());
 		getContentPane().add(Jbut_login);
 
 		Jbut_Exit = new JLabel(new ImageIcon(PATH + "returnLoginBtn.jpg"));

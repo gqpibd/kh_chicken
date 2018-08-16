@@ -45,7 +45,7 @@ public class MyInfoView extends JFrame implements ActionListener {
 	private static final String PATH = "images/myInfoView/";
 
 	public MyInfoView() {
-		
+
 		setContentPane(new JLabel(new ImageIcon(PATH + "myInfoView.jpg")));
 		setResizable(false);
 		getContentPane().setLayout(null);
@@ -81,11 +81,11 @@ public class MyInfoView extends JFrame implements ActionListener {
 			if (!new String(JField_Pw.getPassword()).equals(new String(JField_Pw2.getPassword()))) {
 				JOptionPane.showMessageDialog(null, "비밀번호가 일치하지 않습니다");
 				return;
-			}			
+			}
 			if (!Pattern.matches("^01(?:0|1|[6-9])-(?:\\d{3}|\\d{4})-\\d{4}$", JField_Phone.getText())) {
 				JOptionPane.showMessageDialog(null, "전화번호 형식이 맞지 않습니다.\n 01X-XXXX-XXXX 형태로 입력해 주세요");
 				return;
-			} 
+			}
 			dto.setPw(new String(JField_Pw.getPassword()));
 			dto.setName(JField_Name.getText());
 			dto.setPhone(JField_Phone.getText());
@@ -115,21 +115,21 @@ public class MyInfoView extends JFrame implements ActionListener {
 		JLabel JLabel_Phone;
 
 		JLabel JLabel_Logo;
-		
+
 		// 정보 수정
 		JBut_Change = new JLabel(new ImageIcon(PATH + "upInfoBtn.jpg"));
 		JBut_Change.setName("정보 수정");
 		JBut_Change.addMouseListener(new LabelEventListener(this));
 		JBut_Change.setBounds(315, 381, JBut_Change.getIcon().getIconWidth(), JBut_Change.getIcon().getIconHeight());
-		getContentPane().add(JBut_Change);		
+		getContentPane().add(JBut_Change);
 
 		// 주소 검색
 		JBut_search = new JLabel(new ImageIcon(PATH + "upSearchBtn.jpg"));
-		JBut_search.setBounds(352, 273,JBut_search.getIcon().getIconWidth(), JBut_search.getIcon().getIconHeight());
+		JBut_search.setBounds(352, 273, JBut_search.getIcon().getIconWidth(), JBut_search.getIcon().getIconHeight());
 		JBut_search.setEnabled(false);
 		getContentPane().add(JBut_search);
 		JBut_search.addMouseListener(new LabelEventListener(this));
-		
+
 		// 돌아가기
 		JBut_back = new JLabel(new ImageIcon(PATH + "upReturnBtn.jpg"));
 		JBut_back.addMouseListener(new LabelEventListener(this));
@@ -148,7 +148,7 @@ public class MyInfoView extends JFrame implements ActionListener {
 		JField_Coupon.setFont(new Font("나눔고딕", Font.PLAIN, 14));
 		JField_Coupon.setEditable(false);
 		String address = mdto.getAddress();
-		
+
 		JField_Address = new JTextField();
 		JField_Address.setFont(new Font("나눔고딕", Font.PLAIN, 14));
 		JField_Address2 = new JTextField();
@@ -159,8 +159,7 @@ public class MyInfoView extends JFrame implements ActionListener {
 		if (address.contains(")")) {
 			loc = address.indexOf(")");
 			JField_Address.setText(address.substring(0, loc + 1));
-			
-			
+
 		} else {
 			loc = address.indexOf(' ');
 			loc = address.indexOf(' ', loc + 1);
@@ -219,7 +218,7 @@ public class MyInfoView extends JFrame implements ActionListener {
 		getContentPane().add(JLabel_Address);
 		getContentPane().add(JLabel_Phone);
 
-		JLabel_Logo = new JLabel(new ImageIcon(PATH + "charactor.gif"));	//gif넣기
+		JLabel_Logo = new JLabel(new ImageIcon(PATH + "charactor.gif")); // gif넣기
 		JLabel_Logo.setBounds(480, 345, 282, 106);
 		JLabel_Logo.setBackground(Color.black);
 		JLabel_Logo.setOpaque(true);
@@ -276,7 +275,12 @@ public class MyInfoView extends JFrame implements ActionListener {
 		}
 		////////
 
-		model = new DefaultTableModel(rdats, Obj_Rview); // DefaultTableModel
+		model = new DefaultTableModel(rdats, Obj_Rview) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		}; // DefaultTableModel
 		JTable table = new JTable(model);
 
 		table.getColumnModel().getColumn(0).setPreferredWidth(200);
@@ -297,11 +301,12 @@ public class MyInfoView extends JFrame implements ActionListener {
 		Scroll_model.setBounds(435, 80, 520, 262);
 		getContentPane().add(Scroll_model);
 
-	/*	JLabel lblNewLabel = new JLabel("<나의 주문 내역>");
-		lblNewLabel.setFont(new Font("나눔고딕", Font.BOLD, 20));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(435, 10, 520, 29);
-		getContentPane().add(lblNewLabel);*/
+		/*
+		 * JLabel lblNewLabel = new JLabel("<나의 주문 내역>"); lblNewLabel.setFont(new
+		 * Font("나눔고딕", Font.BOLD, 20));
+		 * lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		 * lblNewLabel.setBounds(435, 10, 520, 29); getContentPane().add(lblNewLabel);
+		 */
 
 		R_List.clear();
 	}

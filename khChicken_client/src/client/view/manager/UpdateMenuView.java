@@ -8,7 +8,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -115,7 +114,10 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 
 		// 제품 이미지
 		imgLabel = new JLabel();
-		imgLabel.setBounds(59, 269, 187, 141);
+		double scale = 0.82;
+		int width = (int) (277 * scale);
+		int height = (int) (182 * scale);
+		imgLabel.setBounds(40, 267, width, height);
 		getContentPane().add(imgLabel);
 
 		// 제품 설명
@@ -304,6 +306,7 @@ public class UpdateMenuView extends JFrame implements ActionListener {
 				s.getMenuCtrl().updateImage(menu, NewImgPath);
 			}
 			s.resetMainView();
+			JOptionPane.showMessageDialog(null, "변경사항을 저장했습니다");
 			System.out.println("변경됨");
 
 		} else if (e.getSource() == delBtn) { // 삭제 버튼 클릭

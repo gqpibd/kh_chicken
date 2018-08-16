@@ -1,19 +1,14 @@
 package client.communicator;
 
 import java.awt.image.BufferedImage;
-import java.io.EOFException;
 import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
-
-import client.singleton.Singleton;
-import dto.OrderedMenuDto;
  
 public class Communicator {
 	public static int INSERT = 0;

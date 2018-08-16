@@ -169,6 +169,8 @@ public class OrderView extends JFrame implements ActionListener {
 		couponField.setBounds(400, 122, 51, 20);
 		getContentPane().add(couponField);
 		couponField.setEditable(false);
+		couponField.setHorizontalAlignment(SwingConstants.CENTER);
+		
 		// 쿠폰사용 증가 버튼
 		couPluBtn = new JLabel(new ImageIcon(PATH + "plusBtn.jpg"));
 		couPluBtn.setBounds(455, 122, couPluBtn.getIcon().getIconWidth(), couPluBtn.getIcon().getIconHeight());
@@ -223,20 +225,37 @@ public class OrderView extends JFrame implements ActionListener {
 		getContentPane().add(nameField);
 		nameField.setColumns(10);
 
+		
+		JLabel barLabel = new JLabel("-");
+		barLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		barLabel.setBounds(135, 95, 25, 16);
+		barLabel.setFont(new Font("08서울남산체 B", Font.PLAIN, 15));
+		getContentPane().add(barLabel);
+		
+		JLabel barLabel1 = new JLabel("-");
+		barLabel1.setHorizontalAlignment(SwingConstants.CENTER);
+		barLabel1.setBounds(220, 95, 25, 16);
+		barLabel1.setFont(new Font("08서울남산체 B", Font.PLAIN, 15));
+		getContentPane().add(barLabel1);
+
 		phoneField1 = new JTextField(currentUser.getPhone().split("-")[0]);
-		phoneField1.setBounds(238, 93, 50, 21);
-		getContentPane().add(phoneField1);
+		phoneField1.setBounds(88, 93, 50, 21);
 		phoneField1.setColumns(10);
+		phoneField1.setHorizontalAlignment(SwingConstants.CENTER);
+		getContentPane().add(phoneField1);
 
 		phoneField2 = new JTextField(currentUser.getPhone().split("-")[1]);
+		phoneField2.setBounds(161, 93, 50, 21);
 		phoneField2.setColumns(10);
-		phoneField2.setBounds(88, 93, 50, 21);
+		phoneField2.setHorizontalAlignment(SwingConstants.CENTER);
 		getContentPane().add(phoneField2);
-
+		
 		phoneField3 = new JTextField(currentUser.getPhone().split("-")[2]);
-		phoneField3.setColumns(10);
-		phoneField3.setBounds(161, 93, 50, 21);
+		phoneField3.setBounds(238, 93, 50, 21);
 		getContentPane().add(phoneField3);
+		phoneField3.setHorizontalAlignment(SwingConstants.CENTER);
+		phoneField3.setColumns(10);	
+
 
 		addressField = new JTextField(currentUser.getAddress());
 		addressField.setBounds(88, 122, 214, 21);

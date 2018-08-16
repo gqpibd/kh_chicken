@@ -68,11 +68,17 @@ public class Singleton {
 	public void backToMain(JFrame currentView) {
 		currentView.setVisible(false);
 		mv.setVisible(true); // 메인 화면을 보이게 한다.
+		mv.toFront();
 	}
 
 	public void resetMainView() {
 		mv = new MainView();
 		mv.login();
+	}
+	
+	public void logoutMainView() {
+		mv = new MainView();
+		mv.setVisible(true);
 	}
 
 }

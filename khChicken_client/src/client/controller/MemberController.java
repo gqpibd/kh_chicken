@@ -56,6 +56,7 @@ public class MemberController {
 
 	public void logout() {
 		memDao.logout();
+		Singleton.getInstance().resetMainView();
 
 	}
 
@@ -71,16 +72,13 @@ public class MemberController {
 			manView = new ManageView(); // 만들고
 		} else { // 있을 땐
 			manView.setVisible(true); // 보여만 준다.
+			manView.toFront();
 		}
 	}
 
 	public void accountView(JFrame currentView) {
 		currentView.setVisible(false);
-		if (accView == null) { // 없을 땐
-			accView = new AccountView(); // 만들고
-		} else { // 있을 땐
-			accView.setVisible(true); // 보여만 준다.
-		}
+		accView = new AccountView(); // 만들고
 
 	}
 

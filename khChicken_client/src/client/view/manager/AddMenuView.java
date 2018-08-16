@@ -75,7 +75,11 @@ public class AddMenuView extends JFrame implements ActionListener {
 		
 		// 제품 이미지
 		imgLabel = new JLabel();
-		imgLabel.setBounds(12, 170, 244, 167);
+		double scale = 0.9;
+		int width = (int) (277 * scale);
+		int height = (int) (182 * scale);
+		imgLabel.setSize(width, height); //
+		imgLabel.setBounds(12, 170, width, height);
 		getContentPane().add(imgLabel);
 
 		// 메뉴타입

@@ -38,6 +38,7 @@ public class StatisticsController {
 			salManView = new SaleManageView(); // 만들고
 		} else { // 있을 땐
 			salManView.setVisible(true); // 보여만 준다.
+			salManView.toFront();
 		}
 	}
 

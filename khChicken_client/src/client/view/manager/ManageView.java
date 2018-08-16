@@ -66,7 +66,7 @@ public class ManageView extends JFrame implements ActionListener {
 		btn_back.setBackground(Color.white);
 		getContentPane().add(btn_back);
 
-		setBounds(100, 100, 350, 400);
+		setSize(350, 400);
 		getContentPane().setBackground(Color.black);
 		setVisible(true);
 
