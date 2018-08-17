@@ -1,45 +1,13 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<jsmoothproject>
-<JVMSearchPath>registry</JVMSearchPath>
-<JVMSearchPath>javahome</JVMSearchPath>
-<JVMSearchPath>jrepath</JVMSearchPath>
-<JVMSearchPath>jdkpath</JVMSearchPath>
-<JVMSearchPath>exepath</JVMSearchPath>
-<JVMSearchPath>jview</JVMSearchPath>
-<arguments></arguments>
-<currentDirectory>.</currentDirectory>
-<embeddedJar>true</embeddedJar>
-<executableName>D:\�gŲ\KHChicken.exe</executableName>
-<iconLocation>..\..\..\..\..\..\Desktop\�ΰ�.png</iconLocation>
-<initialMemoryHeap>-1</initialMemoryHeap>
-<jarLocation>D:\�gŲ\KHChicken.jar</jarLocation>
-<mainClassName>client.run.Main</mainClassName>
-<maximumMemoryHeap>-1</maximumMemoryHeap>
-<maximumVersion></maximumVersion>
-<minimumVersion></minimumVersion>
-<skeletonName>Windowed Wrapper</skeletonName>
-<skeletonProperties>
-<key>Message</key>
-<value>Java has not been found on your computer. Do you want to download it?</value>
-</skeletonProperties>
-<skeletonProperties>
-<key>URL</key>
-<value></value>
-</skeletonProperties>
-<skeletonProperties>
-<key>SingleProcess</key>
-<value>1</value>
-</skeletonProperties>
-<skeletonProperties>
-<key>SingleInstance</key>
-<value>0</value>
-</skeletonProperties>
-<skeletonProperties>
-<key>JniSmooth</key>
-<value>0</value>
-</skeletonProperties>
-<skeletonProperties>
-<key>Debug</key>
-<value>0</value>
-</skeletonProperties>
-</jsmoothproject>
+package client.run;
+
+import client.singleton.Singleton;
+
+public class Main {
+
+	public static void main(String[] args) {
+		Singleton s = Singleton.getInstance(); 
+		s.getComm().makeConnection(); // 소켓 연결을 먼저 한다.
+		s.getMainView().setVisible(true); // 메인화면을 띄워준다.		
+	}
+
+}

@@ -133,9 +133,9 @@ FROM (SELECT 정렬.menu_name , 정렬.판매량 , 정렬.쿠폰 사용쿠폰, �
 FROM(SELECT menu_name , SUM(counts) 판매량, SUM(BEV_COUPON) 쿠폰, ROUND(AVG(SCORE), 2) 별점
 FROM ORDER_DETAIL
 GROUP BY menu_name
-HAVING AVG(SCORE) IS NOT NULL
-ORDER BY AVG(SCORE) DESC) 정렬) A, MENU B
-WHERE A.menu_name = B.MENU_NAME;
+HAVING AVG(SCORE) IS NOT NULL) 정렬) A, MENU B
+WHERE A.menu_name = B.MENU_NAME
+ORDER BY A.별점 DESC;
 
 -- 고객관리
 SELECT A.ID, A.NAME, A.ADR, A.PHONE, B.주문건수
